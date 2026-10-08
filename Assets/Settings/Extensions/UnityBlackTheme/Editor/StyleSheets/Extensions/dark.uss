@@ -1,0 +1,102 @@
+:root {
+    --unity-colors-play_mode-background: #000000 !important;
+    --unity-colors-gameview-background: #000000 !important;
+    --unity-colors-default-background: #000000 !important;
+}
+* {
+    --unity-colors-play_mode-background: #000000;
+}
+.dockHeader,
+.AppToolbar,
+.SceneTopBarBg,
+.ScrollViewAlt,
+.TabWindowBackground,
+.WhiteBackground,
+#WhiteBackground,
+.scrollview,
+.ProjectBrowserIconAreaBg,
+.PreBackground,
+.dragtab-label,
+.Toolbar,
+.toolbarbutton,
+.ToolbarPopup,
+.ToolbarPopupLeft,
+.FoldoutHeader,
+.IN-Title,
+.IN-BigTitle,
+.IN-Footer,
+.PreToolbar,
+.ProjectBrowserTopBarBg,
+.TextField,
+.ObjectField,
+.MiniPopup,
+.ProjectBrowserBottomBarBg
+.EntryBackEven,
+.overlay-toolbar__top,
+.unity-overlay-drop-zone,
+.overlay-toolbar-area.unity-overlay-container-horizontal,
+.unity-overlay-container,
+.overlay-container__spacer,
+.GameViewBackground,
+.unity-game-view__background,
+.unity-game-view,
+#GameView,
+.GameView,
+.game-view-background,
+.unity-gameview-display,
+.unity-camera-preview,
+
+
+/* ------------------------------------------------------------------- */
+/* 🔖 Editor */
+/* ------------------------------------------------------------------- */
+
+.RenderTexture
+{
+    background-color: #0E1011 !important;
+}
+
+/* ------------------------------------------------------------------- */
+/* 🔖 Tabs */
+/* ------------------------------------------------------------------- */
+
+/* Tabs container */
+.dockHeader {
+    background-color: #000 !important;
+}
+
+/* Tabs */
+.dragtab-label {
+    background-color: #12B08D66 !important;
+}
+
+/* ------------------------------------------------------------------- */
+/* 🔖 Scene Object */
+/* ------------------------------------------------------------------- */
+
+/* Scene Active */
+.SceneTopBarBg {
+    background-color: #9e964da8 !important;
+}
+
+/* ------------------------------------------------------------------- */
+/* 🔖 Components */
+/* ------------------------------------------------------------------- */
+
+/* Component h1 */
+.IN-BigTitle       { background-color: #90479470 !important; }
+.IN-BigTitle:hover { background-color: #90479490 !important; }
+
+/* Component h2 */
+.IN-Title       { background-color: #4466aa80 !important; }
+.IN-Title:hover { background-color: #4466aaa0 !important;}
+
+/* Component h3 */
+.FoldoutHeader       { background-color: #86ff8250 !important; }
+.FoldoutHeader:hover { background-color: #86ff8280 !important; }
+
+/* ------------------------------------------------------------------- */
+/* 🔖 X */
+/* ------------------------------------------------------------------- */
+
+
