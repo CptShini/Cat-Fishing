@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 709fe680ec8593244887984a70b378c0
+guid: 27e21962c27720348a117fb8d473cf7c
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3576820975438373056
-    second: CatFishing2_0
+      213: -1065903970935451577
+    second: Catfishing BG_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: CatFishing2_0
+      name: Catfishing BG_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1911
-        height: 1433
+        width: 1920
+        height: 1080
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0c0ab22f9bb63a130800000000000000
-      internalID: 3576820975438373056
+      spriteID: 740d6bf5cf52531f0800000000000000
+      internalID: -1065903970935451577
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      CatFishing2_0: 3576820975438373056
+      Catfishing BG_0: -1065903970935451577
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
