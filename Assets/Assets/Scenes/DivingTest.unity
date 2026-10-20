@@ -390,7 +390,7 @@ MonoBehaviour:
   oxygenCapacity: 100
   defaultPresence: 2
   stealthPresence: 1
-  pouncePresence: 0
+  pouncePresence: 4
   mainCamera: {fileID: 2047324509}
   presenceCollider: {fileID: 179364581}
   defaultCollider: {fileID: 179364582}
