@@ -77,11 +77,11 @@ public class DivingController : MonoBehaviour
         velocityVector = input.ReadValue<Vector2>();
     }
 
-    public void OnCancel(CallbackContext  input)
+    public void OnCancel(CallbackContext input)
     {
         if(state == PlayerState.STEALTH)
         {
-            state = PlayerState.SWIM;
+            SetPlayerState(PlayerState.SWIM);
         }
     }
 
