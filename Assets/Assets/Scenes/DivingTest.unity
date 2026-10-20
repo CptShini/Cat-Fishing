@@ -362,11 +362,13 @@ MonoBehaviour:
   speed: 10
   stealthSpeed: 3
   pounceSpeed: 20
-  acceleration: 10
-  friction: 5
+  acceleration: 25
+  friction: 20
+  maxStamina: 60
+  maxPounceStamina: 20
+  staminaRegen: 5
+  chargeUpSpeed: 10
   mainCamera: {fileID: 2047324509}
-  velocityVector: {x: 0, y: 0}
-  state: 0
 --- !u!50 &179364578
 Rigidbody2D:
   serializedVersion: 5

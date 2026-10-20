@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 
@@ -14,24 +15,38 @@ public enum PlayerState
 public class DivingController : MonoBehaviour
 {
 
-    public float speed = 10, stealthSpeed = 3, pounceSpeed = 20, acceleration = 5, friction = 5;
+    [Header("Speed")]
+    public float speed = 10;
+    public float stealthSpeed = 3;
+    public float pounceSpeed = 20;
 
-    private float curSpeed = 0;
+    [Header("Acceleration")]
+    public float acceleration = 5; 
+    public float friction = 5;
+    
+    [Header("Stamina")]
+    public float maxStamina = 60, maxPounceStamina = 20;
+    public float staminaRegen = 5;
+    
+    [Header("Charge Up")]
+    public float chargeUpSpeed = 10;  // per second
+    
+    [Header("Other")]
+    [SerializeField] private Camera mainCamera;
+
+    private float curStamina, curPounceStamina = 0; // currrent player stamina, and current stamina for pounce
     private float pounceDuration = 0; // Tracker for when to stop pounceing. Can change based on 
     private Vector2 pounceDirection; // For saving the pounce direction during multiple updates
 
     //[SerializeField] private AnimationCurve accelerationCurve;
     private Rigidbody2D playerBody;
-
-    [SerializeField] private Camera mainCamera;
-
-    public Vector2 velocityVector;
-
-    public PlayerState state;
+    private Vector2 velocityVector;
+    private PlayerState state;
 
     void Awake()
     {
         state = PlayerState.SWIM;
+        curStamina = maxStamina;
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -40,10 +55,30 @@ public class DivingController : MonoBehaviour
         playerBody = gameObject.GetComponent<Rigidbody2D>();
     }
 
-
     public void OnMove(CallbackContext  input)
     {
         velocityVector = input.ReadValue<Vector2>();
+    }
+
+    public void OnStealth(CallbackContext  input)
+    {
+        if (input.performed) // Did the player press?
+        {
+            if(state == PlayerState.SWIM)
+            {
+                state = PlayerState.STEALTH;
+            }
+            Debug.Log("START STEALTH");
+        }
+        else if (input.canceled) // Did the player release
+        {
+
+            if(state == PlayerState.STEALTH)
+            {
+                StartPounce();
+            }
+            Debug.Log("RELEASE STEALTH");
+        }
     }
 
     public void Swim()
@@ -55,7 +90,7 @@ public class DivingController : MonoBehaviour
         Vector2 newVelocity = Vector2.MoveTowards(
             playerBody.linearVelocity,
             targetVelocity,
-            currentAcceleration * Time.fixedDeltaTime
+            currentAcceleration * Time.deltaTime
         );
         
         //Debug.Log(newVelocity.ToString());
@@ -74,57 +109,44 @@ public class DivingController : MonoBehaviour
         Vector2 newVelocity = Vector2.MoveTowards(
             playerBody.linearVelocity,
             targetVelocity,
-            currentAcceleration * Time.fixedDeltaTime
+            currentAcceleration * Time.deltaTime
         );
+
+        curPounceStamina = Mathf.Clamp(
+            curPounceStamina + Time.deltaTime * chargeUpSpeed, 
+            0,
+            curStamina < maxPounceStamina ? curStamina : maxPounceStamina);
         
-        //Debug.Log(newVelocity.ToString());
 
-        float speedRatio = Mathf.Clamp01(playerBody.linearVelocity.magnitude / stealthSpeed);
-
+        
         playerBody.linearVelocity = new Vector3(newVelocity.x, newVelocity.y, 0);
     }
 
     public void Pounce(Vector2 direction)
     {
-
         Vector2 targetVelocity = direction.normalized * pounceSpeed;
 
         playerBody.linearVelocity = new Vector3(targetVelocity.x, targetVelocity.y, 0); // instantaneous max speed
-
-
     }
 
-    public void OnStealth(CallbackContext  input)
+    public void StartPounce()
     {
-        if (input.performed) // Did the player press?
-        {
-            if(state == PlayerState.SWIM)
-            {
-                state = PlayerState.STEALTH;
-            }
-            Debug.Log("START STEALTH");
-        }
-        else if (input.canceled) // Did the player release
-        {
+        Vector2 mousePos = mainCamera.ScreenToWorldPoint(Mouse.current.position.ReadValue());
 
-            if(state == PlayerState.STEALTH)
-            {
-                Vector2 mousePos = mainCamera.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        SetPounceDirection(new Vector2(transform.position.x, transform.position.y), mousePos);
 
-                SetPounceDirection(new Vector2(transform.position.x, transform.position.y), mousePos);
+        pounceDuration = curPounceStamina / 20; // 5 stamina = 1 second, for now
 
-                pounceDuration = 5;
+        state = PlayerState.POUNCE;
 
-                state = PlayerState.POUNCE;
-            }
-            Debug.Log("RELEASE STEALTH");
-        }
-
+        curStamina = Mathf.Clamp(curStamina - curPounceStamina, 5, maxStamina);
+        curPounceStamina = 0;
     }
+
+  
 
     public void SetPounceDirection(Vector2 src, Vector2 dst)
     {
-        
         pounceDirection = dst - src;
         Debug.Log("SRC: " + src.ToString());
         Debug.Log("DST: " + dst.ToString());
@@ -132,14 +154,22 @@ public class DivingController : MonoBehaviour
         Debug.Log("NEW POUNCE DIRECTION: " + pounceDirection.ToString());
     }
 
+    void StaminaRegen(float amount)
+    {
+        curStamina = Mathf.Clamp(curStamina + amount, 0, maxStamina);
+    }
+
     // Update is called once per frame
     void Update()
     {
+        Debug.Log($"STAMINA: {curStamina}, CURPOUNCESTAMINA: {curPounceStamina}");
         switch (state)
         {
             case PlayerState.SWIM:
             {
                 Swim();
+                StaminaRegen(staminaRegen * Time.deltaTime);
+
                 break;
             }
             case PlayerState.STEALTH:
@@ -151,7 +181,7 @@ public class DivingController : MonoBehaviour
             {
 
                 Pounce(pounceDirection);
-                pounceDuration -= Time.fixedDeltaTime;
+                pounceDuration -= Time.deltaTime;
 
                 if(pounceDuration < 0)
                     {
