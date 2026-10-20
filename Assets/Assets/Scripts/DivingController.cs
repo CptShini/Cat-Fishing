@@ -77,6 +77,14 @@ public class DivingController : MonoBehaviour
         velocityVector = input.ReadValue<Vector2>();
     }
 
+    public void OnCancel(CallbackContext  input)
+    {
+        if(state == PlayerState.STEALTH)
+        {
+            state = PlayerState.SWIM;
+        }
+    }
+
     public void OnStealth(CallbackContext  input)
     {
         if (input.performed) // Did the player press?
@@ -88,7 +96,6 @@ public class DivingController : MonoBehaviour
         }
         else if (input.canceled) // Did the player release
         {
-
             if(state == PlayerState.STEALTH)
             {
                 StartPounce();
@@ -157,6 +164,7 @@ public class DivingController : MonoBehaviour
             case PlayerState.STEALTH:
             {
                 presenceCollider.radius = stealthPresence;
+                curPounceStamina = 0;
                 break;
             }
             case PlayerState.POUNCE:
