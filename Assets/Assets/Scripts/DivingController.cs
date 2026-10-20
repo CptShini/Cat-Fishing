@@ -136,7 +136,6 @@ public class DivingController : MonoBehaviour
         SetPlayerState(PlayerState.POUNCE);
 
         curStamina = Mathf.Clamp(curStamina - curPounceStamina, 5, maxStamina);
-        curPounceStamina = 0;
     }
     public void SetPounceDirection(Vector2 src, Vector2 dst)
     {
@@ -145,7 +144,8 @@ public class DivingController : MonoBehaviour
 
     public void Pounce(Vector2 direction)
     {
-        Vector2 targetVelocity = direction.normalized * pounceSpeed;
+        Debug.Log(pounceSpeed + curPounceStamina * 0.5f);
+        Vector2 targetVelocity = direction.normalized * (pounceSpeed + curPounceStamina * 0.5f);
 
         playerBody.linearVelocity = new Vector3(targetVelocity.x, targetVelocity.y, 0); // instantaneous max speed
     }
