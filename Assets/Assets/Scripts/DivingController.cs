@@ -26,7 +26,8 @@ public class DivingController : MonoBehaviour
     public float friction = 5;
     
     [Header("Stamina")]
-    public float maxStamina = 60, maxPounceStamina = 20;
+    public float maxStamina = 60;
+    public float maxPounceStamina = 20;
     public float staminaRegen = 5;
     
     [Header("Charge Up")]
@@ -38,7 +39,7 @@ public class DivingController : MonoBehaviour
     [Header("Presence in Radius")]
     public float defaultPresence;
     public float stealthPresence;
-    public float puoncePresence;
+    public float pouncePresence;
     
     [Header("Other")]
     [SerializeField] private Camera mainCamera;
@@ -160,7 +161,7 @@ public class DivingController : MonoBehaviour
             }
             case PlayerState.POUNCE:
             {
-                presenceCollider.radius = puoncePresence;
+                presenceCollider.radius = pouncePresence;
                 break;
             }
             default:
