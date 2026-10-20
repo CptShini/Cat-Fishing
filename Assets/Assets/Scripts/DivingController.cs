@@ -81,9 +81,9 @@ public class DivingController : MonoBehaviour
         }
     }
 
-    public void Swim()
+    public void Swim(float swimSpeed)
     {
-        Vector2 targetVelocity = velocityVector.normalized * speed;
+        Vector2 targetVelocity = velocityVector.normalized * swimSpeed;
 
         float currentAcceleration = (velocityVector.x != 0) ? acceleration : friction;
 
@@ -93,42 +93,16 @@ public class DivingController : MonoBehaviour
             currentAcceleration * Time.deltaTime
         );
         
-        //Debug.Log(newVelocity.ToString());
-
-        float speedRatio = Mathf.Clamp01(playerBody.linearVelocity.magnitude / speed);
-
         playerBody.linearVelocity = new Vector3(newVelocity.x, newVelocity.y, 0);
     }
 
-    public void Stealth()
+    public void ChargeUpPounce()
     {
-        Vector2 targetVelocity = velocityVector.normalized * stealthSpeed;
-
-        float currentAcceleration = (velocityVector.x != 0) ? acceleration : friction;
-
-        Vector2 newVelocity = Vector2.MoveTowards(
-            playerBody.linearVelocity,
-            targetVelocity,
-            currentAcceleration * Time.deltaTime
-        );
-
         curPounceStamina = Mathf.Clamp(
             curPounceStamina + Time.deltaTime * chargeUpSpeed, 
             0,
             curStamina < maxPounceStamina ? curStamina : maxPounceStamina);
-        
-
-        
-        playerBody.linearVelocity = new Vector3(newVelocity.x, newVelocity.y, 0);
     }
-
-    public void Pounce(Vector2 direction)
-    {
-        Vector2 targetVelocity = direction.normalized * pounceSpeed;
-
-        playerBody.linearVelocity = new Vector3(targetVelocity.x, targetVelocity.y, 0); // instantaneous max speed
-    }
-
     public void StartPounce()
     {
         Vector2 mousePos = mainCamera.ScreenToWorldPoint(Mouse.current.position.ReadValue());
@@ -143,6 +117,14 @@ public class DivingController : MonoBehaviour
         curPounceStamina = 0;
     }
 
+    public void Pounce(Vector2 direction)
+    {
+        Vector2 targetVelocity = direction.normalized * pounceSpeed;
+
+        playerBody.linearVelocity = new Vector3(targetVelocity.x, targetVelocity.y, 0); // instantaneous max speed
+    }
+
+ 
   
 
     public void SetPounceDirection(Vector2 src, Vector2 dst)
@@ -167,14 +149,15 @@ public class DivingController : MonoBehaviour
         {
             case PlayerState.SWIM:
             {
-                Swim();
+                Swim(speed);
                 StaminaRegen(staminaRegen * Time.deltaTime);
 
                 break;
             }
             case PlayerState.STEALTH:
             {
-                Stealth();
+                Swim(stealthSpeed);
+                ChargeUpPounce();
                 break;
             }
             case PlayerState.POUNCE:
