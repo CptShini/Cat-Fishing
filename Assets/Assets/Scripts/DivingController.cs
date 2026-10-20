@@ -4,26 +4,26 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
 
-using UnityEngine.Events;
-using System;
-
 public enum PlayerState
 {
     SWIM, // Default state
     STEALTH,
-    DASH,
+    POUNCE,
 }
 
 public class DivingController : MonoBehaviour
 {
 
-    public float speed = 10, acceleration = 5, friction = 5;
+    public float speed = 10, stealthSpeed = 3, pounceSpeed = 20, acceleration = 5, friction = 5;
 
     private float curSpeed = 0;
+    private float pounceDuration = 0; // Tracker for when to stop pounceing. Can change based on 
+    private Vector2 pounceDirection; // For saving the pounce direction during multiple updates
 
-
-    [SerializeField] private AnimationCurve accelerationCurve;
+    //[SerializeField] private AnimationCurve accelerationCurve;
     private Rigidbody2D playerBody;
+
+    [SerializeField] private Camera mainCamera;
 
     public Vector2 velocityVector;
 
@@ -38,7 +38,6 @@ public class DivingController : MonoBehaviour
     void Start()
     {
         playerBody = gameObject.GetComponent<Rigidbody2D>();
-
     }
 
 
@@ -59,12 +58,78 @@ public class DivingController : MonoBehaviour
             currentAcceleration * Time.fixedDeltaTime
         );
         
-        Debug.Log(newVelocity.ToString());
+        //Debug.Log(newVelocity.ToString());
 
         float speedRatio = Mathf.Clamp01(playerBody.linearVelocity.magnitude / speed);
-        float accelerationMultiplier = accelerationCurve.Evaluate(speedRatio);
 
         playerBody.linearVelocity = new Vector3(newVelocity.x, newVelocity.y, 0);
+    }
+
+    public void Stealth()
+    {
+        Vector2 targetVelocity = velocityVector.normalized * stealthSpeed;
+
+        float currentAcceleration = (velocityVector.x != 0) ? acceleration : friction;
+
+        Vector2 newVelocity = Vector2.MoveTowards(
+            playerBody.linearVelocity,
+            targetVelocity,
+            currentAcceleration * Time.fixedDeltaTime
+        );
+        
+        //Debug.Log(newVelocity.ToString());
+
+        float speedRatio = Mathf.Clamp01(playerBody.linearVelocity.magnitude / stealthSpeed);
+
+        playerBody.linearVelocity = new Vector3(newVelocity.x, newVelocity.y, 0);
+    }
+
+    public void Pounce(Vector2 direction)
+    {
+
+        Vector2 targetVelocity = direction.normalized * pounceSpeed;
+
+        playerBody.linearVelocity = new Vector3(targetVelocity.x, targetVelocity.y, 0); // instantaneous max speed
+
+
+    }
+
+    public void OnStealth(CallbackContext  input)
+    {
+        if (input.performed) // Did the player press?
+        {
+            if(state == PlayerState.SWIM)
+            {
+                state = PlayerState.STEALTH;
+            }
+            Debug.Log("START STEALTH");
+        }
+        else if (input.canceled) // Did the player release
+        {
+
+            if(state == PlayerState.STEALTH)
+            {
+                Vector2 mousePos = mainCamera.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+
+                SetPounceDirection(new Vector2(transform.position.x, transform.position.y), mousePos);
+
+                pounceDuration = 5;
+
+                state = PlayerState.POUNCE;
+            }
+            Debug.Log("RELEASE STEALTH");
+        }
+
+    }
+
+    public void SetPounceDirection(Vector2 src, Vector2 dst)
+    {
+        
+        pounceDirection = dst - src;
+        Debug.Log("SRC: " + src.ToString());
+        Debug.Log("DST: " + dst.ToString());
+
+        Debug.Log("NEW POUNCE DIRECTION: " + pounceDirection.ToString());
     }
 
     // Update is called once per frame
@@ -79,12 +144,21 @@ public class DivingController : MonoBehaviour
             }
             case PlayerState.STEALTH:
             {
-                
+                Stealth();
                 break;
             }
-            case PlayerState.DASH:
+            case PlayerState.POUNCE:
             {
-                
+
+                Pounce(pounceDirection);
+                pounceDuration -= Time.fixedDeltaTime;
+
+                if(pounceDuration < 0)
+                    {
+                        Debug.Log("STOP POUNCING");
+                        state = PlayerState.SWIM;
+                    }
+
                 break;
             }
             
