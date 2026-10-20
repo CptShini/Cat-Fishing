@@ -345,6 +345,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 8747fbec-6025-4a2d-8836-0cb8d4dd4593
     m_ActionName: 'Player/Stealth[/Keyboard/shift]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 179364577}
+        m_TargetAssemblyTypeName: DivingController, Assembly-CSharp
+        m_MethodName: OnCancel
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 57228706-0f50-41bc-b798-d18c68ebabfd
+    m_ActionName: 'Player/Cancel[/Mouse/rightButton]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -371,9 +387,10 @@ MonoBehaviour:
   maxPounceStamina: 20
   staminaRegen: 5
   chargeUpSpeed: 10
+  oxygenCapacity: 100
   defaultPresence: 2
   stealthPresence: 1
-  puoncePresence: 4
+  pouncePresence: 0
   mainCamera: {fileID: 2047324509}
   presenceCollider: {fileID: 179364581}
   defaultCollider: {fileID: 179364582}
