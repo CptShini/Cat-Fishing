@@ -10,6 +10,7 @@ public enum PlayerState
     SWIM, // Default state
     STEALTH,
     POUNCE,
+    GRAB,
 }
 
 public class DivingController : MonoBehaviour
@@ -31,6 +32,9 @@ public class DivingController : MonoBehaviour
     [Header("Charge Up")]
     public float chargeUpSpeed = 10;  // per second
 
+    [Header("Oxygen")]
+    public float oxygenCapacity = 100; // seconds
+
     [Header("Presence in Radius")]
     public float defaultPresence;
     public float stealthPresence;
@@ -46,6 +50,8 @@ public class DivingController : MonoBehaviour
     private float curStamina, curPounceStamina = 0; // currrent player stamina, and current stamina for pounce
     private float pounceDuration = 0; // Tracker for when to stop pounceing. Can change based on 
     private Vector2 pounceDirection; // For saving the pounce direction during multiple updates
+    private float curOxygen = 100;
+
 
     //[SerializeField] private AnimationCurve accelerationCurve;
     private Rigidbody2D playerBody;
@@ -56,6 +62,7 @@ public class DivingController : MonoBehaviour
     {
         SetPlayerState(PlayerState.SWIM);
         curStamina = maxStamina;
+        curOxygen = oxygenCapacity;
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -170,14 +177,28 @@ public class DivingController : MonoBehaviour
         Debug.Log("AHHHHHH");
     }
     
-    
+    void ReduceOxygen(float amount)
+    {
+        curOxygen -= amount;
+        Debug.Log($"Reducing oxygen to: {curOxygen}");
 
-  
+        if(curOxygen < 0)
+        {
+            Debug.Log("OUT OF OXYGEN");
+            // Something bad happens
+        }
+    }
+    
     // Update is called once per frame
     void Update()
     {
+
+        if (state != PlayerState.GRAB) // You cannot lose oxygen while battling a fish
+        {
+            ReduceOxygen(Time.deltaTime);
+        }
         
-        //Debug.Log($"STAMINA: {curStamina}, CURPOUNCESTAMINA: {curPounceStamina}");
+        Debug.Log($"STAMINA: {curStamina}, CURPOUNCESTAMINA: {curPounceStamina}");
         switch (state)
         {
             case PlayerState.SWIM:
