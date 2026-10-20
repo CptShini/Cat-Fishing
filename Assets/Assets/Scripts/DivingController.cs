@@ -30,9 +30,18 @@ public class DivingController : MonoBehaviour
     
     [Header("Charge Up")]
     public float chargeUpSpeed = 10;  // per second
+
+    [Header("Presence in Radius")]
+    public float defaultPresence;
+    public float stealthPresence;
+    public float puoncePresence;
     
     [Header("Other")]
     [SerializeField] private Camera mainCamera;
+    [SerializeField] private CircleCollider2D presenceCollider; // collider for presence detection from fish
+    [SerializeField] private Collider2D defaultCollider; // collider for obstacles
+
+
 
     private float curStamina, curPounceStamina = 0; // currrent player stamina, and current stamina for pounce
     private float pounceDuration = 0; // Tracker for when to stop pounceing. Can change based on 
@@ -45,7 +54,7 @@ public class DivingController : MonoBehaviour
 
     void Awake()
     {
-        state = PlayerState.SWIM;
+        SetPlayerState(PlayerState.SWIM);
         curStamina = maxStamina;
     }
 
@@ -66,7 +75,7 @@ public class DivingController : MonoBehaviour
         {
             if(state == PlayerState.SWIM)
             {
-                state = PlayerState.STEALTH;
+                SetPlayerState(PlayerState.STEALTH);
             }
             Debug.Log("START STEALTH");
         }
@@ -111,7 +120,7 @@ public class DivingController : MonoBehaviour
 
         pounceDuration = curPounceStamina / 20; // 5 stamina = 1 second, for now
 
-        state = PlayerState.POUNCE;
+        SetPlayerState(PlayerState.POUNCE);
 
         curStamina = Mathf.Clamp(curStamina - curPounceStamina, 5, maxStamina);
         curPounceStamina = 0;
@@ -131,6 +140,31 @@ public class DivingController : MonoBehaviour
     void StaminaRegen(float amount)
     {
         curStamina = Mathf.Clamp(curStamina + amount, 0, maxStamina);
+    }
+
+    public void SetPlayerState(PlayerState state)
+    {
+        this.state = state;
+
+        switch (state)
+        {
+            case PlayerState.STEALTH:
+            {
+                presenceCollider.radius = stealthPresence;
+                break;
+            }
+            case PlayerState.POUNCE:
+            {
+                presenceCollider.radius = puoncePresence;
+                break;
+            }
+            default:
+            {
+                presenceCollider.radius = defaultPresence;
+                break;
+            }
+        }
+        
     }
 
     // Update is called once per frame
@@ -159,7 +193,7 @@ public class DivingController : MonoBehaviour
 
                 if(pounceDuration < 0)
                     {
-                        state = PlayerState.SWIM;
+                        SetPlayerState(PlayerState.SWIM);
                     }
 
                 break;
@@ -171,4 +205,6 @@ public class DivingController : MonoBehaviour
             }
         } 
     }
+
+
 }
