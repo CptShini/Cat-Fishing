@@ -77,7 +77,6 @@ public class DivingController : MonoBehaviour
             {
                 SetPlayerState(PlayerState.STEALTH);
             }
-            Debug.Log("START STEALTH");
         }
         else if (input.canceled) // Did the player release
         {
@@ -86,7 +85,6 @@ public class DivingController : MonoBehaviour
             {
                 StartPounce();
             }
-            Debug.Log("RELEASE STEALTH");
         }
     }
 
@@ -167,10 +165,19 @@ public class DivingController : MonoBehaviour
         
     }
 
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        Debug.Log("AHHHHHH");
+    }
+    
+    
+
+  
     // Update is called once per frame
     void Update()
     {
-        Debug.Log($"STAMINA: {curStamina}, CURPOUNCESTAMINA: {curPounceStamina}");
+        
+        //Debug.Log($"STAMINA: {curStamina}, CURPOUNCESTAMINA: {curPounceStamina}");
         switch (state)
         {
             case PlayerState.SWIM:
