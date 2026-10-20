@@ -116,24 +116,16 @@ public class DivingController : MonoBehaviour
         curStamina = Mathf.Clamp(curStamina - curPounceStamina, 5, maxStamina);
         curPounceStamina = 0;
     }
+    public void SetPounceDirection(Vector2 src, Vector2 dst)
+    {
+        pounceDirection = dst - src;
+    }
 
     public void Pounce(Vector2 direction)
     {
         Vector2 targetVelocity = direction.normalized * pounceSpeed;
 
         playerBody.linearVelocity = new Vector3(targetVelocity.x, targetVelocity.y, 0); // instantaneous max speed
-    }
-
- 
-  
-
-    public void SetPounceDirection(Vector2 src, Vector2 dst)
-    {
-        pounceDirection = dst - src;
-        Debug.Log("SRC: " + src.ToString());
-        Debug.Log("DST: " + dst.ToString());
-
-        Debug.Log("NEW POUNCE DIRECTION: " + pounceDirection.ToString());
     }
 
     void StaminaRegen(float amount)
@@ -162,13 +154,11 @@ public class DivingController : MonoBehaviour
             }
             case PlayerState.POUNCE:
             {
-
                 Pounce(pounceDirection);
                 pounceDuration -= Time.deltaTime;
 
                 if(pounceDuration < 0)
                     {
-                        Debug.Log("STOP POUNCING");
                         state = PlayerState.SWIM;
                     }
 
