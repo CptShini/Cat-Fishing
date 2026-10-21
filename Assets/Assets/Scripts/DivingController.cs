@@ -47,7 +47,7 @@ public class DivingController : MonoBehaviour
     [SerializeField] private Collider2D defaultCollider; // collider for obstacles
 
 
-
+    private FishCatCommunicator curFish;
     private float curStamina, curPounceStamina = 0; // currrent player stamina, and current stamina for pounce
     private float pounceDuration = 0; // Tracker for when to stop pounceing. Can change based on 
     private Vector2 pounceDirection; // For saving the pounce direction during multiple updates
@@ -181,16 +181,31 @@ public class DivingController : MonoBehaviour
         
     }
 
+    void Grab()
+    {
+        
+        //float catchScore =  velocityVector.normalized;
+    }
+
     void OnCollisionEnter2D(Collision2D col)
     {
+        if (col.gameObject.layer == 7)
+        {
+            curFish = col.gameObject.GetComponent<FishCatCommunicator>();
+
+            curFish.joint.connectedBody = this.playerBody;
+            SetPlayerState(PlayerState.GRAB);
+            Debug.Log("FISH DETECTED");
+        }
         Debug.Log("AHHHHHH");
+        
     }
     
     void ReduceOxygen(float amount)
     {
         curOxygen -= amount;
-        Debug.Log($"Reducing oxygen to: {curOxygen}");
-
+        //Debug.Log($"Reducing oxygen to: {curOxygen}");
+        
         if(curOxygen < 0)
         {
             Debug.Log("OUT OF OXYGEN");
@@ -207,7 +222,7 @@ public class DivingController : MonoBehaviour
             ReduceOxygen(Time.deltaTime);
         }
         
-        Debug.Log($"STAMINA: {curStamina}, CURPOUNCESTAMINA: {curPounceStamina}");
+        //Debug.Log($"STAMINA: {curStamina}, CURPOUNCESTAMINA: {curPounceStamina}");
         switch (state)
         {
             case PlayerState.SWIM:
@@ -232,6 +247,11 @@ public class DivingController : MonoBehaviour
                     {
                         SetPlayerState(PlayerState.SWIM);
                     }
+
+                break;
+            }
+            case PlayerState.GRAB:
+            {
 
                 break;
             }
