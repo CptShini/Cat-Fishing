@@ -1,12 +1,10 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class FishTank : MonoBehaviour, IInteractable
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    [Header("Fish in this tank")]
+    [SerializeField] private List<FishSO> fishes = new List<FishSO>();
 
     public bool CanInteract()
     {
@@ -21,5 +19,11 @@ public class FishTank : MonoBehaviour, IInteractable
             return;
         }
         Debug.Log("Interacting with the: " + gameObject.name);
+        
+        Debug.Log("Fish in this tank:");
+        foreach (FishSO fish in fishes)
+        {
+            Debug.Log("- " + fish.fishName);
+        }
     }
 }
