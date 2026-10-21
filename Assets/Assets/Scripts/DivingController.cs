@@ -11,6 +11,7 @@ public enum PlayerState
     STEALTH,
     POUNCE,
     GRAB,
+    STUN,
 }
 
 public class DivingController : MonoBehaviour
@@ -57,6 +58,9 @@ public class DivingController : MonoBehaviour
     private float curOxygen = 100;
     private float curContest = 0; // Tracking for a contest between fish and cat during catching
     private float contestThreshold = 5; // The value that contest must be to catch a fish succesfully
+    
+    private float stunDuration = 2; // The amount of time in seconds player will be stunned
+    private float curStunTimer = 0;
 
     //[SerializeField] private AnimationCurve accelerationCurve;
     private Rigidbody2D playerBody;
@@ -182,6 +186,11 @@ public class DivingController : MonoBehaviour
                     curContest = contestThreshold / 2;
                     break;
                 }
+            case PlayerState.STUN:
+                {
+                    curStunTimer = stunDuration;
+                    break;
+                }
             default:
             {
                 presenceCollider.radius = defaultPresence;
@@ -211,7 +220,7 @@ public class DivingController : MonoBehaviour
         {
             //LOSE FISH
             curFish.joint.connectedBody = null;
-            SetPlayerState(PlayerState.SWIM);
+            SetPlayerState(PlayerState.STUN);
         }
 
         Debug.Log($"Contest: {curContest}");
@@ -238,6 +247,17 @@ public class DivingController : MonoBehaviour
         {
             Debug.Log("OUT OF OXYGEN");
             // Something bad happens
+        }
+    }
+    
+    void Stunned()
+    {
+        curStunTimer -= Time.deltaTime;
+
+        if (curStunTimer < 0)
+        {
+            defaultCollider.enabled = true;
+            SetPlayerState(PlayerState.SWIM);
         }
     }
     
@@ -283,6 +303,13 @@ public class DivingController : MonoBehaviour
                 Grab();
                 break;
             }
+            case PlayerState.STUN:
+                {
+                    defaultCollider.enabled = false;
+                    Swim(0);
+                    Stunned();
+                    break;
+                }
             
             default:
             {
