@@ -17,9 +17,9 @@ public class FishTank : MonoBehaviour, IInteractable
     {
         if(!CanInteract())
         {
-            Debug.Log("Cannot interact with the fish tank: " + gameObject.name);
+            Debug.Log("Cannot interact with the: " + gameObject.name);
             return;
         }
-        Debug.Log("Interacting with the fish tank: " + gameObject.name);
+        Debug.Log("Interacting with the: " + gameObject.name);
     }
 }
