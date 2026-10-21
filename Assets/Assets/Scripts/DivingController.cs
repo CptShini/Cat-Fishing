@@ -222,8 +222,7 @@ public class DivingController : MonoBehaviour
             curFish.joint.connectedBody = null;
             SetPlayerState(PlayerState.STUN);
         }
-
-        Debug.Log($"Contest: {curContest}");
+        Debug.Log($"Contest: {curContest / contestThreshold * 100}%");
     }
 
     void OnCollisionEnter2D(Collision2D col)

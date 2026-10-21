@@ -386,7 +386,7 @@ MonoBehaviour:
   maxStamina: 60
   maxPounceStamina: 20
   staminaRegen: 5
-  strength: 10
+  strength: 5
   chargeUpSpeed: 10
   oxygenCapacity: 100
   defaultPresence: 2
