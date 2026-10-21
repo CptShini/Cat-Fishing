@@ -672,6 +672,7 @@ GameObject:
   - component: {fileID: 1628522346}
   - component: {fileID: 1628522345}
   - component: {fileID: 1628522348}
+  - component: {fileID: 1628522349}
   m_Layer: 7
   m_Name: Fake Fish
   m_TagString: Untagged
@@ -842,6 +843,22 @@ HingeJoint2D:
   m_AngleLimits:
     m_LowerAngle: 18
     m_UpperAngle: 180
+--- !u!114 &1628522349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1628522343}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01ddec41f57533c46a60cb7653dc1d74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FishCatCommunicator
+  joint: {fileID: 0}
+  body: {fileID: 0}
+  direction: {x: 1, y: 0}
+  strength: 0
 --- !u!1 &2047324507
 GameObject:
   m_ObjectHideFlags: 0

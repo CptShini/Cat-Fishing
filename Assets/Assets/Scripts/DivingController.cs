@@ -30,6 +30,9 @@ public class DivingController : MonoBehaviour
     public float maxPounceStamina = 20;
     public float staminaRegen = 5;
     
+    [Header("Strength")]
+    public float strength = 10;  // How strong the cat is when grabbing fish
+
     [Header("Charge Up")]
     public float chargeUpSpeed = 10;  // per second
 
@@ -52,7 +55,8 @@ public class DivingController : MonoBehaviour
     private float pounceDuration = 0; // Tracker for when to stop pounceing. Can change based on 
     private Vector2 pounceDirection; // For saving the pounce direction during multiple updates
     private float curOxygen = 100;
-
+    private float curContest = 0; // Tracking for a contest between fish and cat during catching
+    private float contestThreshold = 5; // The value that contest must be to catch a fish succesfully
 
     //[SerializeField] private AnimationCurve accelerationCurve;
     private Rigidbody2D playerBody;
@@ -172,6 +176,12 @@ public class DivingController : MonoBehaviour
                 presenceCollider.radius = pouncePresence;
                 break;
             }
+            case PlayerState.GRAB:
+                {
+                    presenceCollider.radius = pouncePresence;
+                    curContest = contestThreshold / 2;
+                    break;
+                }
             default:
             {
                 presenceCollider.radius = defaultPresence;
@@ -183,8 +193,28 @@ public class DivingController : MonoBehaviour
 
     void Grab()
     {
-        
-        //float catchScore =  velocityVector.normalized;
+        float angle = Vector2.Angle(velocityVector, curFish.direction);
+
+        float power = strength * (angle / 180);
+
+        float contest = (power - curFish.strength) / curFish.strength;
+
+        curContest += contest * Time.deltaTime;
+
+        if( curContest >= contestThreshold)
+        {
+            //CATCH FISH
+            curFish.joint.connectedBody = null;
+            Destroy(curFish.gameObject);
+            SetPlayerState(PlayerState.SWIM);
+        } else if(curContest <= 0)
+        {
+            //LOSE FISH
+            curFish.joint.connectedBody = null;
+            SetPlayerState(PlayerState.SWIM);
+        }
+
+        Debug.Log($"Contest: {curContest}");
     }
 
     void OnCollisionEnter2D(Collision2D col)
@@ -195,9 +225,7 @@ public class DivingController : MonoBehaviour
 
             curFish.joint.connectedBody = this.playerBody;
             SetPlayerState(PlayerState.GRAB);
-            Debug.Log("FISH DETECTED");
         }
-        Debug.Log("AHHHHHH");
         
     }
     
@@ -252,7 +280,7 @@ public class DivingController : MonoBehaviour
             }
             case PlayerState.GRAB:
             {
-
+                Grab();
                 break;
             }
             

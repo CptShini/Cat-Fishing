@@ -8,6 +8,8 @@ public class FishCatCommunicator : MonoBehaviour
     public Vector2 direction;
     public float strength;
 
+    
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
