@@ -15,7 +15,6 @@ public class FishTank : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        
         FishTankUI.Instance.Open(this);
     }
 }
