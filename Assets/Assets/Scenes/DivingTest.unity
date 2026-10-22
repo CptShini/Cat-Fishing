@@ -387,6 +387,7 @@ MonoBehaviour:
   staminaRegen: 5
   strength: 5
   chargeUpSpeed: 10
+  pounceCooldown: 0.5
   oxygenCapacity: 100
   defaultPresence: 2
   stealthPresence: 1

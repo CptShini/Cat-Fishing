@@ -34,8 +34,9 @@ public class DivingController : MonoBehaviour
     [Header("Strength")]
     public float strength = 10;  // How strong the cat is when grabbing fish
 
-    [Header("Charge Up")]
+    [Header("Pouncing stats")]
     public float chargeUpSpeed = 10;  // per second
+    public float pounceCooldown = 1; // seconds
 
     [Header("Oxygen")]
     public float oxygenCapacity = 100; // seconds
@@ -61,6 +62,7 @@ public class DivingController : MonoBehaviour
     
     private float stunDuration = 2; // The amount of time in seconds player will be stunned
     private float curStunTimer = 0;
+    private float curPounceCooldown;
 
     //[SerializeField] private AnimationCurve accelerationCurve;
     private Rigidbody2D playerBody;
@@ -97,7 +99,7 @@ public class DivingController : MonoBehaviour
     {
         if (input.performed) // Did the player press?
         {
-            if(state == PlayerState.SWIM)
+            if(state == PlayerState.SWIM && curPounceCooldown <= 0)
             {
                 SetPlayerState(PlayerState.STEALTH);
             }
@@ -178,6 +180,7 @@ public class DivingController : MonoBehaviour
             case PlayerState.POUNCE:
             {
                 presenceCollider.radius = pouncePresence;
+                
                 break;
             }
             case PlayerState.GRAB:
@@ -267,6 +270,7 @@ public class DivingController : MonoBehaviour
         if (state != PlayerState.GRAB) // You cannot lose oxygen while battling a fish
         {
             ReduceOxygen(Time.deltaTime);
+            curPounceCooldown -= Time.deltaTime;
         }
         
         //Debug.Log($"STAMINA: {curStamina}, CURPOUNCESTAMINA: {curPounceStamina}");
@@ -292,6 +296,7 @@ public class DivingController : MonoBehaviour
 
                 if(pounceDuration < 0)
                     {
+                        curPounceCooldown = pounceCooldown; // start cooldown
                         SetPlayerState(PlayerState.SWIM);
                     }
 
