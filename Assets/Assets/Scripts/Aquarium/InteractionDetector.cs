@@ -13,6 +13,11 @@ public class InteractionDetector : MonoBehaviour
 
     public void OnInteract(InputAction.CallbackContext context)
     {
+        if (FishTankUI.Instance != null && FishTankUI.Instance.IsOpen)
+        {
+            return;
+        }
+        
         if(context.performed)
         {
             interactableInRange?.Interact();
