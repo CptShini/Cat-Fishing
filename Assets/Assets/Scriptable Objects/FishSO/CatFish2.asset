@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: CatFish2
   m_EditorClassIdentifier: Assembly-CSharp::FishSO
   fishName: CatFish2
+  sprite: {fileID: -2870039220751124521, guid: caac4e63fea4b624f8cb5a1fb564543d, type: 3}

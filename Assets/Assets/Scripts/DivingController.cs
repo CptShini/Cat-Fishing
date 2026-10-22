@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -217,8 +218,17 @@ public class DivingController : MonoBehaviour
         {
             //CATCH FISH
             curFish.joint.connectedBody = null;
-            Destroy(curFish.gameObject);
-            SetPlayerState(PlayerState.SWIM);
+            FishCollectible fish = new FishCollectible(curFish.fish);
+            if(DivingInventory.Instance.Add(fish)) // Checks if putting in inventory is successful
+            {
+                Destroy(curFish.gameObject);
+                SetPlayerState(PlayerState.SWIM);
+            }
+            else // Cat cannot win, if their inventory is full
+            {
+                SetPlayerState(PlayerState.STUN); 
+            }
+
         } else if(curContest <= 0)
         {
             //LOSE FISH
