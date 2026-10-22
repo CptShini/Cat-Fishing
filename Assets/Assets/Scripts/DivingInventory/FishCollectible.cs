@@ -1,6 +1,5 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "FishCollectible", menuName = "Collectible/Fish")]
 public class FishCollectible : Collectible
 {
     public FishSO fish;
