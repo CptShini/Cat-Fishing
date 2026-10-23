@@ -51,7 +51,8 @@ public class DivingController : MonoBehaviour
     [SerializeField] private Camera mainCamera;
     [SerializeField] private CircleCollider2D presenceCollider; // collider for presence detection from fish
     [SerializeField] private Collider2D defaultCollider; // collider for obstacles
-
+    [SerializeField] private StatBar staminaBar;
+    [SerializeField] private StatBar oxygenBar;
 
     private FishCatCommunicator curFish;
     private float curStamina, curPounceStamina = 0; // currrent player stamina, and current stamina for pounce
@@ -73,13 +74,17 @@ public class DivingController : MonoBehaviour
     void Awake()
     {
         SetPlayerState(PlayerState.SWIM);
-        curStamina = maxStamina;
-        curOxygen = oxygenCapacity;
+        
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        SetStamina(maxStamina);
+        SetOxygen(oxygenCapacity);
+        staminaBar.SetMaxValue(maxStamina);
+        oxygenBar.SetMaxValue(oxygenCapacity);
+
         playerBody = gameObject.GetComponent<Rigidbody2D>();
     }
 
@@ -145,8 +150,7 @@ public class DivingController : MonoBehaviour
         pounceDuration = curPounceStamina / 20; // 5 stamina = 1 second, for now
 
         SetPlayerState(PlayerState.POUNCE);
-
-        curStamina = Mathf.Clamp(curStamina - curPounceStamina, 5, maxStamina);
+        SetStamina(Mathf.Clamp(curStamina - curPounceStamina, 5, maxStamina));
     }
     public void SetPounceDirection(Vector2 src, Vector2 dst)
     {
@@ -163,7 +167,7 @@ public class DivingController : MonoBehaviour
 
     void StaminaRegen(float amount)
     {
-        curStamina = Mathf.Clamp(curStamina + amount, 0, maxStamina);
+        SetStamina(Mathf.Clamp(curStamina + amount, 0, maxStamina));
     }
 
     public void SetPlayerState(PlayerState state)
@@ -252,7 +256,7 @@ public class DivingController : MonoBehaviour
     
     void ReduceOxygen(float amount)
     {
-        curOxygen -= amount;
+        SetOxygen(curOxygen -= amount);
         //Debug.Log($"Reducing oxygen to: {curOxygen}");
         
         if(curOxygen < 0)
@@ -271,6 +275,18 @@ public class DivingController : MonoBehaviour
             defaultCollider.enabled = true;
             SetPlayerState(PlayerState.SWIM);
         }
+    }
+
+    void SetStamina(float value)
+    {
+        this.curStamina = value;
+        staminaBar.SetCurrentValue(value);
+    }
+
+    void SetOxygen(float value)
+    {
+        this.curOxygen = value;
+        oxygenBar.SetCurrentValue(value);
     }
     
     // Update is called once per frame
