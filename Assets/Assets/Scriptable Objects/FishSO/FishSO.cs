@@ -5,4 +5,5 @@ public class FishSO : ScriptableObject
 {
     public string fishName;
     public Sprite sprite;
+    public float weight; // for diving inventory
 }

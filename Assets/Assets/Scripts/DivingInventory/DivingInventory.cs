@@ -8,6 +8,9 @@ public class DivingInventory : MonoBehaviour
 
     public List<Collectible> collectibles;
 
+    public float maxWeight;
+    private float curWeight;
+
     private void Awake()
     {
         if (collectibles == null)
@@ -23,7 +26,7 @@ public class DivingInventory : MonoBehaviour
 
     public bool Add(Collectible collectible)
     {
-        if (IsFull())
+        if (IsFull(collectible.weight))
         {
             Debug.Log("INVENTORY IS FULL");
             return false;
@@ -39,9 +42,16 @@ public class DivingInventory : MonoBehaviour
         collectibles.Remove(collectible);
     }
 
-    bool IsFull()
+    bool IsFull(float weightToAdd)
     {
-        return false; // TO BE ADDED
+        if((curWeight + weightToAdd) > maxWeight)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
 }
