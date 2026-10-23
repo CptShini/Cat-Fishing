@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -17,11 +18,7 @@ public class FishWanderMovement : MonoBehaviour
     
     private Rigidbody2D _rb;
     
-    private void Start()
-    {
-        _rb = GetComponent<Rigidbody2D>();
-        Wander();
-    }
+    private void Start() => _rb = GetComponent<Rigidbody2D>();
 
     private void Update()
     {
@@ -33,12 +30,17 @@ public class FishWanderMovement : MonoBehaviour
         _rb.AddTorque(angle * turnSpeed * Time.deltaTime, ForceMode2D.Force);
     }
 
-    private void Wander()
+    public void Wander(FishSpeed speed)
     {
         _desiredDir = Random.onUnitCircle;
-        _speed = Random.Range(maxSpeed / 4f, maxSpeed);
-        
-        Invoke(nameof(Wander), Random.Range(1f, 15f));
+        _speed = speed switch
+        {
+            FishSpeed.Chill => maxSpeed / 4,
+            FishSpeed.Normal => maxSpeed / 3,
+            FishSpeed.Fast => maxSpeed / 2,
+            FishSpeed.Max => maxSpeed,
+            _ => throw new ArgumentOutOfRangeException(nameof(speed), speed, null)
+        };
     }
 
     private void See()
@@ -54,9 +56,7 @@ public class FishWanderMovement : MonoBehaviour
         if (!hitAny) return;
         
         Vector2 avgPoint = GetAverageHitPoint(hits);
-        Debug.DrawLine(eyes.transform.position, avgPoint, Color.blue);
         Vector2 awayDir = (Vector2)eyes.transform.position - avgPoint;
-        Debug.DrawRay(eyes.transform.position, awayDir, Color.green);
         
         float weight = (viewDistance - awayDir.magnitude) / avoidanceFactor;
         _desiredDir = Vector3.Slerp(_desiredDir.normalized, awayDir.normalized, weight * Time.deltaTime).normalized;
