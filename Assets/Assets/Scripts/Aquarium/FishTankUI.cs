@@ -12,13 +12,12 @@ public class FishTankUI : MonoBehaviour
 
     public bool IsOpen { get; private set; }
 
-    [SerializeField] private PlayerMovementAquarium playerMovementAquarium;
-
     private void Start()
     {
         Instance = this;
         panel.SetActive(false);
         IsOpen = false;
+        PauseController.SetPause(false);
     }
 
     private void Update()
@@ -34,11 +33,10 @@ public class FishTankUI : MonoBehaviour
         panel.SetActive(true);
         IsOpen = true;
 
-        if (playerMovementAquarium != null)
-            playerMovementAquarium.enabled = false;
-
+        // Tank Name
         tankNameText.text = tank.gameObject.name;
 
+        // Fish List (to change later to visible sprites of fishes instead of text)
         fishListText.text = "";
 
         foreach (FishSO fish in tank.Fishes)
@@ -50,6 +48,8 @@ public class FishTankUI : MonoBehaviour
         {
             fishListText.text = "No fish in this tank.";
         }
+
+        PauseController.SetPause(true);
     }
 
     public void Close()
@@ -57,7 +57,6 @@ public class FishTankUI : MonoBehaviour
         panel.SetActive(false);
         IsOpen = false;
 
-        if (playerMovementAquarium != null)
-            playerMovementAquarium.enabled = true;
+        PauseController.SetPause(false);
     }
 }
