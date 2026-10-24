@@ -2,28 +2,128 @@
 
 on:
   push:
+    # Build a downloadable test version whenever pre-release changes.
     branches:
-      - main
       - pre-release
+
+    # Build and publish only when a version tag is pushed.
     tags:
       - 'v*'
 
+  # These PRs get a source-branch policy check, but NO Unity build.
   pull_request:
     branches:
       - main
       - pre-release
 
-# Default permissions for the normal build job.
+# Least-privilege default permissions.
 permissions:
   contents: read
 
 jobs:
-  build:
-    name: Unity Windows Build
+  # ----------------------------------------------------------
+  # PR policy: enforce which branches are allowed to merge.
+  # This does not run Unity.
+  # ----------------------------------------------------------
+  pr-source-policy:
+    name: PR source branch policy
+    if: ${{ github.event_name == 'pull_request' }}
     runs-on: ubuntu-latest
 
     steps:
-      # Free disk space for Unity
+      - name: Enforce allowed PR source branch
+        shell: bash
+        env:
+          BASE_REF: ${{ github.base_ref }}
+          HEAD_REF: ${{ github.head_ref }}
+          HEAD_REPOSITORY: ${{ github.event.pull_request.head.repo.full_name }}
+          TARGET_REPOSITORY: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+
+          # This branch workflow is designed for branches in this
+          # repository, not similarly named branches in forks.
+          if [[ "$HEAD_REPOSITORY" != "$TARGET_REPOSITORY" ]]; then
+            echo "::error::PRs must originate from a branch in this repository."
+            exit 1
+          fi
+
+          if [[ "$BASE_REF" == "main" ]]; then
+            if [[ "$HEAD_REF" != "pre-release" ]]; then
+              echo "::error::PRs into main must come from pre-release."
+              exit 1
+            fi
+
+          elif [[ "$BASE_REF" == "pre-release" ]]; then
+            if [[ ! "$HEAD_REF" =~ ^develop/.+ ]]; then
+              echo "::error::PRs into pre-release must come from develop/<name>."
+              exit 1
+            fi
+
+          else
+            echo "::error::Unexpected target branch: $BASE_REF"
+            exit 1
+          fi
+
+          echo "PR source branch is allowed."
+
+  # ----------------------------------------------------------
+  # Validate release tags BEFORE spending time on a Unity build.
+  # This job also succeeds for ordinary pre-release pushes.
+  # ----------------------------------------------------------
+  validate-release:
+    name: Validate release tag
+    if: ${{ github.event_name == 'push' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        if: ${{ startsWith(github.ref, 'refs/tags/v') }}
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Validate version and confirm commit is on main
+        if: ${{ startsWith(github.ref, 'refs/tags/v') }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if [[ ! "$GITHUB_REF_NAME" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "::error::Use a stable version tag such as v1.2.3."
+            exit 1
+          fi
+
+          git fetch --no-tags origin main:refs/remotes/origin/main
+
+          if ! git merge-base --is-ancestor "$GITHUB_SHA" origin/main; then
+            echo "::error::Release tags must point to a commit on main."
+            exit 1
+          fi
+
+          echo "Validated release tag $GITHUB_REF_NAME."
+
+      - name: No tag to validate for pre-release build
+        if: ${{ github.ref == 'refs/heads/pre-release' }}
+        run: echo "This is a pre-release branch build."
+
+  # ----------------------------------------------------------
+  # Unity build: ONLY pre-release pushes and validated version tags.
+  # ----------------------------------------------------------
+  build:
+    name: Unity Windows Build
+    needs: validate-release
+    if: >-
+      ${{
+        github.event_name == 'push' &&
+        (
+          github.ref == 'refs/heads/pre-release' ||
+          startsWith(github.ref, 'refs/tags/v')
+        )
+      }}
+    runs-on: ubuntu-latest
+
+    steps:
       - name: Free disk space for Unity
         uses: jlumbroso/free-disk-space@v2
         with:
@@ -33,13 +133,11 @@ jobs:
           large-packages: true
           docker-images: true
 
-      # Checkout repository
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
         with:
           lfs: true
 
-      # Cache Unity's Library directory
       - name: Cache Unity Library
         uses: actions/cache@v4
         with:
@@ -48,7 +146,6 @@ jobs:
           restore-keys: |
             Library-CatFishing-Windows-
 
-      # Build Windows player
       - name: Build project
         uses: game-ci/unity-builder@v4
         env:
@@ -58,78 +155,74 @@ jobs:
         with:
           targetPlatform: StandaloneWindows64
 
-      # Package the complete build folder.
-      # This works regardless of the executable's exact name.
+      # Package the entire output directory.
       - name: Package Windows build
+        shell: bash
         run: |
           set -euo pipefail
           test -d build
-          cd build
-          zip -qr "$RUNNER_TEMP/CatFishing-Windows.zip" .
+          zip -qr "$RUNNER_TEMP/CatFishing-Windows.zip" build
           test -s "$RUNNER_TEMP/CatFishing-Windows.zip"
 
-      # Keep a temporary downloadable artifact for every build.
       - name: Upload build artifact
+        id: upload
         uses: actions/upload-artifact@v4
         with:
-          name: CatFishing-Windows
+          name: CatFishing-Windows-${{ github.sha }}
           path: ${{ runner.temp }}/CatFishing-Windows.zip
           if-no-files-found: error
           retention-days: 14
 
-  release:
+      # Provide a direct, clickable link on the workflow run summary.
+      - name: Add pre-release download link
+        if: ${{ github.ref == 'refs/heads/pre-release' }}
+        env:
+          ARTIFACT_URL: ${{ steps.upload.outputs.artifact-url }}
+        shell: bash
+        run: |
+          {
+            echo "## CatFishing pre-release build"
+            echo
+            echo "[Download the Windows build]($ARTIFACT_URL)"
+            echo
+            echo "Built from commit \`$GITHUB_SHA\`."
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  # ----------------------------------------------------------
+  # Publish only on version-tag pushes, after the build succeeds.
+  # ----------------------------------------------------------
+  publish-release:
     name: Publish GitHub Release
-
-    # Only version-tag pushes publish releases.
-    if: ${{ github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v') }}
-
     needs: build
+    if: >-
+      ${{
+        github.event_name == 'push' &&
+        startsWith(github.ref, 'refs/tags/v')
+      }}
     runs-on: ubuntu-latest
 
-    # Only this job needs permission to publish a release.
+    # Only the release job has permission to publish releases.
     permissions:
       contents: write
 
     steps:
-      # Get the full Git history so we can validate the release tag.
-      - name: Checkout repository
-        uses: actions/checkout@v6
-        with:
-          fetch-depth: 0
-
-      # Only allow stable version tags on commits already in main.
-      - name: Validate release tag
-        run: |
-          set -euo pipefail
-
-          if [[ ! "$GITHUB_REF_NAME" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-            echo "::error::Use a stable version tag such as v1.2.3"
-            exit 1
-          fi
-
-          git fetch origin main:refs/remotes/origin/main
-
-          if ! git merge-base --is-ancestor "$GITHUB_SHA" origin/main; then
-            echo "::error::Release tags must point to a commit reachable from main."
-            exit 1
-          fi
-
-      # Download the ZIP generated by the build job.
       - name: Download build artifact
         uses: actions/download-artifact@v4
         with:
-          name: CatFishing-Windows
+          name: CatFishing-Windows-${{ github.sha }}
+          path: release-assets
 
-      # Give the released file a version-specific name.
-      - name: Rename release asset
-        run: mv CatFishing-Windows.zip "CatFishing-${GITHUB_REF_NAME}-Windows.zip"
+      - name: Give ZIP a versioned name
+        shell: bash
+        run: |
+          mv release-assets/CatFishing-Windows.zip \
+            "release-assets/CatFishing-${GITHUB_REF_NAME}-Windows.zip"
 
-      # Publish the release and attach the Windows build.
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v3
         with:
           name: CatFishing ${{ github.ref_name }}
-          files: CatFishing-${{ github.ref_name }}-Windows.zip
+          files: release-assets/CatFishing-*-Windows.zip
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
