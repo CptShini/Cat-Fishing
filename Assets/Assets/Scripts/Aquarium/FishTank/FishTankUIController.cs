@@ -22,7 +22,7 @@ public class FishTankUIController : MonoBehaviour
 
     private void Update()
     {
-        if (IsOpen && Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
+        if (IsOpen && Keyboard.current.escapeKey.wasPressedThisFrame)
         {
             Close();
         }
