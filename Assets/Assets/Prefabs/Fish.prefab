@@ -155,14 +155,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3232370780417970284}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.12, y: -0.011, z: 0}
   m_LocalScale: {x: 0.2, y: 0.15, z: 0.15}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 407102680116667992}
   m_Father: {fileID: 1465565654600974873}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2351633011273638027
 SpriteRenderer:
   serializedVersion: 2
@@ -256,6 +256,7 @@ GameObject:
   - component: {fileID: 4604139004168998407}
   - component: {fileID: 3523591142534891601}
   - component: {fileID: 2770333134826107441}
+  - component: {fileID: 6191101500634081704}
   - component: {fileID: 7517340754007288589}
   - component: {fileID: 7310549756964335776}
   m_Layer: 7
@@ -364,6 +365,21 @@ MonoBehaviour:
   _maxFleeTime: 10
   _sightHandler: {fileID: 2980226103878150663}
   _perceptionHandler: {fileID: 3102036810922805875}
+--- !u!114 &6191101500634081704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5206029193779855580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95b6be2da70e4ee59a69b617590d5376, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Fish.Movement.FishMover
+  target: {fileID: 0}
+  maxSpeed: 3
+  turnSpeed: 1
 --- !u!114 &7517340754007288589
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -376,8 +392,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b703b2655a4440698aeb84ec63353dd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Fish.FishWanderMovement
-  maxSpeed: 3
-  turnSpeed: 1
   viewDistance: 1.5
   avoidanceFactor: 1
   eyes: {fileID: 7665592108927822498}
@@ -393,6 +407,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b16499c5f454eaba2c759d80b72b2f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Fish.FishCaughtMovement
+  catchPattern: {fileID: 0}
 --- !u!1 &7231650367447256696
 GameObject:
   m_ObjectHideFlags: 0
@@ -485,6 +500,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1465565654600974873}
+  - component: {fileID: 6044135393209350168}
   m_Layer: 0
   m_Name: Graphics
   m_TagString: Untagged
@@ -500,14 +516,28 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7583249011573028227}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0.00000004371139, y: -1, z: -0.00000004371139, w: 1.9106855e-15}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8375782537523922051}
   m_Father: {fileID: 7417673365245228754}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 180, y: 0, z: 180}
+--- !u!114 &6044135393209350168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7583249011573028227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78c759363fa8d5642a83574ca440e0a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Fish.FishSpriteRotator
+  _upright: {x: 0, y: 0, z: 180}
+  _downwrong: {x: 180, y: 0, z: 180}
 --- !u!1 &8920100173034518163
 GameObject:
   m_ObjectHideFlags: 0

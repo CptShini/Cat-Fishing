@@ -6,54 +6,34 @@ using Random = UnityEngine.Random;
 
 namespace Assets.Scripts.Fish.Movement
 {
-    [RequireComponent(typeof(Rigidbody2D))]
+    [RequireComponent(typeof(FishMover))]
     public class FishNormalMovement : MonoBehaviour
     {
-        [SerializeField] private float maxSpeed = 3f, turnSpeed = 1f;
         [SerializeField] private float viewDistance = 3f;
         [SerializeField] private float avoidanceFactor = 10f;
 
         [SerializeField] private Transform eyes;
 
-        private Vector2 _desiredDir;
-        private float _speed;
-    
-        private Rigidbody2D _rb;
-    
-        private void Start() => _rb = GetComponent<Rigidbody2D>();
+        private FishMover _mover;
 
+        private void Start() => _mover = GetComponent<FishMover>();
+        
         private void Update()
         {
-            Debug.DrawRay(transform.position, _desiredDir.normalized * (_speed / maxSpeed), Color.red);
+            //Debug.DrawRay(transform.position, _desiredDir.normalized * (_speed / maxSpeed), Color.red);
             See();
-        
-            _rb.AddForce(_desiredDir.normalized * (_speed * 100f * Time.deltaTime), ForceMode2D.Force);
-            float angle = Vector2.SignedAngle(transform.right, _desiredDir);
-            _rb.AddTorque(angle * turnSpeed * Time.deltaTime, ForceMode2D.Force);
         }
 
         public void Wander(FishSpeed speed)
         {
-            _desiredDir = Random.onUnitCircle;
-            SetSpeed(speed);
+            _mover.SetDesiredDirection(Random.onUnitCircle);
+            //SetSpeed(speed);
         }
 
         public void Flee(FishSpeed speed, Vector2 fleePoint)
         {
-            _desiredDir = (Vector2)transform.position - fleePoint;
-            SetSpeed(speed);
-        }
-
-        private void SetSpeed(FishSpeed speed)
-        {
-            _speed = speed switch
-            {
-                FishSpeed.Chill => maxSpeed / 6,
-                FishSpeed.Normal => maxSpeed / 4,
-                FishSpeed.Fast => maxSpeed / 2,
-                FishSpeed.Max => maxSpeed,
-                _ => throw new ArgumentOutOfRangeException(nameof(speed), speed, null)
-            };
+            _mover.SetDesiredDirection((Vector2)transform.position - fleePoint);
+            //SetSpeed(speed);
         }
 
         private void See()
@@ -75,7 +55,7 @@ namespace Assets.Scripts.Fish.Movement
             Debug.DrawRay(transform.position, awayDir, Color.green);
         
             float weight = (viewDistance - awayDir.magnitude) * avoidanceFactor;
-            _desiredDir = Vector3.Slerp(_desiredDir.normalized, awayDir.normalized, weight * Time.deltaTime).normalized;
+            //_desiredDir = Vector3.Slerp(_desiredDir.normalized, awayDir.normalized, weight * Time.deltaTime).normalized;
         }
     
         private RaycastHit2D Raycast(int angleOffset)

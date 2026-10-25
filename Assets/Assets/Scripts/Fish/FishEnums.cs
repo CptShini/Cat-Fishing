@@ -10,6 +10,7 @@
     public enum FishSpeed
     {
         Chill,
+        Slow,
         Normal,
         Fast,
         Max

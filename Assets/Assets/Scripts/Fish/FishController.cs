@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Fish.Movement;
 using Assets.Scripts.Fish.Perception;
+using Assets.Scripts.Helpers;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -88,30 +89,13 @@ namespace Assets.Scripts.Fish
         {
             Dictionary<FishSpeed, int> speedWeights = new()
             {
-                { FishSpeed.Chill, 2 },
+                { FishSpeed.Chill,  1 },
+                { FishSpeed.Slow,   2 },
                 { FishSpeed.Normal, 3 },
-                { FishSpeed.Fast, 1 }
+                { FishSpeed.Fast,   1 }
             };
 
-            return WeightedRandom(speedWeights);
-
-            T WeightedRandom<T>(Dictionary<T, int> weights)
-            {
-                int weightSum = weights.Values.Sum();
-                int rand = Random.Range(0, weightSum);
-
-                int low = 0;
-                foreach (T val in weights.Keys)
-                {
-                    int high = low + weights[val];
-                    if (rand >= low && rand < high)
-                        return val;
-                
-                    low = high;
-                }
-
-                throw new ArgumentOutOfRangeException();
-            }
+            return RandomHelper.WeightedRandom(speedWeights);
         }
     
         private void Flee(Vector2 fleePoint)
