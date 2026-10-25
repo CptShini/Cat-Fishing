@@ -8,7 +8,7 @@ public class FishCollectible : Collectible
     {
         this.fish = fish;
         this.collectibleName = fish.fishName;
-        this.sprite = fish.sprite;
+        this.sprite = fish.fishIcon;
     }
 
     public override void Drop()
