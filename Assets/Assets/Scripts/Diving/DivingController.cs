@@ -245,7 +245,7 @@ public class DivingController : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.layer == 7)
+        if (col.gameObject.layer == 7 && state != PlayerState.GRAB)
         {
             curFish = col.gameObject.GetComponent<FishCatCommunicator>();
 
