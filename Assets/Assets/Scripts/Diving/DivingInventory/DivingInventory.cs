@@ -9,6 +9,7 @@ public class DivingInventory : MonoBehaviour
 {
     [SerializeField] private DivingInventorySlot slotPrefab;
     [SerializeField] public GameObject panel;
+    [SerializeField] private StatBar weightBar;
 
     public static DivingInventory Instance { get; private set; }
     public List<Collectible> collectibles;
@@ -20,6 +21,8 @@ public class DivingInventory : MonoBehaviour
     private void Awake()
     {
         collectibles = new List<Collectible>();
+        weightBar.SetMaxValue(maxWeight);
+        weightBar.SetCurrentValue(curWeight);
         
         if (Instance != null && Instance != this) 
             Destroy(gameObject);
@@ -41,10 +44,19 @@ public class DivingInventory : MonoBehaviour
         Debug.Log($"COLLECTIBLE: {collectible.collectibleName}");
         collectibles.Add(collectible);
         
+        SetWeight(collectible.weight);
+
         CreateSlot(collectible);
 
         return true;
     }
+
+    private void SetWeight(float weight)
+    {
+        curWeight += weight;
+        weightBar.SetCurrentValue(curWeight);
+    }
+
     private void CreateSlot(Collectible collectible)
     {
         
