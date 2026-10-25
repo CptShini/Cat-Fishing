@@ -7,6 +7,7 @@ public class Collectible
     public Sprite sprite;
     public float weight;
 
+
     public virtual void Drop() { return; }
     
 }

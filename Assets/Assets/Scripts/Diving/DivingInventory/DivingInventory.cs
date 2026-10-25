@@ -1,10 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+
 
 public class DivingInventory : MonoBehaviour
 {
-
+    [SerializeField] private DivingInventorySlot slotPrefab;
     public static DivingInventory Instance { get; private set; }
+
+    
 
     public List<Collectible> collectibles;
 
@@ -34,7 +38,17 @@ public class DivingInventory : MonoBehaviour
         Debug.Log($"COLLECTIBLE: {collectible.collectibleName}");
         collectibles.Add(collectible);
 
+        DivingInventorySlot slot = Instantiate(slotPrefab);
+        slot.transform.SetParent(this.transform, false);
+        slot.Setup(collectible);
+
         return true;
+    }
+
+    public void Drag(DivingInventorySlot inventorySlot)
+    {
+        Debug.Log("DRAGGING");
+        
     }
 
     public void Remove(Collectible collectible)

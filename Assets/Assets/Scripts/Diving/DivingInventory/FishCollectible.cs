@@ -7,6 +7,9 @@ public class FishCollectible : Collectible
     public FishCollectible(Fish fish)
     {
         this.fish = fish;
+        this.collectibleName = fish.fishName;
+        this.weight = fish.weight;
+        this.sprite = fish.sprite;
     }
 
     public override void Drop()
