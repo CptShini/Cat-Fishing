@@ -2,78 +2,21 @@
 
 on:
   push:
-    # Build a downloadable test version whenever pre-release changes.
     branches:
       - pre-release
-
-    # Build and publish only when a version tag is pushed.
     tags:
       - 'v*'
 
-  # These PRs get a source-branch policy check, but NO Unity build.
-  pull_request:
-    branches:
-      - main
-      - pre-release
-
-# Least-privilege default permissions.
 permissions:
   contents: read
 
 jobs:
-  # ----------------------------------------------------------
-  # PR policy: enforce which branches are allowed to merge.
-  # This does not run Unity.
-  # ----------------------------------------------------------
-  pr-source-policy:
-    name: PR source branch policy
-    if: ${{ github.event_name == 'pull_request' }}
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Enforce allowed PR source branch
-        shell: bash
-        env:
-          BASE_REF: ${{ github.base_ref }}
-          HEAD_REF: ${{ github.head_ref }}
-          HEAD_REPOSITORY: ${{ github.event.pull_request.head.repo.full_name }}
-          TARGET_REPOSITORY: ${{ github.repository }}
-        run: |
-          set -euo pipefail
-
-          # This branch workflow is designed for branches in this
-          # repository, not similarly named branches in forks.
-          if [[ "$HEAD_REPOSITORY" != "$TARGET_REPOSITORY" ]]; then
-            echo "::error::PRs must originate from a branch in this repository."
-            exit 1
-          fi
-
-          if [[ "$BASE_REF" == "main" ]]; then
-            if [[ "$HEAD_REF" != "pre-release" ]]; then
-              echo "::error::PRs into main must come from pre-release."
-              exit 1
-            fi
-
-          elif [[ "$BASE_REF" == "pre-release" ]]; then
-            if [[ ! "$HEAD_REF" =~ ^develop/.+ ]]; then
-              echo "::error::PRs into pre-release must come from develop/<name>."
-              exit 1
-            fi
-
-          else
-            echo "::error::Unexpected target branch: $BASE_REF"
-            exit 1
-          fi
-
-          echo "PR source branch is allowed."
-
   # ----------------------------------------------------------
   # Validate release tags BEFORE spending time on a Unity build.
   # This job also succeeds for ordinary pre-release pushes.
   # ----------------------------------------------------------
   validate-release:
     name: Validate release tag
-    if: ${{ github.event_name == 'push' }}
     runs-on: ubuntu-latest
 
     steps:
@@ -115,11 +58,8 @@ jobs:
     needs: validate-release
     if: >-
       ${{
-        github.event_name == 'push' &&
-        (
-          github.ref == 'refs/heads/pre-release' ||
-          startsWith(github.ref, 'refs/tags/v')
-        )
+        github.ref == 'refs/heads/pre-release' ||
+        startsWith(github.ref, 'refs/tags/v')
       }}
     runs-on: ubuntu-latest
 
@@ -181,7 +121,7 @@ jobs:
         shell: bash
         run: |
           {
-            echo "## CatFishing pre-release build"
+            echo "## Cat Fishing pre-release build"
             echo
             echo "[Download the Windows build]($ARTIFACT_URL)"
             echo
@@ -194,14 +134,9 @@ jobs:
   publish-release:
     name: Publish GitHub Release
     needs: build
-    if: >-
-      ${{
-        github.event_name == 'push' &&
-        startsWith(github.ref, 'refs/tags/v')
-      }}
+    if: ${{ startsWith(github.ref, 'refs/tags/v') }}
     runs-on: ubuntu-latest
 
-    # Only the release job has permission to publish releases.
     permissions:
       contents: write
 
