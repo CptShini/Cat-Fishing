@@ -1,5 +1,8 @@
-﻿public record CatchPatternMove()
+﻿namespace Assets.Scripts.Fish.FishCatchMinigame
 {
-    private float weight;
-    private int duration;
+    public record CatchPatternMove()
+    {
+        private float weight;
+        private int duration;
+    }
 }

@@ -1,14 +1,17 @@
-﻿public enum FishState
+﻿namespace Assets.Scripts.Fish
 {
-    Wander,
-    Flee,
-    Caught
-}
+    public enum FishState
+    {
+        Wander,
+        Flee,
+        Caught
+    }
 
-public enum FishSpeed
-{
-    Chill,
-    Normal,
-    Fast,
-    Max
+    public enum FishSpeed
+    {
+        Chill,
+        Normal,
+        Fast,
+        Max
+    }
 }
