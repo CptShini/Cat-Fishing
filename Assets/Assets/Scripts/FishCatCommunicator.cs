@@ -3,7 +3,7 @@ using UnityEngine;
 public class FishCatCommunicator : MonoBehaviour
 {
 
-    public FishSO fish;
+    public Fish fish;
     public HingeJoint2D joint;
     public Rigidbody2D body;
     public Vector2 direction;

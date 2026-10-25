@@ -4,6 +4,11 @@ using UnityEngine;
 public class FishSO : ScriptableObject
 {
     public string fishName;
-    public float weight; // for diving inventory
+
     public Sprite fishIcon;
+
+    [Header("Weight")]
+    public float weightMin;
+    public float weightMax;
+
 }

@@ -1,17 +1,16 @@
+using UnityEngine;
+
 public class Fish
 {
-    public FishSO fish;
+    public string fishName;
+    public Sprite sprite;
+    public float weight;
 
-    public FishCollectible(FishSO fish)
+
+    public Fish(FishSO fish)
     {
-        this.fish = fish;
-        this.collectibleName = fish.fishName;
+        this.fishName = fish.fishName;
         this.sprite = fish.fishIcon;
+        this.weight = Random.Range(fish.weightMin, fish.weightMax);
     }
-
-    public override void Drop()
-    {
-        // SOMETHING HAPPENS WHEN WE DROP A FISH OUT OF INVENTORY
-    }
-
 }

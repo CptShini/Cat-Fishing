@@ -2,13 +2,11 @@ using UnityEngine;
 
 public class FishCollectible : Collectible
 {
-    public FishSO fish;
+    public Fish fish;
 
-    public FishCollectible(FishSO fish)
+    public FishCollectible(Fish fish)
     {
         this.fish = fish;
-        this.collectibleName = fish.fishName;
-        this.sprite = fish.fishIcon;
     }
 
     public override void Drop()
