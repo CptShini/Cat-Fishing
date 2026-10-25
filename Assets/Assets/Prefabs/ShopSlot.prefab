@@ -149,7 +149,7 @@ GameObject:
   - component: {fileID: 2074740076870568318}
   - component: {fileID: 5410425823185693961}
   m_Layer: 5
-  m_Name: Indicator
+  m_Name: IndicatorIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -512,6 +512,7 @@ GameObject:
   - component: {fileID: 4232799387338407487}
   - component: {fileID: 7119850873932643905}
   - component: {fileID: 7426072433307981136}
+  - component: {fileID: 1311190283145708101}
   m_Layer: 5
   m_Name: ShopSlot
   m_TagString: Untagged
@@ -624,3 +625,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1311190283145708101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7448182071764492019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ed34c7aaa20def4f82f57db6acb86b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShopSlot
+  itemSO: {fileID: 0}
+  itemNameText: {fileID: 8435461970255375509}
+  priceText: {fileID: 32451218902919530}
+  itemImage: {fileID: 3444942536266849924}
