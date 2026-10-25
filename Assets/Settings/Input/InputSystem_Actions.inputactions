@@ -115,6 +115,16 @@
                     "interactions": "",
                     "initialStateCheck": false,
                     "priority": 0
+                },
+                {
+                    "name": "ToggleInv",
+                    "type": "Button",
+                    "id": "64e41dc8-74b8-43f5-b6ac-84121f5d2dbf",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
                 }
             ],
             "bindings": [
@@ -313,6 +323,17 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "Cancel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e0816286-0e49-4105-a837-a67f0d691f78",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "ToggleInv",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
