@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[System.Serializable]
 public class FishCollectible : Collectible
 {
     public Fish fish;

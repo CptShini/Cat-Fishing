@@ -2,30 +2,33 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+using UnityEngine.InputSystem;
+using static UnityEngine.InputSystem.InputAction;
 
 public class DivingInventory : MonoBehaviour
 {
     [SerializeField] private DivingInventorySlot slotPrefab;
+    [SerializeField] public GameObject panel;
+
     public static DivingInventory Instance { get; private set; }
-
-    
-
     public List<Collectible> collectibles;
 
     public float maxWeight;
+    public bool isEnabled = false;
     private float curWeight;
 
     private void Awake()
     {
-        if (collectibles == null)
-        {
-            collectibles = new List<Collectible>();
-        }
-
+        collectibles = new List<Collectible>();
+        
         if (Instance != null && Instance != this) 
             Destroy(gameObject);
         else
             Instance = this;
+    }
+    void Start()
+    {
+        panel.SetActive(isEnabled);
     }
 
     public bool Add(Collectible collectible)
@@ -37,18 +40,35 @@ public class DivingInventory : MonoBehaviour
         }
         Debug.Log($"COLLECTIBLE: {collectible.collectibleName}");
         collectibles.Add(collectible);
+        
+        CreateSlot(collectible);
 
+        return true;
+    }
+    private void CreateSlot(Collectible collectible)
+    {
+        
         DivingInventorySlot slot = Instantiate(slotPrefab);
         slot.transform.SetParent(this.transform, false);
         slot.Setup(collectible);
-
-        return true;
     }
 
     public void Drag(DivingInventorySlot inventorySlot)
     {
         Debug.Log("DRAGGING");
         
+    }
+
+    public void Toggle()
+    {
+        this.isEnabled = !this.isEnabled;
+        panel.SetActive(this.isEnabled);
+    }
+
+    public void SetEnabled(bool enabled)
+    {
+        this.isEnabled = enabled;
+        panel.SetActive(this.isEnabled);
     }
 
     public void Remove(Collectible collectible)

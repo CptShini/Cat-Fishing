@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+[System.SerializableAttribute]
 public class Collectible
 {
     public string collectibleName;

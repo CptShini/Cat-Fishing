@@ -105,7 +105,7 @@ public class DivingController : MonoBehaviour
     {
         if (input.performed) // Did the player press?
         {
-            if(state == PlayerState.SWIM && curPounceCooldown <= 0)
+            if(state == PlayerState.SWIM && curPounceCooldown <= 0 && !DivingInventory.Instance.isEnabled)
             {
                 SetPlayerState(PlayerState.STEALTH);
             }
@@ -192,6 +192,7 @@ public class DivingController : MonoBehaviour
                 {
                     presenceCollider.radius = pouncePresence;
                     curContest = contestThreshold / 2;
+                    DivingInventory.Instance.SetEnabled(false);
                     break;
                 }
             case PlayerState.STUN:
@@ -265,6 +266,15 @@ public class DivingController : MonoBehaviour
             // Something bad happens
         }
     }
+
+    public void OnToggle(CallbackContext  input)
+    {
+        if( !(state == PlayerState.GRAB))
+        {
+            DivingInventory.Instance.Toggle();
+        }
+    }
+
     
     void Stunned()
     {

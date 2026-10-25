@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class DivingInventorySlot : MonoBehaviour
 {
 
-    [SerializeField] public Collectible collectible;
+    [SerializeReference] public Collectible collectible;
     Button button;
 
     Image image;
