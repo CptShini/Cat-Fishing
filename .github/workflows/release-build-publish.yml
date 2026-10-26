@@ -1,4 +1,4 @@
-name: Publish Unity Release
+name: Build & Publish Release
 
 on:
   push:
@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   validate-release:
-    name: Validate release tag
+    name: Validate release
     runs-on: ubuntu-latest
     outputs:
       tag: ${{ steps.validate.outputs.tag }}
@@ -28,10 +28,10 @@ jobs:
         id: validate
         env:
           GH_TOKEN: ${{ github.token }}
-        run: bash Scripts/ci/validate-release.sh
+        run: bash Scripts/ci/validate-release-version.sh
 
   build-release:
-    name: Build release ${{ needs.validate-release.outputs.tag }}
+    name: Build release
     needs: validate-release
     if: ${{ needs.validate-release.outputs.publish == 'true' }}
     runs-on: ubuntu-latest
@@ -47,14 +47,14 @@ jobs:
           large-packages: true
           docker-images: true
 
-      - name: Checkout tagged source
+      - name: "Checkout ${{ needs.validate-release.outputs.tag }}"
         uses: actions/checkout@v4
         with:
           ref: ${{ needs.validate-release.outputs.tag }}
           fetch-depth: 0
           lfs: true
 
-      - name: Cache Unity Library
+      - name: Cache Unity library
         uses: actions/cache@v4
         with:
           path: Library
@@ -62,7 +62,7 @@ jobs:
           restore-keys: |
             Library-CatFishing-Windows-
 
-      - name: Build project
+      - name: "Build release ${{ needs.validate-release.outputs.tag }}"
         uses: game-ci/unity-builder@v4
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
@@ -91,20 +91,23 @@ jobs:
           retention-days: 1
 
   publish-release:
-    name: Publish GitHub Release
+    name: Publish GitHub release
     needs: [validate-release, build-release]
     if: ${{ needs.validate-release.outputs.publish == 'true' }}
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
-      - name: Download release package
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: "Download release ${{ needs.validate-release.outputs.tag }}"
         uses: actions/download-artifact@v4
         with:
           name: CatFishing-Release-${{ needs.validate-release.outputs.tag }}-${{ github.run_id }}-${{ github.run_attempt }}
           path: release-assets
 
-      - name: Create GitHub Release
+      - name: Create GitHub release
         uses: softprops/action-gh-release@v3
         with:
           tag_name: ${{ needs.validate-release.outputs.tag }}
