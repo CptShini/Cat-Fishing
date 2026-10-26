@@ -11,7 +11,7 @@ namespace Assets.Scripts.Fish.Movement
         [SerializeField] private Transform target;
 
         [Header("Propulsion")]
-        [SerializeField] private float thrustAcceleration = 2f;
+        [SerializeField] private float maxSpeed = 2f;
 
         [Header("Steering")]
         [SerializeField] private float maxTurnRate = 100f;
@@ -23,8 +23,13 @@ namespace Assets.Scripts.Fish.Movement
         [SerializeField] private float wanderFrequency = 0.2f;
         [SerializeField] private float lateralSlipDamping = 1.5f;
         
-        
-        private Vector2 _desiredDirection;
+        private Vector2 _desiredDir;
+        public Vector2 DesiredDirection
+        {
+            get => _desiredDir;
+            set => _desiredDir = value.normalized;
+        }
+
         private float _speed;
         
         private float _noiseSeed;
@@ -33,25 +38,25 @@ namespace Assets.Scripts.Fish.Movement
         private void Start()
         {
             _rb = GetComponent<Rigidbody2D>();
-            _desiredDirection = transform.right;
+            _desiredDir = transform.right;
             _noiseSeed = Random.Range(0f, 1000f);
-            
-            //SetSpeed(FishSpeed.Normal);
         }
 
         private void FixedUpdate()
         {
+            Debug.DrawRay(transform.position, _desiredDir.normalized * (_speed / maxSpeed), Color.red);
+            
             if (target)
             {
                 Vector2 toTarget = (Vector2)target.position - _rb.position;
                 if (toTarget.sqrMagnitude > 0.1f)
-                    _desiredDirection = toTarget.normalized;
+                    _desiredDir = toTarget.normalized;
             }
             
             float noise = Mathf.PerlinNoise(_noiseSeed, Time.fixedTime * wanderFrequency);
             float wanderOffset = (noise * 2f - 1f) * wanderAngle;
             
-            float desiredAngle = Mathf.Atan2(_desiredDirection.y, _desiredDirection.x ) * Mathf.Rad2Deg;
+            float desiredAngle = Mathf.Atan2(_desiredDir.y, _desiredDir.x ) * Mathf.Rad2Deg;
             desiredAngle += wanderOffset;
             
             float angleError = Mathf.DeltaAngle(_rb.rotation, desiredAngle);
@@ -65,7 +70,7 @@ namespace Assets.Scripts.Fish.Movement
             float torque = _rb.inertia * angularVelocityError * Mathf.Deg2Rad;
             _rb.AddTorque(torque);*/
             
-            _rb.AddRelativeForce(Vector2.right * thrustAcceleration);
+            _rb.AddRelativeForce(Vector2.right * _speed);
             
             float sidewaysSpeed = Vector2.Dot(_rb.linearVelocity, transform.up);
             _rb.AddForce(-(Vector2)transform.up * (sidewaysSpeed * lateralSlipDamping));
@@ -77,15 +82,8 @@ namespace Assets.Scripts.Fish.Movement
             Vector2 desiredVelocity = (Vector2)transform.right * targetSpeed;
             _rb.linearVelocity = Vector2.MoveTowards(_rb.linearVelocity, desiredVelocity, acceleration * Time.fixedDeltaTime);*/
         }
-        
-        public void SetDesiredDirection(Vector2 direction)
-        {
-            if (direction.sqrMagnitude <= 0.01f) return;
-            
-            _desiredDirection = direction.normalized;
-        }
 
-        /*private void SetSpeed(FishSpeed speed)
+        public void SetSpeed(FishSpeed speed)
         {
             _speed = speed switch
             {
@@ -96,6 +94,6 @@ namespace Assets.Scripts.Fish.Movement
                 FishSpeed.Max => maxSpeed,
                 _ => throw new ArgumentOutOfRangeException(nameof(speed), speed, null)
             };
-        }*/
+        }
     }
 }
