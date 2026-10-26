@@ -14,19 +14,22 @@ jobs:
   validate-release:
     name: Validate release tag
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
-        if: ${{ startsWith(github.ref, 'refs/tags/v') }}
+        if: startsWith(github.ref, 'refs/tags/v')
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Validate version and confirm commit is on main
-        if: ${{ startsWith(github.ref, 'refs/tags/v') }}
+      - name: Validate release tag (skip on pre-release)
         shell: bash
         run: |
           set -euo pipefail
+
+          if [[ "$GITHUB_REF" == "refs/heads/pre-release" ]]; then
+            echo "No release tag to validate; continuing with pre-release build."
+            exit 0
+          fi
 
           if [[ ! "$GITHUB_REF_NAME" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
             echo "::error::Use a stable version tag such as v1.2.3."
@@ -34,7 +37,6 @@ jobs:
           fi
 
           git fetch --no-tags origin main:refs/remotes/origin/main
-
           if ! git merge-base --is-ancestor "$GITHUB_SHA" origin/main; then
             echo "::error::Release tags must point to a commit on main."
             exit 1
@@ -42,20 +44,10 @@ jobs:
 
           echo "Validated release tag $GITHUB_REF_NAME."
 
-      - name: No tag to validate for pre-release build
-        if: ${{ github.ref == 'refs/heads/pre-release' }}
-        run: echo "This is a pre-release branch build."
-
   build:
     name: Unity Windows Build
     needs: validate-release
-    if: >-
-      ${{
-        github.ref == 'refs/heads/pre-release' ||
-        startsWith(github.ref, 'refs/tags/v')
-      }}
     runs-on: ubuntu-latest
-
     steps:
       - name: Free disk space for Unity
         uses: jlumbroso/free-disk-space@v2
@@ -91,33 +83,7 @@ jobs:
 
       - name: Prepare Windows build
         shell: bash
-        run: |
-          set -euo pipefail
-
-          BUILD_DIR="build/StandaloneWindows64"
-          DIST_DIR="dist"
-
-          test -f "$BUILD_DIR/StandaloneWindows64.exe"
-          test -d "$BUILD_DIR/StandaloneWindows64_Data"
-
-          # Include the version tag in the executable name for releases.
-          if [[ "$GITHUB_REF" == refs/tags/v* ]]; then
-            APP_NAME="CatFishing-Windows-${GITHUB_REF_NAME}"
-          else
-            APP_NAME="CatFishing-Windows"
-          fi
-
-          mkdir -p "$DIST_DIR"
-          cp -a "$BUILD_DIR/." "$DIST_DIR/"
-
-          mv "$DIST_DIR/StandaloneWindows64.exe" \
-             "$DIST_DIR/${APP_NAME}.exe"
-
-          mv "$DIST_DIR/StandaloneWindows64_Data" \
-             "$DIST_DIR/${APP_NAME}_Data"
-
-          echo "APP_NAME=$APP_NAME" >> "$GITHUB_ENV"
-          echo "Prepared ${APP_NAME}.exe"
+        run: bash scripts/ci/prepare-windows-build.sh
 
       - name: Upload build artifact
         id: upload
@@ -128,59 +94,34 @@ jobs:
           if-no-files-found: error
           retention-days: 14
 
-
       - name: Notify Discord about pre-release build
-        if: ${{ github.ref == 'refs/heads/pre-release' }}
+        if: github.ref == 'refs/heads/pre-release'
         continue-on-error: true
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_PRE_RELEASE_WEBHOOK_URL }}
           ARTIFACT_URL: ${{ steps.upload.outputs.artifact-url }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-        shell: bash
-        run: |
-          set -euo pipefail
-
-          payload="$(jq -n \
-            --arg url "$ARTIFACT_URL" \
-            --arg run "$RUN_URL" \
-            --arg commit "${GITHUB_SHA:0:7}" \
-            '{
-              content: (
-                "**CatFishing pre-release build is ready!**\n\n" +
-                "[Download build](" + $url + ")\n" +
-                "[View workflow logs](" + $run + ")\n" +
-                "Commit: `" + $commit + "`"
-              )
-            }')"
-
-          curl --fail-with-body --silent --show-error \
-            -H "Content-Type: application/json" \
-            -d "$payload" \
-            "DISCORD_WEBHOOK_URL"
+        run: bash Scripts/ci/notify-discord.sh prerelease
 
       - name: Add pre-release download link
-        if: ${{ github.ref == 'refs/heads/pre-release' }}
+        if: github.ref == 'refs/heads/pre-release'
         env:
           ARTIFACT_URL: ${{ steps.upload.outputs.artifact-url }}
         shell: bash
         run: |
           {
-            echo "## Cat Fishing pre-release build"
-            echo
-            echo "[Download the Windows build]($ARTIFACT_URL)"
-            echo
-            echo "Built from commit \`$GITHUB_SHA\`."
+            printf '## CatFishing pre-release build\n\n'
+            printf '[Download the Windows build](%s)\n\n' "$ARTIFACT_URL"
+            printf 'Built from commit `%s`.\n' "$GITHUB_SHA"
           } >> "$GITHUB_STEP_SUMMARY"
 
   publish-release:
     name: Publish GitHub Release
     needs: build
-    if: ${{ startsWith(github.ref, 'refs/tags/v') }}
+    if: startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
-
     permissions:
       contents: write
-
     steps:
       - name: Download build artifact
         uses: actions/download-artifact@v4
@@ -190,41 +131,16 @@ jobs:
 
       - name: Package versioned release ZIP
         shell: bash
-        run: |
-          set -euo pipefail
-
-          APP_NAME="CatFishing-Windows-${GITHUB_REF_NAME}"
-          PACKAGE_DIR="release-assets/${APP_NAME}"
-
-          mkdir -p "$PACKAGE_DIR"
-
-          # Move every downloaded game file into a named folder.
-          find release-assets -mindepth 1 -maxdepth 1 \
-            ! -name "$APP_NAME" \
-            -exec mv -t "$PACKAGE_DIR" -- {} +
-
-          test -f "$PACKAGE_DIR/${APP_NAME}.exe"
-          test -d "$PACKAGE_DIR/${APP_NAME}_Data"
-
-          # Create the ZIP outside the folder being archived.
-          (
-            cd release-assets
-            zip -qr "CatFishing-${GITHUB_REF_NAME}-Windows.zip" \
-              "$APP_NAME"
-          )
-
-          test -s \
-            "release-assets/CatFishing-${GITHUB_REF_NAME}-Windows.zip"
+        run: bash scripts/ci/package-windows-release.sh
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v3
         with:
           name: CatFishing ${{ github.ref_name }}
-          files: release-assets/CatFishing-*-Windows.zip
+          files: release-assets/CatFishing-${{ github.ref_name }}-Windows.zip
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
 
       - name: Notify Discord about release
         continue-on-error: true
@@ -232,24 +148,4 @@ jobs:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_RELEASE_WEBHOOK_URL }}
           RELEASE_URL: ${{ github.server_url }}/${{ github.repository }}/releases/tag/${{ github.ref_name }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-        shell: bash
-        run: |
-          set -euo pipefail
-
-          payload="$(jq -n \
-            --arg tag "$GITHUB_REF_NAME" \
-            --arg url "$RELEASE_URL" \
-            --arg run "$RUN_URL" \
-            '{
-              content: (
-                "**CatFishing " + $tag + " has been released!**\n\n" +
-                "[Download release](" + $url + ")\n" +
-                "[View workflow logs](" + $run + ")"
-              )
-            }')"
-
-          curl --fail-with-body --silent --show-error \
-            -H "Content-Type: application/json" \
-            -d "$payload" \
-            "DISCORD_WEBHOOK_URL"
-
+        run: bash Scripts/ci/notify-discord.sh release
