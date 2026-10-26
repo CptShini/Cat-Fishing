@@ -80,12 +80,5 @@ namespace Assets.Scripts.Fish.Perception
             
             _detecting = false;
         }
-
-        private void OnDrawGizmos()
-        {
-            if (!_col) return;
-            
-            Gizmos.DrawWireSphere(transform.TransformPoint(_col.offset), _col.radius);
-        }
     }
 }

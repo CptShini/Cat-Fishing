@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Fish.Movement;
 using Assets.Scripts.Fish.Perception;
+using Assets.Scripts.Helpers;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace Assets.Scripts.Fish
 {
+    [RequireComponent(typeof(FishMover))]
     [RequireComponent(typeof(FishNormalMovement))]
     [RequireComponent(typeof(FishCaughtMovement))]
     public class FishController : MonoBehaviour
@@ -15,18 +17,18 @@ namespace Assets.Scripts.Fish
         // Settings
         
         [SerializeField] private float 
-            _minWanderTime = 1f,
-            _maxWanderTime = 15f,
-            _minFleeTime = 5f,
-            _maxFleeTime = 10f;
+            minWanderTime = 1f,
+            maxWanderTime = 15f,
+            minFleeTime = 5f,
+            maxFleeTime = 10f;
         
         // References
         
         private FishNormalMovement _normalMovement;
         private FishCaughtMovement _caughtMovement;
         
-        [SerializeField] private FishSightHandler _sightHandler;
-        [SerializeField] private FishPerceptionHandler _perceptionHandler;
+        [SerializeField] private FishSightHandler sightHandler;
+        [SerializeField] private FishPerceptionHandler perceptionHandler;
         
         // Logic
         
@@ -37,8 +39,8 @@ namespace Assets.Scripts.Fish
 
         private void Start()
         {
-            _sightHandler.OnSeePlayer.AddListener(Flee);
-            _perceptionHandler.onDetectPlayer.AddListener(Flee);
+            sightHandler.OnSeePlayer.AddListener(Flee);
+            perceptionHandler.onDetectPlayer.AddListener(Flee);
             
             _normalMovement = GetComponent<FishNormalMovement>();
             _caughtMovement = GetComponent<FishCaughtMovement>();
@@ -65,7 +67,6 @@ namespace Assets.Scripts.Fish
                     Wander();
                     break;
                 case FishState.Caught:
-                    Wander();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -76,11 +77,11 @@ namespace Assets.Scripts.Fish
         {
             _state = FishState.Wander;
             _speedState = GetRandomWanderSpeed();
-            _stateClock = Random.Range(_minWanderTime, _maxWanderTime);
+            _stateClock = Random.Range(minWanderTime, maxWanderTime);
 
             _normalMovement.enabled = true;
             _caughtMovement.enabled = false;
-        
+            
             _normalMovement.Wander(_speedState);
         }
 
@@ -88,37 +89,19 @@ namespace Assets.Scripts.Fish
         {
             Dictionary<FishSpeed, int> speedWeights = new()
             {
-                { FishSpeed.Chill, 2 },
+                { FishSpeed.Chill,  1 },
+                { FishSpeed.Slow,   2 },
                 { FishSpeed.Normal, 3 },
-                { FishSpeed.Fast, 1 }
+                { FishSpeed.Fast,   1 }
             };
-
-            return WeightedRandom(speedWeights);
-
-            T WeightedRandom<T>(Dictionary<T, int> weights)
-            {
-                int weightSum = weights.Values.Sum();
-                int rand = Random.Range(0, weightSum);
-
-                int low = 0;
-                foreach (T val in weights.Keys)
-                {
-                    int high = low + weights[val];
-                    if (rand >= low && rand < high)
-                        return val;
-                
-                    low = high;
-                }
-
-                throw new ArgumentOutOfRangeException();
-            }
+            return RandomHelper.WeightedRandom(speedWeights);
         }
     
         private void Flee(Vector2 fleePoint)
         {
             _state = FishState.Flee;
             _speedState = FishSpeed.Max;
-            _stateClock = Random.Range(_minFleeTime, _maxFleeTime);
+            _stateClock = Random.Range(minFleeTime, maxFleeTime);
         
             _normalMovement.enabled = true;
             _caughtMovement.enabled = false;
@@ -126,13 +109,19 @@ namespace Assets.Scripts.Fish
             _normalMovement.Flee(_speedState, fleePoint);
         }
 
-        private void Caught()
+        public void Catch()
         {
             _state = FishState.Caught;
+            _speedState = FishSpeed.Max;
         
             _normalMovement.enabled = false;
             _caughtMovement.enabled = true;
-        
+            
+            _caughtMovement.Catch(_speedState);
+        }
+
+        public void Caught()
+        {
             _caughtMovement.Caught();
         }
     }

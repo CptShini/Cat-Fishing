@@ -159,7 +159,7 @@ public class DivingController : MonoBehaviour
 
     public void Pounce(Vector2 direction)
     {
-        Debug.Log(pounceSpeed + curPounceStamina * 0.5f);
+        //Debug.Log(pounceSpeed + curPounceStamina * 0.5f);
         Vector2 targetVelocity = direction.normalized * (pounceSpeed + curPounceStamina * 0.5f);
 
         playerBody.linearVelocity = new Vector3(targetVelocity.x, targetVelocity.y, 0); // instantaneous max speed
