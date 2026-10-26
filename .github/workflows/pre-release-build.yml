@@ -1,0 +1,124 @@
+name: Unity pre-release build
+
+on:
+  pull_request:
+    branches: [pre-release]
+  push:
+    branches: [pre-release]
+
+permissions:
+  contents: read
+
+jobs:
+  validate-version:
+    name: Validate pre-release version
+    if: ${{ github.event_name == 'pull_request' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Require a new, unused version
+        env:
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: bash Scripts/ci/validate-pre-release.sh
+
+  create-tag:
+    name: Tag pre-release version
+    if: ${{ github.event_name == 'push' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    outputs:
+      version: ${{ steps.tag.outputs.version }}
+      tag: ${{ steps.tag.outputs.tag }}
+      sha: ${{ steps.tag.outputs.sha }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Validate version and create tag
+        id: tag
+        run: bash scripts/ci/create-pre-release-tag.sh
+
+  build:
+    name: Build CatFishing Windows ${{ needs.create-tag.outputs.tag }}
+    needs: create-tag
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Free disk space for Unity
+        uses: jlumbroso/free-disk-space@v2
+        with:
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: true
+          docker-images: true
+
+      - name: Checkout tagged source
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.create-tag.outputs.tag }}
+          fetch-depth: 0
+          lfs: true
+
+      - name: Cache Unity Library
+        uses: actions/cache@v4
+        with:
+          path: Library
+          key: Library-CatFishing-Windows-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+          restore-keys: |
+            Library-CatFishing-Windows-
+
+      - name: Build project
+        uses: game-ci/unity-builder@v4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          targetPlatform: StandaloneWindows64
+          versioning: Tag
+
+      - name: Prepare Windows build
+        env:
+          VERSION_TAG: ${{ needs.create-tag.outputs.tag }}
+        run: bash scripts/ci/prepare-windows-build.sh
+
+      - name: Upload build artifact
+        id: upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: CatFishing-Windows-${{ needs.create-tag.outputs.tag }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: dist/
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Notify Discord about pre-release build
+        if: ${{ always() && steps.upload.outcome == 'success' }}
+        continue-on-error: true
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_PRE_RELEASE_WEBHOOK_URL }}
+          VERSION_TAG: ${{ needs.create-tag.outputs.tag }}
+          ARTIFACT_URL: ${{ steps.upload.outputs.artifact-url }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: bash scripts/ci/notify-discord.sh prerelease
+
+      - name: Add pre-release download link
+        if: ${{ steps.upload.outcome == 'success' }}
+        env:
+          VERSION_TAG: ${{ needs.create-tag.outputs.tag }}
+          ARTIFACT_URL: ${{ steps.upload.outputs.artifact-url }}
+        shell: bash
+        run: |
+          {
+            echo "## CatFishing pre-release ${VERSION_TAG}"
+            echo
+            echo "[Download the Windows build](${ARTIFACT_URL})"
+            echo
+            echo "Built from commit \`${GITHUB_SHA}\`."
+          } >> "$GITHUB_STEP_SUMMARY"

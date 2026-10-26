@@ -1,25 +1,29 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-: "${GITHUB_REF_NAME:?GITHUB_REF_NAME must be set}"
+: "${VERSION_TAG:?VERSION_TAG must be set to the Git tag, such as v0.1.5}"
+if [[ ! "$VERSION_TAG" =~ ^v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$ ]]; then
+  echo "::error::Invalid VERSION_TAG: $VERSION_TAG"
+  exit 1
+fi
 
-ARTIFACT_DIR="release-assets"
-APP_NAME="CatFishing-Windows-${GITHUB_REF_NAME}"
-PACKAGE_DIR="${ARTIFACT_DIR}/${APP_NAME}"
-ZIP_NAME="CatFishing-${GITHUB_REF_NAME}-Windows.zip"
+APP_NAME="CatFishing-Windows-${VERSION_TAG}"
+DIST_DIR="dist"
+RELEASE_DIR="release-assets"
+PACKAGE_DIR="${RELEASE_DIR}/${APP_NAME}"
+ZIP_NAME="CatFishing-${VERSION_TAG}-Windows.zip"
 
+[[ -f "${DIST_DIR}/${APP_NAME}.exe" ]] || { echo "::error::Missing ${DIST_DIR}/${APP_NAME}.exe"; exit 1; }
+[[ -d "${DIST_DIR}/${APP_NAME}_Data" ]] || { echo "::error::Missing ${DIST_DIR}/${APP_NAME}_Data"; exit 1; }
+
+rm -rf "$RELEASE_DIR"
 mkdir -p "$PACKAGE_DIR"
-find "$ARTIFACT_DIR" -mindepth 1 -maxdepth 1 \
-  ! -name "$APP_NAME" \
-  -exec mv -t "$PACKAGE_DIR" -- {} +
-
-test -f "$PACKAGE_DIR/${APP_NAME}.exe"
-test -d "$PACKAGE_DIR/${APP_NAME}_Data"
+cp -a "$DIST_DIR/." "$PACKAGE_DIR/"
 
 (
-  cd "$ARTIFACT_DIR"
+  cd "$RELEASE_DIR"
   zip -qr "$ZIP_NAME" "$APP_NAME"
 )
 
-test -s "${ARTIFACT_DIR}/${ZIP_NAME}"
-echo "Created ${ARTIFACT_DIR}/${ZIP_NAME}"
+test -s "${RELEASE_DIR}/${ZIP_NAME}"
+echo "Created ${RELEASE_DIR}/${ZIP_NAME}"
