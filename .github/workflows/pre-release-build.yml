@@ -44,7 +44,7 @@ jobs:
         run: bash Scripts/ci/create-pre-release-tag.sh
 
   build:
-    name: Build CatFishing Windows ${{ needs.create-tag.outputs.tag }}
+    name: Build pre-release version
     needs: create-tag
     runs-on: ubuntu-latest
     permissions:
