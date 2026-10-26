@@ -6,11 +6,17 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Assets/Scenes/Fish Movement.unity
+    guid: 5f0b840e89bb09c47826b799d5c3b845
+  - enabled: 1
     path: Assets/Assets/Scenes/Main.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
   - enabled: 1
     path: Assets/Assets/Scenes/AquariumScene.unity
     guid: 839ee201e3886b24e9a6ea692ef0a548
+  - enabled: 1
+    path: Assets/Assets/Scenes/DivingTest.unity
+    guid: 6d78cf1d03fc81b4a9195169de39e656
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
