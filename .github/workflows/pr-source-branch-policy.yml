@@ -1,7 +1,7 @@
 name: PR Source Branch Policy
 
 on:
-  pull_request:
+  pull_request_target:
     branches:
       - main
       - pre-release
@@ -15,10 +15,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout target branch policy
+      - name: Checkout trusted branch policy
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.base_ref }}
+          ref: ${{ github.event.repository.default_branch }}
           persist-credentials: false
 
       - name: "Enforce allowed PR source branch (${{ github.head_ref }} -> ${{ github.base_ref }})"
