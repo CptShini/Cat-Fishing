@@ -96,34 +96,42 @@ jobs:
           targetPlatform: StandaloneWindows64
           versioning: ${{ startsWith(github.ref, 'refs/tags/v') && 'Tag' || 'None' }}
 
-      - name: Diagnose modified files
-        if: always()
-        shell: bash
-        run: |
-          echo "=== Modified files ==="
-          git status --short
-          
-          echo "=== Change summary ==="
-          git diff --stat
-          
-          echo "=== Actual source changes ==="
-          git diff -- Assets/Assets/Scripts/Fish/
-
-      # Package the entire output directory.
-      - name: Package Windows build
+      - name: Prepare Windows build
         shell: bash
         run: |
           set -euo pipefail
-          test -d build
-          zip -qr "$RUNNER_TEMP/CatFishing-Windows.zip" build
-          test -s "$RUNNER_TEMP/CatFishing-Windows.zip"
+
+          BUILD_DIR="build/StandaloneWindows64"
+          DIST_DIR="dist"
+
+          test -f "$BUILD_DIR/StandaloneWindows64.exe"
+          test -d "$BUILD_DIR/StandaloneWindows64_Data"
+
+          # Include the version tag in the executable name for releases.
+          if [[ "$GITHUB_REF" == refs/tags/v* ]]; then
+            APP_NAME="CatFishing-Windows-${GITHUB_REF_NAME}"
+          else
+            APP_NAME="CatFishing-Windows"
+          fi
+
+          mkdir -p "$DIST_DIR"
+          cp -a "$BUILD_DIR/." "$DIST_DIR/"
+
+          mv "$DIST_DIR/StandaloneWindows64.exe" \
+             "$DIST_DIR/${APP_NAME}.exe"
+
+          mv "$DIST_DIR/StandaloneWindows64_Data" \
+             "$DIST_DIR/${APP_NAME}_Data"
+
+          echo "APP_NAME=$APP_NAME" >> "$GITHUB_ENV"
+          echo "Prepared ${APP_NAME}.exe"
 
       - name: Upload build artifact
         id: upload
         uses: actions/upload-artifact@v4
         with:
           name: CatFishing-Windows-${{ github.sha }}
-          path: ${{ runner.temp }}/CatFishing-Windows.zip
+          path: dist/
           if-no-files-found: error
           retention-days: 14
 
@@ -142,9 +150,6 @@ jobs:
             echo "Built from commit \`$GITHUB_SHA\`."
           } >> "$GITHUB_STEP_SUMMARY"
 
-  # ----------------------------------------------------------
-  # Publish only on version-tag pushes, after the build succeeds.
-  # ----------------------------------------------------------
   publish-release:
     name: Publish GitHub Release
     needs: build
@@ -161,10 +166,32 @@ jobs:
           name: CatFishing-Windows-${{ github.sha }}
           path: release-assets
 
-      - name: Give ZIP a versioned name
+      - name: Package versioned release ZIP
         shell: bash
         run: |
-          mv release-assets/CatFishing-Windows.zip \
+          set -euo pipefail
+
+          APP_NAME="CatFishing-Windows-${GITHUB_REF_NAME}"
+          PACKAGE_DIR="release-assets/${APP_NAME}"
+
+          mkdir -p "$PACKAGE_DIR"
+
+          # Move every downloaded game file into a named folder.
+          find release-assets -mindepth 1 -maxdepth 1 \
+            ! -name "$APP_NAME" \
+            -exec mv -t "$PACKAGE_DIR" -- {} +
+
+          test -f "$PACKAGE_DIR/${APP_NAME}.exe"
+          test -d "$PACKAGE_DIR/${APP_NAME}_Data"
+
+          # Create the ZIP outside the folder being archived.
+          (
+            cd release-assets
+            zip -qr "CatFishing-${GITHUB_REF_NAME}-Windows.zip" \
+              "$APP_NAME"
+          )
+
+          test -s \
             "release-assets/CatFishing-${GITHUB_REF_NAME}-Windows.zip"
 
       - name: Create GitHub Release
