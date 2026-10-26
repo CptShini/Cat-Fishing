@@ -11,10 +11,6 @@ permissions:
   contents: read
 
 jobs:
-  # ----------------------------------------------------------
-  # Validate release tags BEFORE spending time on a Unity build.
-  # This job also succeeds for ordinary pre-release pushes.
-  # ----------------------------------------------------------
   validate-release:
     name: Validate release tag
     runs-on: ubuntu-latest
@@ -50,9 +46,6 @@ jobs:
         if: ${{ github.ref == 'refs/heads/pre-release' }}
         run: echo "This is a pre-release branch build."
 
-  # ----------------------------------------------------------
-  # Unity build: ONLY pre-release pushes and validated version tags.
-  # ----------------------------------------------------------
   build:
     name: Unity Windows Build
     needs: validate-release
@@ -153,8 +146,8 @@ jobs:
             --arg commit "${GITHUB_SHA:0:7}" \
             '{
               content: (
-                "🐟 **CatFishing Windows pre-release build is ready!**\n\n" +
-                "[⬇️ Download the build](" + $url + ")\n" +
+                "**CatFishing pre-release build is ready!**\n\n" +
+                "[Download build](" + $url + ")\n" +
                 "[View workflow logs](" + $run + ")\n" +
                 "Commit: `" + $commit + "`"
               )
@@ -163,9 +156,8 @@ jobs:
           curl --fail-with-body --silent --show-error \
             -H "Content-Type: application/json" \
             -d "$payload" \
-            "DISCORD_PRE_RELEASE_WEBHOOK_URL"
+            "DISCORD_WEBHOOK_URL"
 
-      # Provide a direct, clickable link on the workflow run summary.
       - name: Add pre-release download link
         if: ${{ github.ref == 'refs/heads/pre-release' }}
         env:
@@ -250,8 +242,8 @@ jobs:
             --arg run "$RUN_URL" \
             '{
               content: (
-                "🚀 **CatFishing " + $tag + " has been released!**\n\n" +
-                "[⬇️ Download release](" + $url + ")\n" +
+                "**CatFishing " + $tag + " has been released!**\n\n" +
+                "[Download release](" + $url + ")\n" +
                 "[View workflow logs](" + $run + ")"
               )
             }')"
@@ -259,5 +251,5 @@ jobs:
           curl --fail-with-body --silent --show-error \
             -H "Content-Type: application/json" \
             -d "$payload" \
-            "DISCORD_RELEASE_WEBHOOK_URL"
+            "DISCORD_WEBHOOK_URL"
 
