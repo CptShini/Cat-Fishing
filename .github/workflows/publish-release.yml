@@ -28,7 +28,7 @@ jobs:
         id: validate
         env:
           GH_TOKEN: ${{ github.token }}
-        run: bash scripts/ci/validate-release.sh
+        run: bash Scripts/ci/validate-release.sh
 
   build-release:
     name: Build release ${{ needs.validate-release.outputs.tag }}
@@ -75,12 +75,12 @@ jobs:
       - name: Prepare Windows build
         env:
           VERSION_TAG: ${{ needs.validate-release.outputs.tag }}
-        run: bash scripts/ci/prepare-windows-build.sh
+        run: bash Scripts/ci/prepare-windows-build.sh
 
       - name: Package release ZIP
         env:
           VERSION_TAG: ${{ needs.validate-release.outputs.tag }}
-        run: bash scripts/ci/package-windows-release.sh
+        run: bash Scripts/ci/package-windows-release.sh
 
       - name: Upload release package for publishing
         uses: actions/upload-artifact@v4
@@ -121,4 +121,4 @@ jobs:
           VERSION_TAG: ${{ needs.validate-release.outputs.tag }}
           RELEASE_URL: ${{ github.server_url }}/${{ github.repository }}/releases/tag/${{ needs.validate-release.outputs.tag }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-        run: bash scripts/ci/notify-discord.sh release
+        run: bash Scripts/ci/notify-discord.sh release
