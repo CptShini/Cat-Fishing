@@ -94,6 +94,20 @@ jobs:
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
           targetPlatform: StandaloneWindows64
+          versioning: ${{ startsWith(github.ref, 'refs/tags/v') && 'Tag' || 'None' }}
+
+      - name: Diagnose modified files
+        if: always()
+        shell: bash
+        run: |
+          echo "=== Modified files ==="
+          git status --short
+          
+          echo "=== Change summary ==="
+          git diff --stat
+          
+          echo "=== Actual source changes ==="
+          git diff -- Assets/Assets/Scripts/Fish/
 
       # Package the entire output directory.
       - name: Package Windows build
