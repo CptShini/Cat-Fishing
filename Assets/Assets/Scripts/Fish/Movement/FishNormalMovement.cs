@@ -16,24 +16,20 @@ namespace Assets.Scripts.Fish.Movement
 
         private FishMover _mover;
 
-        private void Start() => _mover = GetComponent<FishMover>();
+        private void Awake() => _mover = GetComponent<FishMover>();
         
-        private void Update()
-        {
-            //Debug.DrawRay(transform.position, _desiredDir.normalized * (_speed / maxSpeed), Color.red);
-            See();
-        }
+        private void Update() => See();
 
         public void Wander(FishSpeed speed)
         {
-            _mover.SetDesiredDirection(Random.onUnitCircle);
-            //SetSpeed(speed);
+            _mover.DesiredDirection = Random.onUnitCircle;
+            _mover.SetSpeed(speed);
         }
 
         public void Flee(FishSpeed speed, Vector2 fleePoint)
         {
-            _mover.SetDesiredDirection((Vector2)transform.position - fleePoint);
-            //SetSpeed(speed);
+            _mover.DesiredDirection = (Vector2)transform.position - fleePoint;
+            _mover.SetSpeed(speed);
         }
 
         private void See()
@@ -55,7 +51,13 @@ namespace Assets.Scripts.Fish.Movement
             Debug.DrawRay(transform.position, awayDir, Color.green);
         
             float weight = (viewDistance - awayDir.magnitude) * avoidanceFactor;
-            //_desiredDir = Vector3.Slerp(_desiredDir.normalized, awayDir.normalized, weight * Time.deltaTime).normalized;
+            Vector2 newDirection = Vector3.Slerp(
+                _mover.DesiredDirection.normalized,
+                awayDir.normalized,
+                weight
+            );
+            
+            _mover.DesiredDirection = newDirection;
         }
     
         private RaycastHit2D Raycast(int angleOffset)
