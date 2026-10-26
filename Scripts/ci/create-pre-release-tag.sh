@@ -35,8 +35,6 @@ case "$remote_status" in
     git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
     git tag -a "$tag" "$sha" -m "CatFishing pre-release $tag"
     if ! git push origin "refs/tags/$tag"; then
-      # If another run created the same tag concurrently, only accept it if it
-      # points to exactly this commit. Never move an existing version tag.
       git fetch --force --no-tags origin "refs/tags/$tag:refs/tags/$tag" || {
         echo "::error::Failed to push tag $tag, and it could not be fetched for verification."
         exit 1
