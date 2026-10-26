@@ -135,6 +135,36 @@ jobs:
           if-no-files-found: error
           retention-days: 14
 
+
+      - name: Notify Discord about pre-release build
+        if: ${{ github.ref == 'refs/heads/pre-release' }}
+        continue-on-error: true
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_PRE_RELEASE_WEBHOOK_URL }}
+          ARTIFACT_URL: ${{ steps.upload.outputs.artifact-url }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          payload="$(jq -n \
+            --arg url "$ARTIFACT_URL" \
+            --arg run "$RUN_URL" \
+            --arg commit "${GITHUB_SHA:0:7}" \
+            '{
+              content: (
+                "🐟 **CatFishing Windows pre-release build is ready!**\n\n" +
+                "[⬇️ Download the build](" + $url + ")\n" +
+                "[View workflow logs](" + $run + ")\n" +
+                "Commit: `" + $commit + "`"
+              )
+            }')"
+
+          curl --fail-with-body --silent --show-error \
+            -H "Content-Type: application/json" \
+            -d "$payload" \
+            "DISCORD_PRE_RELEASE_WEBHOOK_URL"
+
       # Provide a direct, clickable link on the workflow run summary.
       - name: Add pre-release download link
         if: ${{ github.ref == 'refs/heads/pre-release' }}
@@ -202,3 +232,32 @@ jobs:
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
+      - name: Notify Discord about release
+        continue-on-error: true
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_RELEASE_WEBHOOK_URL }}
+          RELEASE_URL: ${{ github.server_url }}/${{ github.repository }}/releases/tag/${{ github.ref_name }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          payload="$(jq -n \
+            --arg tag "$GITHUB_REF_NAME" \
+            --arg url "$RELEASE_URL" \
+            --arg run "$RUN_URL" \
+            '{
+              content: (
+                "🚀 **CatFishing " + $tag + " has been released!**\n\n" +
+                "[⬇️ Download release](" + $url + ")\n" +
+                "[View workflow logs](" + $run + ")"
+              )
+            }')"
+
+          curl --fail-with-body --silent --show-error \
+            -H "Content-Type: application/json" \
+            -d "$payload" \
+            "DISCORD_RELEASE_WEBHOOK_URL"
+
