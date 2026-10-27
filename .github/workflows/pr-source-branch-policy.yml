@@ -2,6 +2,7 @@ name: PR Source Branch Policy
 
 on:
   pull_request_target:
+    types: [opened, synchronize, reopened, edited]
     branches: [main, pre-release]
 
 permissions:
