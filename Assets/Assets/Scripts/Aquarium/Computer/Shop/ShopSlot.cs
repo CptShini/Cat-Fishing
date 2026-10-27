@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class ShopSlot : MonoBehaviour
 {
-    public ShopItemSO itemSO;
+    public ItemSO itemSO;
     public TMP_Text itemNameText;
     public TMP_Text priceText;
     public Image itemImage;
@@ -13,17 +13,17 @@ public class ShopSlot : MonoBehaviour
 
     private int price;
 
-    public void Initialize(ShopItemSO newShopItem, int price)
+    public void Initialize(ItemSO newItemSO, int price)
     {
-        itemSO = newShopItem;
-        itemNameText.text = itemSO.itemName;
-        itemImage.sprite = itemSO.itemIcon;
+        itemSO = newItemSO;
+        itemNameText.text = itemSO.decorName;
+        itemImage.sprite = itemSO.decorIcon;
         this.price = price;
         priceText.text = price.ToString();
     }
 
     public void OnBuyButtonClicked()
     {
-        //shopManager.TryBuyItem(itemSO, price);
+        shopManager.TryBuyItem(itemSO, price);
     }
 }

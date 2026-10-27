@@ -223,7 +223,7 @@ GameObject:
   - component: {fileID: 7395917379702553603}
   - component: {fileID: 881116303455183817}
   - component: {fileID: 7747480542663197462}
-  - component: {fileID: 5050281620967818002}
+  - component: {fileID: 8560822253141256775}
   m_Layer: 5
   m_Name: DecorInventorySlot 1
   m_TagString: Untagged
@@ -290,7 +290,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &5050281620967818002
+--- !u!114 &8560822253141256775
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -299,8 +299,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 5685211894774445965}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 264b3d9249dd750468e509c4c9fc5f54, type: 3}
+  m_Script: {fileID: 11500000, guid: 17d9aa958e8c2b04ab9adca1311d5b53, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: '::'
-  fishIcon: {fileID: 2062460501140310248}
-  fishName: {fileID: 316089889957663178}
+  m_EditorClassIdentifier: Assembly-CSharp::DecorInventorySlot
+  ItemSO: {fileID: 0}
+  icon: {fileID: 2062460501140310248}
+  name: {fileID: 316089889957663178}

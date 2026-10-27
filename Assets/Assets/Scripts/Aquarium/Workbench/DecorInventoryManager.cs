@@ -3,27 +3,27 @@ using UnityEngine;
 
 public class DecorInventoryManager : MonoBehaviour
 {
-    public DecorInventorySlot[] decorInventorySlots;
+    public DecorInventorySlot[] inventorySlots;
     public int gold;
     public TMP_Text goldText;
     
     public void Start()
     {
         goldText.text = gold.ToString();
-        foreach (var slot in decorInventorySlots)
+        foreach (var slot in inventorySlots)
         {
             slot.UpdateUI();
         }
     }
     
-    public void AddItem(DecorItemSO itemSO)
+    public void AddItem(ItemSO itemSO)
     {
         goldText.text = gold.ToString();
-        foreach (var slot in decorInventorySlots)
+        foreach (var slot in inventorySlots)
         {
-            if (slot.decorItemSO == null)
+            if (slot.ItemSO == null)
             {
-                slot.decorItemSO = itemSO;
+                slot.ItemSO = itemSO;
                 slot.UpdateUI();
                 return;
             }

@@ -7,7 +7,7 @@ public class ShopManager : MonoBehaviour
 
     [SerializeField] private ShopSlot[] shopSlots;
 
-    //[SerializeField] private InventoryManager inventoryManager;
+    [SerializeField] private DecorInventoryManager inventoryManager;
 
     private void Start()
     {
@@ -28,11 +28,36 @@ public class ShopManager : MonoBehaviour
             shopSlots[i].gameObject.SetActive(false);
         }
     }
+
+    public void TryBuyItem(ItemSO itemSO, int price)
+    {
+        if(itemSO != null && inventoryManager.gold >= price)
+        {
+            if(HasSpaceForItem(itemSO))
+            {
+                inventoryManager.gold -= price;
+                inventoryManager.goldText.text = inventoryManager.gold.ToString();
+                inventoryManager.AddItem(itemSO);
+            }
+        }
+    }
+
+    private bool HasSpaceForItem(ItemSO itemSO)
+    {
+        foreach (var slot in inventoryManager.inventorySlots)
+        {
+            if(slot.ItemSO == itemSO)
+                return true;
+            else if(slot.ItemSO == null)
+                return true;
+        }
+        return false;
+    }
 }
 
 [System.Serializable]
 public class ShopItems
 {
-    public ShopItemSO itemSO;
+    public ItemSO itemSO;
     public int price;
 }

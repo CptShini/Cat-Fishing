@@ -4,23 +4,23 @@ using UnityEngine.UI;
 
 public class DecorInventorySlot : MonoBehaviour
 {
-    public DecorItemSO decorItemSO;
-    [SerializeField] private Image decorIcon;
-    [SerializeField] private TMP_Text decorName;
+    public ItemSO ItemSO;
+    [SerializeField] private Image icon;
+    [SerializeField] private TMP_Text name;
 
     public void UpdateUI()
     {
-        if (decorItemSO != null)
+        if (ItemSO != null)
         {
-            decorIcon.sprite = decorItemSO.decorIcon;
-            decorIcon.gameObject.SetActive(true);
-            decorName.text = decorItemSO.decorName;
-            decorName.gameObject.SetActive(true);
+            icon.sprite = ItemSO.decorIcon;
+            icon.gameObject.SetActive(true);
+            name.text = ItemSO.decorName;
+            name.gameObject.SetActive(true);
         }
         else
         {
-            decorIcon.gameObject.SetActive(false);
-            decorName.gameObject.SetActive(false);
+            icon.gameObject.SetActive(false);
+            name.gameObject.SetActive(false);
         }
     }
 }
