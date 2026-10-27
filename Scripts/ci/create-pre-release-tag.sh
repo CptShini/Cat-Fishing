@@ -10,19 +10,25 @@ fail() { echo "::error::$*" >&2; exit 1; }
 : "${HEAD_REPOSITORY:?HEAD_REPOSITORY is required}"
 : "${TARGET_REPOSITORY:?TARGET_REPOSITORY is required}"
 
-major_bump="${VERSION_MAJOR:-false}"
-minor_bump="${VERSION_MINOR:-false}"
+labels_json="${PR_LABELS_JSON:-[]}"
+jq -e 'type == "array"' <<< "$labels_json" >/dev/null || fail 'PR_LABELS_JSON must be a JSON array.'
+mapfile -t version_labels < <(jq -r '.[] | .name | select(startswith("version:"))' <<< "$labels_json")
+(( ${#version_labels[@]} <= 1 )) || fail 'Use at most one version:* label.'
+
+major_bump=false
+minor_bump=false
+case "${version_labels[0]:-}" in
+  '') ;;
+  version:major) major_bump=true ;;
+  version:minor) minor_bump=true ;;
+  version:skip) fail 'version:skip must not run tag creation.' ;;
+  *) fail "Unsupported version label '${version_labels[0]}'. Use version:major, version:minor, or version:skip; no label means patch." ;;
+esac
 
 [[ "$BASE_REF" == pre-release ]] || fail 'Tags can only be created for PRs merged into pre-release.'
 [[ "$HEAD_REPOSITORY" == "$TARGET_REPOSITORY" ]] || fail 'PRs must originate from this repository.'
 [[ "$HEAD_REF" =~ ^develop/.+ ]] || fail 'PRs into pre-release must come from develop/<name>.'
 [[ "$TARGET_SHA" =~ ^[0-9a-fA-F]{40,64}$ ]] || fail "Invalid merged commit SHA: $TARGET_SHA"
-[[ "$major_bump" == true || "$major_bump" == false ]] || fail 'VERSION_MAJOR must be true or false.'
-[[ "$minor_bump" == true || "$minor_bump" == false ]] || fail 'VERSION_MINOR must be true or false.'
-
-if [[ "$major_bump" == true && "$minor_bump" == true ]]; then
-  fail 'Use only one version label: version:major or version:minor.'
-fi
 
 # Tag allocation is serialized by the workflow. Only use version tags on this commit's history.
 git fetch --force --no-tags origin '+refs/heads/pre-release:refs/remotes/origin/pre-release'

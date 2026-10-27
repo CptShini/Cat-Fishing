@@ -14,17 +14,35 @@ jobs:
     if: ${{ github.event.action != 'closed' }}
     runs-on: ubuntu-latest
     steps:
-      - name: Reject conflicting version labels
+      - name: Validate version labels
         shell: bash
         env:
-          VERSION_MAJOR: ${{ contains(github.event.pull_request.labels.*.name, 'version:major') }}
-          VERSION_MINOR: ${{ contains(github.event.pull_request.labels.*.name, 'version:minor') }}
+          PR_LABELS_JSON: ${{ toJSON(github.event.pull_request.labels) }}
         run: |
-          if [[ "$VERSION_MAJOR" == "true" && "$VERSION_MINOR" == "true" ]]; then
-            echo "::error::Use only one version label: version:major or version:minor. No label means patch."
+          set -euo pipefail
+
+          labels_json="${PR_LABELS_JSON:-[]}"
+          version_labels="$(jq -c '[.[] | .name | select(startswith("version:"))]' <<< "$labels_json")"
+          count="$(jq 'length' <<< "$version_labels")"
+
+          if (( count > 1 )); then
+            labels="$(jq -r 'join(", ")' <<< "$version_labels")"
+            echo "::error::Use at most one version:* label. Conflicting labels: $labels"
             exit 1
           fi
-          echo "Version bump labels are valid."
+
+          if (( count == 1 )); then
+            label="$(jq -r '.[0]' <<< "$version_labels")"
+            case "$label" in
+              version:major|version:minor|version:skip) ;;
+              *)
+                echo "::error::Unsupported version label '$label'. Use version:major, version:minor, or version:skip. No label means patch."
+                exit 1
+                ;;
+            esac
+          fi
+
+          echo "Version labels are valid. No version label means a patch bump."
 
   create-tag:
     name: Create pre-release version tag
@@ -55,8 +73,7 @@ jobs:
           HEAD_REF: ${{ github.head_ref }}
           HEAD_REPOSITORY: ${{ github.event.pull_request.head.repo.full_name }}
           TARGET_REPOSITORY: ${{ github.repository }}
-          VERSION_MAJOR: ${{ contains(github.event.pull_request.labels.*.name, 'version:major') }}
-          VERSION_MINOR: ${{ contains(github.event.pull_request.labels.*.name, 'version:minor') }}
+          PR_LABELS_JSON: ${{ toJSON(github.event.pull_request.labels) }}
         run: bash Scripts/ci/create-pre-release-tag.sh
 
   build:
