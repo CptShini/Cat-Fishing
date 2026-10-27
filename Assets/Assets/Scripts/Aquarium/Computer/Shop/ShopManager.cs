@@ -3,16 +3,9 @@ using System.Collections.Generic;
 
 public class ShopManager : MonoBehaviour
 {
-    
-
     [SerializeField] private ShopSlot[] shopSlots;
 
     [SerializeField] private DecorInventoryManager inventoryManager;
-
-    /*private void Start()
-    {
-        PopulateShopItems();
-    }*/
 
     public void PopulateShopItems(List<ShopItems> shopItems)
     {
