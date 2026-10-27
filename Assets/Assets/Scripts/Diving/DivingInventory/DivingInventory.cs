@@ -74,6 +74,7 @@ public class DivingInventory : MonoBehaviour
     public void Toggle()
     {
         this.isEnabled = !this.isEnabled;
+    
         panel.SetActive(this.isEnabled);
     }
 

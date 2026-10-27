@@ -262,8 +262,8 @@ public class DivingController : MonoBehaviour
         
         if(curOxygen < 0)
         {
-            Debug.Log("OUT OF OXYGEN");
-            // Something bad happens
+            curOxygen = float.MaxValue;
+            SceneTransition.Instance.LoadScene("AquariumScene");
         }
     }
 
