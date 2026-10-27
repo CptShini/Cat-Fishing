@@ -32,8 +32,6 @@ jobs:
         id: validate
         env:
           GH_TOKEN: ${{ github.token }}
-          RELEASE_MODE: ${{ github.event_name == 'promotion' }}
-          REQUESTED_TAG: ${{ inputs.tag }}
           PROMOTED_SHA: ${{ github.event.pull_request.head.sha }}
           PROMOTION_SHA: ${{ github.event.pull_request.merge_commit_sha }}
           BASE_REF: ${{ github.base_ref }}
