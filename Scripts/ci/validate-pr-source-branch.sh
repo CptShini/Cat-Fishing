@@ -7,20 +7,20 @@ set -euo pipefail
 : "${TARGET_REPOSITORY:?TARGET_REPOSITORY is required}"
 
 if [[ "$HEAD_REPOSITORY" != "$TARGET_REPOSITORY" ]]; then
-  echo "::error::PRs must originate from a branch in this repository."
+  echo '::error::PRs must originate from this repository.'
   exit 1
 fi
 
 case "$BASE_REF" in
   main)
-    if [[ "$HEAD_REF" != "pre-release" ]]; then
-      echo "::error::PRs into main must come from pre-release."
+    if [[ "$HEAD_REF" != pre-release ]]; then
+      echo '::error::PRs into main must come from pre-release.'
       exit 1
     fi
     ;;
   pre-release)
     if [[ ! "$HEAD_REF" =~ ^develop/.+ ]]; then
-      echo "::error::PRs into pre-release must come from develop/<name>."
+      echo '::error::PRs into pre-release must come from develop/<name>.'
       exit 1
     fi
     ;;
@@ -30,4 +30,4 @@ case "$BASE_REF" in
     ;;
 esac
 
-echo "PR source branch is allowed."
+echo 'PR source branch is allowed.'

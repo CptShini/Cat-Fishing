@@ -3,9 +3,6 @@ name: Build & Publish Release
 on:
   push:
     branches: [main]
-    paths:
-      - version.txt
-  workflow_dispatch:
 
 permissions:
   contents: read
@@ -16,19 +13,19 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       tag: ${{ steps.validate.outputs.tag }}
-      sha: ${{ steps.validate.outputs.sha }}
       publish: ${{ steps.validate.outputs.publish }}
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
         with:
+          ref: ${{ github.sha }}
           fetch-depth: 0
 
-      - name: Validate version and confirm tag is on main
+      - name: Validate promoted version tag
         id: validate
         env:
           GH_TOKEN: ${{ github.token }}
-        run: bash Scripts/ci/validate-release-version.sh
+        run: bash Scripts/ci/validate-promoted-release.sh
 
   build-release:
     name: Build release
@@ -54,6 +51,13 @@ jobs:
           fetch-depth: 0
           lfs: true
 
+      - name: Checkout trusted scripts
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          path: .ci-tools
+          persist-credentials: false
+
       - name: Cache Unity library
         uses: actions/cache@v4
         with:
@@ -72,17 +76,12 @@ jobs:
           targetPlatform: StandaloneWindows64
           versioning: Tag
 
-      - name: Prepare Windows build
+      - name: Prepare release ZIP
         env:
           VERSION_TAG: ${{ needs.validate-release.outputs.tag }}
-        run: bash Scripts/ci/prepare-windows-build.sh
+        run: bash .ci-tools/Scripts/ci/prepare-windows-build.sh release
 
-      - name: Package release ZIP
-        env:
-          VERSION_TAG: ${{ needs.validate-release.outputs.tag }}
-        run: bash Scripts/ci/package-windows-release.sh
-
-      - name: Upload release package for publishing
+      - name: Upload release package
         uses: actions/upload-artifact@v4
         with:
           name: CatFishing-Release-${{ needs.validate-release.outputs.tag }}-${{ github.run_id }}-${{ github.run_attempt }}
@@ -98,10 +97,13 @@ jobs:
     permissions:
       contents: write
     steps:
-      - name: Checkout repository
+      - name: Checkout trusted scripts
         uses: actions/checkout@v4
-      
-      - name: "Download release ${{ needs.validate-release.outputs.tag }}"
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+
+      - name: "Download release ${{ needs.validate-release.outputs.tag }} package"
         uses: actions/download-artifact@v4
         with:
           name: CatFishing-Release-${{ needs.validate-release.outputs.tag }}-${{ github.run_id }}-${{ github.run_attempt }}
