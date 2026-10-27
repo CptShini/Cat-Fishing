@@ -3,18 +3,18 @@ using System.Collections.Generic;
 
 public class ShopManager : MonoBehaviour
 {
-    [SerializeField] private List<ShopItems> shopItems;
+    
 
     [SerializeField] private ShopSlot[] shopSlots;
 
     [SerializeField] private DecorInventoryManager inventoryManager;
 
-    private void Start()
+    /*private void Start()
     {
         PopulateShopItems();
-    }
+    }*/
 
-    public void PopulateShopItems()
+    public void PopulateShopItems(List<ShopItems> shopItems)
     {
         for (int i = 0; i < shopItems.Count && i < shopSlots.Length; i++)
         {

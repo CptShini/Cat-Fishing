@@ -12,6 +12,7 @@ public class DecorInventoryManager : MonoBehaviour
         goldText.text = gold.ToString();
         foreach (var slot in inventorySlots)
         {
+            slot.gameObject.SetActive(slot.ItemSO != null);
             slot.UpdateUI();
         }
     }
@@ -24,6 +25,7 @@ public class DecorInventoryManager : MonoBehaviour
             if (slot.ItemSO == null)
             {
                 slot.ItemSO = itemSO;
+                slot.gameObject.SetActive(true);
                 slot.UpdateUI();
                 return;
             }
