@@ -1,21 +1,27 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class SceneTransition : MonoBehaviour
 {
     public static SceneTransition Instance { get; private set; }
 
-    public Animator fadeAnim;
-    public float fadeTime = 0.5f;
+    private Animator fadeAnim;
+    private Image image;
+    public float fadeTime = 3f;
 
     private void Awake()
     {
-        fadeAnim = gameObject.transform.GetChild(0).GetComponent<Animator>();   
+        fadeAnim = gameObject.transform.GetChild(0).GetComponent<Animator>(); 
+        image = gameObject.transform.GetChild(0).GetComponent<Image>();
+        
         if (Instance != null && Instance != this) 
             Destroy(gameObject);
         else
             Instance = this;
+        
+        FadeOut();
     }
 
     public void LoadScene(string sceneName)
@@ -30,17 +36,12 @@ public class SceneTransition : MonoBehaviour
         yield return new WaitForSeconds(fadeTime);
 
         SceneManager.LoadScene(sceneName);
+        fadeAnim.SetBool("Loaded",true);
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void FadeOut()
     {
-        
+        fadeAnim.Play("FadeOut");
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

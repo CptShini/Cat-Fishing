@@ -1577,6 +1577,7 @@ GameObject:
   - component: {fileID: 1804766955}
   - component: {fileID: 1804766954}
   - component: {fileID: 1804766956}
+  - component: {fileID: 1804766957}
   m_Layer: 5
   m_Name: Blackout
   m_TagString: Untagged
@@ -1616,7 +1617,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 0
@@ -1653,8 +1654,8 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 2c49b94ebbb2d02448a40c6be5a6973d, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_UpdateMode: 1
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_AnimatePhysics: 0
@@ -1663,6 +1664,23 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!320 &1804766957
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1804766952}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 0}
+  m_InitialState: 1
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings: []
+  m_ExposedReferences:
+    m_References: []
 --- !u!1 &1830774408
 GameObject:
   m_ObjectHideFlags: 0
@@ -1676,6 +1694,7 @@ GameObject:
   - component: {fileID: 1830774410}
   - component: {fileID: 1830774409}
   - component: {fileID: 1830774413}
+  - component: {fileID: 1830774414}
   m_Layer: 5
   m_Name: TransitionCanvas
   m_TagString: Untagged
@@ -1778,8 +1797,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fc34c1d992a1734ca9fab7ee2122e58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SceneTransition
-  fadeAnim: {fileID: 0}
   fadeTime: 0.5
+--- !u!114 &1830774414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1830774408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b76b9cb2df3185a4ba63faa8269f71a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DontDestroyOnLoad
 --- !u!20 &1974734721 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 4801324841402261902, guid: 00c4c735be6de9441b62ab6463139022, type: 3}
@@ -1809,6 +1839,10 @@ PrefabInstance:
       propertyPath: staminaBar
       value: 
       objectReference: {fileID: 1557437520}
+    - target: {fileID: 5595691730511454377, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
+      propertyPath: oxygenCapacity
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 6619945467753677165, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
       propertyPath: m_LocalPosition.x
       value: -35.93233
