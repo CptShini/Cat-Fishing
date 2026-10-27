@@ -10,12 +10,6 @@ permissions:
 jobs:
   validate-release:
     name: Validate release
-    if: >-
-      ${{
-        github.event.pull_request.merged == true &&
-        github.event.pull_request.head.ref == 'pre-release' &&
-        github.event.pull_request.head.repo.full_name == github.repository
-      }}
     runs-on: ubuntu-latest
     outputs:
       tag: ${{ steps.validate.outputs.tag }}
