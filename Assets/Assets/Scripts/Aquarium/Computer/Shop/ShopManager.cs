@@ -7,6 +7,8 @@ public class ShopManager : MonoBehaviour
 
     [SerializeField] private ShopSlot[] shopSlots;
 
+    //[SerializeField] private InventoryManager inventoryManager;
+
     private void Start()
     {
         PopulateShopItems();
