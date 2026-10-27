@@ -28,7 +28,12 @@ jobs:
 
   create-tag:
     name: Create pre-release version tag
-    if: ${{ github.event.action == 'closed' && github.event.pull_request.merged == true }}
+    if: >-
+      ${{
+        github.event.action == 'closed' &&
+        github.event.pull_request.merged == true &&
+        !contains(github.event.pull_request.labels.*.name, 'version:skip')
+      }}
     runs-on: ubuntu-latest
     permissions:
       contents: write
