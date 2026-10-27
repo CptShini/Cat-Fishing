@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ExitArea : MonoBehaviour, IInteractable
 {
-
+    [SerializeField] private string scene = "AquariumScene";
 
     public bool CanInteract()
     {
@@ -11,7 +11,6 @@ public class ExitArea : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        SceneTransition.Instance.LoadScene("AquariumScene");
+        SceneTransition.Instance.LoadScene(scene);
     }
-
 }
