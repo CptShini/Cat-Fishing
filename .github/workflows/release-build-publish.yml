@@ -1,6 +1,9 @@
 name: Build & Publish Release
 
 on:
+  pull_request_target:
+    branches: [main]
+    types: [opened, synchronize, reopened, ready_for_review, edited]
   push:
     branches: [main]
 
@@ -25,12 +28,17 @@ jobs:
         id: validate
         env:
           GH_TOKEN: ${{ github.token }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PR_HEAD_REF: ${{ github.head_ref }}
+          PR_HEAD_REPOSITORY: ${{ github.event.pull_request.head.repo.full_name }}
+          TARGET_REPOSITORY: ${{ github.repository }}
+          BASE_REF: ${{ github.base_ref }}
         run: bash Scripts/ci/validate-promoted-release.sh
 
   build-release:
     name: Build release
     needs: validate-release
-    if: ${{ needs.validate-release.outputs.publish == 'true' }}
+    if: ${{ github.event_name == 'push' && needs.validate-release.outputs.publish == 'true' }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -92,7 +100,7 @@ jobs:
   publish-release:
     name: Publish GitHub release
     needs: [validate-release, build-release]
-    if: ${{ needs.validate-release.outputs.publish == 'true' }}
+    if: ${{ github.event_name == 'push' && needs.validate-release.outputs.publish == 'true' }}
     runs-on: ubuntu-latest
     permissions:
       contents: write
