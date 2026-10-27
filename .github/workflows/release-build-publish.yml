@@ -1,0 +1,127 @@
+name: Build & Publish Release
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - version.txt
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-release:
+    name: Validate release
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.validate.outputs.tag }}
+      sha: ${{ steps.validate.outputs.sha }}
+      publish: ${{ steps.validate.outputs.publish }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Validate version and confirm tag is on main
+        id: validate
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: bash Scripts/ci/validate-release-version.sh
+
+  build-release:
+    name: Build release
+    needs: validate-release
+    if: ${{ needs.validate-release.outputs.publish == 'true' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Free disk space for Unity
+        uses: jlumbroso/free-disk-space@v2
+        with:
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: true
+          docker-images: true
+
+      - name: "Checkout ${{ needs.validate-release.outputs.tag }}"
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.validate-release.outputs.tag }}
+          fetch-depth: 0
+          lfs: true
+
+      - name: Cache Unity library
+        uses: actions/cache@v4
+        with:
+          path: Library
+          key: Library-CatFishing-Windows-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+          restore-keys: |
+            Library-CatFishing-Windows-
+
+      - name: "Build release ${{ needs.validate-release.outputs.tag }}"
+        uses: game-ci/unity-builder@v4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          targetPlatform: StandaloneWindows64
+          versioning: Tag
+
+      - name: Prepare Windows build
+        env:
+          VERSION_TAG: ${{ needs.validate-release.outputs.tag }}
+        run: bash Scripts/ci/prepare-windows-build.sh
+
+      - name: Package release ZIP
+        env:
+          VERSION_TAG: ${{ needs.validate-release.outputs.tag }}
+        run: bash Scripts/ci/package-windows-release.sh
+
+      - name: Upload release package for publishing
+        uses: actions/upload-artifact@v4
+        with:
+          name: CatFishing-Release-${{ needs.validate-release.outputs.tag }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: release-assets/CatFishing-${{ needs.validate-release.outputs.tag }}-Windows.zip
+          if-no-files-found: error
+          retention-days: 1
+
+  publish-release:
+    name: Publish GitHub release
+    needs: [validate-release, build-release]
+    if: ${{ needs.validate-release.outputs.publish == 'true' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: "Download release ${{ needs.validate-release.outputs.tag }}"
+        uses: actions/download-artifact@v4
+        with:
+          name: CatFishing-Release-${{ needs.validate-release.outputs.tag }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: release-assets
+
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v3
+        with:
+          tag_name: ${{ needs.validate-release.outputs.tag }}
+          name: CatFishing ${{ needs.validate-release.outputs.tag }}
+          files: release-assets/CatFishing-${{ needs.validate-release.outputs.tag }}-Windows.zip
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Notify Discord about release
+        continue-on-error: true
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_RELEASE_WEBHOOK_URL }}
+          VERSION_TAG: ${{ needs.validate-release.outputs.tag }}
+          RELEASE_URL: ${{ github.server_url }}/${{ github.repository }}/releases/tag/${{ needs.validate-release.outputs.tag }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: bash Scripts/ci/notify-discord.sh release
