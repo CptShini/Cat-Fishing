@@ -1515,7 +1515,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9f745797e5d1ab40b1500a3a04cb503, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ExitArea
-  scene: AquariumScene
+  scene: Aquarium
 --- !u!61 &1085945269
 BoxCollider2D:
   m_ObjectHideFlags: 0
