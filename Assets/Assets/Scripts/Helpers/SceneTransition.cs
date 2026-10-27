@@ -31,6 +31,7 @@ public class SceneTransition : MonoBehaviour
 
     private IEnumerator LoadSceneWithFade(string sceneName)
     {
+        fadeAnim.SetBool("Loaded",false);
         fadeAnim.Play("FadeIn");
 
         yield return new WaitForSeconds(fadeTime);
