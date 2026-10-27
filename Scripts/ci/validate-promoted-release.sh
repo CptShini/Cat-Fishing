@@ -5,24 +5,30 @@ semver_re='^v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$'
 fail() { echo "::error::$*" >&2; exit 1; }
 
 [[ "${GITHUB_REF:-}" == refs/heads/main ]] || fail 'Run this workflow from main.'
+: "${GITHUB_SHA:?GITHUB_SHA must be set to the pushed main commit}"
+
 git fetch --force --tags origin
 git fetch --force --no-tags origin \
   '+refs/heads/main:refs/remotes/origin/main' \
   '+refs/heads/pre-release:refs/remotes/origin/pre-release'
 
-: "${PROMOTED_SHA:?PROMOTED_SHA must be the pre-release PR head SHA}"
-: "${PROMOTION_SHA:?PROMOTION_SHA must be the main merge commit SHA}"
-[[ "${BASE_REF:-}" == main ]] || fail 'Only promotions into main can publish a release.'
-[[ "$PROMOTED_SHA" =~ ^[0-9a-fA-F]{40,64}$ && "$PROMOTION_SHA" =~ ^[0-9a-fA-F]{40,64}$ ]] || fail 'Invalid promotion commit SHA.'
-git cat-file -e "${PROMOTED_SHA}^{commit}" 2>/dev/null || fail 'Pre-release commit is unavailable.'
-git cat-file -e "${PROMOTION_SHA}^{commit}" 2>/dev/null || fail 'Main merge commit is unavailable.'
-git merge-base --is-ancestor "$PROMOTED_SHA" refs/remotes/origin/pre-release || fail 'The PR source commit is not in pre-release history.'
-git merge-base --is-ancestor "$PROMOTION_SHA" refs/remotes/origin/main || fail 'The promotion merge commit is not in main history.'
-git merge-base --is-ancestor "$PROMOTED_SHA" "$PROMOTION_SHA" || fail 'The tagged commit must be preserved in main history. Use a regular merge commit, not squash/rebase.'
+PROMOTION_SHA="$GITHUB_SHA"
+merge_line="$(git rev-list --parents -n 1 "$PROMOTION_SHA")"
+read -r merge_sha main_parent promoted_sha extra <<< "$merge_line"
+[[ "$merge_sha" == "$PROMOTION_SHA" && -n "${main_parent:-}" && -n "${promoted_sha:-}" && -z "${extra:-}" ]] \
+  || fail 'The pushed main commit is not a regular two-parent merge commit. Promote pre-release to main using Create a merge commit.'
+PROMOTED_SHA="$promoted_sha"
+
+git cat-file -e "${PROMOTED_SHA}^{commit}" 2>/dev/null || fail 'The pre-release merge parent is unavailable.'
+git merge-base --is-ancestor "$PROMOTED_SHA" refs/remotes/origin/pre-release \
+  || fail 'The merge commit’s second parent is not in pre-release history.'
+git merge-base --is-ancestor "$PROMOTION_SHA" refs/remotes/origin/main \
+  || fail 'The main merge commit is not in main history.'
 
 tagged_tree="$(git rev-parse "${PROMOTED_SHA}^{tree}")"
 promoted_tree="$(git rev-parse "${PROMOTION_SHA}^{tree}")"
-[[ "$tagged_tree" == "$promoted_tree" ]] || fail 'Main differs from the tested pre-release tree. Re-sync and retest before publishing.'
+[[ "$tagged_tree" == "$promoted_tree" ]] \
+  || fail 'Main differs from the tested pre-release tree. Re-sync and retest before publishing.'
 
 tag=""
 while IFS= read -r candidate; do
