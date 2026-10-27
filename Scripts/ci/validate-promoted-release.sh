@@ -30,13 +30,9 @@ if [[ "$event_name" == pull_request_target ]]; then
     || fail 'PRs into main must come from pre-release.'
   [[ "${PR_HEAD_REPOSITORY:-}" == "${TARGET_REPOSITORY:-}" ]] \
     || fail 'Release PRs must originate from a branch in this repository.'
-  : "${PR_HEAD_SHA:?PR_HEAD_SHA must be the pre-release PR head SHA}"
-  [[ "$PR_HEAD_SHA" =~ ^[0-9a-fA-F]{40,64}$ ]] || fail 'Invalid pre-release PR head SHA.'
-
   pre_release_tip="$(git rev-parse 'refs/remotes/origin/pre-release^{commit}')"
   [[ "$PR_HEAD_SHA" == "$pre_release_tip" ]] \
     || fail 'The promotion PR must target the current pre-release tip. Update the PR and rerun validation.'
-  git cat-file -e "${PR_HEAD_SHA}^{commit}" 2>/dev/null || fail 'The pre-release PR head commit is unavailable.'
 
   tag="$(find_tag_for_commit "$PR_HEAD_SHA")"
   echo "Validated promotion PR: $tag points to the current pre-release tip."
@@ -51,11 +47,9 @@ fi
 
 PROMOTION_SHA="$GITHUB_SHA"
 merge_line="$(git rev-list --parents -n 1 "$PROMOTION_SHA")"
-read -r merge_sha main_parent promoted_sha extra <<< "$merge_line"
-[[ "$merge_sha" == "$PROMOTION_SHA" && -n "${main_parent:-}" && -n "${promoted_sha:-}" && -z "${extra:-}" ]] \
+read -r _ main_parent promoted_sha extra <<< "$merge_line"
+[[ -n "${main_parent:-}" && -n "${promoted_sha:-}" && -z "${extra:-}" ]] \
   || fail 'The pushed main commit is not a regular two-parent merge commit. Promote pre-release to main using Create a merge commit.'
-
-git cat-file -e "${promoted_sha}^{commit}" 2>/dev/null || fail 'The pre-release merge parent is unavailable.'
 git merge-base --is-ancestor "$promoted_sha" refs/remotes/origin/pre-release \
   || fail 'The merge commit’s second parent is not in pre-release history.'
 git merge-base --is-ancestor "$PROMOTION_SHA" refs/remotes/origin/main \
