@@ -12,9 +12,9 @@ public class DecorInventorySlot : MonoBehaviour
     {
         if (ItemSO != null)
         {
-            icon.sprite = ItemSO.decorIcon;
+            icon.sprite = ItemSO.itemIcon;
             icon.gameObject.SetActive(true);
-            name.text = ItemSO.decorName;
+            name.text = ItemSO.itemName;
             name.gameObject.SetActive(true);
         }
         else

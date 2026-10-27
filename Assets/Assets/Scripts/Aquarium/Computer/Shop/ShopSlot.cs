@@ -8,6 +8,7 @@ public class ShopSlot : MonoBehaviour
     public TMP_Text itemNameText;
     public TMP_Text priceText;
     public Image itemImage;
+    public Image WaterIndicator;
 
     [SerializeField] private ShopManager shopManager;
 
@@ -16,10 +17,13 @@ public class ShopSlot : MonoBehaviour
     public void Initialize(ItemSO newItemSO, int price)
     {
         itemSO = newItemSO;
-        itemNameText.text = itemSO.decorName;
-        itemImage.sprite = itemSO.decorIcon;
+        itemNameText.text = itemSO.itemName;
+        itemImage.sprite = itemSO.itemIcon;
         this.price = price;
         priceText.text = price.ToString();
+
+        bool isTank = itemSO.itemType == ItemType.TankDecoration;
+        WaterIndicator.gameObject.SetActive(isTank);
     }
 
     public void OnBuyButtonClicked()

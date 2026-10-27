@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25013cbcc1d5830449af556e0fa64334, type: 3}
   m_Name: Octopus
   m_EditorClassIdentifier: Assembly-CSharp::ItemSO
-  decorName: Octopus
-  decorIcon: {fileID: 21300000, guid: 96c00eda21789d9428763a93cb1ca241, type: 3}
+  itemName: Octopus
+  itemIcon: {fileID: 21300000, guid: 96c00eda21789d9428763a93cb1ca241, type: 3}
+  itemType: 1

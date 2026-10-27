@@ -654,6 +654,7 @@ MonoBehaviour:
   itemNameText: {fileID: 8435461970255375509}
   priceText: {fileID: 32451218902919530}
   itemImage: {fileID: 3444942536266849924}
+  WaterIndicator: {fileID: 5410425823185693961}
   shopManager: {fileID: 0}
 --- !u!1 &7878532962384872742
 GameObject:

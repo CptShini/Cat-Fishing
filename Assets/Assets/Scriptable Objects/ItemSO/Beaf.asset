@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25013cbcc1d5830449af556e0fa64334, type: 3}
   m_Name: Beaf
   m_EditorClassIdentifier: Assembly-CSharp::ItemSO
-  decorName: Beaf
-  decorIcon: {fileID: 21300000, guid: 1b5e96fe3f756e14b81ca8f3ce3bcf36, type: 3}
+  itemName: Beaf
+  itemIcon: {fileID: 21300000, guid: 1b5e96fe3f756e14b81ca8f3ce3bcf36, type: 3}
+  itemType: 0

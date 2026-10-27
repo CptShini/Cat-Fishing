@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25013cbcc1d5830449af556e0fa64334, type: 3}
   m_Name: FortuneCookie
   m_EditorClassIdentifier: Assembly-CSharp::ItemSO
-  decorName: Fortune Cookie
-  decorIcon: {fileID: 21300000, guid: 51948de4222cc054d9df240188ad51f6, type: 3}
+  itemName: Fortune Cookie
+  itemIcon: {fileID: 21300000, guid: 51948de4222cc054d9df240188ad51f6, type: 3}
+  itemType: 0
