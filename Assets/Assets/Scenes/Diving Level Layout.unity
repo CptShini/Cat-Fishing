@@ -1096,6 +1096,71 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e685f0ba126548019dbed3bffe0e884a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Fish.Perception.FishSightHandler
+--- !u!1001 &536298323
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1391562324357835527, guid: 6d8210f595a31b74f884b5e0e28a8ea1, type: 3}
+      propertyPath: m_Name
+      value: Fake Fish
+      objectReference: {fileID: 0}
+    - target: {fileID: 5293987828781041141, guid: 6d8210f595a31b74f884b5e0e28a8ea1, type: 3}
+      propertyPath: m_ConnectedAnchor.x
+      value: -5.257311
+      objectReference: {fileID: 0}
+    - target: {fileID: 5293987828781041141, guid: 6d8210f595a31b74f884b5e0e28a8ea1, type: 3}
+      propertyPath: m_ConnectedAnchor.y
+      value: 8.866352
+      objectReference: {fileID: 0}
+    - target: {fileID: 5998993947126979734, guid: 6d8210f595a31b74f884b5e0e28a8ea1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -5.257311
+      objectReference: {fileID: 0}
+    - target: {fileID: 5998993947126979734, guid: 6d8210f595a31b74f884b5e0e28a8ea1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 8.866352
+      objectReference: {fileID: 0}
+    - target: {fileID: 5998993947126979734, guid: 6d8210f595a31b74f884b5e0e28a8ea1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5998993947126979734, guid: 6d8210f595a31b74f884b5e0e28a8ea1, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5998993947126979734, guid: 6d8210f595a31b74f884b5e0e28a8ea1, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5998993947126979734, guid: 6d8210f595a31b74f884b5e0e28a8ea1, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5998993947126979734, guid: 6d8210f595a31b74f884b5e0e28a8ea1, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5998993947126979734, guid: 6d8210f595a31b74f884b5e0e28a8ea1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5998993947126979734, guid: 6d8210f595a31b74f884b5e0e28a8ea1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5998993947126979734, guid: 6d8210f595a31b74f884b5e0e28a8ea1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6d8210f595a31b74f884b5e0e28a8ea1, type: 3}
 --- !u!1 &558266818
 GameObject:
   m_ObjectHideFlags: 0
@@ -4689,3 +4754,4 @@ SceneRoots:
   - {fileID: 733066519}
   - {fileID: 162168348}
   - {fileID: 11425376}
+  - {fileID: 536298323}
