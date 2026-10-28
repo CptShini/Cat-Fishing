@@ -1,4 +1,5 @@
 using System;
+using Assets.Scripts.PlayerState;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -6,14 +7,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
 
-public enum PlayerState
-{
-    SWIM, // Default state
-    STEALTH,
-    POUNCE,
-    GRAB,
-    STUN,
-}
+
 
 public class DivingController : MonoBehaviour
 {
