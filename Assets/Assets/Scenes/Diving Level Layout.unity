@@ -4486,6 +4486,14 @@ PrefabInstance:
       value: DivingCat
       objectReference: {fileID: 0}
     - target: {fileID: 5595691730511454377, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
+      propertyPath: oxygen
+      value: 
+      objectReference: {fileID: 38101398}
+    - target: {fileID: 5595691730511454377, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
+      propertyPath: stamina
+      value: 
+      objectReference: {fileID: 1557437520}
+    - target: {fileID: 5595691730511454377, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
       propertyPath: oxygenBar
       value: 
       objectReference: {fileID: 38101398}

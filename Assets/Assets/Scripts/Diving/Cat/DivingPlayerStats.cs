@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class DivingPlayerStats
+public class DivingPlayerStats : MonoBehaviour
 {
     [Header("Speed")]
     public float speed = 10;
