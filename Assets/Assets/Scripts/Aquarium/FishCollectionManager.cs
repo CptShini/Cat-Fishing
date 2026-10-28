@@ -6,8 +6,8 @@ public class FishCollectionManager : MonoBehaviour
 {
     public static FishCollectionManager Instance { get; private set; }
 
-    private readonly List<FishSO> collectedFish = new();
-    public IReadOnlyList<FishSO> CollectedFish => collectedFish;
+    private readonly List<Fish> collectedFish = new();
+    public IReadOnlyList<Fish> CollectedFish => collectedFish;
 
     public event Action OnCollectionChanged;
 
@@ -20,13 +20,21 @@ public class FishCollectionManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    public void AddFish(FishSO fish)
+    public void AddFish(Fish fish)
     {
         if (fish == null)
             return;
 
         collectedFish.Add(fish);
-        Debug.Log("Added to collection: " + fish.name);
+        Debug.Log("Added to collection: " + fish.fishName);
         OnCollectionChanged?.Invoke();
+    }
+
+    public void TransferFishCollectibles(List<FishCollectible> list)
+    {
+        foreach (var fish in list)
+        {
+            collectedFish.Add(fish.fish);
+        }
     }
 }

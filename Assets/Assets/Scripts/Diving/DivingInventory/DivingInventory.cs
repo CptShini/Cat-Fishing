@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -100,5 +101,11 @@ public class DivingInventory : MonoBehaviour
             return false;
         }
     }
+
+    public List<T> GetCollectibleofType<T>() where T : Collectible
+    {
+        return collectibles.OfType<T>().ToList();
+    }
+
 
 }
