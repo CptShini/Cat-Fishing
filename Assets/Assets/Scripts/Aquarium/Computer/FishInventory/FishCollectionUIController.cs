@@ -25,7 +25,7 @@ public class FishCollectionUIController : MonoBehaviour
         foreach (Transform child in content)
             Destroy(child.gameObject);
 
-        foreach (FishSO fish in fishCollection.CollectedFish)
+        foreach (Fish fish in fishCollection.CollectedFish)
         {
             FishInventorySlot slot = Instantiate(slotPrefab, content);
             slot.SetFish(fish);

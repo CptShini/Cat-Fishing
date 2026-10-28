@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class FishCollectionList : MonoBehaviour
 {
-    [SerializeField] private List<FishSO> FishList = new();
+    [SerializeField] private List<Fish> FishList = new();
 
     public void AddFish()
     {
-        foreach (FishSO fish in FishList)
+        foreach (Fish fish in FishList)
         {
             if (fish == null)
                 continue;
