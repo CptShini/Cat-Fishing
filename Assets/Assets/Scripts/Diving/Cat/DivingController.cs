@@ -10,24 +10,18 @@ using static UnityEngine.InputSystem.InputAction;
 public class DivingController : MonoBehaviour
 {
     private DivingPlayerStats stats;
-
-    [Header("Presence in Radius")]
-    public float defaultPresence;
-    public float stealthPresence;
-    public float pouncePresence;
     
     [Header("Other")]
     [SerializeField] private Camera mainCamera;
     [SerializeField] private CircleCollider2D presenceCollider; // collider for presence detection from fish
     [SerializeField] private Collider2D defaultCollider; // collider for obstacles
     [SerializeField] private StatBar stamina;
-    [SerializeField] private StatBar oxygenBar;
+    [SerializeField] private StatBar oxygen;
 
     private FishCatCommunicator curFish;
     private float curPounceStamina = 0; // currrent player stamina, and current stamina for pounce
     private float pounceDuration = 0; // Tracker for when to stop pounceing. Can change based on 
     private Vector2 pounceDirection; // For saving the pounce direction during multiple updates
-    private float curOxygen = 100;
     private float curContest = 0; // Tracking for a contest between fish and cat during catching
     private float contestThreshold = 5; // The value that contest must be to catch a fish succesfully
     
@@ -48,10 +42,10 @@ public class DivingController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        SetOxygen(stats.oxygenCapacity);
         stamina.SetMaxValue(stats.maxStamina);
         stamina.SetCurrentValue(stats.maxStamina);
-        oxygenBar.SetMaxValue(stats.oxygenCapacity);
+        oxygen.SetCurrentValue(stats.oxygenCapacity);
+        oxygen.SetMaxValue(stats.oxygenCapacity);
 
         playerBody = gameObject.GetComponent<Rigidbody2D>();
     }
@@ -147,19 +141,19 @@ public class DivingController : MonoBehaviour
         {
             case PlayerState.STEALTH:
             {
-                presenceCollider.radius = stealthPresence;
+                presenceCollider.radius = stats.stealthPresence;
                 curPounceStamina = 0;
                 break;
             }
             case PlayerState.POUNCE:
             {
-                presenceCollider.radius = pouncePresence;
+                presenceCollider.radius = stats.pouncePresence;
                 
                 break;
             }
             case PlayerState.GRAB:
                 {
-                    presenceCollider.radius = pouncePresence;
+                    presenceCollider.radius = stats.pouncePresence;
                     curContest = contestThreshold / 2;
                     DivingInventory.Instance.SetEnabled(false);
                     break;
@@ -171,7 +165,7 @@ public class DivingController : MonoBehaviour
                 }
             default:
             {
-                presenceCollider.radius = defaultPresence;
+                presenceCollider.radius = stats.defaultPresence;
                 break;
             }
         }
@@ -222,17 +216,14 @@ public class DivingController : MonoBehaviour
             curFish.joint.connectedBody = this.playerBody;
             SetPlayerState(PlayerState.GRAB);
         }
-        
     }
-    
+
     void ReduceOxygen(float amount)
     {
-        SetOxygen(curOxygen -= amount);
-        //Debug.Log($"Reducing oxygen to: {curOxygen}");
-        
-        if(curOxygen < 0)
+        oxygen.AddToCurrentValue(-amount);        
+        if(oxygen.currentValue < 0)
         {
-            curOxygen = float.MaxValue;
+            oxygen.SetCurrentValue(float.MaxValue);
             SceneTransition.Instance.LoadScene("AquariumScene");
         }
     }
@@ -254,12 +245,6 @@ public class DivingController : MonoBehaviour
             defaultCollider.enabled = true;
             SetPlayerState(PlayerState.SWIM);
         }
-    }
-
-    void SetOxygen(float value)
-    {
-        this.curOxygen = value;
-        oxygenBar.SetCurrentValue(value);
     }
     
     // Update is called once per frame

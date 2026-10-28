@@ -16,19 +16,11 @@ public class StatBar : MonoBehaviour
     }
     public void AddToCurrentValue(float value)
     {
-        Debug.Log(value + " + " + currentValue);
         currentValue = Mathf.Clamp(currentValue + value, 0, maxValue);
-        Debug.Log(currentValue);
-
+        foreground.fillAmount = currentValue / maxValue;
     }
     public void SetMaxValue(float value)
     {
         maxValue = value;
-    }
-
-    void Update()
-    {
-        // placeholder logic
-        //foreground.fillAmount = currentValue / maxValue;
     }
 }

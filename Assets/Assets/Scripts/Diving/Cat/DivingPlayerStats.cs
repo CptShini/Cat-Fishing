@@ -26,8 +26,15 @@ public class DivingPlayerStats : MonoBehaviour
     [Header("Oxygen")]
     public float oxygenCapacity = 100; // seconds
 
+
+    [Header("Presence in Radius")]
+    public float defaultPresence = 2;
+    public float stealthPresence = 1;
+    public float pouncePresence = 4;
+
     [Header("Other")]
     public float stunDuration = 2; // The amount of time in seconds player will be stunned
+
 
     
 }
