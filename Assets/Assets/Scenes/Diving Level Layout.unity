@@ -517,17 +517,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e685f0ba126548019dbed3bffe0e884a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Fish.Perception.FishSightHandler
---- !u!114 &38101398 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6696175451251767052, guid: a1f5dd710e0e41c4ea3fbad66bc9efee, type: 3}
-  m_PrefabInstance: {fileID: 880628907}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cca9e2d644debcf4ba81c0b314dcfd80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::StatBar
 --- !u!1 &64291470
 GameObject:
   m_ObjectHideFlags: 0
@@ -3883,17 +3872,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e685f0ba126548019dbed3bffe0e884a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Fish.Perception.FishSightHandler
---- !u!114 &1557437520 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6068146095667172721, guid: a1f5dd710e0e41c4ea3fbad66bc9efee, type: 3}
-  m_PrefabInstance: {fileID: 880628907}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cca9e2d644debcf4ba81c0b314dcfd80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::StatBar
 --- !u!1 &1557516222
 GameObject:
   m_ObjectHideFlags: 0
@@ -4488,15 +4466,15 @@ PrefabInstance:
     - target: {fileID: 5595691730511454377, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
       propertyPath: oxygen
       value: 
-      objectReference: {fileID: 38101398}
+      objectReference: {fileID: 0}
     - target: {fileID: 5595691730511454377, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
       propertyPath: stamina
       value: 
-      objectReference: {fileID: 1557437520}
+      objectReference: {fileID: 0}
     - target: {fileID: 5595691730511454377, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
       propertyPath: oxygenBar
       value: 
-      objectReference: {fileID: 38101398}
+      objectReference: {fileID: 0}
     - target: {fileID: 5595691730511454377, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
       propertyPath: mainCamera
       value: 
@@ -4504,7 +4482,7 @@ PrefabInstance:
     - target: {fileID: 5595691730511454377, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
       propertyPath: staminaBar
       value: 
-      objectReference: {fileID: 1557437520}
+      objectReference: {fileID: 0}
     - target: {fileID: 5595691730511454377, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
       propertyPath: oxygenCapacity
       value: 100
@@ -4561,8 +4539,13 @@ PrefabInstance:
       propertyPath: m_CollisionDetection
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 9043816904564429849, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
+      propertyPath: mainCamera
+      value: 
+      objectReference: {fileID: 1974734721}
     m_RemovedComponents:
     - {fileID: 7964419269833872625, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
+    - {fileID: 888424281249766981, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 6619945467753677165, guid: 262047177a92c874888fbafd31ad2f22, type: 3}

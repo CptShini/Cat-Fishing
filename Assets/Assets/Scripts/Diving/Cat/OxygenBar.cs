@@ -12,8 +12,6 @@ public class OxygenBar : StatBar
             Destroy(gameObject);
         else
             Instance = this;
-
-        
     }
     void Start()
     {

@@ -14,25 +14,21 @@ public class DivingController : MonoBehaviour
     private DivingPlayerStats stats;
     
     [Header("Other")]
-    [SerializeField] private Camera mainCamera;
     [SerializeField] private CircleCollider2D presenceCollider; // collider for presence detection from fish
     [SerializeField] private Collider2D defaultCollider; // collider for obstacles
 
     public PlayerState state;
-
     private PounceScript _pounce;
     private FishCatCommunicator curFish;
     private float curContest = 0; // Tracking for a contest between fish and cat during catching
     private float contestThreshold = 5; // The value that contest must be to catch a fish succesfully
     private float curStunTimer = 0;
 
-    //[SerializeField] private AnimationCurve accelerationCurve;
     private Rigidbody2D playerBody;
     private Vector2 velocityVector;
 
     void Awake()
     {
-        
         if (Instance != null && Instance != this) 
             Destroy(gameObject);
         else
@@ -90,11 +86,9 @@ public class DivingController : MonoBehaviour
             playerBody.linearVelocity,
             targetVelocity,
             currentAcceleration * Time.deltaTime
-        );
-        
+        ); 
         playerBody.linearVelocity = new Vector3(newVelocity.x, newVelocity.y, 0);
     }
-
 
     public void SetPlayerState(PlayerState state)
     {
@@ -110,8 +104,7 @@ public class DivingController : MonoBehaviour
             }
             case PlayerState.POUNCE:
             {
-                presenceCollider.radius = stats.pouncePresence;
-                
+                presenceCollider.radius = stats.pouncePresence;     
                 break;
             }
             case PlayerState.GRAB:
@@ -131,18 +124,14 @@ public class DivingController : MonoBehaviour
                 presenceCollider.radius = stats.defaultPresence;
                 break;
             }
-        }
-        
+        } 
     }
 
     void Grab()
     {
         float angle = Vector2.Angle(velocityVector, curFish.direction);
-
         float power = stats.strength * (angle / 180);
-
         float contest = (power - curFish.strength) / curFish.strength;
-
         curContest += contest * Time.deltaTime;
 
         if( curContest >= contestThreshold)
@@ -204,7 +193,6 @@ public class DivingController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log($"STAMINA: {curStamina}, CURPOUNCESTAMINA: {curPounceStamina}");
         switch (state)
         {
             case PlayerState.SWIM:
@@ -212,18 +200,12 @@ public class DivingController : MonoBehaviour
                 Swim(stats.speed);
 
                 StaminaBar.Instance.StaminaRegen(stats.staminaRegen * Time.deltaTime);
-
                 break;
             }
             case PlayerState.STEALTH:
             {
                 Swim(stats.stealthSpeed);
                 _pounce.ChargeUpPounce();
-                break;
-            }
-            case PlayerState.POUNCE:
-            {
-                
                 break;
             }
             case PlayerState.GRAB:
