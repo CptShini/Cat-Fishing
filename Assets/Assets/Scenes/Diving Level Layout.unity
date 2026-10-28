@@ -4423,6 +4423,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7016621705756330028, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
+      propertyPath: m_Interpolate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7016621705756330028, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 7964419269833872625, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
     m_RemovedGameObjects: []
