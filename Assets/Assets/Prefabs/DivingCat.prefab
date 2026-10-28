@@ -102,11 +102,11 @@ GameObject:
   - component: {fileID: 6619945467753677165}
   - component: {fileID: 5801605173612217586}
   - component: {fileID: 7016621705756330028}
-  - component: {fileID: 5595691730511454377}
   - component: {fileID: 3232114992686681449}
-  - component: {fileID: 7964419269833872625}
   - component: {fileID: 1631111650230042207}
   - component: {fileID: 2969132433297625519}
+  - component: {fileID: 5595691730511454377}
+  - component: {fileID: 9043816904564429849}
   m_Layer: 6
   m_Name: DivingCat
   m_TagString: Untagged
@@ -216,26 +216,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &5595691730511454377
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3808421035207708945}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 04d5a0eaa9d45f94b96296f64d7e09ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DivingController
-  defaultPresence: 2
-  stealthPresence: 1
-  pouncePresence: 4
-  mainCamera: {fileID: 0}
-  presenceCollider: {fileID: 7964419269833872625}
-  defaultCollider: {fileID: 1631111650230042207}
-  staminaBar: {fileID: 0}
-  oxygenBar: {fileID: 0}
 --- !u!114 &3232114992686681449
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -414,42 +394,6 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!58 &7964419269833872625
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3808421035207708945}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Radius: 0.1
 --- !u!58 &1631111650230042207
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -510,7 +454,41 @@ MonoBehaviour:
   chargeUpSpeed: 10
   pounceCooldown: 0.5
   oxygenCapacity: 100
+  defaultPresence: 2
+  stealthPresence: 1
+  pouncePresence: 4
   stunDuration: 2
+--- !u!114 &5595691730511454377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3808421035207708945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04d5a0eaa9d45f94b96296f64d7e09ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DivingController
+  mainCamera: {fileID: 0}
+  presenceCollider: {fileID: 0}
+  defaultCollider: {fileID: 1631111650230042207}
+  state: 0
+--- !u!114 &9043816904564429849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3808421035207708945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 075d1af87eec80c46803bacae5766985, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PounceScript
+  mainCamera: {fileID: 0}
+  curPounceStamina: 0
+  curPounceCooldown: 0
 --- !u!1 &7535969392875983473
 GameObject:
   m_ObjectHideFlags: 0

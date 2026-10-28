@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class DivingPlayerStats : MonoBehaviour
 {
+    public static DivingPlayerStats Instance { get; private set; }
+
     [Header("Speed")]
     public float speed = 10;
     public float stealthSpeed = 3;
@@ -26,7 +28,6 @@ public class DivingPlayerStats : MonoBehaviour
     [Header("Oxygen")]
     public float oxygenCapacity = 100; // seconds
 
-
     [Header("Presence in Radius")]
     public float defaultPresence = 2;
     public float stealthPresence = 1;
@@ -36,5 +37,12 @@ public class DivingPlayerStats : MonoBehaviour
     public float stunDuration = 2; // The amount of time in seconds player will be stunned
 
 
-    
+    void Awake()
+    {
+        if (Instance != null && Instance != this) 
+            Destroy(gameObject);
+        else
+            Instance = this;
+    }
+
 }
