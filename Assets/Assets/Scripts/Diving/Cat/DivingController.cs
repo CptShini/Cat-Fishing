@@ -9,30 +9,7 @@ using static UnityEngine.InputSystem.InputAction;
 
 public class DivingController : MonoBehaviour
 {
-
-    [Header("Speed")]
-    public float speed = 10;
-    public float stealthSpeed = 3;
-    public float pounceSpeed = 20;
-
-    [Header("Acceleration")]
-    public float acceleration = 5; 
-    public float friction = 5;
-    
-    [Header("Stamina")]
-    public float maxStamina = 60;
-    public float maxPounceStamina = 20;
-    public float staminaRegen = 5;
-    
-    [Header("Strength")]
-    public float strength = 10;  // How strong the cat is when grabbing fish
-
-    [Header("Pouncing stats")]
-    public float chargeUpSpeed = 10;  // per second
-    public float pounceCooldown = 1; // seconds
-
-    [Header("Oxygen")]
-    public float oxygenCapacity = 100; // seconds
+    private DivingPlayerStats stats;
 
     [Header("Presence in Radius")]
     public float defaultPresence;
@@ -54,7 +31,6 @@ public class DivingController : MonoBehaviour
     private float curContest = 0; // Tracking for a contest between fish and cat during catching
     private float contestThreshold = 5; // The value that contest must be to catch a fish succesfully
     
-    private float stunDuration = 2; // The amount of time in seconds player will be stunned
     private float curStunTimer = 0;
     private float curPounceCooldown;
 
@@ -66,16 +42,16 @@ public class DivingController : MonoBehaviour
     void Awake()
     {
         SetPlayerState(PlayerState.SWIM);
-        
+        stats = gameObject.GetComponent<DivingPlayerStats>(); 
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        SetStamina(maxStamina);
-        SetOxygen(oxygenCapacity);
-        staminaBar.SetMaxValue(maxStamina);
-        oxygenBar.SetMaxValue(oxygenCapacity);
+        SetStamina(stats.maxStamina);
+        SetOxygen(stats.oxygenCapacity);
+        staminaBar.SetMaxValue(stats.maxStamina);
+        oxygenBar.SetMaxValue(stats.oxygenCapacity);
 
         playerBody = gameObject.GetComponent<Rigidbody2D>();
     }
@@ -115,7 +91,7 @@ public class DivingController : MonoBehaviour
     {
         Vector2 targetVelocity = velocityVector.normalized * swimSpeed;
 
-        float currentAcceleration = (velocityVector.x != 0) ? acceleration : friction;
+        float currentAcceleration = (velocityVector.x != 0) ? stats.acceleration : stats.friction;
 
         Vector2 newVelocity = Vector2.MoveTowards(
             playerBody.linearVelocity,
@@ -129,9 +105,9 @@ public class DivingController : MonoBehaviour
     public void ChargeUpPounce()
     {
         curPounceStamina = Mathf.Clamp(
-            curPounceStamina + Time.deltaTime * chargeUpSpeed, 
+            curPounceStamina + Time.deltaTime * stats.chargeUpSpeed, 
             0,
-            curStamina < maxPounceStamina ? curStamina : maxPounceStamina);
+            curStamina < stats.maxPounceStamina ? curStamina : stats.maxPounceStamina);
     }
     public void StartPounce()
     {
@@ -142,7 +118,7 @@ public class DivingController : MonoBehaviour
         pounceDuration = curPounceStamina / 20; // 5 stamina = 1 second, for now
 
         SetPlayerState(PlayerState.POUNCE);
-        SetStamina(Mathf.Clamp(curStamina - curPounceStamina, 5, maxStamina));
+        SetStamina(Mathf.Clamp(curStamina - curPounceStamina, 5, stats.maxStamina));
     }
     public void SetPounceDirection(Vector2 src, Vector2 dst)
     {
@@ -152,14 +128,14 @@ public class DivingController : MonoBehaviour
     public void Pounce(Vector2 direction)
     {
         //Debug.Log(pounceSpeed + curPounceStamina * 0.5f);
-        Vector2 targetVelocity = direction.normalized * (pounceSpeed + curPounceStamina * 0.5f);
+        Vector2 targetVelocity = direction.normalized * (stats.pounceSpeed + curPounceStamina * 0.5f);
 
         playerBody.linearVelocity = new Vector3(targetVelocity.x, targetVelocity.y, 0); // instantaneous max speed
     }
 
     void StaminaRegen(float amount)
     {
-        SetStamina(Mathf.Clamp(curStamina + amount, 0, maxStamina));
+        SetStamina(Mathf.Clamp(curStamina + amount, 0, stats.maxStamina));
     }
 
     public void SetPlayerState(PlayerState state)
@@ -189,7 +165,7 @@ public class DivingController : MonoBehaviour
                 }
             case PlayerState.STUN:
                 {
-                    curStunTimer = stunDuration;
+                    curStunTimer = stats.stunDuration;
                     break;
                 }
             default:
@@ -205,7 +181,7 @@ public class DivingController : MonoBehaviour
     {
         float angle = Vector2.Angle(velocityVector, curFish.direction);
 
-        float power = strength * (angle / 180);
+        float power = stats.strength * (angle / 180);
 
         float contest = (power - curFish.strength) / curFish.strength;
 
@@ -268,7 +244,6 @@ public class DivingController : MonoBehaviour
         }
     }
 
-    
     void Stunned()
     {
         curStunTimer -= Time.deltaTime;
@@ -307,14 +282,14 @@ public class DivingController : MonoBehaviour
         {
             case PlayerState.SWIM:
             {
-                Swim(speed);
-                StaminaRegen(staminaRegen * Time.deltaTime);
+                Swim(stats.speed);
+                StaminaRegen(stats.staminaRegen * Time.deltaTime);
 
                 break;
             }
             case PlayerState.STEALTH:
             {
-                Swim(stealthSpeed);
+                Swim(stats.stealthSpeed);
                 ChargeUpPounce();
                 break;
             }
@@ -325,7 +300,7 @@ public class DivingController : MonoBehaviour
 
                 if(pounceDuration < 0)
                     {
-                        curPounceCooldown = pounceCooldown; // start cooldown
+                        curPounceCooldown = stats.pounceCooldown; // start cooldown
                         SetPlayerState(PlayerState.SWIM);
                     }
 
