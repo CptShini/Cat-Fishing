@@ -20,11 +20,11 @@ public class DivingController : MonoBehaviour
     [SerializeField] private Camera mainCamera;
     [SerializeField] private CircleCollider2D presenceCollider; // collider for presence detection from fish
     [SerializeField] private Collider2D defaultCollider; // collider for obstacles
-    [SerializeField] private StatBar staminaBar;
+    [SerializeField] private StatBar stamina;
     [SerializeField] private StatBar oxygenBar;
 
     private FishCatCommunicator curFish;
-    private float curStamina, curPounceStamina = 0; // currrent player stamina, and current stamina for pounce
+    private float curPounceStamina = 0; // currrent player stamina, and current stamina for pounce
     private float pounceDuration = 0; // Tracker for when to stop pounceing. Can change based on 
     private Vector2 pounceDirection; // For saving the pounce direction during multiple updates
     private float curOxygen = 100;
@@ -48,9 +48,9 @@ public class DivingController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        SetStamina(stats.maxStamina);
         SetOxygen(stats.oxygenCapacity);
-        staminaBar.SetMaxValue(stats.maxStamina);
+        stamina.SetMaxValue(stats.maxStamina);
+        stamina.SetCurrentValue(stats.maxStamina);
         oxygenBar.SetMaxValue(stats.oxygenCapacity);
 
         playerBody = gameObject.GetComponent<Rigidbody2D>();
@@ -107,7 +107,7 @@ public class DivingController : MonoBehaviour
         curPounceStamina = Mathf.Clamp(
             curPounceStamina + Time.deltaTime * stats.chargeUpSpeed, 
             0,
-            curStamina < stats.maxPounceStamina ? curStamina : stats.maxPounceStamina);
+            stamina.currentValue < stats.maxPounceStamina ? stamina.currentValue : stats.maxPounceStamina);
     }
     public void StartPounce()
     {
@@ -118,8 +118,9 @@ public class DivingController : MonoBehaviour
         pounceDuration = curPounceStamina / 20; // 5 stamina = 1 second, for now
 
         SetPlayerState(PlayerState.POUNCE);
-        SetStamina(Mathf.Clamp(curStamina - curPounceStamina, 5, stats.maxStamina));
+        stamina.SetCurrentValue(Mathf.Clamp(stamina.currentValue - curPounceStamina, 5, stats.maxStamina));
     }
+
     public void SetPounceDirection(Vector2 src, Vector2 dst)
     {
         pounceDirection = dst - src;
@@ -135,7 +136,7 @@ public class DivingController : MonoBehaviour
 
     void StaminaRegen(float amount)
     {
-        SetStamina(Mathf.Clamp(curStamina + amount, 0, stats.maxStamina));
+        stamina.SetCurrentValue(Mathf.Clamp(stamina.currentValue + amount, 0, stats.maxStamina));
     }
 
     public void SetPlayerState(PlayerState state)
@@ -255,12 +256,6 @@ public class DivingController : MonoBehaviour
         }
     }
 
-    void SetStamina(float value)
-    {
-        this.curStamina = value;
-        staminaBar.SetCurrentValue(value);
-    }
-
     void SetOxygen(float value)
     {
         this.curOxygen = value;
@@ -283,6 +278,7 @@ public class DivingController : MonoBehaviour
             case PlayerState.SWIM:
             {
                 Swim(stats.speed);
+
                 StaminaRegen(stats.staminaRegen * Time.deltaTime);
 
                 break;
