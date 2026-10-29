@@ -1,5 +1,8 @@
 using System;
+using Assets.Scripts.Fish;
+using Assets.Scripts.Fish.Movement;
 using Assets.Scripts.PlayerState;
+using Unity.VisualScripting;
 using UnityEngine;
 
 using UnityEngine.InputSystem;
@@ -20,8 +23,6 @@ public class DivingController : MonoBehaviour
     public PlayerState state;
     private PounceScript _pounce;
     private FishCatCommunicator curFish;
-    private float curContest = 0; // Tracking for a contest between fish and cat during catching
-    private float contestThreshold = 5; // The value that contest must be to catch a fish succesfully
     private float curStunTimer = 0;
 
     private Rigidbody2D playerBody;
@@ -40,7 +41,6 @@ public class DivingController : MonoBehaviour
     {
         stats = DivingPlayerStats.Instance;
         _pounce = gameObject.GetComponent<PounceScript>();
-        Debug.Log($"HELLO???? {stats.acceleration}");
         SetPlayerState(PlayerState.SWIM);
         playerBody = gameObject.GetComponent<Rigidbody2D>();
     }
@@ -110,7 +110,6 @@ public class DivingController : MonoBehaviour
             case PlayerState.GRAB:
                 {
                     presenceCollider.radius = stats.pouncePresence;
-                    curContest = contestThreshold / 2;
                     DivingInventory.Instance.SetEnabled(false);
                     break;
                 }
@@ -129,43 +128,19 @@ public class DivingController : MonoBehaviour
 
     void Grab()
     {
-        float angle = Vector2.Angle(velocityVector, curFish.direction);
-        float power = stats.strength * (angle / 180);
-        float contest = (power - curFish.strength) / curFish.strength;
-        curContest += contest * Time.deltaTime;
-
-        if( curContest >= contestThreshold)
-        {
-            //CATCH FISH
-            curFish.joint.connectedBody = null;
-            FishCollectible fish = new FishCollectible(curFish.fish);
-            if(DivingInventory.Instance.Add(fish)) // Checks if putting in inventory is successful
-            {
-                Destroy(curFish.gameObject);
-                SetPlayerState(PlayerState.SWIM);
-            }
-            else // Cat cannot win, if their inventory is full
-            {
-                SetPlayerState(PlayerState.STUN); 
-            }
-
-        } else if(curContest <= 0)
-        {
-            //LOSE FISH
-            curFish.joint.connectedBody = null;
-            SetPlayerState(PlayerState.STUN);
-        }
-        Debug.Log($"Contest: {curContest / contestThreshold * 100}%");
+        playerBody.linearVelocity = new Vector3(0, 0, 0);
+        CatchingMinigame.Instance.Grab(velocityVector);
     }
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        // Disabled for now
-        if (col.gameObject.layer == 10 && state != PlayerState.GRAB)
+        if (col.gameObject.layer == 7 && state != PlayerState.GRAB)
         {
-            curFish = col.gameObject.GetComponent<FishCatCommunicator>();
+            Fish fish = col.gameObject.GetComponent<FishStats>().fish;
+            FishCaughtMovement movement = col.gameObject.GetComponent<FishCaughtMovement>();
 
-            curFish.joint.connectedBody = this.playerBody;
+            col.gameObject.GetComponent<FishController>().Catch();
+            CatchingMinigame.Instance.Init(fish, movement);
             SetPlayerState(PlayerState.GRAB);
         }
     }

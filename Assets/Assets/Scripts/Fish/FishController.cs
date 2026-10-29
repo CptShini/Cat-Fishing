@@ -44,6 +44,8 @@ namespace Assets.Scripts.Fish
             
             _normalMovement = GetComponent<FishNormalMovement>();
             _caughtMovement = GetComponent<FishCaughtMovement>();
+
+            _caughtMovement.onLoose.AddListener(Flee);
         
             Wander();
         }
@@ -96,9 +98,15 @@ namespace Assets.Scripts.Fish
             };
             return RandomHelper.WeightedRandom(speedWeights);
         }
+
     
-        private void Flee(Vector2 fleePoint)
+        private void Flee(Vector2 fleePoint, bool loose)
         {
+            Debug.Log("FLEE GODDAMMIT");
+            if(_state == FishState.Caught && !loose)
+            {
+                return;
+            }
             _state = FishState.Flee;
             _speedState = FishSpeed.Max;
             _stateClock = Random.Range(minFleeTime, maxFleeTime);
@@ -112,11 +120,12 @@ namespace Assets.Scripts.Fish
         public void Catch()
         {
             _state = FishState.Caught;
-            _speedState = FishSpeed.Max;
-        
+            _speedState = FishSpeed.Still;
+
+            
             _normalMovement.enabled = false;
             _caughtMovement.enabled = true;
-            
+            _normalMovement.Catch();
             _caughtMovement.Catch(_speedState);
         }
 
