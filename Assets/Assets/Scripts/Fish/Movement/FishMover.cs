@@ -44,6 +44,11 @@ namespace Assets.Scripts.Fish.Movement
 
         private void FixedUpdate()
         {
+            if (_speed == 0)
+            {
+                _rb.linearVelocity = new Vector2(0,0);
+                return;
+            }
             Debug.DrawRay(transform.position, _desiredDir.normalized * (_speed / maxSpeed), Color.red);
             
             if (target)
@@ -87,6 +92,7 @@ namespace Assets.Scripts.Fish.Movement
         {
             _speed = speed switch
             {
+                FishSpeed.Still => 0,
                 FishSpeed.Chill => maxSpeed / 10,
                 FishSpeed.Slow => maxSpeed / 6,
                 FishSpeed.Normal => maxSpeed / 4,

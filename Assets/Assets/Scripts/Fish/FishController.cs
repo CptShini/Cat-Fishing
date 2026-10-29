@@ -120,11 +120,12 @@ namespace Assets.Scripts.Fish
         public void Catch()
         {
             _state = FishState.Caught;
-            _speedState = FishSpeed.Max;
-        
+            _speedState = FishSpeed.Still;
+
+            
             _normalMovement.enabled = false;
             _caughtMovement.enabled = true;
-            
+            _normalMovement.Catch();
             _caughtMovement.Catch(_speedState);
         }
 
