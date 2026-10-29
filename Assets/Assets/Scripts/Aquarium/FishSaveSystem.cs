@@ -146,4 +146,14 @@ public static class FishSaveSystem
 
         return result;
     }
+
+    public static void ResetFishSave()
+    {
+        PlayerPrefs.DeleteKey("FishInventory");
+        PlayerPrefs.DeleteKey("FishTanks");
+
+        PlayerPrefs.Save();
+
+        Debug.Log("Fish inventory and tank saves have been reset.");
+    }
 }

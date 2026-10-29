@@ -57,4 +57,10 @@ public class FishTank : MonoBehaviour, IInteractable
 
         return true;
     }
+
+    public void ClearTank()
+    {
+        fishes.Clear();
+        FishSaveSystem.SaveTank(this);
+    }
 }

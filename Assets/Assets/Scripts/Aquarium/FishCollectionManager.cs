@@ -54,6 +54,12 @@ public class FishCollectionManager : MonoBehaviour
 
         return true;
     }
+
+    public void ReloadInventoryAfterReset()
+    {
+        collectedFish.Clear();
+        OnCollectionChanged?.Invoke();
+    }
     
     public void TransferFishCollectibles(List<FishCollectible> list)
     {
