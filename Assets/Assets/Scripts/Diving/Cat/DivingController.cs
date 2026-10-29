@@ -173,10 +173,11 @@ public class DivingController : MonoBehaviour
 
     public void OnToggle(CallbackContext  input)
     {
-        if( !(state == PlayerState.GRAB))
+        if(state == PlayerState.GRAB)
         {
-            DivingInventory.Instance.Toggle();
+            return;
         }
+        DivingInventory.Instance.Toggle();
     }
 
     void Stunned()
@@ -198,8 +199,6 @@ public class DivingController : MonoBehaviour
             case PlayerState.SWIM:
             {
                 Swim(stats.speed);
-
-                StaminaBar.Instance.StaminaRegen(stats.staminaRegen * Time.deltaTime);
                 break;
             }
             case PlayerState.STEALTH:
