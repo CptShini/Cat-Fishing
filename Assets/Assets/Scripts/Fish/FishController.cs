@@ -98,10 +98,12 @@ namespace Assets.Scripts.Fish
             };
             return RandomHelper.WeightedRandom(speedWeights);
         }
+
     
-        private void Flee(Vector2 fleePoint)
+        private void Flee(Vector2 fleePoint, bool loose)
         {
-            if(_state == FishState.Caught)
+            Debug.Log("FLEE GODDAMMIT");
+            if(_state == FishState.Caught && !loose)
             {
                 return;
             }

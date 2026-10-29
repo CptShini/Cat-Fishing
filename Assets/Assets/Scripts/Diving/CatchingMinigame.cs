@@ -72,8 +72,6 @@ public class CatchingMinigame : MonoBehaviour
             movement.Loose(DivingController.Instance.gameObject.transform.position);
             gameObject.SetActive(false);
         }
-
-        Debug.Log($"Contest: {CatchBar.Instance.currentValue / contestThreshold * 100}%");
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created

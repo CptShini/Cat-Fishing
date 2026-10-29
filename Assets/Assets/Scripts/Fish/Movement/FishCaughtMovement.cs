@@ -10,7 +10,7 @@ namespace Assets.Scripts.Fish.Movement
     {
         [SerializeField] private FishCatchPatternSO catchPattern;
         [SerializeField] private float patternSpeed = 1f;
-        public readonly UnityEvent<Vector2> onLoose = new();
+        public readonly UnityEvent<Vector2,bool> onLoose = new();
 
         private bool _catching;
         private float _catchClock;
@@ -56,7 +56,7 @@ namespace Assets.Scripts.Fish.Movement
         {
             _catching = false;
             _catchClock = 0f;
-            onLoose.Invoke(otherPos);
+            onLoose.Invoke(otherPos, true);
         }
 
         private void NextMove(FishMove previousMove)
