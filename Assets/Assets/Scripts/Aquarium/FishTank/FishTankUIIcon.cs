@@ -22,7 +22,7 @@ public class FishTankUIIcon : MonoBehaviour, IDropHandler
 
     public void OnDrop(PointerEventData eventData)
     {
-        FishSO fish = FishInventorySlot.DraggedFish;
+        Fish fish = FishInventorySlot.DraggedFish;
 
         if (fish == null || fishTank == null)
             return;

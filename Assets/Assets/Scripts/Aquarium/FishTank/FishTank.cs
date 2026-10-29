@@ -4,9 +4,9 @@ using System.Collections.Generic;
 public class FishTank : MonoBehaviour, IInteractable
 {
     [Header("Fish in this tank")]
-    [SerializeField] private List<FishSO> fishes = new List<FishSO>();
+    [SerializeField] private List<Fish> fishes = new List<Fish>();
 
-    public IReadOnlyList<FishSO> Fishes => fishes;
+    public IReadOnlyList<Fish> Fishes => fishes;
 
     public bool CanInteract()
     {
@@ -18,7 +18,7 @@ public class FishTank : MonoBehaviour, IInteractable
         FishTankUIController.Instance.Open(this);
     }
 
-    public bool AddFish(FishSO fish)
+    public bool AddFish(Fish fish)
     {
         fishes.Add(fish);
         Debug.Log(fish.fishName + " added to tank: " + gameObject.name);
@@ -26,7 +26,7 @@ public class FishTank : MonoBehaviour, IInteractable
         return true;
     }
 
-    public bool RemoveFish(FishSO fish)
+    public bool RemoveFish(Fish fish)
     {
         bool removed = fishes.Remove(fish);
 

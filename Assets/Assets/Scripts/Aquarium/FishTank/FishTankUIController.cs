@@ -39,7 +39,7 @@ public class FishTankUIController : MonoBehaviour
         // Fish List (to change later to visible sprites of fishes instead of text)
         fishListText.text = "";
 
-        foreach (FishSO fish in tank.Fishes)
+        foreach (Fish fish in tank.Fishes)
         {
             fishListText.text += fish.fishName + "\n";
         }

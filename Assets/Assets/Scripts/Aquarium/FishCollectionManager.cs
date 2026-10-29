@@ -29,11 +29,11 @@ public class FishCollectionManager : MonoBehaviour
             return;
 
         collectedFish.Add(fish);
-        Debug.Log("Added to collection: " + fish.fishName);
+        Debug.Log($"Added to collection: {fish.fishName}, weight: {fish.weight:F2}");
         OnCollectionChanged?.Invoke();
     }
 
-    public bool RemoveFishItem(FishSO fish)
+    public bool RemoveFishItem(Fish fish)
     {
         if (fish == null)
             return false;
@@ -48,9 +48,11 @@ public class FishCollectionManager : MonoBehaviour
     
     public void TransferFishCollectibles(List<FishCollectible> list)
     {
-        foreach (var fish in list)
+        foreach (FishCollectible collectible in list)
         {
-            collectedFish.Add(fish.fish);
+            collectedFish.Add(collectible.fish);
         }
+
+        OnCollectionChanged?.Invoke();
     }
 }

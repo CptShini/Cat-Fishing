@@ -12,8 +12,8 @@ public class FishInventorySlot : MonoBehaviour, IBeginDragHandler, IDragHandler,
     private CanvasGroup canvasGroup;
     private GameObject dragVisual;
 
-    public FishSO Fish { get; private set; }
-    public static FishSO DraggedFish { get; private set; }
+    public Fish Fish { get; private set; }
+    public static Fish DraggedFish { get; private set; }
 
     private void Awake()
     {
@@ -24,12 +24,12 @@ public class FishInventorySlot : MonoBehaviour, IBeginDragHandler, IDragHandler,
             canvasGroup = gameObject.AddComponent<CanvasGroup>();
     }
 
-    public void SetFish(FishSO fish)
+    public void SetFish(Fish fish)
     {
         if (fish == null) return;
 
         Fish = fish;
-        fishIcon.sprite = fish.fishIcon;
+        fishIcon.sprite = fish.sprite;
         fishName.text = fish.fishName;
         fishIcon.enabled = fish.sprite != null;
     }
