@@ -13,6 +13,11 @@ public class ExitArea : MonoBehaviour, IInteractable
     {
         if(scene == "Aquarium") // Assume this is in diving scene
         {
+            if(DivingController.Instance.state == Assets.Scripts.PlayerState.PlayerState.GRAB)
+            {
+                return;
+            }
+            
             Debug.Log("TRANSFERING");
             FishCollectionManager.Instance.TransferFishCollectibles(DivingInventory.Instance.GetCollectibleofType<FishCollectible>());
         }
