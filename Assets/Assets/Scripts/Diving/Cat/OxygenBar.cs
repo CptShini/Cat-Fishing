@@ -22,11 +22,13 @@ public class OxygenBar : StatBar
     void ReduceOxygen(float amount)
     {
         AddToCurrentValue(-amount);        
-        if(currentValue <= 0)
+        if(currentValue >= 0)
         {
-            SetCurrentValue(float.MaxValue);
-            SceneTransition.Instance.LoadScene("Aquarium");
+            return;
         }
+        
+        SetCurrentValue(float.MaxValue);
+        SceneTransition.Instance.LoadScene("Aquarium");
     }
 
     void Update()
