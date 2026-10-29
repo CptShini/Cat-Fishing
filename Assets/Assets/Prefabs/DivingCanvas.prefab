@@ -783,7 +783,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StatBar
   foreground: {fileID: 1657603122806773197}
-  currentValue: 0
 --- !u!1 &3244102322806336925
 GameObject:
   m_ObjectHideFlags: 0
@@ -1315,7 +1314,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4651415735339665302}
-  - component: {fileID: 6068146095667172721}
+  - component: {fileID: 5762135507144576091}
   m_Layer: 5
   m_Name: Stamina Meter
   m_TagString: Untagged
@@ -1344,7 +1343,7 @@ RectTransform:
   m_AnchoredPosition: {x: -50, y: 0}
   m_SizeDelta: {x: 50, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &6068146095667172721
+--- !u!114 &5762135507144576091
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1353,11 +1352,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4421625064726149190}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cca9e2d644debcf4ba81c0b314dcfd80, type: 3}
+  m_Script: {fileID: 11500000, guid: d272ecd9bfe6f64409edb74acf2a982b, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::StatBar
+  m_EditorClassIdentifier: Assembly-CSharp::StaminaBar
   foreground: {fileID: 5688202531316886813}
-  currentValue: 0
 --- !u!1 &6975680875948496574
 GameObject:
   m_ObjectHideFlags: 0
@@ -1568,7 +1566,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7122091259670730573}
-  - component: {fileID: 6696175451251767052}
+  - component: {fileID: 1953227958076799798}
   m_Layer: 5
   m_Name: Oxygen Meter
   m_TagString: Untagged
@@ -1597,7 +1595,7 @@ RectTransform:
   m_AnchoredPosition: {x: 10, y: -10}
   m_SizeDelta: {x: 1000, y: 40}
   m_Pivot: {x: 0, y: 1}
---- !u!114 &6696175451251767052
+--- !u!114 &1953227958076799798
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1606,8 +1604,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8471800922274905492}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cca9e2d644debcf4ba81c0b314dcfd80, type: 3}
+  m_Script: {fileID: 11500000, guid: 52554505b2470604cbc412f6a975f674, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::StatBar
+  m_EditorClassIdentifier: Assembly-CSharp::OxygenBar
   foreground: {fileID: 2429995756911053735}
-  currentValue: 0
