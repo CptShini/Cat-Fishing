@@ -128,6 +128,7 @@ public class DivingController : MonoBehaviour
 
     void Grab()
     {
+        playerBody.linearVelocity = new Vector3(0, 0, 0);
         CatchingMinigame.Instance.Grab(velocityVector);
     }
 
