@@ -16,19 +16,32 @@ public class FishCollectionUIController : MonoBehaviour
 
         Refresh();
     }
-
+    
     public void Refresh()
     {
-        if (fishCollection == null)
-            return;
+        for (int i = content.childCount - 1; i >= 0; i--)
+        {
+            Transform child = content.GetChild(i);
 
-        foreach (Transform child in content)
-            Destroy(child.gameObject);
+            if (child != null)
+                Destroy(child.gameObject);
+        }
 
         foreach (Fish fish in fishCollection.CollectedFish)
         {
+            if (fish == null)
+                continue;
+
             FishInventorySlot slot = Instantiate(slotPrefab, content);
-            slot.SetFish(fish);
+
+            if (slot != null)
+                slot.SetFish(fish);
         }
+    }
+
+    private void OnDestroy()
+    {
+        if (fishCollection != null)
+            fishCollection.OnCollectionChanged -= Refresh;
     }
 }

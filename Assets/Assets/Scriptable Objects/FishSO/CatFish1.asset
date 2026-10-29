@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2fc9073c9404fd41b3d4eb14df2c97f, type: 3}
   m_Name: CatFish1
   m_EditorClassIdentifier: Assembly-CSharp::FishSO
-  fishName: CatFish1
+  fishKey: CatFish001
+  fishName: CatFish001
   fishIcon: {fileID: 21300000, guid: e9f6c54874fde1148b499987c09abbc5, type: 3}
   weightMin: 2
   weightMax: 10
