@@ -183,12 +183,12 @@ public class DivingController : MonoBehaviour
     void Stunned()
     {
         curStunTimer -= Time.deltaTime;
-
-        if (curStunTimer < 0)
+        if (curStunTimer >= 0)
         {
-            defaultCollider.enabled = true;
-            SetPlayerState(PlayerState.SWIM);
+            return;
         }
+        defaultCollider.enabled = true;
+        SetPlayerState(PlayerState.SWIM);
     }
     
     // Update is called once per frame
