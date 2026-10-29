@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6964749726221392053}
   - component: {fileID: 5293987828781041141}
   - component: {fileID: 8490106021673024782}
-  m_Layer: 7
+  m_Layer: 10
   m_Name: Fake Fish
   m_TagString: Untagged
   m_Icon: {fileID: 0}

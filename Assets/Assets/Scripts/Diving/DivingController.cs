@@ -246,13 +246,13 @@ public class DivingController : MonoBehaviour
     void OnCollisionEnter2D(Collision2D col)
     {
         // Disabled for now
-        /*if (col.gameObject.layer == 7 && state != PlayerState.GRAB)
+        if (col.gameObject.layer == 10 && state != PlayerState.GRAB)
         {
             curFish = col.gameObject.GetComponent<FishCatCommunicator>();
 
             curFish.joint.connectedBody = this.playerBody;
             SetPlayerState(PlayerState.GRAB);
-        }*/
+        }
         
     }
     
