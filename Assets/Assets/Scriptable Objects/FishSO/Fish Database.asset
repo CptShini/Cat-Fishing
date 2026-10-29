@@ -12,4 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f490b170f66e1444b85eb5ece76cc955, type: 3}
   m_Name: Fish Database
   m_EditorClassIdentifier: Assembly-CSharp::FishDatabase
-  fishTypes: []
+  fishTypes:
+  - {fileID: 11400000, guid: 6a86a325640c37047a677ba8c19722f6, type: 2}
+  - {fileID: 11400000, guid: 82831bff64c4f8743beeebe2d5880c29, type: 2}
