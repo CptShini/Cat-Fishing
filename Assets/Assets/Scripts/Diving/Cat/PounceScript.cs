@@ -62,7 +62,6 @@ public class PounceScript : MonoBehaviour
         
         if(DivingController.Instance.state == PlayerState.POUNCE)
         {
-            Debug.Log("AHAAAAAAHHHHH");
             Pounce();
             pounceDuration -= Time.deltaTime;
 

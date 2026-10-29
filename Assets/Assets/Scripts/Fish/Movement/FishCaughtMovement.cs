@@ -2,6 +2,7 @@
 using Assets.Scripts.Fish.CatchMinigame;
 using Assets.Scripts.Helpers;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Assets.Scripts.Fish.Movement
 {
@@ -9,18 +10,24 @@ namespace Assets.Scripts.Fish.Movement
     {
         [SerializeField] private FishCatchPatternSO catchPattern;
         [SerializeField] private float patternSpeed = 1f;
+        public readonly UnityEvent<Vector2> onLoose = new();
 
         private bool _catching;
         private float _catchClock;
         private CatchPatternMove _currentMove;
         private Vector2 _direction;
+
+        public Vector2 direction => _direction;
                 
         private void Update()
         {
             if (!_catching) return;
             
             if (_catchClock > 0f)
+            {
+                Debug.Log($"DIRECTION {_direction}. DURATION {_catchClock}");
                 _catchClock -= Time.deltaTime * patternSpeed;
+            }
             else
             {
                 _catchClock = 0f;
@@ -44,6 +51,14 @@ namespace Assets.Scripts.Fish.Movement
             
             _catching = false;
             _catchClock = 0f;
+            Debug.Log($"Caught!");
+        }
+
+        public void Loose(Vector2 otherPos)
+        {
+            _catching = false;
+            _catchClock = 0f;
+            onLoose.Invoke(otherPos);
         }
 
         private void NextMove(FishMove previousMove)
@@ -52,6 +67,7 @@ namespace Assets.Scripts.Fish.Movement
             _catchClock = _currentMove.duration;
             
             _direction = _currentMove.move.ToVector2();
+            Debug.Log($"DIRECTION {_direction}. DURATION {_catchClock}");
         }
 
         private CatchPatternMove GenerateNextMove(FishMove previousMove)

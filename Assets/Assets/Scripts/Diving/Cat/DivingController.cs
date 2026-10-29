@@ -1,4 +1,5 @@
 using System;
+using Assets.Scripts.Fish;
 using Assets.Scripts.Fish.Movement;
 using Assets.Scripts.PlayerState;
 using Unity.VisualScripting;
@@ -131,7 +132,8 @@ public class DivingController : MonoBehaviour
 
     void Grab()
     {
-        float angle = Vector2.Angle(velocityVector, curFish.direction);
+        CatchingMinigame.Instance.Grab(velocityVector);
+        /*float angle = Vector2.Angle(velocityVector, curFish.direction);
         float power = stats.strength * (angle / 180);
         float contest = (power - curFish.strength) / curFish.strength;
         curContest += contest * Time.deltaTime;
@@ -157,7 +159,7 @@ public class DivingController : MonoBehaviour
             curFish.joint.connectedBody = null;
             SetPlayerState(PlayerState.STUN);
         }
-        Debug.Log($"Contest: {curContest / contestThreshold * 100}%");
+        Debug.Log($"Contest: {curContest / contestThreshold * 100}%");*/
     }
 
     void OnCollisionEnter2D(Collision2D col)
@@ -172,8 +174,12 @@ public class DivingController : MonoBehaviour
         }
         if (col.gameObject.layer == 7 && state != PlayerState.GRAB)
         {
-            col.gameObject.GetComponent<FishCaughtMovement>();
-           // CatchingMinigame.Instance.Init();
+            Fish fish = col.gameObject.GetComponent<FishStats>().fish;
+            FishCaughtMovement movement = col.gameObject.GetComponent<FishCaughtMovement>();
+
+            col.gameObject.GetComponent<FishController>().Catch();
+            CatchingMinigame.Instance.Init(fish, movement);
+            SetPlayerState(PlayerState.GRAB);
         }
     }
 

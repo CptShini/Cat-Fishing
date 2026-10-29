@@ -7,6 +7,8 @@ public class FishSO : ScriptableObject
 
     public Sprite fishIcon;
 
+    public float defaultStrength;
+
     [Header("Weight")]
     public float weightMin;
     public float weightMax;

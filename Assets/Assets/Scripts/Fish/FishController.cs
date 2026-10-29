@@ -41,6 +41,7 @@ namespace Assets.Scripts.Fish
         {
             sightHandler.OnSeePlayer.AddListener(Flee);
             perceptionHandler.onDetectPlayer.AddListener(Flee);
+            _caughtMovement.onLoose.AddListener(Flee);
             
             _normalMovement = GetComponent<FishNormalMovement>();
             _caughtMovement = GetComponent<FishCaughtMovement>();
@@ -99,6 +100,10 @@ namespace Assets.Scripts.Fish
     
         private void Flee(Vector2 fleePoint)
         {
+            if(_state == FishState.Caught)
+            {
+                return;
+            }
             _state = FishState.Flee;
             _speedState = FishSpeed.Max;
             _stateClock = Random.Range(minFleeTime, maxFleeTime);
