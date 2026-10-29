@@ -1,5 +1,6 @@
 using System;
 using Assets.Scripts.PlayerState;
+using Unity.VisualScripting;
 using UnityEngine;
 
 using UnityEngine.InputSystem;
@@ -167,6 +168,11 @@ public class DivingController : MonoBehaviour
 
             curFish.joint.connectedBody = this.playerBody;
             SetPlayerState(PlayerState.GRAB);
+        }
+        if (col.gameObject.layer == 7 && state != PlayerState.GRAB)
+        {
+            //col.gameObject.GetComponent
+           // CatchingMinigame.Instance.Init();
         }
     }
 
