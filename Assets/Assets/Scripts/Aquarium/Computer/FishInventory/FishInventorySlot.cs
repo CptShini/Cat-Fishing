@@ -31,7 +31,7 @@ public class FishInventorySlot : MonoBehaviour, IBeginDragHandler, IDragHandler,
         Fish = fish;
         fishIcon.sprite = fish.fishIcon;
         fishName.text = fish.fishName;
-        fishIcon.enabled = fish.fishIcon != null;
+        fishIcon.enabled = fish.sprite != null;
     }
 
 
