@@ -8,14 +8,16 @@ public class FishInventorySlot : MonoBehaviour, IBeginDragHandler, IDragHandler,
     [SerializeField] private Image fishIcon;
     [SerializeField] private TMP_Text fishName;
 
+    private Canvas canvas;
     private CanvasGroup canvasGroup;
+    private GameObject dragVisual;
 
     public FishSO Fish { get; private set; }
-
     public static FishSO DraggedFish { get; private set; }
 
     private void Awake()
     {
+        canvas = GetComponentInParent<Canvas>();
         canvasGroup = GetComponent<CanvasGroup>();
 
         if (canvasGroup == null)
@@ -37,32 +39,66 @@ public class FishInventorySlot : MonoBehaviour, IBeginDragHandler, IDragHandler,
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (Fish == null || fishIcon.sprite == null)
+        if (Fish == null || fishIcon == null || fishIcon.sprite == null)
+            return;
+
+        if (canvas == null)
             return;
 
         DraggedFish = Fish;
 
-        if (FishDragPreview.Instance != null)
-        {
-            FishDragPreview.Instance.Show(fishIcon.sprite);
-            FishDragPreview.Instance.Move(eventData.position);
-        }
+        dragVisual = new GameObject("FishDragVisual");
+        dragVisual.transform.SetParent(canvas.transform, false);
+        dragVisual.transform.SetAsLastSibling();
+
+        Image image = dragVisual.AddComponent<Image>();
+        image.sprite = fishIcon.sprite;
+        image.preserveAspect = true;
+        image.raycastTarget = false;
+
+        RectTransform dragRect = dragVisual.GetComponent<RectTransform>();
+        dragRect.sizeDelta = fishIcon.rectTransform.rect.size;
+        dragRect.position = eventData.position;
+
+        CanvasGroup dragCanvasGroup = dragVisual.AddComponent<CanvasGroup>();
+        dragCanvasGroup.alpha = 0.7f;
+        dragCanvasGroup.blocksRaycasts = false;
 
         canvasGroup.blocksRaycasts = false;
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (FishDragPreview.Instance != null)
-            FishDragPreview.Instance.Move(eventData.position);
+        if (dragVisual != null)
+            dragVisual.transform.position = eventData.position;
+    }
+
+    
+    private void OnDisable()
+    {
+        if (dragVisual != null)
+        {
+            Destroy(dragVisual);
+            dragVisual = null;
+        }
+
+        if (canvasGroup != null)
+            canvasGroup.blocksRaycasts = true;
+
+        if (DraggedFish == Fish)
+            DraggedFish = null;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        canvasGroup.blocksRaycasts = true;
+        if (dragVisual != null)
+        {
+            Destroy(dragVisual);
+            dragVisual = null;
+        }
 
-        if (FishDragPreview.Instance != null)
-            FishDragPreview.Instance.Hide();
+        if (canvasGroup != null)
+            canvasGroup.blocksRaycasts = true;
 
         DraggedFish = null;
     }
