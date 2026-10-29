@@ -23,8 +23,6 @@ public class DivingController : MonoBehaviour
     public PlayerState state;
     private PounceScript _pounce;
     private FishCatCommunicator curFish;
-    private float curContest = 0; // Tracking for a contest between fish and cat during catching
-    private float contestThreshold = 5; // The value that contest must be to catch a fish succesfully
     private float curStunTimer = 0;
 
     private Rigidbody2D playerBody;
@@ -112,7 +110,6 @@ public class DivingController : MonoBehaviour
             case PlayerState.GRAB:
                 {
                     presenceCollider.radius = stats.pouncePresence;
-                    curContest = contestThreshold / 2;
                     DivingInventory.Instance.SetEnabled(false);
                     break;
                 }
@@ -132,45 +129,10 @@ public class DivingController : MonoBehaviour
     void Grab()
     {
         CatchingMinigame.Instance.Grab(velocityVector);
-        /*float angle = Vector2.Angle(velocityVector, curFish.direction);
-        float power = stats.strength * (angle / 180);
-        float contest = (power - curFish.strength) / curFish.strength;
-        curContest += contest * Time.deltaTime;
-
-        if( curContest >= contestThreshold)
-        {
-            //CATCH FISH
-            curFish.joint.connectedBody = null;
-            FishCollectible fish = new FishCollectible(curFish.fish);
-            if(DivingInventory.Instance.Add(fish)) // Checks if putting in inventory is successful
-            {
-                Destroy(curFish.gameObject);
-                SetPlayerState(PlayerState.SWIM);
-            }
-            else // Cat cannot win, if their inventory is full
-            {
-                SetPlayerState(PlayerState.STUN); 
-            }
-
-        } else if(curContest <= 0)
-        {
-            //LOSE FISH
-            curFish.joint.connectedBody = null;
-            SetPlayerState(PlayerState.STUN);
-        }
-        Debug.Log($"Contest: {curContest / contestThreshold * 100}%");*/
     }
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        // Disabled for now
-        if (col.gameObject.layer == 10 && state != PlayerState.GRAB)
-        {
-            curFish = col.gameObject.GetComponent<FishCatCommunicator>();
-
-            curFish.joint.connectedBody = this.playerBody;
-            SetPlayerState(PlayerState.GRAB);
-        }
         if (col.gameObject.layer == 7 && state != PlayerState.GRAB)
         {
             Fish fish = col.gameObject.GetComponent<FishStats>().fish;
