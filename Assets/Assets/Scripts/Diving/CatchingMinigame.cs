@@ -1,4 +1,5 @@
 
+using System;
 using System.Runtime.CompilerServices;
 using Assets.Scripts.Fish;
 using Assets.Scripts.Fish.Movement;
@@ -17,7 +18,6 @@ public class CatchingMinigame : MonoBehaviour
     [SerializeField] private GameObject catAndFish;
     [SerializeField] private Image fishImage;
     [SerializeField] private Image catImage;
-    private float curContest = 0; // Tracking for a contest between fish and cat during catching
     private float contestThreshold = 5; // The value that contest must be to catch a fish succesfully
     private float fishAngle;
 
@@ -35,18 +35,21 @@ public class CatchingMinigame : MonoBehaviour
     {
         this.fish = fish;
         this.movement = movement;
-        fishImage.sprite = fish.sprite;
+        //fishImage.sprite = fish.sprite;
         gameObject.SetActive(true);
+
+        CatchBar.Instance.SetMaxValue(contestThreshold);
+        CatchBar.Instance.SetCurrentValue(contestThreshold / 2);
     }
 
     public void Grab(Vector2 velocityVector)
     {
         float angle = Vector2.Angle(velocityVector, movement.direction);
         float power = DivingPlayerStats.Instance.strength * (angle / 180);
-        float contest = (power - fish.strength) / fish.strength;
-        curContest += contest * Time.deltaTime;
+        float contest = Math.Clamp((power - fish.strength) / fish.strength, -10, 5);
+        CatchBar.Instance.AddToCurrentValue(contest * Time.deltaTime);
 
-        if( curContest >= contestThreshold)
+        if( CatchBar.Instance.currentValue >= contestThreshold)
         {
             //CATCH FISH
             FishCollectible fishCol = new FishCollectible(fish);
@@ -60,15 +63,17 @@ public class CatchingMinigame : MonoBehaviour
                 DivingController.Instance.SetPlayerState(PlayerState.STUN);
                 movement.Loose(DivingController.Instance.gameObject.transform.position);
             }
+            gameObject.SetActive(false);
 
-        } else if(curContest <= 0)
+        } else if(CatchBar.Instance.currentValue <= 0)
         {
             //LOSE FISH
             DivingController.Instance.SetPlayerState(PlayerState.STUN);
             movement.Loose(DivingController.Instance.gameObject.transform.position);
+            gameObject.SetActive(false);
         }
-        
-        Debug.Log($"Contest: {curContest / contestThreshold * 100}%");
+
+        Debug.Log($"Contest: {CatchBar.Instance.currentValue / contestThreshold * 100}%");
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created

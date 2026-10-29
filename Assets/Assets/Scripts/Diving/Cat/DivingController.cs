@@ -43,7 +43,6 @@ public class DivingController : MonoBehaviour
     {
         stats = DivingPlayerStats.Instance;
         _pounce = gameObject.GetComponent<PounceScript>();
-        Debug.Log($"HELLO???? {stats.acceleration}");
         SetPlayerState(PlayerState.SWIM);
         playerBody = gameObject.GetComponent<Rigidbody2D>();
     }

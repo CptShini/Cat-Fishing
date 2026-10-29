@@ -41,10 +41,11 @@ namespace Assets.Scripts.Fish
         {
             sightHandler.OnSeePlayer.AddListener(Flee);
             perceptionHandler.onDetectPlayer.AddListener(Flee);
-            _caughtMovement.onLoose.AddListener(Flee);
             
             _normalMovement = GetComponent<FishNormalMovement>();
             _caughtMovement = GetComponent<FishCaughtMovement>();
+
+            _caughtMovement.onLoose.AddListener(Flee);
         
             Wander();
         }

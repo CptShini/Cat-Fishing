@@ -25,7 +25,6 @@ namespace Assets.Scripts.Fish.Movement
             
             if (_catchClock > 0f)
             {
-                Debug.Log($"DIRECTION {_direction}. DURATION {_catchClock}");
                 _catchClock -= Time.deltaTime * patternSpeed;
             }
             else
@@ -51,7 +50,6 @@ namespace Assets.Scripts.Fish.Movement
             
             _catching = false;
             _catchClock = 0f;
-            Debug.Log($"Caught!");
         }
 
         public void Loose(Vector2 otherPos)
@@ -67,7 +65,6 @@ namespace Assets.Scripts.Fish.Movement
             _catchClock = _currentMove.duration;
             
             _direction = _currentMove.move.ToVector2();
-            Debug.Log($"DIRECTION {_direction}. DURATION {_catchClock}");
         }
 
         private CatchPatternMove GenerateNextMove(FishMove previousMove)
