@@ -7,7 +7,6 @@ public class Fish
     public Sprite sprite;
     public float weight;
 
-
     public Fish(FishSO fish)
     {
         this.fishName = fish.fishName;

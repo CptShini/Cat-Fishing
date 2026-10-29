@@ -1,4 +1,5 @@
 using System;
+using Assets.Scripts.Fish.Movement;
 using Assets.Scripts.PlayerState;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -171,7 +172,7 @@ public class DivingController : MonoBehaviour
         }
         if (col.gameObject.layer == 7 && state != PlayerState.GRAB)
         {
-            //col.gameObject.GetComponent
+            col.gameObject.GetComponent<FishCaughtMovement>();
            // CatchingMinigame.Instance.Init();
         }
     }

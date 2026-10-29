@@ -259,6 +259,7 @@ GameObject:
   - component: {fileID: 6191101500634081704}
   - component: {fileID: 7517340754007288589}
   - component: {fileID: 7310549756964335776}
+  - component: {fileID: 2908896234982446586}
   m_Layer: 7
   m_Name: Fish
   m_TagString: Fish
@@ -359,12 +360,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8c268f5061947818c25daf7049be8c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Fish.FishController
-  _minWanderTime: 1
-  _maxWanderTime: 15
-  _minFleeTime: 5
-  _maxFleeTime: 10
-  _sightHandler: {fileID: 2980226103878150663}
-  _perceptionHandler: {fileID: 3102036810922805875}
+  minWanderTime: 1
+  maxWanderTime: 15
+  minFleeTime: 5
+  maxFleeTime: 10
+  sightHandler: {fileID: 0}
+  perceptionHandler: {fileID: 0}
 --- !u!114 &6191101500634081704
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -379,7 +380,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Fish.Movement.FishMover
   target: {fileID: 0}
   maxSpeed: 3
-  turnSpeed: 1
+  maxTurnRate: 100
+  turnResponsiveness: 2.5
+  turnAcceleration: 240
+  wanderAngle: 12
+  wanderFrequency: 0.2
+  lateralSlipDamping: 1.5
 --- !u!114 &7517340754007288589
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -408,6 +414,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Fish.FishCaughtMovement
   catchPattern: {fileID: 0}
+  patternSpeed: 1
+--- !u!114 &2908896234982446586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5206029193779855580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3e067ee3297aef4b86463f3837457c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FishStats
+  fishSO: {fileID: 11400000, guid: 6a86a325640c37047a677ba8c19722f6, type: 2}
 --- !u!1 &7231650367447256696
 GameObject:
   m_ObjectHideFlags: 0
@@ -518,7 +538,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.00000004371139, y: -1, z: -0.00000004371139, w: 1.9106855e-15}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: -1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8375782537523922051}
@@ -536,8 +556,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78c759363fa8d5642a83574ca440e0a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Fish.FishSpriteRotator
-  _upright: {x: 0, y: 0, z: 180}
-  _downwrong: {x: 180, y: 0, z: 180}
 --- !u!1 &8920100173034518163
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,7 +5,6 @@ using UnityEngine;
 
 namespace Assets.Scripts.Fish.Movement
 {
-    [RequireComponent(typeof(FishMover))]
     public class FishCaughtMovement : MonoBehaviour
     {
         [SerializeField] private FishCatchPatternSO catchPattern;
@@ -14,11 +13,8 @@ namespace Assets.Scripts.Fish.Movement
         private bool _catching;
         private float _catchClock;
         private CatchPatternMove _currentMove;
-        
-        private FishMover _mover;
-        
-        private void Awake() => _mover = GetComponent<FishMover>();
-
+        private Vector2 _direction;
+                
         private void Update()
         {
             if (!_catching) return;
@@ -37,7 +33,6 @@ namespace Assets.Scripts.Fish.Movement
             if (_catching) return;
             
             _catching = true;
-            _mover.SetSpeed(speed);
             
             FishMove initialMove = (FishMove)Random.Range(0, 4);
             NextMove(initialMove);
@@ -56,7 +51,7 @@ namespace Assets.Scripts.Fish.Movement
             _currentMove = GenerateNextMove(previousMove);
             _catchClock = _currentMove.duration;
             
-            _mover.DesiredDirection = _currentMove.move.ToVector2();
+            _direction = _currentMove.move.ToVector2();
         }
 
         private CatchPatternMove GenerateNextMove(FishMove previousMove)
