@@ -6,6 +6,8 @@ public class FishCollectionManager : MonoBehaviour
 {
     public static FishCollectionManager Instance { get; private set; }
 
+    [SerializeField] private FishDatabase fishDatabase;
+
     private readonly List<Fish> collectedFish = new();
     public IReadOnlyList<Fish> CollectedFish => collectedFish;
 
@@ -21,15 +23,18 @@ public class FishCollectionManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        collectedFish.AddRange(FishSaveSystem.LoadInventory(fishDatabase));
     }
 
     public void AddFish(Fish fish)
     {
-        if (fish == null)
+        if (fish == null || collectedFish.Exists(f => f.fishId == fish.fishId))
             return;
 
         collectedFish.Add(fish);
         Debug.Log($"Added to collection: {fish.fishName}, weight: {fish.weight:F2}");
+        FishSaveSystem.SaveInventory(collectedFish);
         OnCollectionChanged?.Invoke();
     }
 
@@ -38,12 +43,16 @@ public class FishCollectionManager : MonoBehaviour
         if (fish == null)
             return false;
 
-        bool removed = collectedFish.Remove(fish);
+        int index = collectedFish.FindIndex(f => f.fishId == fish.fishId);
 
-        if (removed)
-            OnCollectionChanged?.Invoke();
+        if (index < 0)
+            return false;
 
-        return removed;
+        collectedFish.RemoveAt(index);
+        FishSaveSystem.SaveInventory(collectedFish);
+        OnCollectionChanged?.Invoke();
+
+        return true;
     }
     
     public void TransferFishCollectibles(List<FishCollectible> list)
@@ -53,6 +62,7 @@ public class FishCollectionManager : MonoBehaviour
             collectedFish.Add(collectible.fish);
         }
 
+        FishSaveSystem.SaveInventory(collectedFish);
         OnCollectionChanged?.Invoke();
     }
 }
