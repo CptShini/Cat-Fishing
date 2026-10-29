@@ -1,7 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using System.Linq;
 
-public class FishTankUIIcon : MonoBehaviour
+public class FishTankUIIcon : MonoBehaviour, IDropHandler
 {
     [SerializeField] private Image tankImage;
 
@@ -14,16 +16,33 @@ public class FishTankUIIcon : MonoBehaviour
     {
         if (tankImage == null)
             tankImage = GetComponent<Image>();
+
+        tankImage.raycastTarget = true;
     }
 
-    public void SelectTank()
+    public void OnDrop(PointerEventData eventData)
     {
-        if (fishTank == null)
+        FishSO fish = FishInventorySlot.DraggedFish;
+
+        if (fish == null || fishTank == null)
+            return;
+
+        FishCollectionManager collection = FishCollectionManager.Instance;
+
+        if (collection == null)
+            return;
+
+        // Check if the fish is in the collection before adding it to the tank
+        if (!collection.CollectedFish.Contains(fish))
+            return;
+
+        // Attempt to add the fish to the tank and remove it from the collection
+        if (!fishTank.AddFish(fish))
+            return;
+        if (!collection.RemoveFishItem(fish))
         {
-            Debug.LogWarning("FishTank is not assigned to this icon!", this);
+            fishTank.RemoveFish(fish);
             return;
         }
-
-        Debug.Log("Selected aquarium: " + fishTank.gameObject.name);
     }
 }

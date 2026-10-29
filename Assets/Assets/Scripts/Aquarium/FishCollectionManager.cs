@@ -13,10 +13,13 @@ public class FishCollectionManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance != null && Instance != this) 
+        if (Instance != null && Instance != this)
+        {
             Destroy(gameObject);
-        else
-            Instance = this;
+            return;
+        }
+
+        Instance = this;
         DontDestroyOnLoad(gameObject);
     }
 
@@ -28,5 +31,18 @@ public class FishCollectionManager : MonoBehaviour
         collectedFish.Add(fish);
         Debug.Log("Added to collection: " + fish.name);
         OnCollectionChanged?.Invoke();
+    }
+
+    public bool RemoveFishItem(FishSO fish)
+    {
+        if (fish == null)
+            return false;
+
+        bool removed = collectedFish.Remove(fish);
+
+        if (removed)
+            OnCollectionChanged?.Invoke();
+
+        return removed;
     }
 }
