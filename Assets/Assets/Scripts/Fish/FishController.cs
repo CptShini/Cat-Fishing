@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Assets.Scripts.Fish.Movement;
 using Assets.Scripts.Fish.Perception;
 using Assets.Scripts.Helpers;
@@ -45,7 +44,7 @@ namespace Assets.Scripts.Fish
             _normalMovement = GetComponent<FishNormalMovement>();
             _caughtMovement = GetComponent<FishCaughtMovement>();
 
-            _caughtMovement.onLoose.AddListener(Flee);
+            _caughtMovement.OnLose.AddListener(Flee);
         
             Wander();
         }

@@ -6,9 +6,13 @@ namespace Assets.Scripts.Fish.CatchMinigame
     public enum FishMove
     {
         Up,
+        UpRight,
+        Right,
+        DownRight,
         Down,
+        DownLeft,
         Left,
-        Right
+        UpLeft
     }
 
     public static class FishMoveExtensions
@@ -17,9 +21,13 @@ namespace Assets.Scripts.Fish.CatchMinigame
             move switch
             {
                 FishMove.Up => Vector2.up,
-                FishMove.Down => Vector2.down,
-                FishMove.Left => Vector2.left,
+                FishMove.UpRight => Vector2.up + Vector2.right,
                 FishMove.Right => Vector2.right,
+                FishMove.DownRight => Vector2.down + Vector2.right,
+                FishMove.Down => Vector2.down,
+                FishMove.DownLeft => Vector2.down + Vector2.left,
+                FishMove.Left => Vector2.left,
+                FishMove.UpLeft => Vector2.up + Vector2.left,
                 _ => throw new ArgumentOutOfRangeException(nameof(move), move, null)
             };
     }

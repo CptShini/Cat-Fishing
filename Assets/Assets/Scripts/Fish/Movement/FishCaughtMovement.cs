@@ -10,14 +10,12 @@ namespace Assets.Scripts.Fish.Movement
     {
         [SerializeField] private FishCatchPatternSO catchPattern;
         [SerializeField] private float patternSpeed = 1f;
-        public readonly UnityEvent<Vector2,bool> onLoose = new();
+        public readonly UnityEvent<Vector2,bool> OnLose = new();
 
         private bool _catching;
         private float _catchClock;
         private CatchPatternMove _currentMove;
-        private Vector2 _direction;
-
-        public Vector2 direction => _direction;
+        public Vector2 Direction { get; private set; }
                 
         private void Update()
         {
@@ -39,8 +37,8 @@ namespace Assets.Scripts.Fish.Movement
             if (_catching) return;
             
             _catching = true;
-            
-            FishMove initialMove = (FishMove)Random.Range(0, 4);
+
+            FishMove initialMove = catchPattern.GetUsedMoves().GetRandom();
             NextMove(initialMove);
         }
 
@@ -56,7 +54,7 @@ namespace Assets.Scripts.Fish.Movement
         {
             _catching = false;
             _catchClock = 0f;
-            onLoose.Invoke(otherPos, true);
+            OnLose.Invoke(otherPos, true);
         }
 
         private void NextMove(FishMove previousMove)
@@ -64,7 +62,7 @@ namespace Assets.Scripts.Fish.Movement
             _currentMove = GenerateNextMove(previousMove);
             _catchClock = _currentMove.duration;
             
-            _direction = _currentMove.move.ToVector2();
+            Direction = _currentMove.move.ToVector2();
         }
 
         private CatchPatternMove GenerateNextMove(FishMove previousMove)
