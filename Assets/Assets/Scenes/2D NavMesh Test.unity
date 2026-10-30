@@ -5498,7 +5498,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Fish.Navigation.FishNavigator
   target: {fileID: 961520140}
   tolerance: 0.5
-  areaMask: -1
+  areaMask: 3
+  fleeDistance: 1
 --- !u!4 &2078057984
 Transform:
   m_ObjectHideFlags: 0
