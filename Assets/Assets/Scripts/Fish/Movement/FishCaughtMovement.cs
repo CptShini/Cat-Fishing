@@ -2,29 +2,31 @@
 using Assets.Scripts.Fish.CatchMinigame;
 using Assets.Scripts.Helpers;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Assets.Scripts.Fish.Movement
 {
-    [RequireComponent(typeof(FishMover))]
     public class FishCaughtMovement : MonoBehaviour
     {
         [SerializeField] private FishCatchPatternSO catchPattern;
         [SerializeField] private float patternSpeed = 1f;
+        public readonly UnityEvent<Vector2,bool> onLoose = new();
 
         private bool _catching;
         private float _catchClock;
         private CatchPatternMove _currentMove;
-        
-        private FishMover _mover;
-        
-        private void Awake() => _mover = GetComponent<FishMover>();
+        private Vector2 _direction;
 
+        public Vector2 direction => _direction;
+                
         private void Update()
         {
             if (!_catching) return;
             
             if (_catchClock > 0f)
+            {
                 _catchClock -= Time.deltaTime * patternSpeed;
+            }
             else
             {
                 _catchClock = 0f;
@@ -37,7 +39,6 @@ namespace Assets.Scripts.Fish.Movement
             if (_catching) return;
             
             _catching = true;
-            _mover.SetSpeed(speed);
             
             FishMove initialMove = (FishMove)Random.Range(0, 4);
             NextMove(initialMove);
@@ -51,12 +52,19 @@ namespace Assets.Scripts.Fish.Movement
             _catchClock = 0f;
         }
 
+        public void Loose(Vector2 otherPos)
+        {
+            _catching = false;
+            _catchClock = 0f;
+            onLoose.Invoke(otherPos, true);
+        }
+
         private void NextMove(FishMove previousMove)
         {
             _currentMove = GenerateNextMove(previousMove);
             _catchClock = _currentMove.duration;
             
-            _mover.DesiredDirection = _currentMove.move.ToVector2();
+            _direction = _currentMove.move.ToVector2();
         }
 
         private CatchPatternMove GenerateNextMove(FishMove previousMove)

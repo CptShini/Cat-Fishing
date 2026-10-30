@@ -32,6 +32,12 @@ namespace Assets.Scripts.Fish.Movement
             _mover.SetSpeed(speed);
         }
 
+        public void Catch()
+        {
+            _mover.DesiredDirection = new Vector2(0,0);
+            _mover.SetSpeed(FishSpeed.Still);
+        }
+
         private void See()
         {
             List<RaycastHit2D> hits = new();

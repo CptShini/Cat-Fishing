@@ -100,7 +100,7 @@ jobs:
   publish-release:
     name: Publish GitHub release
     needs: [validate-release, build-release]
-    if: ${{ github.event_name == 'push' && needs.validate-release.outputs.publish == 'true' }}
+    if: ${{ always() && github.event_name == 'push' && needs.validate-release.outputs.publish == 'true' }}
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -128,10 +128,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Notify Discord about release
+        if: ${{ always() }}
         continue-on-error: true
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_RELEASE_WEBHOOK_URL }}
           VERSION_TAG: ${{ needs.validate-release.outputs.tag }}
           RELEASE_URL: ${{ github.server_url }}/${{ github.repository }}/releases/tag/${{ needs.validate-release.outputs.tag }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          BUILD_STATUS: ${{ job.status }}
         run: bash Scripts/ci/notify-discord.sh release
