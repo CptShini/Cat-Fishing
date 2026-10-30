@@ -126,7 +126,7 @@ jobs:
           retention-days: 14
 
       - name: Notify Discord about pre-release build
-        if: ${{ always() && steps.upload.outcome == 'success' }}
+        if: ${{ always() }}
         continue-on-error: true
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_PRE_RELEASE_WEBHOOK_URL }}
@@ -134,4 +134,5 @@ jobs:
           VERSION_SHA: ${{ needs.create-tag.outputs.sha }}
           ARTIFACT_URL: ${{ steps.upload.outputs.artifact-url }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          BUILD_STATUS: ${{ job.status }}
         run: bash .ci-tools/Scripts/ci/notify-discord.sh prerelease
