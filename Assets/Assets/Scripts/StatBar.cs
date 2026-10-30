@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class StatBar : MonoBehaviour
 {
-    [SerializeField] private Image foreground;
+    [SerializeField] protected Image foreground;
     public float maxValue { get; protected set; }
     public float currentValue { get; protected set; }
 
