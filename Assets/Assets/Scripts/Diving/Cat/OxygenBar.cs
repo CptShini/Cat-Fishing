@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class OxygenBar : StatBar
 {
-
     public static OxygenBar Instance { get; private set; }
+    private bool noOxygen = false;
 
     void Awake()
     {
@@ -21,13 +21,15 @@ public class OxygenBar : StatBar
 
     void ReduceOxygen(float amount)
     {
-        AddToCurrentValue(-amount);        
-        if(currentValue >= 0)
+        currentValue -= amount; 
+        foreground.fillAmount = currentValue / maxValue;
+
+        if(currentValue >= 0 || noOxygen)
         {
             return;
         }
-        
-        SetCurrentValue(float.MaxValue);
+
+        noOxygen = true;
         SceneTransition.Instance.LoadScene("Aquarium");
     }
 
