@@ -1,22 +1,22 @@
-using Assets.Scripts.PlayerState;
-using UnityEngine;
-
-public class CatchBar : StatBar
+namespace Assets.Scripts.Fish.CatchMinigame
 {
-
-    public static CatchBar Instance { get; private set; }
-
-    void Awake()
+    public class CatchBar : StatBar
     {
-        if (Instance != null && Instance != this) 
-            Destroy(gameObject);
-        else
-            Instance = this;
-    }
+
+        public static CatchBar Instance { get; private set; }
+
+        void Awake()
+        {
+            if (Instance != null && Instance != this) 
+                Destroy(gameObject);
+            else
+                Instance = this;
+        }
     
-    void Update()
-    {
+        void Update()
+        {
        
-    }
+        }
 
+    }
 }

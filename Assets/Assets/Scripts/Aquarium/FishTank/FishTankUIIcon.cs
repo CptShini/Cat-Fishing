@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Linq;
+using Assets.Scripts.Fish;
 
 public class FishTankUIIcon : MonoBehaviour, IDropHandler
 {

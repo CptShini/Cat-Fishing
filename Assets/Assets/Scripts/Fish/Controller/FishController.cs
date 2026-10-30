@@ -6,9 +6,8 @@ using Assets.Scripts.Helpers;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Assets.Scripts.Fish
+namespace Assets.Scripts.Fish.Controller
 {
-    [RequireComponent(typeof(FishMover))]
     [RequireComponent(typeof(FishNormalMovement))]
     [RequireComponent(typeof(FishCaughtMovement))]
     public class FishController : MonoBehaviour
@@ -32,14 +31,13 @@ namespace Assets.Scripts.Fish
         // Logic
         
         private FishState _state;
-        private FishSpeed _speedState;
 
         private float _stateClock;
 
         private void Start()
         {
             sightHandler.OnSeePlayer.AddListener(Flee);
-            perceptionHandler.onDetectPlayer.AddListener(Flee);
+            perceptionHandler.OnDetectPlayer.AddListener(Flee);
             
             _normalMovement = GetComponent<FishNormalMovement>();
             _caughtMovement = GetComponent<FishCaughtMovement>();
@@ -77,60 +75,36 @@ namespace Assets.Scripts.Fish
         private void Wander()
         {
             _state = FishState.Wander;
-            _speedState = GetRandomWanderSpeed();
             _stateClock = Random.Range(minWanderTime, maxWanderTime);
 
             _normalMovement.enabled = true;
             _caughtMovement.enabled = false;
             
-            _normalMovement.Wander(_speedState);
+            _normalMovement.Wander();
         }
-
-        private static FishSpeed GetRandomWanderSpeed()
-        {
-            Dictionary<FishSpeed, int> speedWeights = new()
-            {
-                { FishSpeed.Chill,  1 },
-                { FishSpeed.Slow,   2 },
-                { FishSpeed.Normal, 3 },
-                { FishSpeed.Fast,   1 }
-            };
-            return RandomHelper.WeightedRandom(speedWeights);
-        }
-
     
         private void Flee(Vector2 fleePoint, bool loose)
         {
-            Debug.Log("FLEE GODDAMMIT");
-            if(_state == FishState.Caught && !loose)
-            {
+            if (_state == FishState.Caught && !loose)
                 return;
-            }
+            
             _state = FishState.Flee;
-            _speedState = FishSpeed.Max;
             _stateClock = Random.Range(minFleeTime, maxFleeTime);
         
             _normalMovement.enabled = true;
             _caughtMovement.enabled = false;
             
-            _normalMovement.Flee(_speedState, fleePoint);
+            _normalMovement.Flee(fleePoint);
         }
 
         public void Catch()
         {
             _state = FishState.Caught;
-            _speedState = FishSpeed.Still;
-
             
             _normalMovement.enabled = false;
             _caughtMovement.enabled = true;
-            _normalMovement.Catch();
-            _caughtMovement.Catch(_speedState);
-        }
-
-        public void Caught()
-        {
-            _caughtMovement.Caught();
+            
+            _caughtMovement.Catch();
         }
     }
 }

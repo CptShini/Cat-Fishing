@@ -10,12 +10,13 @@ namespace Assets.Scripts.Fish.Movement
     {
         [SerializeField] private FishCatchPatternSO catchPattern;
         [SerializeField] private float patternSpeed = 1f;
+        
+        public Vector2 Direction { get; private set; }
         public readonly UnityEvent<Vector2,bool> OnLose = new();
 
         private bool _catching;
         private float _catchClock;
         private CatchPatternMove _currentMove;
-        public Vector2 Direction { get; private set; }
                 
         private void Update()
         {
@@ -24,15 +25,14 @@ namespace Assets.Scripts.Fish.Movement
             if (_catchClock > 0f)
             {
                 _catchClock -= Time.deltaTime * patternSpeed;
+                return;
             }
-            else
-            {
-                _catchClock = 0f;
-                NextMove(_currentMove.move);
-            }
+
+            _catchClock = 0f;
+            NextMove(_currentMove.move);
         }
 
-        public void Catch(FishSpeed speed)
+        public void Catch()
         {
             if (_catching) return;
             
@@ -42,15 +42,7 @@ namespace Assets.Scripts.Fish.Movement
             NextMove(initialMove);
         }
 
-        public void Caught()
-        {
-            if (!_catching) return;
-            
-            _catching = false;
-            _catchClock = 0f;
-        }
-
-        public void Loose(Vector2 otherPos)
+        public void Lose(Vector2 otherPos)
         {
             _catching = false;
             _catchClock = 0f;
@@ -59,20 +51,24 @@ namespace Assets.Scripts.Fish.Movement
 
         private void NextMove(FishMove previousMove)
         {
-            _currentMove = GenerateNextMove(previousMove);
+            _currentMove = GenerateNextMove();
             _catchClock = _currentMove.duration;
             
             Direction = _currentMove.move.ToVector2();
+            
+            return;
+            
+            CatchPatternMove GenerateNextMove()
+            {
+                CatchPatternMove[] possibleNextMoves = catchPattern.GetMoves(previousMove);
+                CatchPatternMove nextMove = RandomHelper.WeightedRandom(possibleNextMoves
+                    .ToDictionary(m => m, w => w.weight)
+                );
+
+                return nextMove;
+            }
         }
 
-        private CatchPatternMove GenerateNextMove(FishMove previousMove)
-        {
-            CatchPatternMove[] possibleNextMoves = catchPattern.GetMoves(previousMove);
-            CatchPatternMove nextMove = RandomHelper.WeightedRandom(possibleNextMoves
-                .ToDictionary(m => m, w => w.weight)
-            );
-
-            return nextMove;
-        }
+        
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using Assets.Scripts.Fish;
+using Assets.Scripts.Fish.Controller;
 using Assets.Scripts.Fish.Movement;
 using Assets.Scripts.PlayerState;
 using Unity.VisualScripting;
