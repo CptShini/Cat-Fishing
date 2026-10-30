@@ -44,7 +44,7 @@ public class CatchingMinigame : MonoBehaviour
 
     public void Grab(Vector2 velocityVector)
     {
-        float angle = Vector2.Angle(velocityVector, movement.direction);
+        float angle = Vector2.Angle(velocityVector, movement.Direction);
         float power = DivingPlayerStats.Instance.strength * (angle / 180);
         float contest = Math.Clamp((power - fish.strength) / fish.strength, -10, 5);
         CatchBar.Instance.AddToCurrentValue(contest * Time.deltaTime);
@@ -87,7 +87,7 @@ public class CatchingMinigame : MonoBehaviour
         {
             return;
         }
-        float angleRad = Mathf.Atan2(movement.direction.y, movement.direction.x);
+        float angleRad = Mathf.Atan2(movement.Direction.y, movement.Direction.x);
         fishAngle = angleRad * (180 / Mathf.PI);
         catAndFish.transform.eulerAngles = new Vector3(0,0, fishAngle);
     }

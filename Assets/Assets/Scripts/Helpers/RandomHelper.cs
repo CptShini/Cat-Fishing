@@ -7,6 +7,9 @@ namespace Assets.Scripts.Helpers
 {
     public static class RandomHelper
     {
+        public static T GetRandom<T>(this List<T> collection) => 
+            collection[Random.Range(0, collection.Count)];
+
         public static T WeightedRandom<T>(Dictionary<T, int> weights)
         {
             int weightSum = weights.Values.Sum();
