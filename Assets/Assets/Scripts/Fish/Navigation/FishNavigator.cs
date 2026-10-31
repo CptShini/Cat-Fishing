@@ -4,6 +4,7 @@ using System.Linq;
 using Assets.Scripts.Helpers;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
 namespace Assets.Scripts.Fish.Navigation
@@ -11,11 +12,12 @@ namespace Assets.Scripts.Fish.Navigation
     [RequireComponent(typeof(FishEyes))]
     public class FishNavigator : MonoBehaviour
     {
-        public Vector2 DesiredDirection { get; private set; }
+        public readonly UnityEvent DestinationReached = new();
+        
         public Vector2 CurrentDirection { get; private set; }
+        private Vector2 _desiredDirection;
         
         private bool _hasDestination;
-        private Vector2 _destination;
         private readonly Queue<Vector2> _path = new();
 
         private bool _hasWaypoint;
@@ -24,37 +26,28 @@ namespace Assets.Scripts.Fish.Navigation
         private int areaMask;
         
         private FishEyes _eyes;
-        
-        [SerializeField] private Transform target;
-        
-        [Space]
-        
+
+        [SerializeField] private Transform eyePoint;
         [SerializeField] private string areaMaskName;
         [SerializeField] private float arrivalDistanceTolerance;
         [SerializeField] private float fleeDistMin, fleeDistMax;
-
-        [Space]
-        
         [SerializeField] private float wanderDistMin, wanderDistMax;
 
-        private void Start()
+        private void Awake()
         {
             _eyes = GetComponent<FishEyes>();
-            
-            areaMask = 1 << NavMesh.GetAreaFromName(areaMaskName);
-            //TryFlee(target.position);
-            CurrentDirection = transform.right;
+
+            int mask = NavMesh.GetAreaFromName(areaMaskName);
+            areaMask = mask == -1 ? -1 : 1 << mask;
+            CurrentDirection = Random.onUnitCircle;
         }
         
         private void Update()
         {
-            //DesiredDirection = (target.position - transform.position).normalized;
-            if (!_hasDestination)
-                Wander();
             Navigate();
             
             //compute CurrentDir from DesiredDir + WaverDir + AvoidanceDir
-            if (_hasDestination) CurrentDirection = DesiredDirection;
+            if (_hasDestination) CurrentDirection = _desiredDirection;
         }
 
         private void Navigate()
@@ -71,7 +64,7 @@ namespace Assets.Scripts.Fish.Navigation
             bool arrivedAtWaypoint = distToWaypoint <= arrivalDistanceTolerance;
             if (!arrivedAtWaypoint)
             {
-                DesiredDirection = (_waypoint - (Vector2)transform.position).normalized;
+                _desiredDirection = (_waypoint - (Vector2)transform.position).normalized;
                 return;
             }
             
@@ -82,29 +75,21 @@ namespace Assets.Scripts.Fish.Navigation
             if (!arrivedAtDestination) return;
             
             _hasDestination = false;
-            DesiredDirection = Vector2.zero;
+            _desiredDirection = Vector2.zero;
+            DestinationReached.Invoke();
         }
 
         public void Wander()
         {
             Vector2[] path = Pathfind(0.5f, () =>
             {
-                Vector2 randomDirection = Random.onUnitCircle;
-
-                float r = Random.Range(0f, 1f);
-                Vector2 newDirection = Vector3.Slerp(CurrentDirection, randomDirection, r*r);
-                
+                Vector2 newDirection = MixWithRandom(CurrentDirection);
                 float wanderDistance = Random.Range(wanderDistMin, wanderDistMax);
-                Vector2 wanderTarget = (Vector2)transform.position + newDirection * wanderDistance;
-                
-                var hit = Physics2D.Raycast(transform.position, newDirection, wanderDistance);
-                if (hit.collider)
-                    wanderTarget = hit.point;
-                
-                Debug.DrawLine(transform.position, wanderTarget, Color.pink);
-                Debug.DrawRay(transform.position, randomDirection, Color.red);
-                Debug.DrawRay(transform.position, CurrentDirection, Color.green);
-                Debug.DrawRay(transform.position, newDirection, Color.blue);
+
+                var hit = Physics2D.Raycast(eyePoint.position, newDirection, wanderDistance);
+                Vector2 wanderTarget = hit.collider 
+                    ? hit.point 
+                    : (Vector2)transform.position + newDirection * wanderDistance;
                 
                 return wanderTarget;
             });
@@ -117,9 +102,10 @@ namespace Assets.Scripts.Fish.Navigation
             Vector2[] path = Pathfind(fleeDistMax, () =>
             {
                 Vector2 awayDir = ((Vector2)transform.position - fleePoint).normalized;
+                Vector2 fleeDir = MixWithRandom(awayDir);
             
                 float fleeDistance = Random.Range(fleeDistMin, fleeDistMax);
-                Vector2 fleeTarget = (Vector2)transform.position + awayDir * fleeDistance;
+                Vector2 fleeTarget = (Vector2)transform.position + fleeDir * fleeDistance;
                 return fleeTarget;
             });
             
@@ -159,7 +145,6 @@ namespace Assets.Scripts.Fish.Navigation
             if (path.Length == 0) return;
             
             _hasDestination = true;
-            _destination = path[^1];
             
             _path.Clear();
             foreach (Vector2 p in path)
@@ -168,22 +153,30 @@ namespace Assets.Scripts.Fish.Navigation
 
         private Vector2[] Pathfind(float tolerance, Func<Vector2> randomDestinationFunc)
         {
-            const int maxIterations = 100;
+            const int maxIterations = 10;
             for (int i = 0; i < maxIterations; i++)
             {
                 bool validPath = TryPathfind(randomDestinationFunc(), out Vector2[] path);
                 if (validPath) return path;
             }
             
+            Debug.LogWarning($"{name} didn't find any path!");
             return Array.Empty<Vector2>();
             
             bool TryPathfind(Vector2 destination, out Vector2[] path) =>
                 NavQuery.TryGetPath(transform.position, destination, out path, areaMask, tolerance);
         }
 
+        private static Vector2 MixWithRandom(Vector2 vec)
+        {
+            float r = Random.Range(0f, 1f); // Completely arbitrary
+            return Vector3.Slerp(vec, Random.onUnitCircle, r*r);
+        }
+
         private void OnDrawGizmos()
         {
-            if (DebugDrawer.Instance == null || !DebugDrawer.Instance.EnableDebug) return;
+            if (DebugDrawer.Instance == null || !DebugDrawer.Instance.EnableDebug
+                || !DebugDrawer.Instance.Fish_Nav) return;
             
             if (DebugDrawer.Instance.Fish_Nav_DrawPathing) DrawPath();
             if (DebugDrawer.Instance.Fish_Nav_DrawDirections) DrawDirections();
@@ -192,10 +185,10 @@ namespace Assets.Scripts.Fish.Navigation
 
             void DrawDirections()
             {
-                Gizmos.color = Color.black;
-                Gizmos.DrawRay(transform.position, DesiredDirection);
+                Gizmos.color = Color.softRed;
+                Gizmos.DrawRay(transform.position, _desiredDirection);
                 
-                Gizmos.color = Color.blue;
+                Gizmos.color = Color.orange;
                 Gizmos.DrawRay(transform.position, CurrentDirection);
             }
             
@@ -204,13 +197,13 @@ namespace Assets.Scripts.Fish.Navigation
                 if (_path == null || _path.Count == 0)
                     return;
             
-                Gizmos.color = Color.red;
+                Gizmos.color = Color.white;
                 
                 Vector2 prev = transform.position;
                 foreach (Vector2 p in _path)
                 {
                     Gizmos.DrawLine(prev, p);
-                    Gizmos.DrawSphere(p, 0.25f);
+                    Gizmos.DrawSphere(p, 0.1f);
                 
                     prev = p;
                 }

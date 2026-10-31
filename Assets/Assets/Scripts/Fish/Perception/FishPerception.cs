@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using Assets.Scripts.Helpers;
+using UnityEngine;
 
 namespace Assets.Scripts.Fish.Perception
 {
@@ -70,7 +72,6 @@ namespace Assets.Scripts.Fish.Perception
 
             _other = other;
             _colDistance = other.Distance(_col);
-            Debug.DrawLine(_colDistance.pointA, _colDistance.pointB, Color.deepPink);
         }
 
         private void OnTriggerExit2D(Collider2D other)
@@ -79,6 +80,32 @@ namespace Assets.Scripts.Fish.Perception
                 return;
             
             _detecting = false;
+        }
+
+        private void OnDrawGizmos()
+        {
+            if (DebugDrawer.Instance == null || !DebugDrawer.Instance.EnableDebug
+                || !DebugDrawer.Instance.Fish_Perception) return;
+            
+            if (DebugDrawer.Instance.Fish_Perception_DrawReactionTime) DrawReactionTime();
+            if (DebugDrawer.Instance.Fish_Perception_DrawCircle) DrawCircle();
+
+            return;
+
+            void DrawCircle()
+            {
+                Gizmos.color = Color.white;
+                Gizmos.DrawWireSphere(_col.bounds.center, _col.radius);
+            }
+
+            void DrawReactionTime()
+            {
+                Gizmos.color = _cooldown 
+                    ? Color.blueViolet 
+                    : _detecting ? Color.hotPink : Color.white;
+                float r = _reactionMeter / (reactionTimeMs / 1000f) * _col.radius;
+                Gizmos.DrawSphere(_col.bounds.center, r);
+            }
         }
     }
 }

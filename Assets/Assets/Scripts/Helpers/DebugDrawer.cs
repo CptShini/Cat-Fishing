@@ -16,11 +16,18 @@ namespace Assets.Scripts.Helpers
 
         public bool EnableDebug;
 
-        //[Header("--- Fish ---")]
+        [Header("--- Fish ---")]
         
-        //[Header("Fish Navigator")]
-        public bool
-            Fish_Nav_DrawDirections,
-            Fish_Nav_DrawPathing;
+        [Header("Fish Perception")]
+        public bool Fish_Perception;
+        [Space]
+        public bool Fish_Perception_DrawCircle;
+        public bool Fish_Perception_DrawReactionTime;
+        
+        [Header("Fish Navigator")]
+        public bool Fish_Nav;
+        [Space]
+        public bool Fish_Nav_DrawDirections;
+        public bool Fish_Nav_DrawPathing;
     }
 }
