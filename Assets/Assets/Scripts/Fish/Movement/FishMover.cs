@@ -7,9 +7,6 @@ namespace Assets.Scripts.Fish.Movement
     [RequireComponent(typeof(Rigidbody2D))]
     public class FishMover : MonoBehaviour
     {
-        [Header("Target (optional)")]
-        [SerializeField] private Transform target;
-
         [Header("Propulsion")]
         [SerializeField] private float maxSpeed = 2f;
 
@@ -23,12 +20,7 @@ namespace Assets.Scripts.Fish.Movement
         [SerializeField] private float wanderFrequency = 0.2f;
         [SerializeField] private float lateralSlipDamping = 1.5f;
         
-        private Vector2 _desiredDir;
-        public Vector2 DesiredDirection
-        {
-            get => _desiredDir;
-            set => _desiredDir = value.normalized;
-        }
+        public Vector2 DesiredDirection;
 
         private float _speed;
         
@@ -38,29 +30,16 @@ namespace Assets.Scripts.Fish.Movement
         private void Start()
         {
             _rb = GetComponent<Rigidbody2D>();
-            _desiredDir = transform.right;
+            DesiredDirection = transform.right;
             _noiseSeed = Random.Range(0f, 1000f);
         }
 
         private void FixedUpdate()
         {
-            if (_speed == 0)
-            {
-                _rb.linearVelocity = new Vector2(0,0);
-                return;
-            }
-            
-            if (target)
-            {
-                Vector2 toTarget = (Vector2)target.position - _rb.position;
-                if (toTarget.sqrMagnitude > 0.1f)
-                    _desiredDir = toTarget.normalized;
-            }
-            
             float noise = Mathf.PerlinNoise(_noiseSeed, Time.fixedTime * wanderFrequency);
             float wanderOffset = (noise * 2f - 1f) * wanderAngle;
             
-            float desiredAngle = Mathf.Atan2(_desiredDir.y, _desiredDir.x ) * Mathf.Rad2Deg;
+            float desiredAngle = Mathf.Atan2(DesiredDirection.y, DesiredDirection.x ) * Mathf.Rad2Deg;
             desiredAngle += wanderOffset;
             
             float angleError = Mathf.DeltaAngle(_rb.rotation, desiredAngle);
@@ -98,6 +77,12 @@ namespace Assets.Scripts.Fish.Movement
                 FishSpeed.Max => maxSpeed,
                 _ => throw new ArgumentOutOfRangeException(nameof(speed), speed, null)
             };
+        }
+
+        private void OnDisable()
+        {
+            _rb.linearVelocity = new(0,0);
+            _rb.angularVelocity = 0f;
         }
     }
 }
