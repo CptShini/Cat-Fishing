@@ -14,39 +14,34 @@ namespace Assets.Scripts.Fish.Movement
         public Vector2 Direction { get; private set; }
         public readonly UnityEvent<Vector2> OnLose = new();
 
-        private bool _catching;
+        public bool Catching { get; private set; }
         private float _catchClock;
         private CatchPatternMove _currentMove;
                 
         private void Update()
         {
-            if (!_catching) return;
+            if (!Catching) return;
             
-            if (_catchClock > 0f)
-            {
-                _catchClock -= Time.deltaTime * patternSpeed;
-                return;
-            }
-
-            _catchClock = 0f;
+            _catchClock -= Time.deltaTime * patternSpeed;
+            if (_catchClock > 0f) return;
+            
             NextMove(_currentMove.move);
         }
 
         public void Catch()
         {
-            if (_catching) return;
-            
-            _catching = true;
+            Catching = true;
 
             FishMove initialMove = catchPattern.GetUsedMoves().GetRandom();
             NextMove(initialMove);
         }
 
-        public void Lose(Vector2 otherPos)
+        public void Lose(Vector2 playerPos)
         {
-            _catching = false;
+            Catching = false;
             _catchClock = 0f;
-            OnLose.Invoke(otherPos);
+            
+            OnLose.Invoke(playerPos);
         }
 
         private void NextMove(FishMove previousMove)
@@ -68,7 +63,5 @@ namespace Assets.Scripts.Fish.Movement
                 return nextMove;
             }
         }
-
-        
     }
 }

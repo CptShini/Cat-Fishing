@@ -30,26 +30,28 @@ namespace Assets.Scripts.Fish
 
         private void Wander()
         {
-            _normalMovement.enabled = true;
-            _caughtMovement.enabled = false;
-            
+            ToggleSystems(false);
             _normalMovement.Wander();
         }
     
         private void Flee(Vector2 fleePoint)
         {
-            _normalMovement.enabled = true;
-            _caughtMovement.enabled = false;
-            
+            ToggleSystems(false);
             _normalMovement.Flee(fleePoint);
         }
 
         public void Catch()
         {
-            _normalMovement.enabled = false;
-            _caughtMovement.enabled = true;
-            
+            ToggleSystems(true);
             _caughtMovement.Catch();
+        }
+
+        private void ToggleSystems(bool gettingCaught)
+        {
+            _normalMovement.enabled = !gettingCaught;
+            _caughtMovement.enabled = gettingCaught;
+            sightHandler.enabled = !gettingCaught;
+            perceptionHandler.enabled = !gettingCaught;
         }
     }
 }
