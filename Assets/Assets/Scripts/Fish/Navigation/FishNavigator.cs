@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Assets.Scripts.Helpers;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
@@ -121,6 +122,42 @@ namespace Assets.Scripts.Fish.Navigation
             _path.Clear();
             foreach (Vector2 p in path)
                 _path.Enqueue(p);
+        }
+        
+        private void OnDrawGizmos()
+        {
+            if (DebugDrawer.Instance == null || !DebugDrawer.Instance.EnableDebug) return;
+            
+            if (DebugDrawer.Instance.Fish_Nav_DrawDirections) DrawDirections();
+            if (DebugDrawer.Instance.Fish_Nav_DrawPathing) DrawPath();
+
+            return;
+
+            void DrawDirections()
+            {
+                Gizmos.color = Color.black;
+                Gizmos.DrawRay(transform.position, DesiredDirection);
+                
+                Gizmos.color = Color.blue;
+                Gizmos.DrawRay(transform.position, CurrentDirection);
+            }
+            
+            void DrawPath()
+            {
+                if (_path == null || _path.Count == 0)
+                    return;
+            
+                Gizmos.color = Color.red;
+                
+                Vector2 prev = transform.position;
+                foreach (Vector2 p in _path)
+                {
+                    Gizmos.DrawLine(prev, p);
+                    Gizmos.DrawSphere(p, 0.25f);
+                
+                    prev = p;
+                }
+            }
         }
     }
 }
