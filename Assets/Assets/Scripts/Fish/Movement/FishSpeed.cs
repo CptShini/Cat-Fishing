@@ -2,7 +2,6 @@
 {
     public enum FishSpeed
     {
-        Still,
         Chill,
         Slow,
         Normal,

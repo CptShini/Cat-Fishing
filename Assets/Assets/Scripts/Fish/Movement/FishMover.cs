@@ -91,7 +91,6 @@ namespace Assets.Scripts.Fish.Movement
         {
             _speed = speed switch
             {
-                FishSpeed.Still => 0,
                 FishSpeed.Chill => maxSpeed / 10,
                 FishSpeed.Slow => maxSpeed / 6,
                 FishSpeed.Normal => maxSpeed / 4,

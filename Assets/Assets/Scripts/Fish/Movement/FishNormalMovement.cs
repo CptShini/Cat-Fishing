@@ -9,8 +9,6 @@ namespace Assets.Scripts.Fish.Movement
     [RequireComponent(typeof(FishNavigator))]
     public class FishNormalMovement : MonoBehaviour
     {
-        private FishSpeed _speedState;
-        
         private FishMover _mover;
         private FishNavigator _navigator;
 
@@ -28,8 +26,8 @@ namespace Assets.Scripts.Fish.Movement
         {
             _navigator.Wander();
             
-            _speedState = GetRandomWanderSpeed();
-            _mover.SetSpeed(_speedState);
+            FishSpeed wanderSpeed = GetRandomWanderSpeed();
+            _mover.SetSpeed(wanderSpeed);
 
             return;
             
@@ -40,7 +38,7 @@ namespace Assets.Scripts.Fish.Movement
                     { FishSpeed.Chill,  1 },
                     { FishSpeed.Slow,   2 },
                     { FishSpeed.Normal, 3 },
-                    { FishSpeed.Fast,   1 }
+                    { FishSpeed.Fast,   2 }
                 };
                 return RandomHelper.WeightedRandom(speedWeights);
             }
@@ -50,8 +48,7 @@ namespace Assets.Scripts.Fish.Movement
         {
             _navigator.Flee(fleePoint);
             
-            _speedState = FishSpeed.Max;
-            _mover.SetSpeed(_speedState);
+            _mover.SetSpeed(FishSpeed.Max);
         }
     }
 }
