@@ -44,7 +44,7 @@ namespace Assets.Scripts.Fish.Navigation
             if (!found || path.status != NavMeshPathStatus.PathComplete)
                 return false;
 
-            corners = path.corners.Select(c => new Vector2(c.x, c.y)).ToArray();
+            corners = path.corners.Skip(1).Select(c => new Vector2(c.x, c.y)).ToArray();
             return true;
         }
 
