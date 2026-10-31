@@ -1,3 +1,4 @@
+using Assets.Scripts.Fish;
 using UnityEngine;
 
 public class FishCollectionUIController : MonoBehaviour

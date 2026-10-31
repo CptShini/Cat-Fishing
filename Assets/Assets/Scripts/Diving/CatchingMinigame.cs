@@ -2,6 +2,7 @@
 using System;
 using System.Runtime.CompilerServices;
 using Assets.Scripts.Fish;
+using Assets.Scripts.Fish.CatchMinigame;
 using Assets.Scripts.Fish.Movement;
 using Assets.Scripts.PlayerState;
 using UnityEngine;
@@ -61,7 +62,7 @@ public class CatchingMinigame : MonoBehaviour
             else // Cat cannot win, if their inventory is full
             {
                 DivingController.Instance.SetPlayerState(PlayerState.STUN);
-                movement.Loose(DivingController.Instance.gameObject.transform.position);
+                movement.Lose(DivingController.Instance.gameObject.transform.position);
             }
             gameObject.SetActive(false);
 
@@ -69,7 +70,7 @@ public class CatchingMinigame : MonoBehaviour
         {
             //LOSE FISH
             DivingController.Instance.SetPlayerState(PlayerState.STUN);
-            movement.Loose(DivingController.Instance.gameObject.transform.position);
+            movement.Lose(DivingController.Instance.gameObject.transform.position);
             gameObject.SetActive(false);
         }
     }

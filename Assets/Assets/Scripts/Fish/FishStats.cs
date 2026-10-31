@@ -1,15 +1,18 @@
 using UnityEngine;
 
-public class FishStats : MonoBehaviour
+namespace Assets.Scripts.Fish
 {
-    [SerializeField] private FishSO fishSO;
-
-    private Fish _fish;
-
-    public Fish fish => _fish;
-
-    void Awake()
+    public class FishStats : MonoBehaviour
     {
-        _fish = new Fish(fishSO);
+        [SerializeField] private FishSO fishSO;
+
+        private Fish _fish;
+
+        public Fish fish => _fish;
+
+        void Awake()
+        {
+            _fish = new Fish(fishSO);
+        }
     }
 }
