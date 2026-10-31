@@ -2,6 +2,7 @@
 using Assets.Scripts.Fish.Navigation;
 using Assets.Scripts.Helpers;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Assets.Scripts.Fish.Movement
 {
@@ -9,6 +10,8 @@ namespace Assets.Scripts.Fish.Movement
     [RequireComponent(typeof(FishNavigator))]
     public class FishNormalMovement : MonoBehaviour
     {
+        public readonly UnityEvent MovementDone = new();
+        
         private FishMover _mover;
         private FishNavigator _navigator;
 
@@ -16,8 +19,8 @@ namespace Assets.Scripts.Fish.Movement
         {
             _mover = GetComponent<FishMover>();
             _navigator = GetComponent<FishNavigator>();
-
-            _navigator.DestinationReached.AddListener(Wander);
+            
+            _navigator.DestinationReached.AddListener(MovementDone.Invoke);
         }
 
         private void Update() => _mover.DesiredDirection = _navigator.CurrentDirection;
@@ -49,6 +52,18 @@ namespace Assets.Scripts.Fish.Movement
             _navigator.Flee(fleePoint);
             
             _mover.SetSpeed(FishSpeed.Max);
+        }
+
+        private void OnEnable()
+        {
+            _mover.enabled = true;
+            _navigator.enabled = true;
+        }
+
+        private void OnDisable()
+        {
+            _mover.enabled = false;
+            _navigator.enabled = false;
         }
     }
 }

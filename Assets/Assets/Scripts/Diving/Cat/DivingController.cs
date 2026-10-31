@@ -1,12 +1,7 @@
-using System;
 using Assets.Scripts.Fish;
-using Assets.Scripts.Fish.Controller;
 using Assets.Scripts.Fish.Movement;
 using Assets.Scripts.PlayerState;
-using Unity.VisualScripting;
 using UnityEngine;
-
-using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
 
 

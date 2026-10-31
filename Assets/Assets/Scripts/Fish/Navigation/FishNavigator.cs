@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Helpers;
@@ -18,6 +19,7 @@ namespace Assets.Scripts.Fish.Navigation
         private Vector2 _desiredDirection;
         
         private bool _hasDestination;
+        private Vector2 _destination;
         private readonly Queue<Vector2> _path = new();
 
         private bool _hasWaypoint;
@@ -149,11 +151,26 @@ namespace Assets.Scripts.Fish.Navigation
             if (path.Length == 0) return;
             
             _hasDestination = true;
+            _destination = path[^1];
+            
             _hasWaypoint = false;
             
             _path.Clear();
             foreach (Vector2 p in path)
                 _path.Enqueue(p);
+            
+            StartCoroutine(RecalculatePath());
+        }
+        
+        private IEnumerator RecalculatePath()
+        {
+            float waitTime = Random.Range(5f, 10f);
+            yield return new WaitForSeconds(waitTime);
+            
+            if (!_hasDestination) yield break;
+            
+            TryPathfind(_destination, 0.5f, out Vector2[] path);
+            SetPath(path);
         }
 
         private Vector2[] Pathfind(float tolerance, Func<Vector2> randomDestinationFunc)
@@ -161,22 +178,26 @@ namespace Assets.Scripts.Fish.Navigation
             const int maxIterations = 25;
             for (int i = 0; i < maxIterations; i++)
             {
-                bool validPath = TryPathfind(randomDestinationFunc(), out Vector2[] path);
+                bool validPath = TryPathfind(randomDestinationFunc(), tolerance, out Vector2[] path);
                 if (validPath) return path;
             }
             
             Debug.LogWarning($"{name} didn't find any path!");
             return Array.Empty<Vector2>();
-            
-            bool TryPathfind(Vector2 destination, out Vector2[] path) =>
-                NavQuery.TryGetPath(transform.position, destination, out path, areaMask, tolerance);
         }
+        
+        private bool TryPathfind(Vector2 destination, float tolerance, out Vector2[] path) =>
+            NavQuery.TryGetPath(transform.position, destination, out path, areaMask, tolerance);
 
         private static Vector2 MixWithRandom(Vector2 vec)
         {
             float r = Random.Range(0f, 1f); // Completely arbitrary
             return Vector3.Slerp(vec, Random.onUnitCircle, r*r);
         }
+
+        private void OnEnable() => _eyes.enabled = true;
+
+        private void OnDisable() => _eyes.enabled = false;
 
         private void OnDrawGizmos()
         {
