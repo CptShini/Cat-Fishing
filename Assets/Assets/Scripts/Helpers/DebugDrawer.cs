@@ -29,5 +29,11 @@ namespace Assets.Scripts.Helpers
         [Space]
         public bool Fish_Nav_DrawDirections;
         public bool Fish_Nav_DrawPathing;
+        
+        [Header("Fish Eyes")]
+        public bool Fish_Eyes;
+        [Space]
+        public bool Fish_Eyes_DrawRaycasts;
+        public bool Fish_Eyes_DrawDirections;
     }
 }

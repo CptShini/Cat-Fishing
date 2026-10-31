@@ -37,8 +37,9 @@ namespace Assets.Scripts.Fish.Navigation
         {
             _eyes = GetComponent<FishEyes>();
 
-            int mask = NavMesh.GetAreaFromName(areaMaskName);
-            areaMask = mask == -1 ? -1 : 1 << mask;
+            areaMask = NavMesh.GetAreaFromName(areaMaskName);
+            if (areaMask != -1) areaMask = 1 << areaMask;
+            
             CurrentDirection = Random.onUnitCircle;
         }
         
@@ -46,8 +47,11 @@ namespace Assets.Scripts.Fish.Navigation
         {
             Navigate();
             
-            //compute CurrentDir from DesiredDir + WaverDir + AvoidanceDir
-            if (_hasDestination) CurrentDirection = _desiredDirection;
+            if (!_hasDestination) return;
+            
+            CurrentDirection = _eyes.Spotted
+                ? Vector3.Slerp(_desiredDirection, _eyes.AwayDirection, _eyes.Weight)
+                : _desiredDirection;
         }
 
         private void Navigate()
@@ -145,6 +149,7 @@ namespace Assets.Scripts.Fish.Navigation
             if (path.Length == 0) return;
             
             _hasDestination = true;
+            _hasWaypoint = false;
             
             _path.Clear();
             foreach (Vector2 p in path)
@@ -153,7 +158,7 @@ namespace Assets.Scripts.Fish.Navigation
 
         private Vector2[] Pathfind(float tolerance, Func<Vector2> randomDestinationFunc)
         {
-            const int maxIterations = 10;
+            const int maxIterations = 25;
             for (int i = 0; i < maxIterations; i++)
             {
                 bool validPath = TryPathfind(randomDestinationFunc(), out Vector2[] path);
@@ -175,8 +180,10 @@ namespace Assets.Scripts.Fish.Navigation
 
         private void OnDrawGizmos()
         {
-            if (DebugDrawer.Instance == null || !DebugDrawer.Instance.EnableDebug
-                || !DebugDrawer.Instance.Fish_Nav) return;
+            if (!DebugDrawer.Instance
+                || !DebugDrawer.Instance.EnableDebug 
+                || !DebugDrawer.Instance.Fish_Nav
+            ) return;
             
             if (DebugDrawer.Instance.Fish_Nav_DrawPathing) DrawPath();
             if (DebugDrawer.Instance.Fish_Nav_DrawDirections) DrawDirections();
@@ -185,10 +192,10 @@ namespace Assets.Scripts.Fish.Navigation
 
             void DrawDirections()
             {
-                Gizmos.color = Color.softRed;
+                Gizmos.color = Color.green;
                 Gizmos.DrawRay(transform.position, _desiredDirection);
                 
-                Gizmos.color = Color.orange;
+                Gizmos.color = Color.blue;
                 Gizmos.DrawRay(transform.position, CurrentDirection);
             }
             

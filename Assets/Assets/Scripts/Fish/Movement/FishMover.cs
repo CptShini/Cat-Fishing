@@ -49,7 +49,6 @@ namespace Assets.Scripts.Fish.Movement
                 _rb.linearVelocity = new Vector2(0,0);
                 return;
             }
-            Debug.DrawRay(transform.position, _desiredDir.normalized * (_speed / maxSpeed), Color.red);
             
             if (target)
             {

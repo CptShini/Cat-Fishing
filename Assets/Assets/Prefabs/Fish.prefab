@@ -123,7 +123,7 @@ Transform:
   m_GameObject: {fileID: 2845935514510385659}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.53, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -156,7 +156,7 @@ Transform:
   m_GameObject: {fileID: 3232370780417970284}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.12, y: -0.011, z: 0}
+  m_LocalPosition: {x: 0.5, y: 0, z: 0}
   m_LocalScale: {x: 0.2, y: 0.15, z: 0.15}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -278,7 +278,7 @@ Transform:
   m_GameObject: {fileID: 5206029193779855580}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
-  m_LocalPosition: {x: 6.99, y: 0.04, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -320,8 +320,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.1, y: 0}
-  m_Size: {x: 1.25, y: 0.5}
+  m_Offset: {x: -0.35, y: 0}
+  m_Size: {x: 0.8, y: 0.35}
   m_Direction: 1
 --- !u!50 &3523591142534891601
 Rigidbody2D:
@@ -382,9 +382,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Fish.Movement.FishMover
   target: {fileID: 0}
   maxSpeed: 3
-  maxTurnRate: 100
-  turnResponsiveness: 2.5
-  turnAcceleration: 240
+  maxTurnRate: 720
+  turnResponsiveness: 10
+  turnAcceleration: 720
   wanderAngle: 12
   wanderFrequency: 0.2
   lateralSlipDamping: 1.5
@@ -441,7 +441,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Fish.Navigation.FishNavigator
   eyePoint: {fileID: 7665592108927822498}
   areaMaskName: Biome 1
-  arrivalDistanceTolerance: 1
+  arrivalDistanceTolerance: 2
   fleeDistMin: 10
   fleeDistMax: 15
   wanderDistMin: 3
@@ -459,8 +459,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Fish.Navigation.FishEyes
   eyes: {fileID: 7665592108927822498}
-  viewDistance: 3
-  avoidanceFactor: 10
+  viewDistance: 1.5
+  fov: 120
+  eyeCount: 4
 --- !u!1 &7231650367447256696
 GameObject:
   m_ObjectHideFlags: 0

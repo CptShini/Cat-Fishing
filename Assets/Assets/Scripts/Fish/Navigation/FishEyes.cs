@@ -1,64 +1,87 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Assets.Scripts.Helpers;
 using UnityEngine;
 
 namespace Assets.Scripts.Fish.Navigation
 {
     public class FishEyes : MonoBehaviour
     {
-        [SerializeField] private Transform eyes;
-        [SerializeField] private float viewDistance = 3f;
-        [SerializeField] private float avoidanceFactor = 10f;
+        public bool Spotted { get; private set; }
+        public float Weight { get; private set; }
+        public Vector2 AwayDirection { get; private set; }
         
+        [SerializeField] private Transform eyes;
+        [SerializeField] private float viewDistance = 1.5f;
+
+        [Space]
+        
+        [SerializeField] private float fov = 120f;
+        [SerializeField] private int eyeCount = 4;
+
+        private void Update() => See();
+
         private void See()
         {
+            if (eyeCount <= 0 || fov / eyeCount <= 0) return;
+            
             List<RaycastHit2D> hits = new();
-            for (int i = -60; i <= 60; i += 15)
+            for (float i = -fov / 2f; i <= fov / 2f; i += fov / eyeCount)
             {
                 RaycastHit2D hit = Raycast(i);
                 hits.Add(hit);
             }
         
-            bool hitAny = hits.Any(hit => hit.collider);
-            if (!hitAny) return;
+            Spotted = hits.Any(hit => hit.collider);
+            if (!Spotted) return;
         
-            Vector2 avgPoint = GetAverageHitPoint(hits);
-            Vector2 awayDir = (Vector2)eyes.position - avgPoint;
-            
-            Debug.DrawLine(eyes.position, avgPoint, Color.blue);
-            Debug.DrawRay(transform.position, awayDir, Color.green);
+            Vector2 closestPoint = GetClosestHit(hits);
+            Vector2 awayDir = (Vector2)eyes.position - closestPoint;
         
-            float weight = (viewDistance - awayDir.magnitude) * avoidanceFactor;
-            /*Vector2 newDirection = Vector3.Slerp(
-                _mover.DesiredDirection.normalized,
-                awayDir.normalized,
-                weight
-            );
+            Weight = (viewDistance - awayDir.magnitude) / viewDistance;
+            AwayDirection = awayDir.normalized;
+
+            if (!DebugDrawer.Instance 
+                || !DebugDrawer.Instance.Fish_Eyes
+                || !DebugDrawer.Instance.Fish_Eyes_DrawDirections
+            ) return;
             
-            _mover.DesiredDirection = newDirection;*/
+            Debug.DrawRay(eyes.position, AwayDirection * (Weight * 3), Color.red);
         }
     
-        private RaycastHit2D Raycast(int angleOffset)
+        private RaycastHit2D Raycast(float angleOffset)
         {
             Vector2 source = eyes.position;
             Vector2 dir = Quaternion.Euler(0, 0, angleOffset) * transform.right;
-            Debug.DrawRay(source, dir * viewDistance, Color.red);
+            
+            if (DebugDrawer.Instance 
+                && DebugDrawer.Instance.Fish_Eyes 
+                && DebugDrawer.Instance.Fish_Eyes_DrawRaycasts
+            ) Debug.DrawRay(source, dir * viewDistance, Color.red);
+                
             return Physics2D.Raycast(source, dir, viewDistance);
         }
 
-        private Vector2 GetAverageHitPoint(IEnumerable<RaycastHit2D> hits)
+        private Vector2 GetClosestHit(IEnumerable<RaycastHit2D> hits)
         {
-            float x = 0f, y = 0f, weightSum = 0f;
+            Vector2 closest = Vector2.zero;
+            
+            float min = float.MaxValue;
             foreach (RaycastHit2D hit in hits.Where(hit => hit.collider))
             {
-                Debug.DrawLine(eyes.transform.position, hit.point, Color.white);
-                float weight = (viewDistance - hit.distance) / viewDistance;
-                x += hit.point.x * weight;
-                y += hit.point.y * weight;
-                weightSum += weight;
+                if (DebugDrawer.Instance
+                    && DebugDrawer.Instance.Fish_Eyes
+                    && DebugDrawer.Instance.Fish_Eyes_DrawRaycasts
+                ) Debug.DrawLine(eyes.position, hit.point, Color.white);
+
+                float dist = hit.distance;
+                if (dist >= min) continue;
+                
+                min = dist;
+                closest = hit.point;
             }
         
-            return new(x / weightSum, y / weightSum);
+            return closest;
         }
     }
 }
