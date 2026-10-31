@@ -403,6 +403,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b703b2655a4440698aeb84ec63353dd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Fish.FishWanderMovement
+  speedChangeTimeMin: 1
+  speedChangeTimeMax: 10
+  speedWeightChill: 1
+  speedWeightSlow: 2
+  speedWeightNormal: 4
+  speedWeightFast: 3
 --- !u!114 &6191101500634081704
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -442,8 +448,6 @@ MonoBehaviour:
   fleeDistMax: 15
   wanderDistMin: 3
   wanderDistMax: 8
-  renavigateTimeMin: 5
-  renavigateTimeMax: 10
 --- !u!114 &7207838198360369881
 MonoBehaviour:
   m_ObjectHideFlags: 0

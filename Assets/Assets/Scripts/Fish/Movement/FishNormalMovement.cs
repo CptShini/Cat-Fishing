@@ -15,6 +15,16 @@ namespace Assets.Scripts.Fish.Movement
         private FishMover _mover;
         private FishNavigator _navigator;
 
+        private bool _wandering;
+        private float _wanderSpeedClock;
+        
+        [SerializeField] private float speedChangeTimeMin, speedChangeTimeMax;
+        [SerializeField] private int
+            speedWeightChill = 1,
+            speedWeightSlow = 2,
+            speedWeightNormal = 4,
+            speedWeightFast = 3;
+
         private void Awake()
         {
             _mover = GetComponent<FishMover>();
@@ -23,35 +33,51 @@ namespace Assets.Scripts.Fish.Movement
             _navigator.DestinationReached.AddListener(MovementDone.Invoke);
         }
 
-        private void Update() => _mover.DesiredDirection = _navigator.CurrentDirection;
+        private void Update()
+        {
+            _mover.DesiredDirection = _navigator.CurrentDirection;
+            UpdateWanderSpeedRandomly();
+        }
 
         public void Wander()
         {
+            _wandering = true;
+            _wanderSpeedClock = 0f;
             _navigator.Wander();
+        }
+        
+        public void Flee(Vector2 fleePoint)
+        {
+            _wandering = false;
+            _navigator.Flee(fleePoint);
+            _mover.SetSpeed(FishSpeed.Max);
+        }
+
+        private void UpdateWanderSpeedRandomly()
+        {
+            if (!_wandering) return;
+            
+            _wanderSpeedClock -= Time.deltaTime;
+            if (_wanderSpeedClock > 0f) return;
+
+            _wanderSpeedClock = Random.Range(speedChangeTimeMin, speedChangeTimeMax);
             
             FishSpeed wanderSpeed = GetRandomWanderSpeed();
             _mover.SetSpeed(wanderSpeed);
 
             return;
             
-            static FishSpeed GetRandomWanderSpeed()
+            FishSpeed GetRandomWanderSpeed()
             {
                 Dictionary<FishSpeed, int> speedWeights = new()
                 {
-                    { FishSpeed.Chill,  1 },
-                    { FishSpeed.Slow,   2 },
-                    { FishSpeed.Normal, 3 },
-                    { FishSpeed.Fast,   2 }
+                    { FishSpeed.Chill,  speedWeightChill },
+                    { FishSpeed.Slow,   speedWeightSlow },
+                    { FishSpeed.Normal, speedWeightNormal },
+                    { FishSpeed.Fast,   speedWeightFast }
                 };
                 return RandomHelper.WeightedRandom(speedWeights);
             }
-        }
-
-        public void Flee(Vector2 fleePoint)
-        {
-            _navigator.Flee(fleePoint);
-            
-            _mover.SetSpeed(FishSpeed.Max);
         }
 
         private void OnEnable()
