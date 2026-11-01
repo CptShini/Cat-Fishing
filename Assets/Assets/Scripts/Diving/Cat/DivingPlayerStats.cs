@@ -35,14 +35,12 @@ public class DivingPlayerStats : MonoBehaviour
 
     [Header("Other")]
     public float stunDuration = 2; // The amount of time in seconds player will be stunned
-
-
-    void Awake()
+    
+    private void Awake()
     {
         if (Instance != null && Instance != this) 
             Destroy(gameObject);
         else
             Instance = this;
     }
-
 }

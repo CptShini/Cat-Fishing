@@ -3,46 +3,45 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class SceneTransition : MonoBehaviour
+namespace Assets.Scripts.Helpers
 {
-    public static SceneTransition Instance { get; private set; }
-
-    private Animator fadeAnim;
-    private Image image;
-    public float fadeTime = 3f;
-
-    private void Awake()
+    public class SceneTransition : MonoBehaviour
     {
-        fadeAnim = gameObject.transform.GetChild(0).GetComponent<Animator>(); 
-        image = gameObject.transform.GetChild(0).GetComponent<Image>();
+        public static SceneTransition Instance { get; private set; }
+
+        [SerializeField] private float fadeTime = 3f;
+    
+        [SerializeField] private Animator fadeAnim;
+        [SerializeField] private Image image;
+
+        private void Awake()
+        {
+            if (Instance != null && Instance != this) 
+                Destroy(gameObject);
+            else
+                Instance = this;
         
-        if (Instance != null && Instance != this) 
-            Destroy(gameObject);
-        else
-            Instance = this;
-        
-        FadeOut();
+            FadeOut();
+        }
+
+        public void LoadScene(int buildIndex) => 
+            StartCoroutine(LoadSceneWithFade(buildIndex));
+
+        private IEnumerator LoadSceneWithFade(int buildIndex)
+        {
+            fadeAnim.SetBool("Loaded", false); // TODO: shouldn't be done with strings :/
+            fadeAnim.Play("FadeIn");
+
+            yield return new WaitForSeconds(fadeTime);
+
+            SceneManager.LoadScene(buildIndex);
+            fadeAnim.SetBool("Loaded", true);
+        }
+
+        private void FadeOut()
+        {
+            fadeAnim.Play("FadeOut");
+        }
+
     }
-
-    public void LoadScene(string sceneName)
-    {
-        StartCoroutine(LoadSceneWithFade(sceneName));
-    }
-
-    private IEnumerator LoadSceneWithFade(string sceneName)
-    {
-        fadeAnim.SetBool("Loaded",false);
-        fadeAnim.Play("FadeIn");
-
-        yield return new WaitForSeconds(fadeTime);
-
-        SceneManager.LoadScene(sceneName);
-        fadeAnim.SetBool("Loaded",true);
-    }
-
-    private void FadeOut()
-    {
-        fadeAnim.Play("FadeOut");
-    }
-
 }

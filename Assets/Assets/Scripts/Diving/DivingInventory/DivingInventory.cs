@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Assets.Scripts.Diving;
 using UnityEngine;
 
 public class DivingInventory : MonoBehaviour
@@ -19,8 +20,7 @@ public class DivingInventory : MonoBehaviour
     private void Awake()
     {
         collectibles = new();
-        weightBar.SetMaxValue(maxWeight);
-        weightBar.SetCurrentValue(curWeight);
+        weightBar.SetMaxValue(maxWeight, curWeight);
         
         if (Instance != null && Instance != this) 
             Destroy(gameObject);
@@ -47,7 +47,7 @@ public class DivingInventory : MonoBehaviour
     private void SetWeight(float weight)
     {
         curWeight += weight;
-        weightBar.SetCurrentValue(curWeight);
+        weightBar.CurrentValue = curWeight;
     }
 
     private void CreateSlot(Collectible collectible)

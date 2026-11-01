@@ -1,18 +1,40 @@
+using Assets.Scripts.Helpers;
 using UnityEngine;
 
-public class DivingManager : MonoBehaviour
+namespace Assets.Scripts.Diving.Managers
 {
-    public static DivingManager Instance { get; private set; }
-    
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public class DivingManager : MonoBehaviour
     {
-        
-    }
+        [SerializeField] private int aquariumSceneIndex = 1;
 
-    // Update is called once per frame
-    void Update()
-    {
+        [SerializeField] private StatBar
+            oxygenBar;
+
+        private static PlayerState.PlayerState PlayerState => DivingController.Instance.state;
+        private static DivingPlayerStats PlayerStats => DivingPlayerStats.Instance;
         
+        private bool _noOxygen;
+        
+        private void Start()
+        {
+            oxygenBar.SetMaxValue(PlayerStats.oxygenCapacity);
+            oxygenBar.BarEmpty.AddListener(NoOxygen);
+        }
+
+        private void Update()
+        {
+            if (PlayerState != Scripts.PlayerState.PlayerState.GRAB)
+            {
+                oxygenBar.CurrentValue -= Time.deltaTime;
+            }
+        }
+
+        private void NoOxygen()
+        {
+            if (_noOxygen) return;
+        
+            _noOxygen = true;
+            SceneTransition.Instance.LoadScene(aquariumSceneIndex);
+        }
     }
 }
