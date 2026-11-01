@@ -304,4 +304,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DecorInventorySlot
   ItemSO: {fileID: 0}
   icon: {fileID: 2062460501140310248}
-  name: {fileID: 316089889957663178}
+  nameText: {fileID: 316089889957663178}

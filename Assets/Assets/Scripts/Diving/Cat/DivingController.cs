@@ -130,15 +130,14 @@ public class DivingController : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.layer == 7 && state != PlayerState.GRAB)
-        {
-            Fish fish = col.gameObject.GetComponent<FishStats>().fish;
-            FishCaughtMovement movement = col.gameObject.GetComponent<FishCaughtMovement>();
+        if (col.gameObject.layer != 7 || state == PlayerState.GRAB) return;
+        
+        Fish fish = col.gameObject.GetComponent<FishStats>().fish;
+        FishCaughtMovement movement = col.gameObject.GetComponent<FishCaughtMovement>();
 
-            col.gameObject.GetComponent<FishController>().Catch();
-            CatchingMinigame.Instance.Init(fish, movement);
-            SetPlayerState(PlayerState.GRAB);
-        }
+        col.gameObject.GetComponent<FishController>().Catch();
+        CatchingMinigame.Instance.Init(fish, movement);
+        SetPlayerState(PlayerState.GRAB);
     }
 
 
