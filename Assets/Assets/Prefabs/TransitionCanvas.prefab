@@ -117,6 +117,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SceneTransition
   fadeTime: 2
+  fadeAnim: {fileID: 8247425466164966125}
+  image: {fileID: 5178574621326907143}
 --- !u!114 &2245637555574165907
 MonoBehaviour:
   m_ObjectHideFlags: 0

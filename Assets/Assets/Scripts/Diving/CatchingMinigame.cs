@@ -1,4 +1,5 @@
 using System;
+using Assets.Scripts.Diving.Bars;
 using Assets.Scripts.Fish;
 using Assets.Scripts.Fish.CatchMinigame;
 using Assets.Scripts.Fish.Movement;
@@ -35,8 +36,7 @@ public class CatchingMinigame : MonoBehaviour
         //fishImage.sprite = fish.sprite;
         minigameCanvas.SetActive(true);
 
-        CatchBar.Instance.SetMaxValue(contestThreshold);
-        CatchBar.Instance.SetCurrentValue(contestThreshold / 2);
+        CatchBar.Instance.SetMaxValue(contestThreshold, contestThreshold / 2);
     }
 
     public void Grab(Vector2 velocityVector)
@@ -44,9 +44,9 @@ public class CatchingMinigame : MonoBehaviour
         float angle = Vector2.Angle(velocityVector, movement.Direction);
         float power = DivingPlayerStats.Instance.strength * (angle / 180);
         float contest = Math.Clamp((power - fish.strength) / fish.strength, -10, 5);
-        CatchBar.Instance.AddToCurrentValue(contest * Time.deltaTime);
+        CatchBar.Instance.CurrentValue += contest * Time.deltaTime;
 
-        if( CatchBar.Instance.currentValue >= contestThreshold)
+        if( CatchBar.Instance.CurrentValue >= contestThreshold)
         {
             //CATCH FISH
             FishCollectible fishCol = new FishCollectible(fish);
@@ -62,7 +62,7 @@ public class CatchingMinigame : MonoBehaviour
             }
             minigameCanvas.SetActive(false);
 
-        } else if(CatchBar.Instance.currentValue <= 0)
+        } else if(CatchBar.Instance.CurrentValue <= 0)
         {
             //LOSE FISH
             DivingController.Instance.SetPlayerState(PlayerState.STUN);

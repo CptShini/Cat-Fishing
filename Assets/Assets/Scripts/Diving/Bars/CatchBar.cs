@@ -1,4 +1,4 @@
-namespace Assets.Scripts.Fish.CatchMinigame
+namespace Assets.Scripts.Diving.Bars
 {
     public class CatchBar : StatBar
     {

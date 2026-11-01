@@ -1,18 +1,27 @@
+using Assets.Scripts.Diving.Bars;
+using Assets.Scripts.Helpers;
 using UnityEngine;
 
-public class DivingManager : MonoBehaviour
+namespace Assets.Scripts.Diving.Managers
 {
-    public static DivingManager Instance { get; private set; }
+    public class DivingManager : MonoBehaviour
+    {
+        [SerializeField] private int aquariumSceneIndex = 1;
+        
+        private bool _noOxygen;
+        
     
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+        private void Start()
+        {
+            OxygenBar.Instance.BarEmpty.AddListener(NoOxygen);
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
+        private void NoOxygen()
+        {
+            if (_noOxygen) return;
         
+            _noOxygen = true;
+            SceneTransition.Instance.LoadScene(aquariumSceneIndex);
+        }
     }
 }
