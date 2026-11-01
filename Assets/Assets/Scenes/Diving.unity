@@ -5467,7 +5467,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37c52f7d1084f914fb4b5aa4a0a4262c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.Managers.DivingManager
-  aquariumSceneIndex: 1
+  aquariumSceneIndex: 0
   oxygenBar: {fileID: 352567872}
 --- !u!1001 &2046191312
 PrefabInstance:
