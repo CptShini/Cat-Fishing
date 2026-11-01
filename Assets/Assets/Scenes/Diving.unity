@@ -5461,11 +5461,7 @@ MonoBehaviour:
   catchBar: {fileID: 228957061}
   minigameCanvas: {fileID: 988630930}
   catAndFish: {fileID: 1440476227}
-  fishImage: {fileID: 0}
-  catImage: {fileID: 0}
-  OnSetFishSprite:
-    m_PersistentCalls:
-      m_Calls: []
+  fishImage: {fileID: 234567692}
 --- !u!114 &2035162236
 MonoBehaviour:
   m_ObjectHideFlags: 0
