@@ -1,4 +1,4 @@
-using UnityEngine;
+using Assets.Scripts.Fish;
 
 [System.Serializable]
 public class FishCollectible : Collectible

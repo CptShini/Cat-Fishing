@@ -1,7 +1,6 @@
-
 using System;
-using System.Runtime.CompilerServices;
 using Assets.Scripts.Fish;
+using Assets.Scripts.Fish.CatchMinigame;
 using Assets.Scripts.Fish.Movement;
 using Assets.Scripts.PlayerState;
 using UnityEngine;
@@ -9,12 +8,12 @@ using UnityEngine.UI;
 
 public class CatchingMinigame : MonoBehaviour
 {
-
     public static CatchingMinigame Instance { get; private set; }
 
     private Fish fish;
     private FishCaughtMovement movement;
 
+    [SerializeField] private GameObject minigameCanvas;
     [SerializeField] private GameObject catAndFish;
     [SerializeField] private Image fishImage;
     [SerializeField] private Image catImage;
@@ -27,8 +26,6 @@ public class CatchingMinigame : MonoBehaviour
             Destroy(gameObject);
         else
             Instance = this;
-
-        gameObject.SetActive(false);
     }
 
     public void Init(Fish fish, FishCaughtMovement movement)
@@ -36,7 +33,7 @@ public class CatchingMinigame : MonoBehaviour
         this.fish = fish;
         this.movement = movement;
         //fishImage.sprite = fish.sprite;
-        gameObject.SetActive(true);
+        minigameCanvas.SetActive(true);
 
         CatchBar.Instance.SetMaxValue(contestThreshold);
         CatchBar.Instance.SetCurrentValue(contestThreshold / 2);
@@ -61,16 +58,16 @@ public class CatchingMinigame : MonoBehaviour
             else // Cat cannot win, if their inventory is full
             {
                 DivingController.Instance.SetPlayerState(PlayerState.STUN);
-                movement.Loose(DivingController.Instance.gameObject.transform.position);
+                movement.Lose(DivingController.Instance.gameObject.transform.position);
             }
-            gameObject.SetActive(false);
+            minigameCanvas.SetActive(false);
 
         } else if(CatchBar.Instance.currentValue <= 0)
         {
             //LOSE FISH
             DivingController.Instance.SetPlayerState(PlayerState.STUN);
-            movement.Loose(DivingController.Instance.gameObject.transform.position);
-            gameObject.SetActive(false);
+            movement.Lose(DivingController.Instance.gameObject.transform.position);
+            minigameCanvas.SetActive(false);
         }
     }
 

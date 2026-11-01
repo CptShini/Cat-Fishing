@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Assets.Scripts.Fish;
 using UnityEngine;
 
 public static class FishSaveSystem
