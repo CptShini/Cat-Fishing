@@ -13,18 +13,34 @@ MonoBehaviour:
   m_Name: Spin
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Fish.CatchMinigame.FishCatchPatternSO
   UpMoves:
-  - move: 3
+  - move: 1
     duration: 1
     weight: 1
-  DownMoves:
+  UpRightMoves:
   - move: 2
     duration: 1
     weight: 1
-  LeftMoves:
-  - move: 0
-    duration: 0.5
-    weight: 1
   RightMoves:
-  - move: 1
-    duration: 0.5
+  - move: 3
+    duration: 1
+    weight: 1
+  DownRightMoves:
+  - move: 4
+    duration: 1
+    weight: 1
+  DownMoves:
+  - move: 5
+    duration: 1
+    weight: 1
+  DownLeftMoves:
+  - move: 6
+    duration: 1
+    weight: 1
+  LeftMoves:
+  - move: 7
+    duration: 1
+    weight: 1
+  UpLeftMoves:
+  - move: 0
+    duration: 1
     weight: 1

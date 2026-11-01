@@ -4652,6 +4652,10 @@ PrefabInstance:
       propertyPath: areaMaskName
       value: Biome 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2908896234982446586, guid: 161b5c02739f62b4fb82a7e106416081, type: 3}
+      propertyPath: fishSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 82831bff64c4f8743beeebe2d5880c29, type: 2}
     - target: {fileID: 5206029193779855580, guid: 161b5c02739f62b4fb82a7e106416081, type: 3}
       propertyPath: m_Name
       value: Fish (3)
@@ -4660,6 +4664,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7310549756964335776, guid: 161b5c02739f62b4fb82a7e106416081, type: 3}
+      propertyPath: catchPattern
+      value: 
+      objectReference: {fileID: 11400000, guid: 738c509b7d7362a4280fea24455f9b53, type: 2}
     - target: {fileID: 7417673365245228754, guid: 161b5c02739f62b4fb82a7e106416081, type: 3}
       propertyPath: m_LocalPosition.x
       value: -14.13
@@ -5453,8 +5461,7 @@ MonoBehaviour:
   catchBar: {fileID: 228957061}
   minigameCanvas: {fileID: 988630930}
   catAndFish: {fileID: 1440476227}
-  fishImage: {fileID: 0}
-  catImage: {fileID: 0}
+  fishImage: {fileID: 234567692}
 --- !u!114 &2035162236
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5481,6 +5488,10 @@ PrefabInstance:
       propertyPath: areaMaskName
       value: Biome 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2908896234982446586, guid: 161b5c02739f62b4fb82a7e106416081, type: 3}
+      propertyPath: fishSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 82831bff64c4f8743beeebe2d5880c29, type: 2}
     - target: {fileID: 5206029193779855580, guid: 161b5c02739f62b4fb82a7e106416081, type: 3}
       propertyPath: m_Name
       value: Fish (7)
@@ -5489,6 +5500,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7310549756964335776, guid: 161b5c02739f62b4fb82a7e106416081, type: 3}
+      propertyPath: catchPattern
+      value: 
+      objectReference: {fileID: 11400000, guid: 48af6f98da75d24489cb9a8ba00f679b, type: 2}
     - target: {fileID: 7417673365245228754, guid: 161b5c02739f62b4fb82a7e106416081, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4.07
