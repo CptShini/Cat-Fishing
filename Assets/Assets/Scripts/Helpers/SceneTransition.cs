@@ -29,13 +29,13 @@ namespace Assets.Scripts.Helpers
 
         private IEnumerator LoadSceneWithFade(int buildIndex)
         {
-            fadeAnim.SetBool("Loaded",false);
+            fadeAnim.SetBool("Loaded", false); // TODO: shouldn't be done with strings :/
             fadeAnim.Play("FadeIn");
 
             yield return new WaitForSeconds(fadeTime);
 
             SceneManager.LoadScene(buildIndex);
-            fadeAnim.SetBool("Loaded",true);
+            fadeAnim.SetBool("Loaded", true);
         }
 
         private void FadeOut()

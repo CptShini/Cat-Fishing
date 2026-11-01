@@ -1,3 +1,4 @@
+using Assets.Scripts.Diving.Cat;
 using Assets.Scripts.Fish;
 using Assets.Scripts.Fish.Movement;
 using Assets.Scripts.PlayerState;

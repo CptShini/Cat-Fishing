@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-namespace Assets.Scripts.Diving.Bars
+namespace Assets.Scripts.Diving
 {
     public class StatBar : MonoBehaviour
     {
@@ -22,8 +22,7 @@ namespace Assets.Scripts.Diving.Bars
         public readonly UnityEvent BarEmpty = new();
         
         private float _currentValue;
-        private float _maxValue;
-        private protected float _minValue;
+        private float _minValue, _maxValue;
         
         public void SetMaxValue(float maxVal, float newVal = -1f)
         {
@@ -31,6 +30,8 @@ namespace Assets.Scripts.Diving.Bars
             _currentValue = newVal < 0 ? maxVal : newVal;
             UpdateFill();
         }
+        
+        public void SetMinValue(float minVal) => _minValue = minVal;
 
         private void OnValueChanged()
         {

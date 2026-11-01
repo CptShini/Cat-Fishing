@@ -11,9 +11,9 @@ namespace Assets.Scripts.Helpers
 
         public void Interact()
         {
-            if (isDivingScene)
+            if (isDivingScene) // TODO: all of this is stupid
             {
-                if (DivingController.Instance.state == Assets.Scripts.PlayerState.PlayerState.GRAB)
+                if (DivingController.Instance.state == PlayerState.PlayerState.GRAB)
                     return;
             
                 FishCollectionManager.Instance.TransferFishCollectibles(DivingInventory.Instance.GetCollectibleofType<FishCollectible>());
