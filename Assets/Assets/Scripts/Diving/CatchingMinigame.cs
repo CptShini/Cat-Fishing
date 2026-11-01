@@ -5,6 +5,7 @@ using Assets.Scripts.Fish.CatchMinigame;
 using Assets.Scripts.Fish.Movement;
 using Assets.Scripts.PlayerState;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class CatchingMinigame : MonoBehaviour
@@ -18,10 +19,9 @@ public class CatchingMinigame : MonoBehaviour
     [SerializeField] private GameObject minigameCanvas;
     [SerializeField] private GameObject catAndFish;
     [SerializeField] private Image fishImage;
-    [SerializeField] private Image catImage;
     private float contestThreshold = 5; // The value that contest must be to catch a fish succesfully
     private float fishAngle;
-
+    
     void Awake()
     {
         if (Instance != null && Instance != this) 
@@ -34,7 +34,8 @@ public class CatchingMinigame : MonoBehaviour
     {
         this.fish = fish;
         this.movement = movement;
-        //fishImage.sprite = fish.sprite;
+        
+        fishImage.sprite = fish.sprite;
         minigameCanvas.SetActive(true);
 
         catchBar.SetMaxValue(contestThreshold, contestThreshold / 2);
