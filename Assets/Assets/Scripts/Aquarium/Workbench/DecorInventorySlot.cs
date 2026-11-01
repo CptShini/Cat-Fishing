@@ -6,7 +6,7 @@ public class DecorInventorySlot : MonoBehaviour
 {
     public ItemSO ItemSO;
     [SerializeField] private Image icon;
-    [SerializeField] private TMP_Text name;
+    [SerializeField] private TMP_Text nameText;
 
     public void UpdateUI()
     {
@@ -14,13 +14,13 @@ public class DecorInventorySlot : MonoBehaviour
         {
             icon.sprite = ItemSO.itemIcon;
             icon.gameObject.SetActive(true);
-            name.text = ItemSO.itemName;
-            name.gameObject.SetActive(true);
+            nameText.text = ItemSO.itemName;
+            nameText.gameObject.SetActive(true);
         }
         else
         {
             icon.gameObject.SetActive(false);
-            name.gameObject.SetActive(false);
+            nameText.gameObject.SetActive(false);
         }
     }
 }

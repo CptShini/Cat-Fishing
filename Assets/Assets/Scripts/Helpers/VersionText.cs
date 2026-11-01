@@ -10,7 +10,7 @@ namespace Assets.Scripts.Helpers
         private void Awake()
         {
             _text = GetComponent<TextMeshProUGUI>();
-            _text.text = Application.version;
+            _text.text = $"v{Application.version}";
         }
     }
 }

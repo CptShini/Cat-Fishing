@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 407102680116667992}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Body_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1543806730874570324}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: -0.005967728, w: 0.9999822}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.888015, y: -0.030480498, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -42,7 +42,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5369148328498034889}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: bone_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -57,7 +57,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1793009914047417189}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0.00596786, w: 0.9999822}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 2.3900635, y: -0.0000024260098, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -123,7 +123,7 @@ Transform:
   m_GameObject: {fileID: 2845935514510385659}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.53, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -140,7 +140,7 @@ GameObject:
   - component: {fileID: 8375782537523922051}
   - component: {fileID: 2351633011273638027}
   - component: {fileID: 3831577865461553534}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: sea-clown-fish-cartoon-character-illustration-design-isolate-png_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -156,7 +156,7 @@ Transform:
   m_GameObject: {fileID: 3232370780417970284}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.12, y: -0.011, z: 0}
+  m_LocalPosition: {x: 0.5, y: 0, z: 0}
   m_LocalScale: {x: 0.2, y: 0.15, z: 0.15}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -255,11 +255,13 @@ GameObject:
   - component: {fileID: 7417673365245228754}
   - component: {fileID: 4604139004168998407}
   - component: {fileID: 3523591142534891601}
-  - component: {fileID: 2770333134826107441}
-  - component: {fileID: 6191101500634081704}
-  - component: {fileID: 7517340754007288589}
-  - component: {fileID: 7310549756964335776}
   - component: {fileID: 2908896234982446586}
+  - component: {fileID: 2770333134826107441}
+  - component: {fileID: 7310549756964335776}
+  - component: {fileID: 7517340754007288589}
+  - component: {fileID: 6191101500634081704}
+  - component: {fileID: 272854619560324941}
+  - component: {fileID: 7207838198360369881}
   m_Layer: 7
   m_Name: Fish
   m_TagString: Fish
@@ -276,7 +278,7 @@ Transform:
   m_GameObject: {fileID: 5206029193779855580}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
-  m_LocalPosition: {x: 6.99, y: 0.04, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -318,8 +320,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.1, y: 0}
-  m_Size: {x: 1.25, y: 0.5}
+  m_Offset: {x: -0.35, y: 0}
+  m_Size: {x: 0.8, y: 0.35}
   m_Direction: 1
 --- !u!50 &3523591142534891601
 Rigidbody2D:
@@ -348,73 +350,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &2770333134826107441
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5206029193779855580}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8c268f5061947818c25daf7049be8c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Fish.FishController
-  minWanderTime: 1
-  maxWanderTime: 15
-  minFleeTime: 5
-  maxFleeTime: 10
-  sightHandler: {fileID: 0}
-  perceptionHandler: {fileID: 0}
---- !u!114 &6191101500634081704
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5206029193779855580}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95b6be2da70e4ee59a69b617590d5376, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Fish.Movement.FishMover
-  target: {fileID: 0}
-  maxSpeed: 3
-  maxTurnRate: 100
-  turnResponsiveness: 2.5
-  turnAcceleration: 240
-  wanderAngle: 12
-  wanderFrequency: 0.2
-  lateralSlipDamping: 1.5
---- !u!114 &7517340754007288589
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5206029193779855580}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b703b2655a4440698aeb84ec63353dd8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Fish.FishWanderMovement
-  viewDistance: 1.5
-  avoidanceFactor: 1
-  eyes: {fileID: 7665592108927822498}
---- !u!114 &7310549756964335776
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5206029193779855580}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b16499c5f454eaba2c759d80b72b2f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Fish.FishCaughtMovement
-  catchPattern: {fileID: 0}
-  patternSpeed: 1
 --- !u!114 &2908896234982446586
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -428,6 +363,107 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FishStats
   fishSO: {fileID: 11400000, guid: 6a86a325640c37047a677ba8c19722f6, type: 2}
+--- !u!114 &2770333134826107441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5206029193779855580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8c268f5061947818c25daf7049be8c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Fish.FishController
+  sightHandler: {fileID: 2980226103878150663}
+  perceptionHandler: {fileID: 3102036810922805875}
+--- !u!114 &7310549756964335776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5206029193779855580}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b16499c5f454eaba2c759d80b72b2f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Fish.FishCaughtMovement
+  catchPattern: {fileID: 11400000, guid: 48af6f98da75d24489cb9a8ba00f679b, type: 2}
+  patternSpeed: 1
+--- !u!114 &7517340754007288589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5206029193779855580}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b703b2655a4440698aeb84ec63353dd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Fish.FishWanderMovement
+  speedChangeTimeMin: 1
+  speedChangeTimeMax: 10
+  speedWeightChill: 1
+  speedWeightSlow: 2
+  speedWeightNormal: 4
+  speedWeightFast: 3
+--- !u!114 &6191101500634081704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5206029193779855580}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95b6be2da70e4ee59a69b617590d5376, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Fish.Movement.FishMover
+  target: {fileID: 0}
+  maxSpeed: 3
+  maxTurnRate: 720
+  turnResponsiveness: 10
+  turnAcceleration: 720
+  wanderAngle: 12
+  wanderFrequency: 0.2
+  lateralSlipDamping: 1.5
+--- !u!114 &272854619560324941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5206029193779855580}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94f516577b584cfda95bf2b5818f1fdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Fish.Navigation.FishNavigator
+  eyePoint: {fileID: 7665592108927822498}
+  areaMaskName: Biome 1
+  arrivalDistanceTolerance: 1
+  fleeDistMin: 10
+  fleeDistMax: 15
+  wanderDistMin: 3
+  wanderDistMax: 8
+--- !u!114 &7207838198360369881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5206029193779855580}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1bd37ee306e45db8d6a50881635d641, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Fish.Navigation.FishEyes
+  eyes: {fileID: 7665592108927822498}
+  viewDistance: 1.5
+  fov: 120
+  eyeCount: 4
 --- !u!1 &7231650367447256696
 GameObject:
   m_ObjectHideFlags: 0
@@ -521,7 +557,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1465565654600974873}
   - component: {fileID: 6044135393209350168}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Graphics
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -565,7 +601,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 685606463614873724}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -580,13 +616,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8920100173034518163}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0, z: -0.99953073, w: 0.030634096}
+  m_LocalRotation: {x: 0, y: 0, z: -1, w: 0}
   m_LocalPosition: {x: -0.008974911, y: 0.00086877315, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 407102680116667992}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -180}
 --- !u!1 &9044366346588553811
 GameObject:
   m_ObjectHideFlags: 0

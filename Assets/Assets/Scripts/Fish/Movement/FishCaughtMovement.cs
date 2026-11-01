@@ -10,71 +10,58 @@ namespace Assets.Scripts.Fish.Movement
     {
         [SerializeField] private FishCatchPatternSO catchPattern;
         [SerializeField] private float patternSpeed = 1f;
-        public readonly UnityEvent<Vector2,bool> onLoose = new();
+        
+        public Vector2 Direction { get; private set; }
+        public readonly UnityEvent<Vector2> OnLose = new();
 
-        private bool _catching;
+        public bool Catching { get; private set; }
         private float _catchClock;
         private CatchPatternMove _currentMove;
-        private Vector2 _direction;
-
-        public Vector2 direction => _direction;
                 
         private void Update()
         {
-            if (!_catching) return;
+            if (!Catching) return;
             
-            if (_catchClock > 0f)
-            {
-                _catchClock -= Time.deltaTime * patternSpeed;
-            }
-            else
-            {
-                _catchClock = 0f;
-                NextMove(_currentMove.move);
-            }
+            _catchClock -= Time.deltaTime * patternSpeed;
+            if (_catchClock > 0f) return;
+            
+            NextMove(_currentMove.move);
         }
 
-        public void Catch(FishSpeed speed)
+        public void Catch()
         {
-            if (_catching) return;
-            
-            _catching = true;
-            
-            FishMove initialMove = (FishMove)Random.Range(0, 4);
+            Catching = true;
+
+            FishMove initialMove = catchPattern.GetUsedMoves().GetRandom();
             NextMove(initialMove);
         }
 
-        public void Caught()
+        public void Lose(Vector2 playerPos)
         {
-            if (!_catching) return;
+            Catching = false;
+            _catchClock = 0f;
             
-            _catching = false;
-            _catchClock = 0f;
-        }
-
-        public void Loose(Vector2 otherPos)
-        {
-            _catching = false;
-            _catchClock = 0f;
-            onLoose.Invoke(otherPos, true);
+            OnLose.Invoke(playerPos);
         }
 
         private void NextMove(FishMove previousMove)
         {
-            _currentMove = GenerateNextMove(previousMove);
+            _currentMove = GenerateNextMove();
             _catchClock = _currentMove.duration;
             
-            _direction = _currentMove.move.ToVector2();
-        }
+            Direction = _currentMove.move.ToVector2();
+            
+            return;
+            
+            CatchPatternMove GenerateNextMove()
+            {
+                CatchPatternMove[] possibleNextMoves = catchPattern.GetMoves(previousMove);
+                CatchPatternMove nextMove = RandomHelper.WeightedRandom(possibleNextMoves
+                    .ToDictionary(m => m, w => w.weight)
+                );
 
-        private CatchPatternMove GenerateNextMove(FishMove previousMove)
-        {
-            CatchPatternMove[] possibleNextMoves = catchPattern.GetMoves(previousMove);
-            CatchPatternMove nextMove = RandomHelper.WeightedRandom(possibleNextMoves
-                .ToDictionary(m => m, w => w.weight)
-            );
-
-            return nextMove;
+                return nextMove;
+            }
         }
     }
 }

@@ -1,9 +1,10 @@
 using UnityEngine;
 
-public class DontDestroyOnLoad : MonoBehaviour
+namespace Assets.Scripts.Helpers
 {
-    void Awake()
+    public class DontDestroyOnLoad : MonoBehaviour
     {
-        DontDestroyOnLoad(gameObject);
+        private void Awake() => 
+            DontDestroyOnLoad(gameObject);
     }
 }

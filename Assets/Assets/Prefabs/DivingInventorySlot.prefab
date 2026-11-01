@@ -349,6 +349,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DivingInventorySlot
   collectible:
     rid: -2
+  image: {fileID: 2162555662106202484}
+  text: {fileID: 3616436314245021593}
   references:
     version: 2
     RefIds:
