@@ -1,3 +1,4 @@
+using Assets.Scripts.Fish.CatchMinigame;
 using Assets.Scripts.Helpers;
 using UnityEngine;
 
@@ -24,11 +25,14 @@ namespace Assets.Scripts.Fish.Domain
         
         // --- Stats ---
         
-        [field: SerializeField, Range(1, 10), Header("Stats")]
-        public int Strength { get; private set; }
+        [field: SerializeField, Header("Stats")]
+        public FishCatchPattern CatchPattern { get; private set; }
         
         [field: SerializeField]
         public Range Weight { get; private set; }
+        
+        [field: SerializeField, Range(1, 10)]
+        public int Strength { get; private set; }
         
         [field: SerializeField, Range(1, 10)]
         public int Speed { get; private set; }

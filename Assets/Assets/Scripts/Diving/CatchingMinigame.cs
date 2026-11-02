@@ -1,19 +1,16 @@
 using System;
 using Assets.Scripts.Diving;
-using Assets.Scripts.Fish;
-using Assets.Scripts.Fish.CatchMinigame;
 using Assets.Scripts.Fish.Domain;
 using Assets.Scripts.Fish.Movement;
 using Assets.Scripts.PlayerState;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class CatchingMinigame : MonoBehaviour
 {
     public static CatchingMinigame Instance { get; private set; }
 
-    private FishDTO _fishDto;
+    private Fish _fish;
     private FishCaughtMovement movement;
 
     [SerializeField] private StatBar catchBar;
@@ -31,12 +28,12 @@ public class CatchingMinigame : MonoBehaviour
             Instance = this;
     }
 
-    public void Init(FishDTO fishDto, FishCaughtMovement movement)
+    public void Init(Fish fish, FishCaughtMovement movement)
     {
-        this._fishDto = fishDto;
+        _fish = fish;
         this.movement = movement;
         
-        fishImage.sprite = fishDto.sprite;
+        fishImage.sprite = fish.Species.Icon;
         minigameCanvas.SetActive(true);
 
         catchBar.SetMaxValue(contestThreshold, contestThreshold / 2);
@@ -46,13 +43,13 @@ public class CatchingMinigame : MonoBehaviour
     {
         float angle = Vector2.Angle(velocityVector, movement.Direction);
         float power = DivingPlayerStats.Instance.strength * (angle / 180);
-        float contest = Math.Clamp((power - _fishDto.Strength) / _fishDto.Strength, -10, 5);
+        float contest = Math.Clamp((power - _fish.Strength) / _fish.Strength, -10, 5);
         catchBar.CurrentValue += contest * Time.deltaTime;
 
         if (catchBar.CurrentValue >= contestThreshold)
         {
             //CATCH FISH
-            FishCollectible fishCol = new(_fishDto);
+            FishCollectible fishCol = new(_fish);
             if (DivingInventory.Instance.Add(fishCol)) // Checks if putting in inventory is successful
             {
                 Destroy(movement.gameObject);

@@ -10,13 +10,21 @@ namespace Assets.Scripts.Fish.Perception
         private protected override string TriggerTag() => "Player Presence";
         
         private protected override bool IsOffset() => false;
+        
+        private protected override float ComputeReactionTime(int reactionStat)
+        {
+            int x = reactionStat;
+            int reactionTimeMs = 42 * x * x - 910 * x + 5000;
+            return reactionTimeMs / 1000f;
+        }
 
-        private protected override float RadiusFromSizeStat(int sizeStat)
+        private protected override float ComputeRadius(int sizeStat)
         {
             int x = sizeStat;
-            return x < 2
+            float radius = x < 2
                 ? Mathf.Sqrt(x / 2f)
                 : Mathf.Pow(1.2f, x - 2);
+            return radius;
         }
 
         private protected override void Detect(Collider2D other) =>

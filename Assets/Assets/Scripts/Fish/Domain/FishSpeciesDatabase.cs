@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 namespace Assets.Scripts.Fish.Domain
 {
-    [CreateAssetMenu]
+    [CreateAssetMenu(fileName = "New Species Database", menuName = "ScriptableObjects/Fish/Species Database")]
     public class FishSpeciesDatabase : ScriptableObject
     {
         [SerializeField] private List<FishSpecies> species;

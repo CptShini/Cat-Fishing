@@ -1,19 +1,18 @@
 using UnityEngine;
 using System.Collections.Generic;
-using Assets.Scripts.Fish;
 using Assets.Scripts.Fish.Domain;
 
 public class FishTank : MonoBehaviour, IInteractable
 {
     [Header("Tank settings")]
     [SerializeField] private string tankId;
-    [SerializeField] private FishDatabase fishDatabase;
+    [SerializeField] private FishSpeciesDatabase fishSpeciesDatabase;
 
     [Header("Fish in this tank")]
-    [SerializeField] private List<FishDTO> fishes = new List<FishDTO>();
+    [SerializeField] private List<Fish> fishes = new();
 
     public string TankId => tankId;
-    public IReadOnlyList<FishDTO> Fishes => fishes;
+    public IReadOnlyList<Fish> Fishes => fishes;
 
     public bool CanInteract()
     {
@@ -28,34 +27,34 @@ public class FishTank : MonoBehaviour, IInteractable
     private void Start()
     {
         fishes.Clear();
-        fishes.AddRange(FishSaveSystem.LoadTank(tankId, fishDatabase));
+        fishes.AddRange(FishSaveSystem.LoadTank(tankId, fishSpeciesDatabase));
     }
 
-    public bool AddFish(FishDTO fishDto)
+    public bool AddFish(Fish fish)
     {
-        if (fishDto == null || fishes.Exists(f => f != null && f.Id == fishDto.Id))
+        if (fish == null || fishes.Exists(f => f != null && f.Id == fish.Id))
             return false;
         
-        fishes.Add(fishDto);
+        fishes.Add(fish);
         FishSaveSystem.SaveTank(this);
-        Debug.Log(fishDto.Name + " added to tank: " + gameObject.name);
+        Debug.Log(fish.Species.Name + " added to tank: " + gameObject.name);
 
         return true;
     }
 
-    public bool RemoveFish(FishDTO fishDto)
+    public bool RemoveFish(Fish fish)
     {
-        int index = fishes.FindIndex(f => f != null && f.Id == fishDto.Id);
+        int index = fishes.FindIndex(f => f != null && f.Id == fish.Id);
 
         if (index < 0)
             return false;
 
-        FishDTO removedFishDto = fishes[index];
+        Fish removedFish = fishes[index];
         fishes.RemoveAt(index);
 
         FishSaveSystem.SaveTank(this);
 
-        Debug.Log(removedFishDto.Name + " removed from tank: " + gameObject.name);
+        Debug.Log(removedFish.Species.Name + " removed from tank: " + gameObject.name);
 
         return true;
     }

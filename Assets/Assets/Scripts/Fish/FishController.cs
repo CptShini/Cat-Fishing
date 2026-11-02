@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Fish.Movement;
+﻿using Assets.Scripts.Fish.Domain;
+using Assets.Scripts.Fish.Movement;
 using Assets.Scripts.Fish.Perception;
 using UnityEngine;
 
@@ -8,9 +9,14 @@ namespace Assets.Scripts.Fish
     [RequireComponent(typeof(FishCaughtMovement))]
     public class FishController : MonoBehaviour
     {
+        [SerializeField] private FishSpecies species;
+        
+        public Domain.Fish Fish { get; private set; }
+        
         private FishNormalMovement _normalMovement;
         private FishCaughtMovement _caughtMovement;
-        
+
+        [SerializeField] private FishSpriteSetter spriteSetter;
         [SerializeField] private FishSightHandler sightHandler;
         [SerializeField] private FishPerceptionHandler perceptionHandler;
 
@@ -24,8 +30,21 @@ namespace Assets.Scripts.Fish
             
             _normalMovement.MovementDone.AddListener(Wander);
             _caughtMovement.OnLose.AddListener(Flee);
-        
+            
+            Init(new(species)); // Temporary until it's done by spawner
             Wander();
+        }
+
+        public void Init(Domain.Fish fish)
+        {
+            Fish = fish;
+            spriteSetter.SetSprite(fish.Species.Icon);
+            
+            _normalMovement.Init();
+            _caughtMovement.Init(fish.Species.CatchPattern, 1f);
+            
+            sightHandler.Init(fish.Species.Reaction, fish.Species.Sight);
+            perceptionHandler.Init(fish.Species.Reaction, fish.Species.Perception);
         }
 
         private void Wander()

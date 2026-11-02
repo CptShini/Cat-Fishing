@@ -8,21 +8,27 @@ namespace Assets.Scripts.Fish.Movement
 {
     public class FishCaughtMovement : MonoBehaviour
     {
-        [SerializeField] private FishCatchPatternSO catchPattern;
-        [SerializeField] private float patternSpeed = 1f;
-        
         public Vector2 Direction { get; private set; }
         public readonly UnityEvent<Vector2> OnLose = new();
 
+        private FishCatchPattern _catchPattern;
+        private float _patternSpeed;
+        
         public bool Catching { get; private set; }
         private float _catchClock;
         private CatchPatternMove _currentMove;
-                
+
+        public void Init(FishCatchPattern catchPattern, float patternSpeed)
+        {
+            _catchPattern = catchPattern;
+            _patternSpeed = patternSpeed;
+        }
+        
         private void Update()
         {
             if (!Catching) return;
             
-            _catchClock -= Time.deltaTime * patternSpeed;
+            _catchClock -= Time.deltaTime * _patternSpeed;
             if (_catchClock > 0f) return;
             
             NextMove(_currentMove.move);
@@ -32,7 +38,7 @@ namespace Assets.Scripts.Fish.Movement
         {
             Catching = true;
 
-            FishMove initialMove = catchPattern.GetUsedMoves().GetRandom();
+            FishMove initialMove = _catchPattern.GetUsedMoves().GetRandom();
             NextMove(initialMove);
         }
 
@@ -55,7 +61,7 @@ namespace Assets.Scripts.Fish.Movement
             
             CatchPatternMove GenerateNextMove()
             {
-                CatchPatternMove[] possibleNextMoves = catchPattern.GetMoves(previousMove);
+                CatchPatternMove[] possibleNextMoves = _catchPattern.GetMoves(previousMove);
                 CatchPatternMove nextMove = RandomHelper.WeightedRandom(possibleNextMoves
                     .ToDictionary(m => m, w => w.weight)
                 );

@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
 using Random = UnityEngine.Random;
+using Range = Assets.Scripts.Helpers.Range;
 
 namespace Assets.Scripts.Fish.Navigation
 {
@@ -32,8 +33,8 @@ namespace Assets.Scripts.Fish.Navigation
         [SerializeField] private Transform eyePoint;
         [SerializeField] private string areaMaskName;
         [SerializeField] private float arrivalDistanceTolerance;
-        [SerializeField] private float fleeDistMin, fleeDistMax;
-        [SerializeField] private float wanderDistMin, wanderDistMax;
+        [SerializeField] private Range fleeDist;
+        [SerializeField] private Range wanderDist;
 
         private void Awake()
         {
@@ -90,7 +91,7 @@ namespace Assets.Scripts.Fish.Navigation
             Vector2[] path = Pathfind(0.5f, () =>
             {
                 Vector2 newDirection = MixWithRandom(CurrentDirection);
-                float wanderDistance = Random.Range(wanderDistMin, wanderDistMax);
+                float wanderDistance = wanderDist.Random();
 
                 var hit = Physics2D.Raycast(eyePoint.position, newDirection, wanderDistance);
                 Vector2 wanderTarget = hit.collider 
@@ -105,12 +106,12 @@ namespace Assets.Scripts.Fish.Navigation
         
         public void Flee(Vector2 fleePoint)
         {
-            Vector2[] path = Pathfind(fleeDistMax, () =>
+            Vector2[] path = Pathfind(fleeDist.Max, () =>
             {
                 Vector2 awayDir = ((Vector2)transform.position - fleePoint).normalized;
                 Vector2 fleeDir = MixWithRandom(awayDir);
             
-                float fleeDistance = Random.Range(fleeDistMin, fleeDistMax);
+                float fleeDistance = fleeDist.Random();
                 Vector2 fleeTarget = (Vector2)transform.position + fleeDir * fleeDistance;
                 return fleeTarget;
             });

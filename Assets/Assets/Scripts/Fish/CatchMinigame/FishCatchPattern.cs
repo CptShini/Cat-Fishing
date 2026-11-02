@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace Assets.Scripts.Fish.CatchMinigame
 {
-    [CreateAssetMenu(fileName = "Fish Catch Pattern", menuName = "ScriptableObjects/Fish Catch Pattern")]
-    public class FishCatchPatternSO : ScriptableObject
+    [CreateAssetMenu(fileName = "Fish Catch Pattern", menuName = "ScriptableObjects/Fish/Fish Catch Pattern")]
+    public class FishCatchPattern : ScriptableObject
     {
         public CatchPatternMove[] UpMoves;
         public CatchPatternMove[] UpRightMoves;

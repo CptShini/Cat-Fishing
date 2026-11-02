@@ -18,7 +18,7 @@ namespace Assets.Scripts.Fish.Movement
         private bool _wandering;
         private float _wanderSpeedClock;
         
-        [SerializeField] private float speedChangeTimeMin, speedChangeTimeMax;
+        [SerializeField] private Range speedChangeTime;
         [SerializeField] private int
             speedWeightChill = 1,
             speedWeightSlow = 2,
@@ -31,6 +31,11 @@ namespace Assets.Scripts.Fish.Movement
             _navigator = GetComponent<FishNavigator>();
             
             _navigator.DestinationReached.AddListener(MovementDone.Invoke);
+        }
+
+        public void Init()
+        {
+            
         }
 
         private void Update()
@@ -60,7 +65,7 @@ namespace Assets.Scripts.Fish.Movement
             _wanderSpeedClock -= Time.deltaTime;
             if (_wanderSpeedClock > 0f) return;
 
-            _wanderSpeedClock = Random.Range(speedChangeTimeMin, speedChangeTimeMax);
+            _wanderSpeedClock = speedChangeTime.Random();
             
             FishSpeed wanderSpeed = GetRandomWanderSpeed();
             _mover.SetSpeed(wanderSpeed);

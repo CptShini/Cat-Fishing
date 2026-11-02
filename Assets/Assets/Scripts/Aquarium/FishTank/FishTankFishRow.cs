@@ -1,5 +1,4 @@
 using System;
-using Assets.Scripts.Fish;
 using Assets.Scripts.Fish.Domain;
 using TMPro;
 using UnityEngine;
@@ -10,9 +9,9 @@ public class FishTankFishRow : MonoBehaviour
     [SerializeField] private TMP_Text fishNameText;
     [SerializeField] private Button returnButton;
 
-    public void Setup(FishDTO fishDto, Action onReturn)
+    public void Setup(Fish fish, Action onReturn)
     {
-        fishNameText.text = fishDto.Name;
+        fishNameText.text = fish.Species.Name;
 
         returnButton.onClick.RemoveAllListeners();
         returnButton.onClick.AddListener(() => onReturn?.Invoke());

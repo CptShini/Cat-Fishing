@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Assets.Scripts.Fish;
+using System.Linq;
 using Assets.Scripts.Fish.Domain;
 using UnityEngine;
 
@@ -9,25 +9,16 @@ public static class FishSaveSystem
     private const string SaveKey = "AquariumFishSave";
 
     [Serializable]
-    private class FishData
-    {
-        public string fishId;
-        public int fishSOId;
-        public string fishName;
-        public float weight;
-    }
-
-    [Serializable]
     private class TankData
     {
         public string tankId;
-        public List<FishData> fishes = new();
+        public List<FishDTO> fishes = new();
     }
 
     [Serializable]
     private class SaveData
     {
-        public List<FishData> inventory = new();
+        public List<FishDTO> inventory = new();
         public List<TankData> tanks = new();
     }
 
@@ -36,7 +27,7 @@ public static class FishSaveSystem
         string json = PlayerPrefs.GetString(SaveKey, "");
 
         if (string.IsNullOrEmpty(json))
-            return new SaveData();
+            return new();
 
         try
         {
@@ -46,7 +37,7 @@ public static class FishSaveSystem
         catch (Exception e)
         {
             Debug.LogError("Fish save load failed: " + e.Message);
-            return new SaveData();
+            return new();
         }
     }
 
@@ -56,54 +47,26 @@ public static class FishSaveSystem
         PlayerPrefs.Save();
     }
 
-    private static FishData ToData(FishDTO fishDto)
-    {
-        return new FishData
-        {
-            fishId = fishDto.Id,
-            fishSOId = fishDto.SpeciesId,
-            fishName = fishDto.Name,
-            weight = fishDto.Weight
-        };
-    }
-
-    private static FishDTO FromData(FishData data, FishDatabase database)
-    {
-        FishSpecies type = database != null ? database.GetFishSO(data.fishSOId) : null;
-
-        return new FishDTO
-        {
-            Id = data.fishId,
-            SpeciesId = data.fishSOId,
-            Name = data.fishName,
-            Weight = data.weight,
-            sprite = type != null ? type.Icon : null
-        };
-    }
-
-    public static void SaveInventory(IReadOnlyList<FishDTO> fish)
+    public static void SaveInventory(IReadOnlyList<Fish> fish)
     {
         SaveData data = Load();
         data.inventory.Clear();
 
-        foreach (FishDTO item in fish)
+        foreach (Fish item in fish)
         {
             if (item != null)
-                data.inventory.Add(ToData(item));
+                data.inventory.Add(new(item));
         }
 
         Write(data);
     }
 
-    public static List<FishDTO> LoadInventory(FishDatabase database)
+    public static List<Fish> LoadInventory(FishSpeciesDatabase db)
     {
         SaveData data = Load();
-        List<FishDTO> result = new();
-
-        foreach (FishData item in data.inventory)
-            result.Add(FromData(item, database));
-
-        return result;
+        return data.inventory
+            .Select(fishDTO => new Fish(fishDTO, db))
+            .ToList();
     }
 
     public static void SaveTank(FishTank tank)
@@ -117,34 +80,33 @@ public static class FishSaveSystem
 
         if (entry == null)
         {
-            entry = new TankData { tankId = tank.TankId };
+            entry = new() { tankId = tank.TankId };
             data.tanks.Add(entry);
         }
 
         entry.fishes.Clear();
 
-        foreach (FishDTO fish in tank.Fishes)
+        foreach (Fish fish in tank.Fishes)
         {
             if (fish != null)
-                entry.fishes.Add(ToData(fish));
+                entry.fishes.Add(new(fish));
         }
 
         Write(data);
     }
 
-    public static List<FishDTO> LoadTank(string tankId, FishDatabase database)
+    public static List<Fish> LoadTank(string tankId, FishSpeciesDatabase db)
     {
         SaveData data = Load();
 
         TankData entry = data.tanks.Find(t => t.tankId == tankId);
 
-        List<FishDTO> result = new();
+        List<Fish> result = new();
 
         if (entry == null)
             return result;
 
-        foreach (FishData item in entry.fishes)
-            result.Add(FromData(item, database));
+        result.AddRange(entry.fishes.Select(fishDTO => new Fish(fishDTO, db)));
 
         return result;
     }

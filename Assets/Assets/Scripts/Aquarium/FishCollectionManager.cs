@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Assets.Scripts.Fish;
 using Assets.Scripts.Fish.Domain;
 using UnityEngine;
 
@@ -8,10 +7,10 @@ public class FishCollectionManager : MonoBehaviour
 {
     public static FishCollectionManager Instance { get; private set; }
 
-    [SerializeField] private FishDatabase fishDatabase;
+    [SerializeField] private FishSpeciesDatabase fishSpeciesDatabase;
 
-    private readonly List<FishDTO> collectedFish = new();
-    public IReadOnlyList<FishDTO> CollectedFish => collectedFish;
+    private readonly List<Fish> collectedFish = new();
+    public IReadOnlyList<Fish> CollectedFish => collectedFish;
 
     public event Action OnCollectionChanged;
 
@@ -26,26 +25,26 @@ public class FishCollectionManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        collectedFish.AddRange(FishSaveSystem.LoadInventory(fishDatabase));
+        collectedFish.AddRange(FishSaveSystem.LoadInventory(fishSpeciesDatabase));
     }
 
-    public void AddFish(FishDTO fishDto)
+    public void AddFish(Fish fish)
     {
-        if (fishDto == null || collectedFish.Exists(f => f.Id == fishDto.Id))
+        if (fish == null || collectedFish.Exists(f => f.Id == fish.Id))
             return;
 
-        collectedFish.Add(fishDto);
-        Debug.Log($"Added to collection: {fishDto.Name}, weight: {fishDto.Weight:F2}");
+        collectedFish.Add(fish);
+        Debug.Log($"Added to collection: {fish.Species.Name}, weight: {fish.Weight:F2}");
         FishSaveSystem.SaveInventory(collectedFish);
         OnCollectionChanged?.Invoke();
     }
 
-    public bool RemoveFishItem(FishDTO fishDto)
+    public bool RemoveFishItem(Fish fish)
     {
-        if (fishDto == null)
+        if (fish == null)
             return false;
 
-        int index = collectedFish.FindIndex(f => f.Id == fishDto.Id);
+        int index = collectedFish.FindIndex(f => f.Id == fish.Id);
 
         if (index < 0)
             return false;
@@ -67,7 +66,7 @@ public class FishCollectionManager : MonoBehaviour
     {
         foreach (FishCollectible collectible in list)
         {
-            collectedFish.Add(collectible.fishDto);
+            collectedFish.Add(collectible.fish);
         }
 
         FishSaveSystem.SaveInventory(collectedFish);

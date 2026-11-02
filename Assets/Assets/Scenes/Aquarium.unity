@@ -21625,7 +21625,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.27977, y: -0.67744, z: -10}
+  m_LocalPosition: {x: 0.30864146, y: 0.79467994, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -31465,8 +31465,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   tankId: 01
-  fishDatabase: {fileID: 11400000, guid: c3e9100d80a272a4993ec6f3e1dd8ae8, type: 2}
-  fishes: []
+  fishSpeciesDatabase: {fileID: 0}
 --- !u!61 &1267698148
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -38739,7 +38738,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d51f7181fbbc2b4d85bab28a8bc5df7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  fishDatabase: {fileID: 11400000, guid: c3e9100d80a272a4993ec6f3e1dd8ae8, type: 2}
+  fishSpeciesDatabase: {fileID: 0}
 --- !u!4 &1970059723
 Transform:
   m_ObjectHideFlags: 0
@@ -40506,8 +40505,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   tankId: 02
-  fishDatabase: {fileID: 11400000, guid: c3e9100d80a272a4993ec6f3e1dd8ae8, type: 2}
-  fishes: []
+  fishSpeciesDatabase: {fileID: 0}
 --- !u!61 &2064735235
 BoxCollider2D:
   m_ObjectHideFlags: 0

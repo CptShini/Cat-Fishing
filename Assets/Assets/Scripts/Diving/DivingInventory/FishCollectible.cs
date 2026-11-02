@@ -1,17 +1,16 @@
-using Assets.Scripts.Fish;
 using Assets.Scripts.Fish.Domain;
 
 [System.Serializable]
 public class FishCollectible : Collectible
 {
-    public FishDTO fishDto;
+    public Fish fish { get; private set; }
 
-    public FishCollectible(FishDTO fishDto)
+    public FishCollectible(Fish fish)
     {
-        this.fishDto = fishDto;
-        this.collectibleName = fishDto.Name;
-        this.weight = fishDto.Weight;
-        this.sprite = fishDto.sprite;
+        this.fish = fish;
+        collectibleName = fish.Species.Name;
+        weight = fish.Weight;
+        sprite = fish.Species.Icon;
     }
 
     public override void Drop()

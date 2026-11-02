@@ -134,11 +134,11 @@ public class DivingController : MonoBehaviour
     {
         if (col.gameObject.layer != 7 || state == PlayerState.GRAB) return;
         
-        FishDTO fishDto = col.gameObject.GetComponent<FishStats>().FishDto;
+        Fish fish = col.gameObject.GetComponent<FishController>().Fish;
         FishCaughtMovement movement = col.gameObject.GetComponent<FishCaughtMovement>();
 
         col.gameObject.GetComponent<FishController>().Catch();
-        CatchingMinigame.Instance.Init(fishDto, movement);
+        CatchingMinigame.Instance.Init(fish, movement);
         SetPlayerState(PlayerState.GRAB);
     }
 

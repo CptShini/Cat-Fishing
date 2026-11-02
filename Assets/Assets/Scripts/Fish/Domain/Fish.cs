@@ -1,5 +1,4 @@
 ﻿using System;
-using Random = UnityEngine.Random;
 
 namespace Assets.Scripts.Fish.Domain
 {
@@ -15,8 +14,8 @@ namespace Assets.Scripts.Fish.Domain
         {
             Id = Guid.NewGuid();
             Species = species;
-            
-            Weight = Random.Range(species.Weight.Min, species.Weight.Max);
+
+            Weight = species.Weight.Random();
             Strength = species.Strength * (Weight / species.Weight.Average);
         }
 

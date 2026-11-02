@@ -1,9 +1,12 @@
 using UnityEngine;
 
-public class FishSpriteSetter : MonoBehaviour
+namespace Assets.Scripts.Fish
 {
-    public void SetSprite(Sprite sprite)
+    public class FishSpriteSetter : MonoBehaviour
     {
-        GetComponent<SpriteRenderer>().sprite = sprite;
+        [SerializeField] private SpriteRenderer _spriteRenderer;
+    
+        public void SetSprite(Sprite sprite) => 
+            _spriteRenderer.sprite = sprite;
     }
 }

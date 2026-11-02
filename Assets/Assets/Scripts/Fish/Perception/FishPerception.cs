@@ -8,6 +8,8 @@ namespace Assets.Scripts.Fish.Perception
     {
         private protected abstract string TriggerTag();
         private protected abstract bool IsOffset();
+        private protected abstract float ComputeReactionTime(int reactionStat);
+        private protected abstract float ComputeRadius(int sizeStat);
 
         private float _reactionTime;
         private float _radius;
@@ -21,26 +23,20 @@ namespace Assets.Scripts.Fish.Perception
         private string _triggerTag;
         private CircleCollider2D _col;
         
-        private void Start()
+        private void Awake()
         {
             _triggerTag = TriggerTag();
             _col = GetComponent<CircleCollider2D>();
-            if (!_col.isTrigger) Debug.LogWarning($"This ({name}) needs to be isTrigger!");
         }
 
         public void Init(int reactionStat, int sizeStat)
         {
-            int x = reactionStat;
-            int reactionTimeMs = 42 * x * x - 910 * x + 5000;
-            _reactionTime = reactionTimeMs / 1000f;
-
-            _radius = RadiusFromSizeStat(sizeStat);
+            _reactionTime = ComputeReactionTime(reactionStat);
+            _radius = ComputeRadius(sizeStat);
             
             _col.radius = _radius;
             _col.offset = IsOffset() ? new(_radius * 0.8f, 0) : Vector2.zero;
         }
-        
-        private protected abstract float RadiusFromSizeStat(int sizeStat);
 
         private void Update()
         {

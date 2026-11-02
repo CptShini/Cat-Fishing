@@ -9,5 +9,6 @@ namespace Assets.Scripts.Helpers
         [Min(0)] public float Max;
         
         public float Average => (Min + Max) / 2f;
+        public float Random() => UnityEngine.Random.Range(Min, Max);
     }
 }
