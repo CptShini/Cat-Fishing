@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Assets.Scripts.Fish;
+using Assets.Scripts.Fish.Domain;
 using UnityEngine;
 
 public class FishCollectionManager : MonoBehaviour
@@ -9,8 +10,8 @@ public class FishCollectionManager : MonoBehaviour
 
     [SerializeField] private FishDatabase fishDatabase;
 
-    private readonly List<Fish> collectedFish = new();
-    public IReadOnlyList<Fish> CollectedFish => collectedFish;
+    private readonly List<FishDTO> collectedFish = new();
+    public IReadOnlyList<FishDTO> CollectedFish => collectedFish;
 
     public event Action OnCollectionChanged;
 
@@ -28,23 +29,23 @@ public class FishCollectionManager : MonoBehaviour
         collectedFish.AddRange(FishSaveSystem.LoadInventory(fishDatabase));
     }
 
-    public void AddFish(Fish fish)
+    public void AddFish(FishDTO fishDto)
     {
-        if (fish == null || collectedFish.Exists(f => f.fishId == fish.fishId))
+        if (fishDto == null || collectedFish.Exists(f => f.Id == fishDto.Id))
             return;
 
-        collectedFish.Add(fish);
-        Debug.Log($"Added to collection: {fish.fishName}, weight: {fish.weight:F2}");
+        collectedFish.Add(fishDto);
+        Debug.Log($"Added to collection: {fishDto.Name}, weight: {fishDto.Weight:F2}");
         FishSaveSystem.SaveInventory(collectedFish);
         OnCollectionChanged?.Invoke();
     }
 
-    public bool RemoveFishItem(Fish fish)
+    public bool RemoveFishItem(FishDTO fishDto)
     {
-        if (fish == null)
+        if (fishDto == null)
             return false;
 
-        int index = collectedFish.FindIndex(f => f.fishId == fish.fishId);
+        int index = collectedFish.FindIndex(f => f.Id == fishDto.Id);
 
         if (index < 0)
             return false;
@@ -66,7 +67,7 @@ public class FishCollectionManager : MonoBehaviour
     {
         foreach (FishCollectible collectible in list)
         {
-            collectedFish.Add(collectible.fish);
+            collectedFish.Add(collectible.fishDto);
         }
 
         FishSaveSystem.SaveInventory(collectedFish);

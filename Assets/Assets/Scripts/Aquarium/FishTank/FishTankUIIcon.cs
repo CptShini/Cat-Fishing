@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Linq;
 using Assets.Scripts.Fish;
+using Assets.Scripts.Fish.Domain;
 
 public class FishTankUIIcon : MonoBehaviour, IDropHandler
 {
@@ -23,9 +24,9 @@ public class FishTankUIIcon : MonoBehaviour, IDropHandler
 
     public void OnDrop(PointerEventData eventData)
     {
-        Fish fish = FishInventorySlot.DraggedFish;
+        FishDTO fishDto = FishInventorySlot.DraggedFishDto;
 
-        if (fish == null || fishTank == null)
+        if (fishDto == null || fishTank == null)
             return;
 
         FishCollectionManager collection = FishCollectionManager.Instance;
@@ -34,15 +35,15 @@ public class FishTankUIIcon : MonoBehaviour, IDropHandler
             return;
 
         // Check if the fish is in the collection before adding it to the tank
-        if (!collection.CollectedFish.Contains(fish))
+        if (!collection.CollectedFish.Contains(fishDto))
             return;
 
         // Attempt to add the fish to the tank and remove it from the collection
-        if (!fishTank.AddFish(fish))
+        if (!fishTank.AddFish(fishDto))
             return;
-        if (!collection.RemoveFishItem(fish))
+        if (!collection.RemoveFishItem(fishDto))
         {
-            fishTank.RemoveFish(fish);
+            fishTank.RemoveFish(fishDto);
             return;
         }
     }

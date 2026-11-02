@@ -1,4 +1,5 @@
 using Assets.Scripts.Fish;
+using Assets.Scripts.Fish.Domain;
 using UnityEngine;
 using TMPro;
 using UnityEngine.InputSystem;
@@ -62,7 +63,7 @@ public class FishTankUIController : MonoBehaviour
         if (currentTank == null)
             return;
 
-        foreach (Fish fish in currentTank.Fishes)
+        foreach (FishDTO fish in currentTank.Fishes)
         {
             if (fish == null)
                 continue;
@@ -73,9 +74,9 @@ public class FishTankUIController : MonoBehaviour
         }
     }
 
-    private void ReturnFishToInventory(Fish fish)
+    private void ReturnFishToInventory(FishDTO fishDto)
     {
-        if (currentTank == null || fish == null)
+        if (currentTank == null || fishDto == null)
             return;
 
         FishCollectionManager collection = FishCollectionManager.Instance;
@@ -84,11 +85,11 @@ public class FishTankUIController : MonoBehaviour
             return;
 
         // detach the fish from the tank first
-        if (!currentTank.RemoveFish(fish))
+        if (!currentTank.RemoveFish(fishDto))
             return;
 
         // add the fish back to the player's collection
-        collection.AddFish(fish);
+        collection.AddFish(fishDto);
 
         RefreshFishList();
     }

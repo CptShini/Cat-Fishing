@@ -1,11 +1,12 @@
 using Assets.Scripts.Fish;
+using Assets.Scripts.Fish.Domain;
 using UnityEngine;
 
 public class FishCatCommunicator : MonoBehaviour
 {
-    [SerializeField] public FishSO fishSO;
+    [SerializeField] public FishSpecies fishSpecies;
 
-    public Fish fish;
+    public FishDTO fishDto;
     public HingeJoint2D joint;
     public Rigidbody2D body;
     public Vector2 direction;
@@ -23,8 +24,8 @@ public class FishCatCommunicator : MonoBehaviour
         joint = gameObject.GetComponent<HingeJoint2D>();
         body = gameObject.GetComponent<Rigidbody2D>();
 
-        fish = new Fish(fishSO);
-        Debug.Log($"FISH NAME: {fish.fishName}");
+        fishDto = new FishDTO(fishSpecies);
+        Debug.Log($"FISH NAME: {fishDto.Name}");
     }
 
     // Update is called once per frame

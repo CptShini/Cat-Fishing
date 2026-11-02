@@ -11,6 +11,9 @@ namespace Assets.Scripts.Fish.Perception
 
         private protected abstract string TriggerTag();
         private protected abstract bool IsOffset();
+
+        private int _reactionTimeMs;
+        private float _radius;
         
         private bool _detecting, _cooldown;
         private float _reactionMeter;
@@ -30,6 +33,14 @@ namespace Assets.Scripts.Fish.Perception
             _col.radius = radius;
             _col.offset = IsOffset() ? new(radius * 0.8f, 0) : Vector2.zero;
         }
+
+        public void Init(int reactionStat, int sizeStat)
+        {
+            _reactionTimeMs = reactionStat * -490 + 5000;
+            //_radius = 
+        }
+        
+        private protected abstract float RadiusFromSizeStat(int sizeStat);
 
         private void Update()
         {

@@ -1,4 +1,5 @@
 using Assets.Scripts.Fish;
+using Assets.Scripts.Fish.Domain;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -13,8 +14,8 @@ public class FishInventorySlot : MonoBehaviour, IBeginDragHandler, IDragHandler,
     private CanvasGroup canvasGroup;
     private GameObject dragVisual;
 
-    public Fish Fish { get; private set; }
-    public static Fish DraggedFish { get; private set; }
+    public FishDTO FishDto { get; private set; }
+    public static FishDTO DraggedFishDto { get; private set; }
 
     private void Awake()
     {
@@ -25,14 +26,14 @@ public class FishInventorySlot : MonoBehaviour, IBeginDragHandler, IDragHandler,
             canvasGroup = gameObject.AddComponent<CanvasGroup>();
     }
 
-    public void SetFish(Fish fish)
+    public void SetFish(FishDTO fishDto)
     {
-        if (fish == null) return;
+        if (fishDto == null) return;
 
-        Fish = fish;
-        fishIcon.sprite = fish.sprite;
-        fishName.text = fish.fishName;
-        fishIcon.enabled = fish.sprite != null;
+        FishDto = fishDto;
+        fishIcon.sprite = fishDto.sprite;
+        fishName.text = fishDto.Name;
+        fishIcon.enabled = fishDto.sprite != null;
     }
 
 
@@ -40,13 +41,13 @@ public class FishInventorySlot : MonoBehaviour, IBeginDragHandler, IDragHandler,
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (Fish == null || fishIcon == null || fishIcon.sprite == null)
+        if (FishDto == null || fishIcon == null || fishIcon.sprite == null)
             return;
 
         if (canvas == null)
             return;
 
-        DraggedFish = Fish;
+        DraggedFishDto = FishDto;
 
         dragVisual = new GameObject("FishDragVisual");
         dragVisual.transform.SetParent(canvas.transform, false);
@@ -86,8 +87,8 @@ public class FishInventorySlot : MonoBehaviour, IBeginDragHandler, IDragHandler,
         if (canvasGroup != null)
             canvasGroup.blocksRaycasts = true;
 
-        if (DraggedFish == Fish)
-            DraggedFish = null;
+        if (DraggedFishDto == FishDto)
+            DraggedFishDto = null;
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -101,6 +102,6 @@ public class FishInventorySlot : MonoBehaviour, IBeginDragHandler, IDragHandler,
         if (canvasGroup != null)
             canvasGroup.blocksRaycasts = true;
 
-        DraggedFish = null;
+        DraggedFishDto = null;
     }
 }

@@ -1,5 +1,6 @@
 using Assets.Scripts.Diving.Cat;
 using Assets.Scripts.Fish;
+using Assets.Scripts.Fish.Domain;
 using Assets.Scripts.Fish.Movement;
 using Assets.Scripts.PlayerState;
 using UnityEngine;
@@ -133,11 +134,11 @@ public class DivingController : MonoBehaviour
     {
         if (col.gameObject.layer != 7 || state == PlayerState.GRAB) return;
         
-        Fish fish = col.gameObject.GetComponent<FishStats>().fish;
+        FishDTO fishDto = col.gameObject.GetComponent<FishStats>().FishDto;
         FishCaughtMovement movement = col.gameObject.GetComponent<FishCaughtMovement>();
 
         col.gameObject.GetComponent<FishController>().Catch();
-        CatchingMinigame.Instance.Init(fish, movement);
+        CatchingMinigame.Instance.Init(fishDto, movement);
         SetPlayerState(PlayerState.GRAB);
     }
 

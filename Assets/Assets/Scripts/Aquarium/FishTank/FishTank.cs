@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using Assets.Scripts.Fish;
+using Assets.Scripts.Fish.Domain;
 
 public class FishTank : MonoBehaviour, IInteractable
 {
@@ -9,10 +10,10 @@ public class FishTank : MonoBehaviour, IInteractable
     [SerializeField] private FishDatabase fishDatabase;
 
     [Header("Fish in this tank")]
-    [SerializeField] private List<Fish> fishes = new List<Fish>();
+    [SerializeField] private List<FishDTO> fishes = new List<FishDTO>();
 
     public string TankId => tankId;
-    public IReadOnlyList<Fish> Fishes => fishes;
+    public IReadOnlyList<FishDTO> Fishes => fishes;
 
     public bool CanInteract()
     {
@@ -30,31 +31,31 @@ public class FishTank : MonoBehaviour, IInteractable
         fishes.AddRange(FishSaveSystem.LoadTank(tankId, fishDatabase));
     }
 
-    public bool AddFish(Fish fish)
+    public bool AddFish(FishDTO fishDto)
     {
-        if (fish == null || fishes.Exists(f => f != null && f.fishId == fish.fishId))
+        if (fishDto == null || fishes.Exists(f => f != null && f.Id == fishDto.Id))
             return false;
         
-        fishes.Add(fish);
+        fishes.Add(fishDto);
         FishSaveSystem.SaveTank(this);
-        Debug.Log(fish.fishName + " added to tank: " + gameObject.name);
+        Debug.Log(fishDto.Name + " added to tank: " + gameObject.name);
 
         return true;
     }
 
-    public bool RemoveFish(Fish fish)
+    public bool RemoveFish(FishDTO fishDto)
     {
-        int index = fishes.FindIndex(f => f != null && f.fishId == fish.fishId);
+        int index = fishes.FindIndex(f => f != null && f.Id == fishDto.Id);
 
         if (index < 0)
             return false;
 
-        Fish removedFish = fishes[index];
+        FishDTO removedFishDto = fishes[index];
         fishes.RemoveAt(index);
 
         FishSaveSystem.SaveTank(this);
 
-        Debug.Log(removedFish.fishName + " removed from tank: " + gameObject.name);
+        Debug.Log(removedFishDto.Name + " removed from tank: " + gameObject.name);
 
         return true;
     }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Assets.Scripts.Fish;
+using Assets.Scripts.Fish.Domain;
 using UnityEngine;
 
 public static class FishSaveSystem
@@ -11,7 +12,7 @@ public static class FishSaveSystem
     private class FishData
     {
         public string fishId;
-        public string fishSOId;
+        public int fishSOId;
         public string fishName;
         public float weight;
     }
@@ -55,37 +56,37 @@ public static class FishSaveSystem
         PlayerPrefs.Save();
     }
 
-    private static FishData ToData(Fish fish)
+    private static FishData ToData(FishDTO fishDto)
     {
         return new FishData
         {
-            fishId = fish.fishId,
-            fishSOId = fish.fishSOId,
-            fishName = fish.fishName,
-            weight = fish.weight
+            fishId = fishDto.Id,
+            fishSOId = fishDto.SpeciesId,
+            fishName = fishDto.Name,
+            weight = fishDto.Weight
         };
     }
 
-    private static Fish FromData(FishData data, FishDatabase database)
+    private static FishDTO FromData(FishData data, FishDatabase database)
     {
-        FishSO type = database != null ? database.GetFishSO(data.fishSOId) : null;
+        FishSpecies type = database != null ? database.GetFishSO(data.fishSOId) : null;
 
-        return new Fish
+        return new FishDTO
         {
-            fishId = data.fishId,
-            fishSOId = data.fishSOId,
-            fishName = data.fishName,
-            weight = data.weight,
-            sprite = type != null ? type.fishIcon : null
+            Id = data.fishId,
+            SpeciesId = data.fishSOId,
+            Name = data.fishName,
+            Weight = data.weight,
+            sprite = type != null ? type.Icon : null
         };
     }
 
-    public static void SaveInventory(IReadOnlyList<Fish> fish)
+    public static void SaveInventory(IReadOnlyList<FishDTO> fish)
     {
         SaveData data = Load();
         data.inventory.Clear();
 
-        foreach (Fish item in fish)
+        foreach (FishDTO item in fish)
         {
             if (item != null)
                 data.inventory.Add(ToData(item));
@@ -94,10 +95,10 @@ public static class FishSaveSystem
         Write(data);
     }
 
-    public static List<Fish> LoadInventory(FishDatabase database)
+    public static List<FishDTO> LoadInventory(FishDatabase database)
     {
         SaveData data = Load();
-        List<Fish> result = new();
+        List<FishDTO> result = new();
 
         foreach (FishData item in data.inventory)
             result.Add(FromData(item, database));
@@ -122,7 +123,7 @@ public static class FishSaveSystem
 
         entry.fishes.Clear();
 
-        foreach (Fish fish in tank.Fishes)
+        foreach (FishDTO fish in tank.Fishes)
         {
             if (fish != null)
                 entry.fishes.Add(ToData(fish));
@@ -131,13 +132,13 @@ public static class FishSaveSystem
         Write(data);
     }
 
-    public static List<Fish> LoadTank(string tankId, FishDatabase database)
+    public static List<FishDTO> LoadTank(string tankId, FishDatabase database)
     {
         SaveData data = Load();
 
         TankData entry = data.tanks.Find(t => t.tankId == tankId);
 
-        List<Fish> result = new();
+        List<FishDTO> result = new();
 
         if (entry == null)
             return result;
