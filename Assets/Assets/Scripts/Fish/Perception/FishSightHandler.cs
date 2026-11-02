@@ -11,6 +11,11 @@ namespace Assets.Scripts.Fish.Perception
 
         private protected override bool IsOffset() => true;
 
+        private protected override float RadiusFromSizeStat(int sizeStat)
+        {
+            throw new System.NotImplementedException();
+        }
+
         private protected override void Detect(Collider2D other) => 
             OnSeePlayer.Invoke(other.transform.position);
     }

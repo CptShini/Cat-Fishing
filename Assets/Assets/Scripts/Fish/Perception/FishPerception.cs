@@ -6,13 +6,10 @@ namespace Assets.Scripts.Fish.Perception
     [RequireComponent(typeof(CircleCollider2D))]
     public abstract class FishPerception : MonoBehaviour
     {
-        [SerializeField] private int reactionTimeMs = 1000;
-        [SerializeField] private float radius = 1f;
-
         private protected abstract string TriggerTag();
         private protected abstract bool IsOffset();
 
-        private int _reactionTimeMs;
+        private float _reactionTime;
         private float _radius;
         
         private bool _detecting, _cooldown;
@@ -29,15 +26,18 @@ namespace Assets.Scripts.Fish.Perception
             _triggerTag = TriggerTag();
             _col = GetComponent<CircleCollider2D>();
             if (!_col.isTrigger) Debug.LogWarning($"This ({name}) needs to be isTrigger!");
-            
-            _col.radius = radius;
-            _col.offset = IsOffset() ? new(radius * 0.8f, 0) : Vector2.zero;
         }
 
         public void Init(int reactionStat, int sizeStat)
         {
-            _reactionTimeMs = reactionStat * -490 + 5000;
-            //_radius = 
+            int x = reactionStat;
+            int reactionTimeMs = 42 * x * x - 910 * x + 5000;
+            _reactionTime = reactionTimeMs / 1000f;
+
+            _radius = RadiusFromSizeStat(sizeStat);
+            
+            _col.radius = _radius;
+            _col.offset = IsOffset() ? new(_radius * 0.8f, 0) : Vector2.zero;
         }
         
         private protected abstract float RadiusFromSizeStat(int sizeStat);
@@ -57,9 +57,9 @@ namespace Assets.Scripts.Fish.Perception
                 return;
             }
             
-            float closenessFactor = 1f + -_colDistance.distance / radius;
+            float closenessFactor = 1f + -_colDistance.distance / _radius;
             _reactionMeter += Time.deltaTime * closenessFactor;
-            if (_reactionMeter < reactionTimeMs / 1000f) return;
+            if (_reactionMeter < _reactionTime) return;
             
             _cooldown = true;
             Detect(_other);
@@ -113,7 +113,7 @@ namespace Assets.Scripts.Fish.Perception
                 Gizmos.color = _cooldown 
                     ? Color.blueViolet 
                     : _detecting ? Color.hotPink : Color.white;
-                float r = _reactionMeter / (reactionTimeMs / 1000f) * _col.radius;
+                float r = _reactionMeter / _reactionTime * _col.radius;
                 Gizmos.DrawSphere(_col.bounds.center, r);
             }
         }
