@@ -1,4 +1,5 @@
 using Assets.Scripts.Diving;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class DamagedScript : MonoBehaviour, IDamageable
@@ -6,7 +7,7 @@ public class DamagedScript : MonoBehaviour, IDamageable
     [SerializeField] public float invincibleDuration;
     [SerializeField] private StatBar oxygenBar;
 
-    private float curInvincibleDuration;
+    private float curInvincibleDuration = 0;
 
     private Rigidbody2D _rb;
 
@@ -15,7 +16,7 @@ public class DamagedScript : MonoBehaviour, IDamageable
         _rb = gameObject.GetComponent<Rigidbody2D>();
     }
 
-    public void Damaged(float amount, Vector2 normal)
+    public void Damaged(float amount, Vector2 knockback)
     {
         if(curInvincibleDuration < invincibleDuration)
         {
@@ -24,9 +25,13 @@ public class DamagedScript : MonoBehaviour, IDamageable
 
         oxygenBar.CurrentValue -= amount;
         curInvincibleDuration = 0;
-        Debug.Log($"NORMAL: {normal.x}, {normal.y}");
-        _rb.linearVelocity = new Vector3(-normal.x * amount, -normal.y * amount, 0);
 
+        if(knockback == Vector2.zero)
+        {
+            return;
+        }
+
+        _rb.linearVelocity = new Vector2(knockback.x, knockback.y);
     }
 
     void Update()
