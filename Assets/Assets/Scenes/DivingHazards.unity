@@ -2749,6 +2749,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e5627266a5b2a34185e2c190e07f583, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  damage: 10
 --- !u!58 &657359836
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -2783,8 +2784,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Radius: 0.5
+  m_Offset: {x: -0.0012008668, y: 0}
+  m_Radius: 0.09291496
 --- !u!212 &657359837
 SpriteRenderer:
   serializedVersion: 2
@@ -5516,6 +5517,10 @@ PrefabInstance:
       propertyPath: m_CollisionDetection
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8572074976040694381, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
+      propertyPath: oxygenBar
+      value: 
+      objectReference: {fileID: 352567872}
     - target: {fileID: 9043816904564429849, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
       propertyPath: mainCamera
       value: 

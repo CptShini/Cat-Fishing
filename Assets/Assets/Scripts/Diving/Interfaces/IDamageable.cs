@@ -1,6 +1,8 @@
 
+using UnityEngine;
+
 public interface IDamageable
 {
-    void Damaged();
+    void Damaged(float amount, Vector2 contactNormal);
 }
 

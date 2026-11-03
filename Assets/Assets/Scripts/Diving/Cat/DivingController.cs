@@ -19,7 +19,6 @@ public class DivingController : MonoBehaviour
 
     public PlayerState state;
     private PounceScript _pounce;
-    private FishCatCommunicator curFish;
     private float curStunTimer = 0;
 
     private Rigidbody2D playerBody;
