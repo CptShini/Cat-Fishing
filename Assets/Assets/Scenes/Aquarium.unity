@@ -306,6 +306,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -750,6 +754,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1006,6 +1014,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1343,6 +1355,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17d9aa958e8c2b04ab9adca1311d5b53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DecorInventorySlot
+--- !u!1 &115505263
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 115505264}
+  m_Layer: 12
+  m_Name: GridAnchor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &115505264
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 115505263}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.26, y: -0.7, z: 0}
+  m_LocalScale: {x: 0.6666667, y: 1.3333334, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1665775249}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &124261636
 GameObject:
   m_ObjectHideFlags: 0
@@ -1541,6 +1584,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1941,6 +1988,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2038,6 +2089,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2135,6 +2190,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2232,6 +2291,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2776,6 +2839,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3015,6 +3082,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3112,6 +3183,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3378,6 +3453,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -19396,6 +19475,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -19415,6 +19498,7 @@ GameObject:
   - component: {fileID: 258446012}
   - component: {fileID: 258446011}
   - component: {fileID: 258446010}
+  - component: {fileID: 258446016}
   m_Layer: 12
   m_Name: Computer
   m_TagString: Untagged
@@ -19627,9 +19711,25 @@ Transform:
   m_LocalPosition: {x: 0.44995117, y: 3.7799988, z: 0}
   m_LocalScale: {x: 1, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1797565706}
   m_Father: {fileID: 839073159}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &258446016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 258446009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0bd6275d84d0484bad6546cde8c8111, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RoomFixedFurniture
+  size: {x: 7, y: 1}
+  gridAnchor: {fileID: 1797565706}
+  blocksPlacement: 1
 --- !u!1001 &260459364
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19914,6 +20014,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -20357,6 +20461,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -20585,6 +20693,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -21755,6 +21867,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -21946,6 +22062,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -23016,6 +23136,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -23451,6 +23575,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -23648,6 +23776,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -24496,6 +24628,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -24593,6 +24729,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -25556,6 +25696,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -25701,6 +25845,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -26049,6 +26197,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -26268,6 +26420,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -26282,8 +26438,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 825155557}
-  - component: {fileID: 825155556}
   - component: {fileID: 825155554}
+  - component: {fileID: 825155558}
   m_Layer: 0
   m_Name: Room Decoration System
   m_TagString: Untagged
@@ -26303,26 +26459,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96482894ec4f32744b9f362c8804cd0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  roomGrid: {fileID: 0}
-  inventory: {fileID: 0}
+  roomGrid: {fileID: 942905344}
+  inventory: {fileID: 862072090}
+  placedFurnitureRoot: {fileID: 1135691818}
+  mainCamera: {fileID: 519420031}
   validColor: {r: 0.3, g: 1, b: 0.3, a: 0.5}
   invalidColor: {r: 1, g: 0.3, b: 0.3, a: 0.5}
---- !u!114 &825155556
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 825155553}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 902c94986cb6e464383327ae0729cc88, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  grid: {fileID: 0}
-  blockingMask:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!4 &825155557
 Transform:
   m_ObjectHideFlags: 0
@@ -26338,6 +26480,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1452388775}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &825155558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 825155553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6934617747f11404e84f90493815a437, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  roomGrid: {fileID: 942905344}
+  fixedFurnitureRoot: {fileID: 839073159}
+  grid: {fileID: 942905342}
 --- !u!224 &826556046 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7395917379702553603, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
@@ -26868,6 +27025,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -26902,7 +27063,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c9e2272174589741b163bf5c611e909, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  placementController: {fileID: 0}
+  placementController: {fileID: 825155554}
   inventorySlots:
   - {fileID: 1128738844}
   - {fileID: 2004509773}
@@ -27212,6 +27373,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -27325,6 +27490,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -27454,6 +27623,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -27704,6 +27877,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -27719,6 +27896,7 @@ GameObject:
   m_Component:
   - component: {fileID: 942905343}
   - component: {fileID: 942905342}
+  - component: {fileID: 942905344}
   m_Layer: 0
   m_Name: Grid
   m_TagString: Untagged
@@ -27759,6 +27937,23 @@ Transform:
   - {fileID: 527220277}
   m_Father: {fileID: 1452388775}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &942905344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 942905341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 902c94986cb6e464383327ae0729cc88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RoomGrid
+  grid: {fileID: 942905342}
+  placeableArea: {fileID: 248715201}
+  placementBlockerMask:
+    serializedVersion: 2
+    m_Bits: 16384
 --- !u!1 &943333007
 GameObject:
   m_ObjectHideFlags: 0
@@ -28158,6 +28353,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -28271,6 +28470,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -29190,6 +29393,7 @@ GameObject:
   - component: {fileID: 1101959163}
   - component: {fileID: 1101959162}
   - component: {fileID: 1101959161}
+  - component: {fileID: 1101959166}
   m_Layer: 12
   m_Name: Workbench
   m_TagString: Untagged
@@ -29209,7 +29413,8 @@ Transform:
   m_LocalPosition: {x: -4.324341, y: 4.0486145, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1971544013}
   m_Father: {fileID: 839073159}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1101959161
@@ -29405,6 +29610,21 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 1
+--- !u!114 &1101959166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1101959159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0bd6275d84d0484bad6546cde8c8111, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RoomFixedFurniture
+  size: {x: 2, y: 2}
+  gridAnchor: {fileID: 1971544013}
+  blocksPlacement: 1
 --- !u!1001 &1105457181
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29497,6 +29717,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -29882,6 +30106,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -29995,6 +30223,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -30292,6 +30524,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -30542,6 +30778,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -30872,6 +31112,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -30969,6 +31213,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -31558,6 +31806,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -31577,6 +31829,7 @@ GameObject:
   - component: {fileID: 1267698149}
   - component: {fileID: 1267698148}
   - component: {fileID: 1267698147}
+  - component: {fileID: 1267698153}
   m_Layer: 12
   m_Name: Fish Tank 1
   m_TagString: Untagged
@@ -31792,9 +32045,25 @@ Transform:
   m_LocalPosition: {x: -2.5100098, y: 1.019989, z: 0}
   m_LocalScale: {x: 1, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1411435764}
   m_Father: {fileID: 839073159}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1267698153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1267698146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0bd6275d84d0484bad6546cde8c8111, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RoomFixedFurniture
+  size: {x: 1, y: 2}
+  gridAnchor: {fileID: 1411435764}
+  blocksPlacement: 1
 --- !u!1001 &1267910101
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -32169,6 +32438,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -32282,6 +32555,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -32395,6 +32672,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -32492,6 +32773,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -32605,6 +32890,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -32702,6 +32991,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -33017,6 +33310,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -33290,6 +33587,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -33412,6 +33713,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17d9aa958e8c2b04ab9adca1311d5b53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DecorInventorySlot
+--- !u!1 &1411435763
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1411435764}
+  m_Layer: 12
+  m_Name: GridAnchor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1411435764
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1411435763}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.03, y: -0.34, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1267698152}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1417141635
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -33504,6 +33836,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -33601,6 +33937,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -33864,6 +34204,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -33961,6 +34305,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -34058,6 +34406,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -34219,6 +34571,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -34773,6 +35129,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -34870,6 +35230,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -35315,6 +35679,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -35333,6 +35701,7 @@ GameObject:
   - component: {fileID: 1665775252}
   - component: {fileID: 1665775251}
   - component: {fileID: 1665775250}
+  - component: {fileID: 1665775254}
   m_Layer: 12
   m_Name: Door
   m_TagString: Untagged
@@ -35352,7 +35721,8 @@ Transform:
   m_LocalPosition: {x: 5.0046387, y: 8.33963, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 115505264}
   m_Father: {fileID: 839073159}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1665775250
@@ -35512,6 +35882,21 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 1
+--- !u!114 &1665775254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1665775248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0bd6275d84d0484bad6546cde8c8111, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RoomFixedFurniture
+  size: {x: 2, y: 2}
+  gridAnchor: {fileID: 115505264}
+  blocksPlacement: 1
 --- !u!1001 &1675942830
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -36716,6 +37101,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -36995,6 +37384,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -37162,7 +37555,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1771166659}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -37285,6 +37678,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -37306,6 +37703,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ed34c7aaa20def4f82f57db6acb86b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShopSlot
+--- !u!1 &1790383348
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1790383349}
+  m_Layer: 12
+  m_Name: GridAnchor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1790383349
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1790383348}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.01, y: -0.34, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2064735239}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1795334739
 GameObject:
   m_ObjectHideFlags: 0
@@ -37412,6 +37840,37 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!1 &1797565705
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1797565706}
+  m_Layer: 12
+  m_Name: GridAnchor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1797565706
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1797565705}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -2.62, y: -0.19, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 258446015}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &1798819918 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7395917379702553603, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
@@ -37595,6 +38054,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -37948,6 +38411,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -38077,6 +38544,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -38210,6 +38681,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -38382,6 +38857,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -38495,6 +38974,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -38544,6 +39027,37 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1971544012
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1971544013}
+  m_Layer: 12
+  m_Name: GridAnchor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1971544013
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1971544012}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.36, y: -0.28, z: 0}
+  m_LocalScale: {x: 0.5, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1101959160}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1996243196
 GameObject:
@@ -38853,6 +39367,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -39300,6 +39818,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -39413,6 +39935,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -39510,6 +40036,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -39623,6 +40153,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -40003,6 +40537,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -40276,6 +40814,7 @@ GameObject:
   - component: {fileID: 2064735236}
   - component: {fileID: 2064735235}
   - component: {fileID: 2064735234}
+  - component: {fileID: 2064735240}
   m_Layer: 12
   m_Name: Fish Tank 2
   m_TagString: Untagged
@@ -40491,9 +41030,25 @@ Transform:
   m_LocalPosition: {x: 3.5, y: 1.019989, z: 0}
   m_LocalScale: {x: 1, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1790383349}
   m_Father: {fileID: 839073159}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2064735240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2064735233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0bd6275d84d0484bad6546cde8c8111, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RoomFixedFurniture
+  size: {x: 1, y: 2}
+  gridAnchor: {fileID: 1790383349}
+  blocksPlacement: 1
 --- !u!1001 &2065587827
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -40586,6 +41141,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560822253141256775, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
+      propertyPath: placementController
+      value: 
+      objectReference: {fileID: 825155554}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

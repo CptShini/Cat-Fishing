@@ -14,4 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemSO
   itemName: Seed
   itemIcon: {fileID: 21300000, guid: 3ec17479442e0a54b92edcf72eec901c, type: 3}
-  itemType: 1
+  prefab: {fileID: 3758215890295927942, guid: a5a94c7a89e9dbc46ab244137aea4e8d, type: 3}
+  size: {x: 1, y: 1}
+  blocksPlacement: 1
+  sortingLayer: 1
+  sortingOrder: 0
