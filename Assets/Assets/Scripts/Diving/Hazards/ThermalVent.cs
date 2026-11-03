@@ -10,17 +10,18 @@ public class ThermalVent : MonoBehaviour
 
     [SerializeField] private float cooldownDuration;
     [SerializeField] private float activeDuration;
-
-    private float curTimer = 0;
-    private bool isActive = false;
-
+    [SerializeField] private float offset = 0;
+    [SerializeField] private bool isActive = false;
+    private float curTimer;
 
     void Start()
     {
         _collider = gameObject.GetComponent<Collider2D>();
         _sprite = gameObject.GetComponent<SpriteRenderer>();
 
-        SetActive(false);
+        curTimer = offset;
+
+        SetActive(isActive);
     }
 
     void OnTriggerEnter2D(Collider2D other)
