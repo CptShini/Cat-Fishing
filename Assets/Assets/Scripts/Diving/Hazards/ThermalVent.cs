@@ -6,7 +6,7 @@ public class ThermalVent : MonoBehaviour
     [SerializeField] public int power;
 
     private Collider2D _collider;
-    private SpriteRenderer _sprite;
+    [SerializeField] private ParticleSystem _ps;
 
     [SerializeField] private float cooldownDuration;
     [SerializeField] private float activeDuration;
@@ -17,8 +17,6 @@ public class ThermalVent : MonoBehaviour
     void Start()
     {
         _collider = gameObject.GetComponent<Collider2D>();
-        _sprite = gameObject.GetComponent<SpriteRenderer>();
-
         curTimer = offset;
 
         SetActive(isActive);
@@ -40,13 +38,15 @@ public class ThermalVent : MonoBehaviour
         {
             this.isActive = true;
             _collider.enabled = true;
-            _sprite.enabled = true;
+            var emission = _ps.emission;
+            emission.enabled = true;
         }
         else
         {
             this.isActive = false;
             _collider.enabled = false;
-            _sprite.enabled = false;
+            var emission = _ps.emission;
+            emission.enabled = false;
         }
     }
 
