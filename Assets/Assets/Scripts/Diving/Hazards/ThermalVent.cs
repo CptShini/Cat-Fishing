@@ -7,7 +7,8 @@ public class ThermalVent : MonoBehaviour
 
     private Collider2D _collider;
     [SerializeField] private ParticleSystem _ps;
-
+    [SerializeField] private SpriteRenderer _warningSprite;
+    [SerializeField] private Animator animator;
     [SerializeField] private float cooldownDuration;
     [SerializeField] private float activeDuration;
     [SerializeField] private float offset = 0;
@@ -18,6 +19,8 @@ public class ThermalVent : MonoBehaviour
     {
         _collider = gameObject.GetComponent<Collider2D>();
         curTimer = offset;
+
+        animator.SetFloat("speed", 1 / cooldownDuration);
 
         SetActive(isActive);
     }
@@ -36,6 +39,7 @@ public class ThermalVent : MonoBehaviour
 
         if (isActive)
         {
+            animator.SetBool("exit", false);
             this.isActive = true;
             _collider.enabled = true;
             var emission = _ps.emission;
@@ -43,10 +47,13 @@ public class ThermalVent : MonoBehaviour
         }
         else
         {
+            animator.SetBool("exit", true);
             this.isActive = false;
             _collider.enabled = false;
             var emission = _ps.emission;
             emission.enabled = false;
+            Debug.Log("play");
+            animator.Play("WarningClip");
         }
     }
 

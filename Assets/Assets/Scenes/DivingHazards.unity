@@ -576,8 +576,8 @@ ParticleSystem:
     startColor:
       serializedVersion: 2
       minMaxState: 2
-      minColor: {r: 0.5566038, g: 0.5566038, b: 0.5566038, a: 1}
-      maxColor: {r: 0.764151, g: 0.7605465, b: 0.7605465, a: 1}
+      minColor: {r: 0.38841325, g: 0.19428623, b: 0.6981132, a: 1}
+      maxColor: {r: 0.4852253, g: 0.21867211, b: 0.735849, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -7551,7 +7551,7 @@ GameObject:
   - component: {fileID: 657359837}
   - component: {fileID: 657359836}
   - component: {fileID: 657359835}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Choral Spike
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13624,6 +13624,8 @@ MonoBehaviour:
   damage: 10
   power: 25
   _ps: {fileID: 164758034}
+  _warningSprite: {fileID: 1721373106}
+  animator: {fileID: 1721373107}
   cooldownDuration: 5
   activeDuration: 4
   offset: 0
@@ -14448,6 +14450,18 @@ PrefabInstance:
       propertyPath: areaMaskName
       value: Biome 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2351633011273638027, guid: 161b5c02739f62b4fb82a7e106416081, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2351633011273638027, guid: 161b5c02739f62b4fb82a7e106416081, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2351633011273638027, guid: 161b5c02739f62b4fb82a7e106416081, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5206029193779855580, guid: 161b5c02739f62b4fb82a7e106416081, type: 3}
       propertyPath: m_Name
       value: Fish (1)
@@ -14681,6 +14695,7 @@ GameObject:
   - component: {fileID: 1721373104}
   - component: {fileID: 1721373106}
   - component: {fileID: 1721373105}
+  - component: {fileID: 1721373107}
   m_Layer: 11
   m_Name: Hydrothermal vent
   m_TagString: Untagged
@@ -14790,7 +14805,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  m_Color: {r: 0.5471698, g: 0.16590656, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -14799,6 +14814,28 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!95 &1721373107
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1721373103}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5e663bebe28dceb40aaf9a495d37de72, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &1728644421
 PrefabInstance:
   m_ObjectHideFlags: 0
