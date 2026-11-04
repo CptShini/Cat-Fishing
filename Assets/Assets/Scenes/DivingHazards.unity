@@ -15078,6 +15078,10 @@ PrefabInstance:
       propertyPath: presenceCollider
       value: 
       objectReference: {fileID: 722392316}
+    - target: {fileID: 5778309398152115365, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
+      propertyPath: mainCamera
+      value: 
+      objectReference: {fileID: 1974734721}
     - target: {fileID: 6619945467753677165, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
       propertyPath: m_LocalScale.x
       value: 2
