@@ -4,6 +4,7 @@ public class WorkbenchUIController : MonoBehaviour
 {
     public GameObject panel;
     public RoomCameraZoom roomCameraZoom;
+    [SerializeField] private DecorationGridVisuals gridVisuals;
 
     public bool IsOpen { get; private set; }
     
@@ -16,6 +17,7 @@ public class WorkbenchUIController : MonoBehaviour
     public void Open()
     {
         roomCameraZoom.EnterDecorationMode();
+        gridVisuals.ShowGrid();
         panel.SetActive(true);
         IsOpen = true;
 
@@ -24,6 +26,7 @@ public class WorkbenchUIController : MonoBehaviour
 
     public void Close()
     {
+        gridVisuals.HideGrid();
         roomCameraZoom.ExitDecorationMode();
         panel.SetActive(false);
         IsOpen = false;

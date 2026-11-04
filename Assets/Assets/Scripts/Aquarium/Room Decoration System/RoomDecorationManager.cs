@@ -6,6 +6,7 @@ public class RoomDecorationManager : MonoBehaviour
     [SerializeField] private RoomGrid roomGrid;
     [SerializeField] private Transform fixedFurnitureRoot;
     [SerializeField] private Grid grid;
+    [SerializeField] private DecorationGridVisuals gridVisuals;
 
     private void Awake()
     {
@@ -21,10 +22,11 @@ public class RoomDecorationManager : MonoBehaviour
 
         foreach (RoomFixedFurniture item in furniture)
         {
+            Vector3Int origin = item.GetOrigin(grid);
+            gridVisuals.RegisterFixedFurniture(item, origin);
+
             if (!item.blocksPlacement)
                 continue;
-
-            Vector3Int origin = item.GetOrigin(grid);
 
             roomGrid.RegisterObject(origin, item.size);
         }

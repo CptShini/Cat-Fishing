@@ -10,6 +10,7 @@ public class PlacementController : MonoBehaviour
     [SerializeField] private DecorInventoryManager inventory;
     [SerializeField] private Transform placedFurnitureRoot;
     [SerializeField] private Camera mainCamera;
+    [SerializeField] private DecorationGridVisuals gridVisuals;
 
     [Header("Preview Colors")]
     [SerializeField] private Color validColor = new Color(0.3f, 1f, 0.3f, 0.5f);
@@ -93,6 +94,8 @@ public class PlacementController : MonoBehaviour
         canPlace = roomGrid.CanPlace(currentCell, currentSize, selectedItem.blocksPlacement);
 
         SetGhostColor(canPlace ? validColor : invalidColor);
+        
+        gridVisuals.ShowFootprint(currentCell, currentSize, canPlace);
     }
 
     private void TryPlaceItem()
@@ -114,6 +117,7 @@ public class PlacementController : MonoBehaviour
         }
 
         furniture.Initialize(selectedItem, currentCell, currentSize);
+        gridVisuals.RegisterPlacedFurniture(furniture);
 
         FurnitureSortingUtility.ApplySorting(placedObject, selectedItem);
 
@@ -149,5 +153,6 @@ public class PlacementController : MonoBehaviour
 
         ghostObject = null;
         selectedItem = null;
+        gridVisuals.HideFootprint();
     }
 }

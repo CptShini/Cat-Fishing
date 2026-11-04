@@ -21812,7 +21812,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.013960587, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -23712,7 +23712,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 0000000023c9e008b7bb71311be5bd0b8d81c7b41f72392e
+  m_ApplyToSortingLayers: 0000000023c9e008b7bb71311be5bd0b8d81c7b41f72392e47d808b1
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -26516,6 +26516,7 @@ GameObject:
   - component: {fileID: 825155554}
   - component: {fileID: 825155558}
   - component: {fileID: 825155559}
+  - component: {fileID: 825155560}
   m_Layer: 0
   m_Name: Room Decoration System
   m_TagString: Untagged
@@ -26539,6 +26540,7 @@ MonoBehaviour:
   inventory: {fileID: 862072090}
   placedFurnitureRoot: {fileID: 1135691818}
   mainCamera: {fileID: 519420031}
+  gridVisuals: {fileID: 825155560}
   validColor: {r: 0.3, g: 1, b: 0.3, a: 0.5}
   invalidColor: {r: 1, g: 0.3, b: 0.3, a: 0.5}
 --- !u!4 &825155557
@@ -26571,6 +26573,7 @@ MonoBehaviour:
   roomGrid: {fileID: 942905344}
   fixedFurnitureRoot: {fileID: 839073159}
   grid: {fileID: 942905342}
+  gridVisuals: {fileID: 825155560}
 --- !u!114 &825155559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26587,6 +26590,30 @@ MonoBehaviour:
   decorationCamera: {fileID: 308733758}
   roomTilemap: {fileID: 248715201}
   padding: 0.5
+--- !u!114 &825155560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 825155553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74bafed6120d6234db01e72e7e799191, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  grid: {fileID: 942905342}
+  roomTilemap: {fileID: 248715201}
+  lineMaterial: {fileID: 2100000, guid: be9b50d73b916164e97f06d4969a5728, type: 2}
+  gridColor: {r: 1, g: 1, b: 1, a: 0.35}
+  gridLineWidth: 0.025
+  validColor: {r: 0, g: 1, b: 0, a: 1}
+  invalidColor: {r: 1, g: 0, b: 0, a: 1}
+  footprintLineWidth: 0.055
+  sortingLayerName: GridOverlay
+  sortingOrder: 0
+  zOffset: -0.05
+  placedColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!224 &826556046 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7395917379702553603, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
@@ -29171,6 +29198,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   panel: {fileID: 1771166659}
   roomCameraZoom: {fileID: 825155559}
+  gridVisuals: {fileID: 825155560}
 --- !u!1 &1085979607
 GameObject:
   m_ObjectHideFlags: 0
@@ -29716,7 +29744,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0bd6275d84d0484bad6546cde8c8111, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomFixedFurniture
-  size: {x: 2, y: 2}
+  size: {x: 3, y: 3}
   gridAnchor: {fileID: 1971544013}
   blocksPlacement: 1
 --- !u!1001 &1105457181
@@ -39146,7 +39174,7 @@ Transform:
   m_GameObject: {fileID: 1971544012}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.36, y: -0.28, z: 0}
+  m_LocalPosition: {x: -0.36, y: -0.82, z: 0}
   m_LocalScale: {x: 0.5, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

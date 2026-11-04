@@ -58,5 +58,8 @@ TagManager:
   - name: AboveWorld
     uniqueID: 775516703
     locked: 0
+  - name: GridOverlay
+    uniqueID: 2970146887
+    locked: 0
   m_RenderingLayers:
   - Default

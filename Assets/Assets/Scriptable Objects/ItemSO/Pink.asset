@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 25013cbcc1d5830449af556e0fa64334, type: 3}
-  m_Name: Noodle
+  m_Name: Pink
   m_EditorClassIdentifier: Assembly-CSharp::ItemSO
-  itemName: Noodle
-  itemIcon: {fileID: 21300000, guid: 8f707a290daa44a4cbcea015bdce8161, type: 3}
+  itemName: Pink
+  itemIcon: {fileID: 21300000, guid: d1a02ec5a8703f44797f049c4e75ae94, type: 3}
   prefab: {fileID: 3758215890295927942, guid: a5a94c7a89e9dbc46ab244137aea4e8d, type: 3}
-  size: {x: 1, y: 1}
+  size: {x: 2, y: 1}
   blocksPlacement: 1
   sortingLayer: 1
   sortingOrder: 0
