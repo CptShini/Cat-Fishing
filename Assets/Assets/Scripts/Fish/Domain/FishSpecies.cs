@@ -18,6 +18,9 @@ namespace Assets.Scripts.Fish.Domain
         [field: SerializeField]
         public string LatinName { get; private set; } = "Fishus Maximus";
         
+        [field: SerializeField]
+        public string Biome { get; private set; } = "Biome 1";
+        
         // --- Visuals ---
         
         [field: SerializeField, Header("Visuals")]
@@ -37,23 +40,13 @@ namespace Assets.Scripts.Fish.Domain
         [field: SerializeField, Range(1, 10)]
         public int Speed { get; private set; }
         
-        [field: SerializeField, Range(1, 10)]
+        [field: SerializeField, Range(0, 10)]
         public int Reaction { get; private set; }
         
-        [field: SerializeField, Range(1, 10)]
+        [field: SerializeField, Range(0, 10)]
         public int Perception { get; private set; }
         
-        [field: SerializeField, Range(1, 10)]
+        [field: SerializeField, Range(0, 10)]
         public int Sight { get; private set; }
-        
-        private void OnValidate()
-        {
-            Range range = Weight;
-
-            range.Min = Mathf.Max(0, range.Min);
-            range.Max = Mathf.Max(range.Min, range.Max);
-
-            Weight = range;
-        }
     }
 }

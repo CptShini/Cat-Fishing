@@ -9,6 +9,7 @@ namespace Assets.Scripts.Fish.Domain
         public int SpeciesId;
         
         public float Weight;
+        public float RelativeWeight;
         public float Strength;
         
         public FishDTO() { }
@@ -18,6 +19,7 @@ namespace Assets.Scripts.Fish.Domain
             Id = fish.Id.ToString();
             SpeciesId = fish.Species.Id;
             Weight = fish.Weight;
+            RelativeWeight = fish.RelativeWeight;
             Strength = fish.Strength;
         }
     }

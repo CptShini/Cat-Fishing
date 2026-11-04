@@ -293,8 +293,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8c268f5061947818c25daf7049be8c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Fish.FishController
-  species: {fileID: 0}
-  spriteSetter: {fileID: 9206399475325001486}
+  speciesFuck: {fileID: 0}
+  visuals: {fileID: 9206399475325001486}
   sightHandler: {fileID: 2980226103878150663}
   perceptionHandler: {fileID: 3102036810922805875}
 --- !u!114 &7310549756964335776
@@ -512,7 +512,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 794d74f5c7e22ca438144c2c4385f178, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Fish.FishSpriteSetter
-  _spriteRenderer: {fileID: 2351633011273638027}
+  spriteRenderer: {fileID: 2351633011273638027}
 --- !u!114 &6044135393209350168
 MonoBehaviour:
   m_ObjectHideFlags: 0

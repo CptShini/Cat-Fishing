@@ -31,19 +31,27 @@ namespace Assets.Scripts.Fish.Navigation
         private FishEyes _eyes;
 
         [SerializeField] private Transform eyePoint;
-        [SerializeField] private string areaMaskName;
         [SerializeField] private float arrivalDistanceTolerance;
         [SerializeField] private Range fleeDist;
         [SerializeField] private Range wanderDist;
+        [SerializeField] private Range reNavTime;
 
         private void Awake()
         {
             _eyes = GetComponent<FishEyes>();
-
-            areaMask = NavMesh.GetAreaFromName(areaMaskName);
-            if (areaMask != -1) areaMask = 1 << areaMask;
-            
             CurrentDirection = Random.onUnitCircle;
+        }
+
+        public void Init(string biome)
+        {
+            areaMask = NavMesh.GetAreaFromName(biome);
+            if (areaMask == -1)
+            {
+                Debug.LogWarning($"Biome string \"{biome}\" not found!");
+                return;
+            }
+            
+            areaMask = 1 << areaMask;
         }
         
         private void Update()
@@ -165,7 +173,7 @@ namespace Assets.Scripts.Fish.Navigation
         
         private IEnumerator RecalculatePath()
         {
-            float waitTime = Random.Range(5f, 10f);
+            float waitTime = reNavTime.Random();
             yield return new WaitForSeconds(waitTime);
             
             if (!_hasDestination) yield break;

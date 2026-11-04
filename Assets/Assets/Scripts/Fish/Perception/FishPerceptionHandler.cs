@@ -29,5 +29,7 @@ namespace Assets.Scripts.Fish.Perception
 
         private protected override void Detect(Collider2D other) =>
             OnDetectPlayer.Invoke(other.transform.position);
+
+        private protected override bool PerceptionCheck(Collider2D other) => true;
     }
 }

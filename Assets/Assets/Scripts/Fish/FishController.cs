@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.Fish.Domain;
 using Assets.Scripts.Fish.Movement;
 using Assets.Scripts.Fish.Perception;
+using Assets.Scripts.Fish.Visuals;
 using UnityEngine;
 
 namespace Assets.Scripts.Fish
@@ -16,7 +17,7 @@ namespace Assets.Scripts.Fish
         private FishNormalMovement _normalMovement;
         private FishCaughtMovement _caughtMovement;
 
-        [SerializeField] private FishSpriteSetter spriteSetter;
+        [SerializeField] private FishVisuals visuals;
         [SerializeField] private FishSightHandler sightHandler;
         [SerializeField] private FishPerceptionHandler perceptionHandler;
 
@@ -38,9 +39,9 @@ namespace Assets.Scripts.Fish
         public void Init(FishSpecies species)
         {
             Fish = new(species);
-            spriteSetter.SetSprite(species.Icon);
+            visuals.Init(species.Icon, Fish.RelativeWeight);
             
-            _normalMovement.Init();
+            _normalMovement.Init(species.Speed, species.Biome);
             _caughtMovement.Init(species.CatchPattern, 1f);
             
             sightHandler.Init(species.Reaction, species.Sight);

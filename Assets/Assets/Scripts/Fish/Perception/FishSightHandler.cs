@@ -29,5 +29,12 @@ namespace Assets.Scripts.Fish.Perception
 
         private protected override void Detect(Collider2D other) => 
             OnSeePlayer.Invoke(other.transform.position);
+
+        private protected override bool PerceptionCheck(Collider2D other)
+        {
+            Vector2 direction = other.transform.position - transform.position;
+            var hit = Physics2D.Raycast(transform.position, direction);
+            return hit.transform.CompareTag(_triggerTag);
+        }
     }
 }

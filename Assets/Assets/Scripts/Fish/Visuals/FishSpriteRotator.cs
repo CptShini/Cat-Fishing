@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Assets.Scripts.Fish
+namespace Assets.Scripts.Fish.Visuals
 {
     [ExecuteInEditMode]
     public class FishSpriteRotator : MonoBehaviour

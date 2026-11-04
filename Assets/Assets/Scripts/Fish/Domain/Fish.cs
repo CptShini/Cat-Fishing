@@ -4,11 +4,12 @@ namespace Assets.Scripts.Fish.Domain
 {
     public class Fish
     {
-        public Guid Id;
-        public FishSpecies Species;
+        public readonly Guid Id;
+        public readonly FishSpecies Species;
 
-        public float Weight;
-        public float Strength;
+        public readonly float Weight;
+        public readonly float RelativeWeight;
+        public readonly float Strength;
 
         public Fish(FishSpecies species)
         {
@@ -16,7 +17,8 @@ namespace Assets.Scripts.Fish.Domain
             Species = species;
 
             Weight = species.Weight.Random();
-            Strength = species.Strength * (Weight / species.Weight.Average);
+            RelativeWeight = Weight / species.Weight.Average;
+            Strength = species.Strength * RelativeWeight;
         }
 
         public Fish(FishDTO fishDTO, FishSpeciesDatabase db)
@@ -25,6 +27,7 @@ namespace Assets.Scripts.Fish.Domain
             Species = db[fishDTO.SpeciesId];
             
             Weight = fishDTO.Weight;
+            RelativeWeight = fishDTO.RelativeWeight;
             Strength = fishDTO.Strength;
         }
     }

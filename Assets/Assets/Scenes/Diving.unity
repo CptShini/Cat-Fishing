@@ -285,6 +285,10 @@ PrefabInstance:
       propertyPath: areaMaskName
       value: Biome 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2770333134826107441, guid: 161b5c02739f62b4fb82a7e106416081, type: 3}
+      propertyPath: speciesFuck
+      value: 
+      objectReference: {fileID: 11400000, guid: e5ee08445d645884093d25dd2a282203, type: 2}
     - target: {fileID: 5206029193779855580, guid: 161b5c02739f62b4fb82a7e106416081, type: 3}
       propertyPath: m_Name
       value: Fish (2)
@@ -2537,6 +2541,10 @@ PrefabInstance:
       propertyPath: areaMaskName
       value: Biome 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2770333134826107441, guid: 161b5c02739f62b4fb82a7e106416081, type: 3}
+      propertyPath: speciesFuck
+      value: 
+      objectReference: {fileID: 11400000, guid: e5ee08445d645884093d25dd2a282203, type: 2}
     - target: {fileID: 5206029193779855580, guid: 161b5c02739f62b4fb82a7e106416081, type: 3}
       propertyPath: m_Name
       value: Fish (6)
@@ -2991,6 +2999,10 @@ PrefabInstance:
       propertyPath: areaMaskName
       value: Biome 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2770333134826107441, guid: 161b5c02739f62b4fb82a7e106416081, type: 3}
+      propertyPath: speciesFuck
+      value: 
+      objectReference: {fileID: 11400000, guid: e5ee08445d645884093d25dd2a282203, type: 2}
     - target: {fileID: 5206029193779855580, guid: 161b5c02739f62b4fb82a7e106416081, type: 3}
       propertyPath: m_Name
       value: Fish (4)
@@ -3281,6 +3293,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FishCollectionManager
       objectReference: {fileID: 0}
+    - target: {fileID: 8886687971848814266, guid: 000809e192caa97469756909191f92ad, type: 3}
+      propertyPath: fishSpeciesDatabase
+      value: 
+      objectReference: {fileID: 11400000, guid: 69c0a0e81678bc0419aa277dd4158367, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3684,6 +3700,10 @@ PrefabInstance:
       propertyPath: areaMaskName
       value: Biome 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2770333134826107441, guid: 161b5c02739f62b4fb82a7e106416081, type: 3}
+      propertyPath: speciesFuck
+      value: 
+      objectReference: {fileID: 11400000, guid: e5ee08445d645884093d25dd2a282203, type: 2}
     - target: {fileID: 5206029193779855580, guid: 161b5c02739f62b4fb82a7e106416081, type: 3}
       propertyPath: m_Name
       value: Fish (9)
@@ -3758,9 +3778,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 420862131}
     m_Modifications:
+    - target: {fileID: 2770333134826107441, guid: 161b5c02739f62b4fb82a7e106416081, type: 3}
+      propertyPath: speciesFuck
+      value: 
+      objectReference: {fileID: 11400000, guid: e5ee08445d645884093d25dd2a282203, type: 2}
     - target: {fileID: 5206029193779855580, guid: 161b5c02739f62b4fb82a7e106416081, type: 3}
       propertyPath: m_Name
       value: Fish
+      objectReference: {fileID: 0}
+    - target: {fileID: 5206029193779855580, guid: 161b5c02739f62b4fb82a7e106416081, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7417673365245228754, guid: 161b5c02739f62b4fb82a7e106416081, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4293,6 +4321,10 @@ PrefabInstance:
       propertyPath: areaMaskName
       value: Biome 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2770333134826107441, guid: 161b5c02739f62b4fb82a7e106416081, type: 3}
+      propertyPath: speciesFuck
+      value: 
+      objectReference: {fileID: 11400000, guid: e5ee08445d645884093d25dd2a282203, type: 2}
     - target: {fileID: 5206029193779855580, guid: 161b5c02739f62b4fb82a7e106416081, type: 3}
       propertyPath: m_Name
       value: Fish (1)
@@ -4382,6 +4414,10 @@ PrefabInstance:
       propertyPath: areaMaskName
       value: Biome 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2770333134826107441, guid: 161b5c02739f62b4fb82a7e106416081, type: 3}
+      propertyPath: speciesFuck
+      value: 
+      objectReference: {fileID: 11400000, guid: e5ee08445d645884093d25dd2a282203, type: 2}
     - target: {fileID: 5206029193779855580, guid: 161b5c02739f62b4fb82a7e106416081, type: 3}
       propertyPath: m_Name
       value: Fish (8)
@@ -4452,6 +4488,10 @@ PrefabInstance:
       propertyPath: areaMaskName
       value: Biome 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2770333134826107441, guid: 161b5c02739f62b4fb82a7e106416081, type: 3}
+      propertyPath: speciesFuck
+      value: 
+      objectReference: {fileID: 11400000, guid: e5ee08445d645884093d25dd2a282203, type: 2}
     - target: {fileID: 2908896234982446586, guid: 161b5c02739f62b4fb82a7e106416081, type: 3}
       propertyPath: fishSO
       value: 
@@ -4890,6 +4930,10 @@ PrefabInstance:
       propertyPath: areaMaskName
       value: Biome 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2770333134826107441, guid: 161b5c02739f62b4fb82a7e106416081, type: 3}
+      propertyPath: speciesFuck
+      value: 
+      objectReference: {fileID: 11400000, guid: e5ee08445d645884093d25dd2a282203, type: 2}
     - target: {fileID: 5206029193779855580, guid: 161b5c02739f62b4fb82a7e106416081, type: 3}
       propertyPath: m_Name
       value: Fish (5)
@@ -5136,6 +5180,10 @@ PrefabInstance:
       propertyPath: areaMaskName
       value: Biome 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2770333134826107441, guid: 161b5c02739f62b4fb82a7e106416081, type: 3}
+      propertyPath: speciesFuck
+      value: 
+      objectReference: {fileID: 11400000, guid: e5ee08445d645884093d25dd2a282203, type: 2}
     - target: {fileID: 2908896234982446586, guid: 161b5c02739f62b4fb82a7e106416081, type: 3}
       propertyPath: fishSO
       value: 

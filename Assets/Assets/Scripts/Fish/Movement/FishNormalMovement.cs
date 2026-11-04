@@ -33,9 +33,10 @@ namespace Assets.Scripts.Fish.Movement
             _navigator.DestinationReached.AddListener(MovementDone.Invoke);
         }
 
-        public void Init()
+        public void Init(int speedStat, string biome)
         {
-            
+            _mover.Init(speedStat); // TODO: size and/or weight should probably also play a part in mobility
+            _navigator.Init(biome);
         }
 
         private void Update()

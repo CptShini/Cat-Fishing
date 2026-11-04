@@ -7,9 +7,6 @@ namespace Assets.Scripts.Fish.Movement
     [RequireComponent(typeof(Rigidbody2D))]
     public class FishMover : MonoBehaviour
     {
-        [Header("Propulsion")]
-        [SerializeField] private float maxSpeed = 2f;
-
         [Header("Steering")]
         [SerializeField] private float maxTurnRate = 100f;
         [SerializeField] private float turnResponsiveness = 2.5f;
@@ -22,6 +19,7 @@ namespace Assets.Scripts.Fish.Movement
         
         public Vector2 DesiredDirection;
 
+        private float _maxSpeed;
         private float _speed;
         
         private float _noiseSeed;
@@ -32,6 +30,11 @@ namespace Assets.Scripts.Fish.Movement
             _rb = GetComponent<Rigidbody2D>();
             DesiredDirection = transform.right;
             _noiseSeed = Random.Range(0f, 1000f);
+        }
+
+        public void Init(int speedStat)
+        {
+            _maxSpeed = speedStat; // TODO: proper conversion formula
         }
 
         private void FixedUpdate()
@@ -70,11 +73,11 @@ namespace Assets.Scripts.Fish.Movement
         {
             _speed = speed switch
             {
-                FishSpeed.Chill => maxSpeed / 10,
-                FishSpeed.Slow => maxSpeed / 6,
-                FishSpeed.Normal => maxSpeed / 4,
-                FishSpeed.Fast => maxSpeed / 2,
-                FishSpeed.Max => maxSpeed,
+                FishSpeed.Chill => _maxSpeed / 10,
+                FishSpeed.Slow => _maxSpeed / 6,
+                FishSpeed.Normal => _maxSpeed / 4,
+                FishSpeed.Fast => _maxSpeed / 2,
+                FishSpeed.Max => _maxSpeed,
                 _ => throw new ArgumentOutOfRangeException(nameof(speed), speed, null)
             };
         }

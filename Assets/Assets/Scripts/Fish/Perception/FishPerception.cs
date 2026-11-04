@@ -20,7 +20,7 @@ namespace Assets.Scripts.Fish.Perception
         private Collider2D _other;
         private ColliderDistance2D _colDistance;
         
-        private string _triggerTag;
+        private protected string _triggerTag;
         private CircleCollider2D _col;
         
         private void Awake()
@@ -31,6 +31,12 @@ namespace Assets.Scripts.Fish.Perception
 
         public void Init(int reactionStat, int sizeStat)
         {
+            if (sizeStat == 0)
+            {
+                gameObject.SetActive(false);
+                return;
+            }
+            
             _reactionTime = ComputeReactionTime(reactionStat);
             _radius = ComputeRadius(sizeStat);
             
@@ -63,22 +69,20 @@ namespace Assets.Scripts.Fish.Perception
 
         private protected abstract void Detect(Collider2D other);
         
-        private void OnTriggerEnter2D(Collider2D other)
-        {
-            if (!other.CompareTag(_triggerTag))
-                return;
-            
-            _detecting = true;
-        }
-
         private void OnTriggerStay2D(Collider2D other)
         {
             if (_cooldown || !other.CompareTag(_triggerTag))
+                return;
+            
+            _detecting = PerceptionCheck(other);
+            if (!_detecting)
                 return;
 
             _other = other;
             _colDistance = other.Distance(_col);
         }
+        
+        private protected abstract bool PerceptionCheck(Collider2D other);
 
         private void OnTriggerExit2D(Collider2D other)
         {
