@@ -5,16 +5,19 @@ public class RoomFixedFurniture : MonoBehaviour
     [Header("Grid")]
     public Vector2Int size = Vector2Int.one;
 
-    [Tooltip("Point in central left-bottom field.")]
-    public Transform gridAnchor;
-
     [Header("Placement")]
     public bool blocksPlacement = true;
 
     public Vector3Int GetOrigin(Grid grid)
     {
-        Transform anchor = gridAnchor != null ? gridAnchor : transform;
+        SpriteRenderer spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 
-        return grid.WorldToCell(anchor.position);
+        if (spriteRenderer == null)
+            return grid.WorldToCell(transform.position);
+
+        // Lft bottom corner of the sprite bounds
+        Vector3 bottomLeft = spriteRenderer.bounds.min;
+
+        return grid.WorldToCell(bottomLeft);
     }
 }

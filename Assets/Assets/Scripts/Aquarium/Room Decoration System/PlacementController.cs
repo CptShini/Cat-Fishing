@@ -105,6 +105,8 @@ public class PlacementController : MonoBehaviour
 
         GameObject placedObject = Instantiate(selectedItem.prefab, ghostObject.transform.position, Quaternion.identity, placedFurnitureRoot);
 
+        SetupFurnitureCollider(placedObject, selectedItem);
+
         FurnitureVisual visual = placedObject.GetComponent<FurnitureVisual>();
 
         visual.SetSprite(selectedItem.itemIcon);
@@ -154,5 +156,23 @@ public class PlacementController : MonoBehaviour
         ghostObject = null;
         selectedItem = null;
         gridVisuals.HideFootprint();
+    }
+
+    private void SetupFurnitureCollider(GameObject furniture, ItemSO item)
+    {
+        if (item.sortingLayer != FurnitureSortingLayer.World)
+            return;
+
+        SpriteRenderer spriteRenderer = furniture.GetComponentInChildren<SpriteRenderer>();
+
+        if (spriteRenderer == null)
+            return;
+
+        PolygonCollider2D collider = furniture.GetComponent<PolygonCollider2D>();
+
+        if (collider == null)
+            collider = furniture.AddComponent<PolygonCollider2D>();
+
+        collider.isTrigger = false;
     }
 }
