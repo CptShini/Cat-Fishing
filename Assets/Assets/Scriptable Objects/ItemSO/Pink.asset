@@ -17,5 +17,5 @@ MonoBehaviour:
   prefab: {fileID: 3758215890295927942, guid: a5a94c7a89e9dbc46ab244137aea4e8d, type: 3}
   size: {x: 2, y: 1}
   blocksPlacement: 1
-  sortingLayer: 1
+  sortingLayer: 0
   sortingOrder: 0
