@@ -11,6 +11,7 @@ public class DamagedScript : MonoBehaviour, IDamageable
 
     private Rigidbody2D _rb;
 
+
     void Start()
     {
         _rb = gameObject.GetComponent<Rigidbody2D>();
