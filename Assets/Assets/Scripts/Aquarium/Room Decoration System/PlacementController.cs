@@ -1,7 +1,7 @@
-
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
 
 public class PlacementController : MonoBehaviour
 {
@@ -105,11 +105,10 @@ public class PlacementController : MonoBehaviour
 
         GameObject placedObject = Instantiate(selectedItem.prefab, ghostObject.transform.position, Quaternion.identity, placedFurnitureRoot);
 
-        SetupFurnitureCollider(placedObject, selectedItem);
-
         FurnitureVisual visual = placedObject.GetComponent<FurnitureVisual>();
-
         visual.SetSprite(selectedItem.itemIcon);
+
+        SetupFurnitureCollider(placedObject, selectedItem);
 
         PlacedFurniture furniture = placedObject.GetComponent<PlacedFurniture>();
 
@@ -168,11 +167,24 @@ public class PlacementController : MonoBehaviour
         if (spriteRenderer == null)
             return;
 
-        PolygonCollider2D collider = furniture.GetComponent<PolygonCollider2D>();
+        PolygonCollider2D collider = spriteRenderer.gameObject.GetComponent<PolygonCollider2D>();
 
         if (collider == null)
-            collider = furniture.AddComponent<PolygonCollider2D>();
+            collider = spriteRenderer.gameObject.AddComponent<PolygonCollider2D>();
 
         collider.isTrigger = false;
+
+        Sprite sprite = spriteRenderer.sprite;
+
+        int shapeCount = sprite.GetPhysicsShapeCount();
+
+        collider.pathCount = shapeCount;
+
+        for (int i = 0; i < shapeCount; i++)
+        {
+            List<Vector2> points = new List<Vector2>();
+            sprite.GetPhysicsShape(i, points);
+            collider.SetPath(i, points);
+        }
     }
 }
