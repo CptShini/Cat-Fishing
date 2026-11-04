@@ -52,7 +52,6 @@ public class ThermalVent : MonoBehaviour
             _collider.enabled = false;
             var emission = _ps.emission;
             emission.enabled = false;
-            Debug.Log("play");
             animator.Play("WarningClip");
         }
     }

@@ -6,11 +6,13 @@ public class AimScript : MonoBehaviour
 {
 
 [SerializeField] private Camera mainCamera;
+[SerializeField] private Animator animator;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         DivingController.Instance.OnStateChanged.AddListener(AimEnabler);
+        animator.SetFloat("speed", 1 / 100);
     }
 
     void AimEnabler(PlayerState state)
@@ -18,9 +20,13 @@ public class AimScript : MonoBehaviour
         if(state == PlayerState.STEALTH)
         {
             gameObject.SetActive(true);
+            animator.Play("Paw");
+            animator.SetFloat("speed", 1.0f / DivingPlayerStats.Instance.chargeUpSpeed);
+            animator.SetBool("exit", false);
         }
         else
         {
+            animator.SetBool("exit", true);
             gameObject.SetActive(false);
         } 
     }
