@@ -143,8 +143,6 @@ public class DivingController : MonoBehaviour
         CatchingMinigame.Instance.Init(fish, movement);
         SetPlayerState(PlayerState.GRAB);
     }
-
-
     public void OnToggle(CallbackContext  input)
     {
         if(state == PlayerState.GRAB)
