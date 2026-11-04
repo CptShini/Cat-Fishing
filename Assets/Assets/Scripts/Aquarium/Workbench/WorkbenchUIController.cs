@@ -3,6 +3,7 @@ using UnityEngine;
 public class WorkbenchUIController : MonoBehaviour
 {
     public GameObject panel;
+    public RoomCameraZoom roomCameraZoom;
 
     public bool IsOpen { get; private set; }
     
@@ -14,6 +15,7 @@ public class WorkbenchUIController : MonoBehaviour
 
     public void Open()
     {
+        roomCameraZoom.EnterDecorationMode();
         panel.SetActive(true);
         IsOpen = true;
 
@@ -22,6 +24,7 @@ public class WorkbenchUIController : MonoBehaviour
 
     public void Close()
     {
+        roomCameraZoom.ExitDecorationMode();
         panel.SetActive(false);
         IsOpen = false;
 
