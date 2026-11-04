@@ -61,7 +61,9 @@ public class PlacementController : MonoBehaviour
         currentSize = itemSO.size;
 
         ghostObject = Instantiate(itemSO.prefab);
-        
+        FurnitureVisual visual = ghostObject.GetComponent<FurnitureVisual>();
+        visual.SetSprite(itemSO.itemIcon);
+
         foreach (Collider2D col in ghostObject.GetComponentsInChildren<Collider2D>())
         {
             col.enabled = false;
@@ -99,6 +101,10 @@ public class PlacementController : MonoBehaviour
             return;
 
         GameObject placedObject = Instantiate(selectedItem.prefab, ghostObject.transform.position, Quaternion.identity, placedFurnitureRoot);
+
+        FurnitureVisual visual = placedObject.GetComponent<FurnitureVisual>();
+
+        visual.SetSprite(selectedItem.itemIcon);
 
         PlacedFurniture furniture = placedObject.GetComponent<PlacedFurniture>();
 
