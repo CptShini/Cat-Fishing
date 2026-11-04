@@ -601,24 +601,17 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!1 &352567870 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8471800922274905492, guid: a1f5dd710e0e41c4ea3fbad66bc9efee, type: 3}
+--- !u!114 &352567874 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1614027725093702409, guid: a1f5dd710e0e41c4ea3fbad66bc9efee, type: 3}
   m_PrefabInstance: {fileID: 880628907}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &352567872
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 352567870}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cca9e2d644debcf4ba81c0b314dcfd80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.StatBar
-  foreground: {fileID: 1903694823}
 --- !u!1 &392749704
 GameObject:
   m_ObjectHideFlags: 0
@@ -2963,13 +2956,7 @@ PrefabInstance:
     - {fileID: 1953227958076799798, guid: a1f5dd710e0e41c4ea3fbad66bc9efee, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8471800922274905492, guid: a1f5dd710e0e41c4ea3fbad66bc9efee, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 352567872}
-    - targetCorrespondingSourceObject: {fileID: 4421625064726149190, guid: a1f5dd710e0e41c4ea3fbad66bc9efee, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1860766758}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a1f5dd710e0e41c4ea3fbad66bc9efee, type: 3}
 --- !u!1001 &921032353
 PrefabInstance:
@@ -4335,17 +4322,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7417673365245228754, guid: 161b5c02739f62b4fb82a7e106416081, type: 3}
   m_PrefabInstance: {fileID: 1578363280}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1614182512 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5688202531316886813, guid: a1f5dd710e0e41c4ea3fbad66bc9efee, type: 3}
-  m_PrefabInstance: {fileID: 880628907}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
 --- !u!1001 &1639901073
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4635,24 +4611,17 @@ Transform:
   - {fileID: 518480041}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1860766756 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4421625064726149190, guid: a1f5dd710e0e41c4ea3fbad66bc9efee, type: 3}
+--- !u!114 &1860766760 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5067281982600294254, guid: a1f5dd710e0e41c4ea3fbad66bc9efee, type: 3}
   m_PrefabInstance: {fileID: 880628907}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1860766758
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1860766756}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cca9e2d644debcf4ba81c0b314dcfd80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.StatBar
-  foreground: {fileID: 1614182512}
 --- !u!1 &1875646955
 GameObject:
   m_ObjectHideFlags: 0
@@ -4730,17 +4699,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1875646955}
   m_CullTransparentMesh: 1
---- !u!114 &1903694823 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2429995756911053735, guid: a1f5dd710e0e41c4ea3fbad66bc9efee, type: 3}
-  m_PrefabInstance: {fileID: 880628907}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
 --- !u!20 &1974734721 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 4801324841402261902, guid: 00c4c735be6de9441b62ab6463139022, type: 3}
@@ -4945,6 +4903,10 @@ PrefabInstance:
       value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 2969132433297625519, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
+      propertyPath: chargeUpSpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2969132433297625519, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
       propertyPath: oxygenCapacity
       value: 70
       objectReference: {fileID: 0}
@@ -5028,6 +4990,10 @@ PrefabInstance:
       propertyPath: m_CollisionDetection
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8572074976040694381, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
+      propertyPath: oxygenBar
+      value: 
+      objectReference: {fileID: 352567874}
     - target: {fileID: 9043816904564429849, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
       propertyPath: mainCamera
       value: 
@@ -5035,7 +5001,7 @@ PrefabInstance:
     - target: {fileID: 9043816904564429849, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
       propertyPath: staminaBar
       value: 
-      objectReference: {fileID: 1860766758}
+      objectReference: {fileID: 1860766760}
     m_RemovedComponents:
     - {fileID: 7964419269833872625, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
     - {fileID: 888424281249766981, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
@@ -5154,7 +5120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.Managers.DivingManager
   aquariumSceneIndex: 0
-  oxygenBar: {fileID: 352567872}
+  oxygenBar: {fileID: 352567874}
 --- !u!1001 &2046191312
 PrefabInstance:
   m_ObjectHideFlags: 0
