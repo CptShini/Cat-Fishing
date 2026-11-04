@@ -1,6 +1,7 @@
 using Assets.Scripts.Diving;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class DamagedScript : MonoBehaviour, IDamageable
 {
@@ -11,6 +12,8 @@ public class DamagedScript : MonoBehaviour, IDamageable
 
     private Rigidbody2D _rb;
 
+    public readonly UnityEvent OnDamaged = new();
+
 
     void Start()
     {
@@ -19,6 +22,7 @@ public class DamagedScript : MonoBehaviour, IDamageable
 
     public void Damaged(float amount, Vector2 knockback)
     {
+        OnDamaged.Invoke();
         if(curInvincibleDuration < invincibleDuration)
         {
             return;
