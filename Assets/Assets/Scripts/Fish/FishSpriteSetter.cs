@@ -4,9 +4,9 @@ namespace Assets.Scripts.Fish
 {
     public class FishSpriteSetter : MonoBehaviour
     {
-        [SerializeField] private SpriteRenderer _spriteRenderer;
+        [SerializeField] private SpriteRenderer spriteRenderer;
     
         public void SetSprite(Sprite sprite) => 
-            _spriteRenderer.sprite = sprite;
+            spriteRenderer.sprite = sprite;
     }
 }

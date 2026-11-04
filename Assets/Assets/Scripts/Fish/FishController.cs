@@ -9,7 +9,7 @@ namespace Assets.Scripts.Fish
     [RequireComponent(typeof(FishCaughtMovement))]
     public class FishController : MonoBehaviour
     {
-        [SerializeField] private FishSpecies species;
+        [SerializeField] private FishSpecies speciesFuck;
         
         public Domain.Fish Fish { get; private set; }
         
@@ -31,20 +31,20 @@ namespace Assets.Scripts.Fish
             _normalMovement.MovementDone.AddListener(Wander);
             _caughtMovement.OnLose.AddListener(Flee);
             
-            Init(new(species)); // Temporary until it's done by spawner
+            Init(speciesFuck); // Temporary until it's done by spawner
             Wander();
         }
 
-        public void Init(Domain.Fish fish)
+        public void Init(FishSpecies species)
         {
-            Fish = fish;
-            spriteSetter.SetSprite(fish.Species.Icon);
+            Fish = new(species);
+            spriteSetter.SetSprite(species.Icon);
             
             _normalMovement.Init();
-            _caughtMovement.Init(fish.Species.CatchPattern, 1f);
+            _caughtMovement.Init(species.CatchPattern, 1f);
             
-            sightHandler.Init(fish.Species.Reaction, fish.Species.Sight);
-            perceptionHandler.Init(fish.Species.Reaction, fish.Species.Perception);
+            sightHandler.Init(species.Reaction, species.Sight);
+            perceptionHandler.Init(species.Reaction, species.Perception);
         }
 
         private void Wander()
