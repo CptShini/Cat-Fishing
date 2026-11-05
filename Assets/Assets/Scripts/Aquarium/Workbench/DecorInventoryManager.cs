@@ -18,8 +18,11 @@ public class DecorInventoryManager : MonoBehaviour
         }
     }
     
-    public void AddItem(ItemSO itemSO)
+    public bool AddItem(ItemSO itemSO)
     {
+        if (itemSO == null)
+            return false;
+
         goldText.text = gold.ToString();
         foreach (var slot in inventorySlots)
         {
@@ -28,9 +31,10 @@ public class DecorInventoryManager : MonoBehaviour
                 slot.ItemSO = itemSO;
                 slot.gameObject.SetActive(true);
                 slot.UpdateUI();
-                return;
+                return true;
             }
         }
+        return false;
     }
 
     public void RemoveItem(ItemSO itemSO)

@@ -194,6 +194,18 @@ public class DecorationGridVisuals : MonoBehaviour
         UpdatePlacedFurnitureFrame(furniture);
     }
 
+    public void UnregisterPlacedFurniture(PlacedFurniture furniture)
+    {
+        if (furniture == null)
+            return;
+
+        if (placedFrames.TryGetValue(furniture, out LineRenderer line))
+        {
+            Destroy(line.gameObject);
+            placedFrames.Remove(furniture);
+        }
+    }
+
     private void UpdatePlacedFurnitureFrame(PlacedFurniture furniture)
     {
         if (!placedFrames.TryGetValue(furniture, out LineRenderer line))

@@ -28,11 +28,20 @@ public class PlacementController : MonoBehaviour
 
     private void Update()
     {
-        if (selectedItem == null || ghostObject == null)
-            return;
-
         if (Mouse.current == null)
             return;
+
+        if (selectedItem == null || ghostObject == null)
+        {
+            if (Mouse.current.leftButton.wasPressedThisFrame)
+            {
+                if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+                    return;
+
+                TryPickUpFurniture();
+            }
+            return;
+        }
 
         UpdateGhostPosition();
 
@@ -77,6 +86,43 @@ public class PlacementController : MonoBehaviour
         SetGhostColor(validColor);
 
         Debug.Log("Selected item: " + itemSO.itemName);
+    }
+
+    private void TryPickUpFurniture()
+    {
+        Vector2 mousePosition = Mouse.current.position.ReadValue();
+
+        float distanceToCamera = -mainCamera.transform.position.z;
+
+        Vector3 screenPosition = new Vector3(mousePosition.x, mousePosition.y, distanceToCamera);
+
+        Vector3 worldPosition = mainCamera.ScreenToWorldPoint(screenPosition);
+
+        Collider2D[] hits = Physics2D.OverlapPointAll(worldPosition);
+
+        foreach (Collider2D hit in hits)
+        {
+            PlacedFurniture furniture = hit.GetComponentInParent<PlacedFurniture>();
+
+            if (furniture == null)
+                continue;
+
+            if (!inventory.AddItem(furniture.itemSO))
+                return;
+
+            if (furniture.itemSO.blocksPlacement)
+            {
+                roomGrid.UnregisterObject(furniture.origin, furniture.currentSize);
+            }
+
+            gridVisuals.UnregisterPlacedFurniture(furniture);
+
+            Debug.Log("Picked up furniture: " + furniture.itemSO.itemName);
+
+            Destroy(furniture.gameObject);
+
+            return;
+        }
     }
 
     private void UpdateGhostPosition()
@@ -161,20 +207,14 @@ public class PlacementController : MonoBehaviour
 
     private void SetupFurnitureCollider(GameObject furniture, ItemSO item)
     {
-        if (item.sortingLayer != FurnitureSortingLayer.World)
-            return;
-
         SpriteRenderer spriteRenderer = furniture.GetComponentInChildren<SpriteRenderer>();
-
-        if (spriteRenderer == null)
-            return;
 
         PolygonCollider2D collider = spriteRenderer.gameObject.GetComponent<PolygonCollider2D>();
 
         if (collider == null)
             collider = spriteRenderer.gameObject.AddComponent<PolygonCollider2D>();
 
-        collider.isTrigger = false;
+        collider.isTrigger = item.sortingLayer != FurnitureSortingLayer.World;
 
         Sprite sprite = spriteRenderer.sprite;
 
