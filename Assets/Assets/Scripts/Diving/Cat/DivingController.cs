@@ -1,7 +1,8 @@
 using Assets.Scripts.Diving.Cat;
-using Assets.Scripts.Fish;
-using Assets.Scripts.Fish.Domain;
-using Assets.Scripts.Fish.Movement;
+using Assets.Scripts.Diving.DivingInventory;
+using Assets.Scripts.Fishies;
+using Assets.Scripts.Fishies.Domain;
+using Assets.Scripts.Fishies.Movement;
 using Assets.Scripts.PlayerState;
 using UnityEngine;
 using static UnityEngine.InputSystem.InputAction;
@@ -60,7 +61,7 @@ public class DivingController : MonoBehaviour
     {
         if (input.performed) // Did the player press?
         {
-            if(state == PlayerState.SWIM && _pounce.curPounceCooldown <= 0 && !DivingInventory.Instance.isEnabled)
+            if(state == PlayerState.SWIM && _pounce.curPounceCooldown <= 0 && !DivingInventory.Instance.IsEnabled)
             {
                 SetPlayerState(PlayerState.STEALTH);
             }

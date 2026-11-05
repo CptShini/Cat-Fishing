@@ -1,7 +1,8 @@
 using System;
-using Assets.Scripts.Diving;
-using Assets.Scripts.Fish.Domain;
-using Assets.Scripts.Fish.Movement;
+using Assets.Scripts.Diving.Bars;
+using Assets.Scripts.Diving.DivingInventory;
+using Assets.Scripts.Fishies.Domain;
+using Assets.Scripts.Fishies.Movement;
 using Assets.Scripts.PlayerState;
 using UnityEngine;
 using UnityEngine.UI;

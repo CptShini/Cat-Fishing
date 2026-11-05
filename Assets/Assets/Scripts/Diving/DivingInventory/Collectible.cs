@@ -1,12 +1,20 @@
 using UnityEngine;
 
-[System.SerializableAttribute]
-public class Collectible
+namespace Assets.Scripts.Diving.DivingInventory
 {
-    public string collectibleName;
-    public Sprite sprite;
-    public float weight;
+    public class Collectible
+    {
+        public readonly string Name;
+        public readonly Sprite Sprite;
+        public readonly float Weight;
+        
+        public Collectible(string name, Sprite sprite, float weight)
+        {
+            Name = name;
+            Sprite = sprite;
+            Weight = weight;
+        }
     
-    public virtual void Drop() { return; }
-    
+        public virtual void Drop() { }
+    }
 }

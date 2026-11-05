@@ -1,3 +1,4 @@
+using Assets.Scripts.Diving.Bars;
 using UnityEngine;
 using UnityEngine.InputSystem;
 

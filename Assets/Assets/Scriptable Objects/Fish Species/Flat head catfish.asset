@@ -21,7 +21,7 @@ MonoBehaviour:
   <Weight>k__BackingField:
     Min: 20
     Max: 60
-  <Strength>k__BackingField: 10
+  <Strength>k__BackingField: 2
   <Speed>k__BackingField: 10
   <Reaction>k__BackingField: 10
   <Perception>k__BackingField: 1

@@ -340,7 +340,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95b6be2da70e4ee59a69b617590d5376, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Fish.Movement.FishMover
-  maxSpeed: 3
   maxTurnRate: 720
   turnResponsiveness: 10
   turnAcceleration: 720
@@ -361,7 +360,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Fish.Navigation.FishNavigator
   eyePoint: {fileID: 7665592108927822498}
-  areaMaskName: Biome 1
   arrivalDistanceTolerance: 1
   fleeDist:
     Min: 10
@@ -369,6 +367,9 @@ MonoBehaviour:
   wanderDist:
     Min: 3
     Max: 8
+  reNavTime:
+    Min: 5
+    Max: 10
 --- !u!114 &7207838198360369881
 MonoBehaviour:
   m_ObjectHideFlags: 0

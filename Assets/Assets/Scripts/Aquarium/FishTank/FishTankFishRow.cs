@@ -1,19 +1,22 @@
 using System;
-using Assets.Scripts.Fish.Domain;
+using Assets.Scripts.Fishies.Domain;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class FishTankFishRow : MonoBehaviour
+namespace Assets.Scripts.Aquarium.FishTank
 {
-    [SerializeField] private TMP_Text fishNameText;
-    [SerializeField] private Button returnButton;
-
-    public void Setup(Fish fish, Action onReturn)
+    public class FishTankFishRow : MonoBehaviour
     {
-        fishNameText.text = fish.Species.Name;
+        [SerializeField] private TMP_Text fishNameText;
+        [SerializeField] private Button returnButton;
 
-        returnButton.onClick.RemoveAllListeners();
-        returnButton.onClick.AddListener(() => onReturn?.Invoke());
+        public void Setup(Fish fish, Action onReturn)
+        {
+            fishNameText.text = fish.Species.Name;
+
+            returnButton.onClick.RemoveAllListeners();
+            returnButton.onClick.AddListener(() => onReturn?.Invoke());
+        }
     }
 }

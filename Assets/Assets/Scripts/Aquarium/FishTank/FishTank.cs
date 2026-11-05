@@ -1,67 +1,61 @@
-using UnityEngine;
+using System;
 using System.Collections.Generic;
-using Assets.Scripts.Fish.Domain;
+using System.Linq;
+using Assets.Scripts.Data.Domain;
+using Assets.Scripts.Data.Persistence;
+using Assets.Scripts.Fishies.Domain;
+using UnityEngine;
 
-public class FishTank : MonoBehaviour, IInteractable
+namespace Assets.Scripts.Aquarium.FishTank
 {
-    [Header("Tank settings")]
-    [SerializeField] private string tankId;
-    [SerializeField] private FishSpeciesDatabase fishSpeciesDatabase;
-
-    [Header("Fish in this tank")]
-    [SerializeField] private List<Fish> fishes = new();
-
-    public string TankId => tankId;
-    public IReadOnlyList<Fish> Fishes => fishes;
-
-    public bool CanInteract()
+    public class FishTank : MonoBehaviour, IInteractable, IDataPersistence
     {
-        return true;
-    }
-
-    public void Interact()
-    {
-        FishTankUIController.Instance.Open(this);
-    }
-
-    private void Start()
-    {
-        fishes.Clear();
-        fishes.AddRange(FishSaveSystem.LoadTank(tankId, fishSpeciesDatabase));
-    }
-
-    public bool AddFish(Fish fish)
-    {
-        if (fish == null || fishes.Exists(f => f != null && f.Id == fish.Id))
-            return false;
+        [SerializeField] private string tankId;
+        [SerializeField] private FishSpeciesDatabase fishSpeciesDatabase;
         
-        fishes.Add(fish);
-        FishSaveSystem.SaveTank(this);
-        Debug.Log(fish.Species.Name + " added to tank: " + gameObject.name);
+        public IReadOnlyCollection<Fish> Fish => _fish.Values;
+        private Dictionary<Guid, Fish> _fish = new();
 
-        return true;
-    }
+        public bool CanInteract() => true;
 
-    public bool RemoveFish(Fish fish)
-    {
-        int index = fishes.FindIndex(f => f != null && f.Id == fish.Id);
+        public void Interact() => FishTankUIController.Instance.Open(this);
 
-        if (index < 0)
-            return false;
+        public bool AddFish(Fish fish) => _fish.TryAdd(fish.Id, fish);
 
-        Fish removedFish = fishes[index];
-        fishes.RemoveAt(index);
+        public bool RemoveFish(Fish fish)
+        {
+            bool containsFish = _fish.ContainsKey(fish.Id);
+            if (!containsFish) return false;
 
-        FishSaveSystem.SaveTank(this);
+            _fish.Remove(fish.Id);
 
-        Debug.Log(removedFish.Species.Name + " removed from tank: " + gameObject.name);
+            return true;
+        }
 
-        return true;
-    }
+        public void LoadData(GameData data)
+        {
+            bool tankSaved = data.Tanks.ContainsKey(tankId);
+            if (!tankSaved) return;
+            
+            TankData tankData = data.Tanks[tankId];
+            _fish = tankData.Fishes.ToDictionary(fishSpeciesDatabase);
+        }
 
-    public void ClearTank()
-    {
-        fishes.Clear();
-        FishSaveSystem.SaveTank(this);
+        public void SaveData(ref GameData data)
+        {
+            List<FishDTO> fishDTOs = _fish.Values
+                .ToDTOs()
+                .ToList();
+            
+            if (data.Tanks.TryGetValue(tankId, out TankData tank))
+            {
+                tank.Fishes = fishDTOs;
+            }
+            else
+            {
+                tank = new(tankId, fishDTOs);
+                data.Tanks.Add(tankId, tank);
+            }
+        }
     }
 }
