@@ -24,6 +24,8 @@ public class PlacementController : MonoBehaviour
 
     private bool canPlace;
 
+    public bool IsPlacingItem => selectedItem != null;
+
     private void Update()
     {
         if (selectedItem == null || ghostObject == null)

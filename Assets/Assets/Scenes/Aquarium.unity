@@ -8426,7 +8426,7 @@ BoxCollider2D:
   m_Offset: {x: 1.0493796, y: 1.4522452}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     oldSize: {x: 2, y: 3}
     newSize: {x: 2, y: 3}
     adaptiveTilingThreshold: 0.5
@@ -18835,6 +18835,7 @@ MonoBehaviour:
   panel: {fileID: 1771166659}
   roomCameraZoom: {fileID: 825155559}
   gridVisuals: {fileID: 825155560}
+  placementController: {fileID: 825155554}
 --- !u!1 &1085979607
 GameObject:
   m_ObjectHideFlags: 0
