@@ -600,11 +600,11 @@ Transform:
   m_GameObject: {fileID: 5560953002884090599}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.619996, y: 1.1999991, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -0.9499979, y: 0.2699995, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 547029068133216273}
+  m_Father: {fileID: 4722608374751236603}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8370455419162555338
 SpriteRenderer:
@@ -1164,7 +1164,6 @@ Transform:
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 7785895094848131301}
   - {fileID: 2598707453658501197}
   - {fileID: 8984494032151953292}
   - {fileID: 1940725372656263050}
@@ -1274,10 +1273,10 @@ HingeJoint2D:
   m_Anchor: {x: 0, y: 0}
   m_ConnectedAnchor: {x: 4.62, y: -1.2}
   m_UseConnectedAnchor: 1
-  m_UseMotor: 1
+  m_UseMotor: 0
   m_Motor:
-    m_MotorSpeed: 10
-    m_MaximumMotorForce: 10
+    m_MotorSpeed: 0
+    m_MaximumMotorForce: 0
   m_UseLimits: 1
   m_AngleLimits:
     m_LowerAngle: 0
@@ -1294,6 +1293,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d76fe9bf121479a4db6200a193409feb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeadScript
+  _body: {fileID: 4709481541221139582}
+  _aimScript: {fileID: 5778309398152115365}
 --- !u!114 &5296180400179886498
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1413,6 +1414,7 @@ Transform:
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 1
   m_Children:
+  - {fileID: 7785895094848131301}
   - {fileID: 547029068133216273}
   m_Father: {fileID: 3988479928123277851}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -15033,6 +15033,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2044614419147659504, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2969132433297625519, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
       propertyPath: speed
       value: 3
@@ -15069,6 +15073,10 @@ PrefabInstance:
       propertyPath: m_EnableCollision
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4709481541221139582, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
+      propertyPath: m_Constraints
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5296180400179886498, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
       propertyPath: mainCamera
       value: 
@@ -15085,10 +15093,6 @@ PrefabInstance:
       propertyPath: mainCamera
       value: 
       objectReference: {fileID: 1974734721}
-    - target: {fileID: 6144211805419999783, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
-      propertyPath: m_IsTrigger
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6619945467753677165, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
       propertyPath: m_LocalScale.x
       value: 2

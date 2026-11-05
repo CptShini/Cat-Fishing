@@ -12,10 +12,11 @@ public class SwimScript : MonoBehaviour
     private float swimSpeed = 0;
     private float friction = 0;
     private float acceleration = 0;
-    public readonly UnityEvent<Vector2> OnSwim = new();
+    public readonly UnityEvent<Vector2, float> OnSwim = new();
     private Vector2 velocityVector;
 
     bool swimming = false;
+    bool stealth = false;
 
     private Rigidbody2D _pb;
 
@@ -35,12 +36,15 @@ public class SwimScript : MonoBehaviour
         {
             case PlayerState.SWIM:
                 swimSpeed = DivingPlayerStats.Instance.speed;
+                stealth = false;
                 break;
             case PlayerState.STEALTH:
                 swimSpeed = DivingPlayerStats.Instance.stealthSpeed;
+                stealth = true;
                 break;
             case PlayerState.STUN:
                 swimSpeed = 0;
+                stealth = false;
                 break; 
             default:
                 swimming = false;
@@ -57,7 +61,10 @@ public class SwimScript : MonoBehaviour
     private void Swim(Vector2 direction)
     {
         Vector2 targetVelocity = direction.normalized * swimSpeed;
-        OnSwim.Invoke(direction);
+        if (!stealth)
+        {
+            OnSwim.Invoke(direction, 250);
+        }
         float currentAcceleration = (direction.x != 0) ? acceleration : friction;
 
         Vector2 newVelocity = Vector2.MoveTowards(
