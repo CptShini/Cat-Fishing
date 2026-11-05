@@ -81,7 +81,5 @@ namespace Assets.Scripts.Data
         }
         
         private void OnApplicationQuit() => Save();
-        
-        
     }
 }

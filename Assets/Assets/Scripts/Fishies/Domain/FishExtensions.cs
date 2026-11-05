@@ -16,38 +16,25 @@ namespace Assets.Scripts.Fishies.Domain
         public static Dictionary<Guid, Fish> ToDictionary(
             this IEnumerable<FishDTO> fishDTOs,
             FishSpeciesDatabase db
-        ) {
-            var dictionary = new Dictionary<Guid, Fish>();
-            
-            foreach (FishDTO fish in fishDTOs)
-            {
-                Guid key = Guid.Parse(fish.Id);
-                Fish value = new(fish, db);
-                dictionary.Add(key, value);
-            }
-            
-            return dictionary;
-        }
-        
+        ) =>
+            fishDTOs.ToDictionary(
+                dto => Guid.Parse(dto.Id),
+                dto => new Fish(dto, db)
+            );
+
         public static Dictionary<Guid, Fish> ToDictionary(
             this SerializableDictionary<string, FishDTO> fishDic, 
             FishSpeciesDatabase db
-        ) {
-            var dictionary = new Dictionary<Guid, Fish>();
-            
-            foreach (string fishId in fishDic.Keys)
-            {
-                Guid key = Guid.Parse(fishId);
-                Fish value = new(fishDic[fishId], db);
-                dictionary.Add(key, value);
-            }
-            
-            return dictionary;
-        }
+        ) =>
+            fishDic.ToDictionary(
+                kvp => Guid.Parse(kvp.Key),
+                kvp => new Fish(kvp.Value, db)
+            );
 
         public static SerializableDictionary<string, FishDTO> ToSerializableDictionary(
             this Dictionary<Guid, Fish> fishDic
-        ) {
+        )
+        {
             var serializableDictionary = new SerializableDictionary<string, FishDTO>();
             
             foreach (Guid fishId in fishDic.Keys)

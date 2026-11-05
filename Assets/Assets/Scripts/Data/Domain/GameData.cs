@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Text;
 using Assets.Scripts.Fishies.Domain;
 
 namespace Assets.Scripts.Data.Domain
@@ -14,24 +13,6 @@ namespace Assets.Scripts.Data.Domain
         {
             Collection = new();
             Tanks = new();
-        }
-
-        public override string ToString()
-        {
-            StringBuilder sb = new();
-            {
-                sb.AppendLine("Collection: ");
-                foreach (string fishId in Collection.Keys)
-                {
-                    sb.AppendLine($"{fishId} -  {Collection[fishId]}");
-                }
-            }
-
-            {
-                
-            }
-
-            return sb.ToString();
         }
     }
 }
