@@ -12,7 +12,7 @@ namespace Assets.Scripts.Fishies
     {
         [SerializeField] private FishSpecies speciesFuck;
         
-        public Domain.Fish Fish { get; private set; }
+        public Fish Fish { get; private set; }
         
         private FishNormalMovement _normalMovement;
         private FishCaughtMovement _caughtMovement;

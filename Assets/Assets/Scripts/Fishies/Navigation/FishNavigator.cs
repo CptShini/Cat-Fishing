@@ -45,13 +45,16 @@ namespace Assets.Scripts.Fishies.Navigation
         public void Init(string biome)
         {
             areaMask = NavMesh.GetAreaFromName(biome);
-            if (areaMask == -1)
+            if (areaMask != -1)
             {
-                Debug.LogWarning($"Biome string \"{biome}\" not found!");
+                areaMask = 1 << areaMask;
                 return;
             }
+
+            if (biome.Equals("All"))
+                return;
             
-            areaMask = 1 << areaMask;
+            Debug.LogWarning($"Biome string \"{biome}\" not found!");
         }
         
         private void Update()
