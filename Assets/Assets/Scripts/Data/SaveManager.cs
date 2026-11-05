@@ -22,9 +22,6 @@ namespace Assets.Scripts.Data
             }
 
             Instance = this;
-            transform.parent = null;
-            DontDestroyOnLoad(gameObject);
-            
             _dataPersistenceManager = GetComponent<DataPersistenceManager>();
         }
         
@@ -79,7 +76,7 @@ namespace Assets.Scripts.Data
             
             _dataPersistenceManager.SaveGame(_currentSaveName);
         }
-        
-        private void OnApplicationQuit() => Save();
+
+        private void OnDestroy() => Save();
     }
 }
