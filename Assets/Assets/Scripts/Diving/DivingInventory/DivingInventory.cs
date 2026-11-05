@@ -42,7 +42,7 @@ namespace Assets.Scripts.Diving.DivingInventory
         {
             if (!weightBar.TryAdd(collectible.Weight))
             {
-                print($"No more space in inventory for '{collectible.Name}' ({collectible.Weight}kg)");
+                print($"No space in inventory for '{collectible.Name}' ({collectible.Weight:F1}kg)");
                 return false;
             }
 

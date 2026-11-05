@@ -9,18 +9,13 @@ namespace Assets.Scripts.Fishies.Domain
     {
         [SerializeField] private List<FishSpecies> species;
         
-        private Dictionary<int, FishSpecies> _lookup = new();
+        private Dictionary<int, FishSpecies> _lookup;
 
-        public FishSpecies this[int id]
-        {
-            get
-            {
-                _lookup ??= species.ToDictionary(s => s.Id);
-                
-                return _lookup.TryGetValue(id, out FishSpecies result) 
-                    ? result 
-                    : throw new KeyNotFoundException($"Unknown FishSpecies ID: {id}");
-            }
-        }
+        public FishSpecies this[int id] =>
+            species
+                .ToDictionary(s => s.Id)
+                .TryGetValue(id, out FishSpecies result) 
+                ? result 
+                : throw new KeyNotFoundException($"Unknown FishSpecies ID: {id}");
     }
 }

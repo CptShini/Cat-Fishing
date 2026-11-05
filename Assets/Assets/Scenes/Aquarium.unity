@@ -31275,7 +31275,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   tankId: 01
-  fishSpeciesDatabase: {fileID: 0}
+  fishSpeciesDatabase: {fileID: 11400000, guid: 69c0a0e81678bc0419aa277dd4158367, type: 2}
 --- !u!61 &1267698148
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -40315,7 +40315,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   tankId: 02
-  fishSpeciesDatabase: {fileID: 0}
+  fishSpeciesDatabase: {fileID: 11400000, guid: 69c0a0e81678bc0419aa277dd4158367, type: 2}
 --- !u!61 &2064735235
 BoxCollider2D:
   m_ObjectHideFlags: 0

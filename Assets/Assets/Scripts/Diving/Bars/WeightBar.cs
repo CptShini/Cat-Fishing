@@ -5,7 +5,7 @@
         public bool TryAdd(float weight)
         {
             bool tooHeavy = CurrentValue + weight > _maxValue;
-            if (!tooHeavy) return false;
+            if (tooHeavy) return false;
             
             CurrentValue += weight;
             return true;
