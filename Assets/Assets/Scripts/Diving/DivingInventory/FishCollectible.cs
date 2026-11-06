@@ -1,21 +1,20 @@
-using Assets.Scripts.Fish;
+using Assets.Scripts.Fishies.Domain;
 
-[System.Serializable]
-public class FishCollectible : Collectible
+namespace Assets.Scripts.Diving.DivingInventory
 {
-    public Fish fish;
-
-    public FishCollectible(Fish fish)
+    public class FishCollectible : Collectible
     {
-        this.fish = fish;
-        this.collectibleName = fish.fishName;
-        this.weight = fish.weight;
-        this.sprite = fish.sprite;
-    }
+        public readonly Fish fish;
+        
+        public FishCollectible(Fish fish)
+            : base(fish.Species.Name, fish.Species.Icon, fish.Weight)
+        {
+            this.fish = fish;
+        }
 
-    public override void Drop()
-    {
-        // SOMETHING HAPPENS WHEN WE DROP A FISH OUT OF INVENTORY
+        public override void Drop()
+        {
+            // SOMETHING HAPPENS WHEN WE DROP A FISH OUT OF INVENTORY
+        }
     }
-
 }

@@ -1,5 +1,4 @@
-using Assets.Scripts.Diving;
-using Unity.VisualScripting;
+using Assets.Scripts.Diving.Bars;
 using UnityEngine;
 using UnityEngine.Events;
 
