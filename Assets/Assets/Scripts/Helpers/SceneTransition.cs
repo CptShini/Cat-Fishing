@@ -24,11 +24,14 @@ namespace Assets.Scripts.Helpers
             FadeOut();
         }
 
+        private void Start() => MusicPlayer.Instance.PlayTrack(0, fadeTime);
+
         public void LoadScene(int buildIndex) => 
             StartCoroutine(LoadSceneWithFade(buildIndex));
 
         private IEnumerator LoadSceneWithFade(int buildIndex)
         {
+            MusicPlayer.Instance.StopTrack(fadeTime);
             fadeAnim.SetBool("Loaded", false); // TODO: shouldn't be done with strings :/
             fadeAnim.Play("FadeIn");
 
@@ -36,6 +39,7 @@ namespace Assets.Scripts.Helpers
 
             SceneManager.LoadScene(buildIndex);
             fadeAnim.SetBool("Loaded", true);
+            MusicPlayer.Instance.PlayTrack(buildIndex, fadeTime);
         }
 
         private void FadeOut()
