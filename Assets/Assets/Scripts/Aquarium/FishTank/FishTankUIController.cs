@@ -1,7 +1,6 @@
 using Assets.Scripts.Fishies.Domain;
 using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Assets.Scripts.Aquarium.FishTank
 {
@@ -12,89 +11,66 @@ namespace Assets.Scripts.Aquarium.FishTank
         [SerializeField] private GameObject panel;
         [SerializeField] private TMP_Text tankNameText;
 
-        [Header("Fish list")]
-        [SerializeField] private Transform listContent;
-        [SerializeField] private FishTankFishRow rowPrefab;
+        [Space]
+        
+        [SerializeField] private FishTankSpawner spawner;
+        [SerializeField] private FishGrabber grabber;
 
-        private FishTank currentTank;
+        private FishTank _currentTank, _prevTank;
 
         public bool IsOpen { get; private set; }
 
-        private void Awake()
-        {
-            Instance = this;
-        }
+        private void Awake() => Instance = this;
 
-        private void Start()
-        {
-            panel.SetActive(false);
-            IsOpen = false;
-            PauseController.SetPause(false);
-        }
+        private void Start() => grabber.DropFish.AddListener(OnFishDropped);
 
         public void Open(FishTank tank)
         {
-            currentTank = tank;
-
+            if (IsOpen) return;
+            
+            _currentTank = tank;
+            
             panel.SetActive(true);
             IsOpen = true;
-
-            tankNameText.text = tank.gameObject.name;
-
-            RefreshFishList();
+            grabber.enabled = true;
 
             PauseController.SetPause(true);
-        }
 
-        private void RefreshFishList()
-        {
-            for (int i = listContent.childCount - 1; i >= 0; i--)
-            {
-                Destroy(listContent.GetChild(i).gameObject);
-            }
-
-            if (currentTank == null)
+            if (_prevTank && tank.Id == _prevTank.Id)
                 return;
-
-            foreach (Fish fish in currentTank.Fish)
+            
+            tankNameText.text = tank.Name;
+            
+            spawner.Clear();
+            foreach (Fish fish in _currentTank.Fish)
             {
-                if (fish == null)
-                    continue;
-
-                FishTankFishRow row = Instantiate(rowPrefab, listContent);
-
-                row.Setup(fish, () => ReturnFishToInventory(fish));
+                spawner.SpawnFish(fish);
             }
         }
-
-        private void ReturnFishToInventory(Fish fish)
-        {
-            if (currentTank == null || fish == null)
-                return;
-
-            FishCollectionManager collection = FishCollectionManager.Instance;
-
-            if (collection == null)
-                return;
-
-            // detach the fish from the tank first
-            if (!currentTank.RemoveFish(fish))
-                return;
-
-            // add the fish back to the player's collection
-            collection.Add(fish);
-
-            RefreshFishList();
-        }
-
 
         public void Close()
         {
+            if (!IsOpen) return;
+            
+            _prevTank = _currentTank;
+            _currentTank = null;
+            
             panel.SetActive(false);
             IsOpen = false;
-            currentTank = null;
+            grabber.enabled = false;
 
             PauseController.SetPause(false);
+        }
+
+        private void OnFishDropped(Fish fish, Vector2 dropPos)
+        {
+            if (!_currentTank || !spawner.OutsideBounds(dropPos)) return;
+            
+            if (!_currentTank.RemoveFish(fish))
+                return;
+
+            spawner.RemoveFish(fish);
+            FishCollectionManager.Instance.Add(fish);
         }
     }
 }
