@@ -16598,7 +16598,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1153414163}
-  m_Father: {fileID: 1452388775}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &832454666
 Animator:
@@ -16759,6 +16759,22 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 64e41dc8-74b8-43f5-b6ac-84121f5d2dbf
     m_ActionName: 'Player/ToggleInv[/Keyboard/tab]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1153414164}
+        m_TargetAssemblyTypeName: InteractionDetector, Assembly-CSharp
+        m_MethodName: OnEscape
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 56cabef6-3e1a-47d9-bd8c-6f2f8165bdc8
+    m_ActionName: 'Player/Escape[/Keyboard/escape]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -23657,7 +23673,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 825155557}
-  - {fileID: 832454665}
   - {fileID: 942905343}
   - {fileID: 839073159}
   - {fileID: 1135691818}
@@ -68111,6 +68126,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 619394802}
   - {fileID: 953177426}
+  - {fileID: 832454665}
   - {fileID: 1452388775}
   - {fileID: 1058299126}
   - {fileID: 1970059723}
