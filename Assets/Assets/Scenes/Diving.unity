@@ -2989,6 +2989,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cca9e2d644debcf4ba81c0b314dcfd80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.Bars.StatBar
+--- !u!4 &907717792 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 547029068133216273, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
+  m_PrefabInstance: {fileID: 2012719187}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &921032353
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4695,7 +4700,7 @@ PrefabInstance:
     - target: {fileID: 741549643081215890, guid: 00c4c735be6de9441b62ab6463139022, type: 3}
       propertyPath: Target.TrackingTarget
       value: 
-      objectReference: {fileID: 2033680100}
+      objectReference: {fileID: 907717792}
     - target: {fileID: 1470836264289042023, guid: 00c4c735be6de9441b62ab6463139022, type: 3}
       propertyPath: m_Name
       value: Cameras
@@ -4706,11 +4711,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6541992116239579157, guid: 00c4c735be6de9441b62ab6463139022, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -10.007251
+      value: -9.73525
       objectReference: {fileID: 0}
     - target: {fileID: 6541992116239579157, guid: 00c4c735be6de9441b62ab6463139022, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -67.902916
+      value: -67.96891
       objectReference: {fileID: 0}
     - target: {fileID: 6541992116239579157, guid: 00c4c735be6de9441b62ab6463139022, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4718,11 +4723,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8695834584669431874, guid: 00c4c735be6de9441b62ab6463139022, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -10.007251
+      value: -9.73525
       objectReference: {fileID: 0}
     - target: {fileID: 8695834584669431874, guid: 00c4c735be6de9441b62ab6463139022, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -67.902916
+      value: -67.96891
       objectReference: {fileID: 0}
     - target: {fileID: 8695834584669431874, guid: 00c4c735be6de9441b62ab6463139022, type: 3}
       propertyPath: m_LocalPosition.z
@@ -5090,6 +5095,18 @@ PrefabInstance:
       propertyPath: carryingCapacity
       value: 50
       objectReference: {fileID: 0}
+    - target: {fileID: 4547274666616658480, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
+      propertyPath: oxygenBar
+      value: 
+      objectReference: {fileID: 880628908}
+    - target: {fileID: 5296180400179886498, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
+      propertyPath: mainCamera
+      value: 
+      objectReference: {fileID: 1974734721}
+    - target: {fileID: 5296180400179886498, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
+      propertyPath: staminaBar
+      value: 
+      objectReference: {fileID: 880628909}
     - target: {fileID: 5778309398152115365, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
       propertyPath: mainCamera
       value: 
