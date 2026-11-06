@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 169cdaaf8d1f47bda87302198ec4a21f, type: 3}
+  m_Name: Violet cory
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Fishies.CatchMinigame.FishCatchPattern
+  UpMoves:
+  - move: 1
+    duration: 1
+    weight: 1
+  UpRightMoves:
+  - move: 2
+    duration: 1
+    weight: 1
+  RightMoves:
+  - move: 3
+    duration: 1
+    weight: 1
+  - move: 5
+    duration: 0.5
+    weight: 1
+  DownRightMoves:
+  - move: 4
+    duration: 1
+    weight: 1
+  DownMoves:
+  - move: 5
+    duration: 1
+    weight: 1
+  DownLeftMoves:
+  - move: 6
+    duration: 1
+    weight: 1
+  LeftMoves:
+  - move: 1
+    duration: 1
+    weight: 1
+  - move: 7
+    duration: 0.5
+    weight: 1
+  UpLeftMoves:
+  - move: 0
+    duration: 1
+    weight: 1
