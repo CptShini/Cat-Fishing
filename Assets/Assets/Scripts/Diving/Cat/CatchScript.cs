@@ -1,5 +1,6 @@
-using Assets.Scripts.Fish;
-using Assets.Scripts.Fish.Movement;
+using Assets.Scripts.Fishies;
+using Assets.Scripts.Fishies.Domain;
+using Assets.Scripts.Fishies.Movement;
 using Assets.Scripts.PlayerState;
 using UnityEngine;
 using static UnityEngine.InputSystem.InputAction;
@@ -22,7 +23,7 @@ public class CatchScript : MonoBehaviour
     {
         if (col.gameObject.layer != 7 || grabbing) return;
         
-        Fish fish = col.gameObject.GetComponent<FishStats>().fish;
+        Fish fish = col.gameObject.GetComponent<FishController>().Fish;
         FishCaughtMovement movement = col.gameObject.GetComponent<FishCaughtMovement>();
 
         col.gameObject.GetComponent<FishController>().Catch();

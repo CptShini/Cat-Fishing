@@ -502,10 +502,7 @@ MonoBehaviour:
   slotPrefab: {fileID: 8719399219098157219, guid: 0703ffa65894d4d4793c6c5d2e64d08e, type: 3}
   panel: {fileID: 3244102322806336925}
   grid: {fileID: 0}
-  weightBar: {fileID: 7895509822091062188}
-  collectibles: []
-  maxWeight: 25
-  isEnabled: 1
+  weightBar: {fileID: 0}
 --- !u!114 &1769765895746498724
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -742,7 +739,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6751562458667321514}
-  - component: {fileID: 7895509822091062188}
+  - component: {fileID: 6213074359607386840}
   m_Layer: 5
   m_Name: Weight Meter
   m_TagString: Untagged
@@ -771,7 +768,7 @@ RectTransform:
   m_AnchoredPosition: {x: 10, y: 10}
   m_SizeDelta: {x: 150, y: 125}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &7895509822091062188
+--- !u!114 &6213074359607386840
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -780,9 +777,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2365761184008796080}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cca9e2d644debcf4ba81c0b314dcfd80, type: 3}
+  m_Script: {fileID: 11500000, guid: 08b3d7d2130641aeb925b3db05c1991e, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::StatBar
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.Bars.WeightBar
   foreground: {fileID: 1657603122806773197}
 --- !u!1 &3244102322806336925
 GameObject:
@@ -1315,7 +1312,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4651415735339665302}
-  - component: {fileID: 5067281982600294254}
+  - component: {fileID: 2991899046791209115}
   m_Layer: 5
   m_Name: Stamina Meter
   m_TagString: Untagged
@@ -1344,7 +1341,7 @@ RectTransform:
   m_AnchoredPosition: {x: -50, y: 0}
   m_SizeDelta: {x: 50, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &5067281982600294254
+--- !u!114 &2991899046791209115
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1355,7 +1352,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cca9e2d644debcf4ba81c0b314dcfd80, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.StatBar
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.Bars.StatBar
   foreground: {fileID: 5688202531316886813}
 --- !u!1 &6975680875948496574
 GameObject:
@@ -1567,7 +1564,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7122091259670730573}
-  - component: {fileID: 1614027725093702409}
+  - component: {fileID: 5699938357424794612}
   m_Layer: 5
   m_Name: Oxygen Meter
   m_TagString: Untagged
@@ -1596,7 +1593,7 @@ RectTransform:
   m_AnchoredPosition: {x: 10, y: -10}
   m_SizeDelta: {x: 1000, y: 40}
   m_Pivot: {x: 0, y: 1}
---- !u!114 &1614027725093702409
+--- !u!114 &5699938357424794612
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1607,5 +1604,5 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cca9e2d644debcf4ba81c0b314dcfd80, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.StatBar
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.Bars.StatBar
   foreground: {fileID: 2429995756911053735}

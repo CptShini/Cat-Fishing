@@ -1,5 +1,5 @@
+using Assets.Scripts.Diving.Bars;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 namespace Assets.Scripts.Diving.Cat

@@ -1,3 +1,4 @@
+using Assets.Scripts.Aquarium.FishTank;
 using UnityEngine;
 using UnityEngine.InputSystem;
 

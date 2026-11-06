@@ -1435,7 +1435,7 @@ GameObject:
   - component: {fileID: 233133954}
   - component: {fileID: 233133953}
   - component: {fileID: 233133952}
-  m_Layer: 12
+  m_Layer: 16
   m_Name: Square (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2316,7 +2316,7 @@ PrefabInstance:
     - target: {fileID: 8572074976040694381, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
       propertyPath: oxygenBar
       value: 
-      objectReference: {fileID: 1491790224}
+      objectReference: {fileID: 0}
     - target: {fileID: 9043816904564429849, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
       propertyPath: mainCamera
       value: 
@@ -2324,7 +2324,7 @@ PrefabInstance:
     - target: {fileID: 9043816904564429849, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
       propertyPath: staminaBar
       value: 
-      objectReference: {fileID: 1491790219}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2426,7 +2426,7 @@ GameObject:
   - component: {fileID: 562596105}
   - component: {fileID: 562596107}
   - component: {fileID: 562596106}
-  m_Layer: 11
+  m_Layer: 14
   m_Name: Particle System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7541,7 +7541,7 @@ GameObject:
   - component: {fileID: 845901416}
   - component: {fileID: 845901415}
   - component: {fileID: 845901414}
-  m_Layer: 12
+  m_Layer: 16
   m_Name: Square (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7952,7 +7952,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.Managers.DivingManager
   aquariumSceneIndex: 0
-  oxygenBar: {fileID: 1491790224}
+  oxygenBar: {fileID: 0}
 --- !u!114 &883350057
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7984,10 +7984,7 @@ MonoBehaviour:
   slotPrefab: {fileID: 8719399219098157219, guid: 0703ffa65894d4d4793c6c5d2e64d08e, type: 3}
   panel: {fileID: 1491790222}
   grid: {fileID: 1491790221}
-  weightBar: {fileID: 1491790223}
-  collectibles: []
-  maxWeight: 25
-  isEnabled: 0
+  weightBar: {fileID: 0}
 --- !u!4 &883350059
 Transform:
   m_ObjectHideFlags: 0
@@ -8014,7 +8011,7 @@ GameObject:
   - component: {fileID: 925181133}
   - component: {fileID: 925181135}
   - component: {fileID: 925181134}
-  m_Layer: 11
+  m_Layer: 14
   m_Name: Gas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13189,7 +13186,7 @@ GameObject:
   - component: {fileID: 1078795600}
   - component: {fileID: 1078795599}
   - component: {fileID: 1078795602}
-  m_Layer: 12
+  m_Layer: 16
   m_Name: fog1_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13575,7 +13572,7 @@ GameObject:
   - component: {fileID: 1139260265}
   - component: {fileID: 1139260266}
   - component: {fileID: 1139260264}
-  m_Layer: 11
+  m_Layer: 14
   m_Name: Hydrothermal vent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13727,7 +13724,7 @@ GameObject:
   - component: {fileID: 1157687714}
   - component: {fileID: 1157687713}
   - component: {fileID: 1157687716}
-  m_Layer: 12
+  m_Layer: 16
   m_Name: fog2_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14196,7 +14193,7 @@ GameObject:
   - component: {fileID: 1283820260}
   - component: {fileID: 1283820259}
   - component: {fileID: 1283820258}
-  m_Layer: 12
+  m_Layer: 16
   m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14562,7 +14559,7 @@ GameObject:
   - component: {fileID: 1480753809}
   - component: {fileID: 1480753808}
   - component: {fileID: 1480753807}
-  m_Layer: 11
+  m_Layer: 14
   m_Name: Choral Spike
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14917,17 +14914,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a1f5dd710e0e41c4ea3fbad66bc9efee, type: 3}
---- !u!114 &1491790219 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5067281982600294254, guid: a1f5dd710e0e41c4ea3fbad66bc9efee, type: 3}
-  m_PrefabInstance: {fileID: 1491790218}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cca9e2d644debcf4ba81c0b314dcfd80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.StatBar
 --- !u!224 &1491790220 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1686952069388820168, guid: a1f5dd710e0e41c4ea3fbad66bc9efee, type: 3}
@@ -14943,28 +14929,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3244102322806336925, guid: a1f5dd710e0e41c4ea3fbad66bc9efee, type: 3}
   m_PrefabInstance: {fileID: 1491790218}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1491790223 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7895509822091062188, guid: a1f5dd710e0e41c4ea3fbad66bc9efee, type: 3}
-  m_PrefabInstance: {fileID: 1491790218}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cca9e2d644debcf4ba81c0b314dcfd80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::StatBar
---- !u!114 &1491790224 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1614027725093702409, guid: a1f5dd710e0e41c4ea3fbad66bc9efee, type: 3}
-  m_PrefabInstance: {fileID: 1491790218}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cca9e2d644debcf4ba81c0b314dcfd80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.StatBar
 --- !u!1001 &1528264186
 PrefabInstance:
   m_ObjectHideFlags: 0
