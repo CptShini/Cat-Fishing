@@ -21,6 +21,8 @@ public class CatchingMinigame : MonoBehaviour
     [SerializeField] private Image fishImage;
     private float contestThreshold = 5; // The value that contest must be to catch a fish succesfully
     private float fishAngle;
+
+    public readonly UnityEvent<bool> OnEnded = new();
     
     void Awake()
     {
@@ -56,11 +58,13 @@ public class CatchingMinigame : MonoBehaviour
             {
                 Destroy(movement.gameObject);
                 DivingController.Instance.SetPlayerState(PlayerState.SWIM);
+                OnEnded.Invoke(true);
             }
             else // Cat cannot win, if their inventory is full
             {
                 DivingController.Instance.SetPlayerState(PlayerState.STUN);
                 movement.Lose(DivingController.Instance.gameObject.transform.position);
+                OnEnded.Invoke(false);
             }
             minigameCanvas.SetActive(false);
 
@@ -70,6 +74,7 @@ public class CatchingMinigame : MonoBehaviour
             DivingController.Instance.SetPlayerState(PlayerState.STUN);
             movement.Lose(DivingController.Instance.gameObject.transform.position);
             minigameCanvas.SetActive(false);
+            OnEnded.Invoke(false);
         }
     }
     

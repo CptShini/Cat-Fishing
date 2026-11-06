@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 namespace Assets.Scripts.Diving.Cat
@@ -18,13 +19,14 @@ namespace Assets.Scripts.Diving.Cat
 
         public float curPounceCooldown;
 
+
+
         private void Start()
         {
             _rb = gameObject.GetComponent<Rigidbody2D>();
             staminaBar.SetMaxValue(DivingPlayerStats.Instance.maxStamina);
             staminaBar.SetMinValue(5); // Idk, ask Andreas
             damaged = gameObject.GetComponent<DamagedScript>();
-            Debug.Log(damaged.didAwake);
             damaged.OnDamaged.AddListener(CancelPounce);
         }
 
