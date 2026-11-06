@@ -8,6 +8,8 @@ namespace Assets.Scripts.Helpers
     public class SceneTransition : MonoBehaviour
     {
         public static SceneTransition Instance { get; private set; }
+        
+        public bool Transitioning { get; private set; }
 
         [SerializeField] private float fadeTime = 3f;
     
@@ -35,6 +37,7 @@ namespace Assets.Scripts.Helpers
 
         private IEnumerator LoadSceneWithFade(int buildIndex)
         {
+            Transitioning = true;
             MusicPlayer.Instance.StopTrack(fadeTime);
             fadeAnim.SetBool("Loaded", false); // TODO: shouldn't be done with strings :/
             fadeAnim.Play("FadeIn");
@@ -44,6 +47,7 @@ namespace Assets.Scripts.Helpers
             SceneManager.LoadScene(buildIndex);
             fadeAnim.SetBool("Loaded", true);
             MusicPlayer.Instance.PlayTrack(buildIndex, fadeTime);
+            Transitioning = false;
         }
 
         private void FadeOut()

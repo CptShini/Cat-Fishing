@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Assets.Scripts.Fishies.Visuals
@@ -5,8 +6,11 @@ namespace Assets.Scripts.Fishies.Visuals
     [ExecuteInEditMode]
     public class FishSpriteRotator : MonoBehaviour
     {
-        private bool _regularRotation = true;
-        
+        private bool _regularRotation;
+
+        private void Start() => 
+            _regularRotation = transform.parent.right.x < 0;
+
         private void Update()
         {
             Vector3 localScale = transform.localScale;

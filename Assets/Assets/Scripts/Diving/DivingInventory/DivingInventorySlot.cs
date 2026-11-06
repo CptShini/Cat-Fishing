@@ -18,7 +18,7 @@ namespace Assets.Scripts.Diving.DivingInventory
             _button = gameObject.GetComponent<Button>();
             _button.onClick.AddListener(delegate { DivingInventory.Instance.Drag(this); });
         
-            text.text = $"{Mathf.RoundToInt(_collectible.Weight)} kg";
+            text.text = $"{_collectible.Weight:F1} kg";
         }
 
         public void Setup(Collectible collectible)
