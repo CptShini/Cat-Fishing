@@ -24,7 +24,11 @@ namespace Assets.Scripts.Helpers
             FadeOut();
         }
 
-        private void Start() => MusicPlayer.Instance.PlayTrack(0, fadeTime);
+        private void Start() => 
+            MusicPlayer.Instance.PlayTrack(
+                SceneManager.GetActiveScene().buildIndex, 
+                fadeTime
+            );
 
         public void LoadScene(int buildIndex) => 
             StartCoroutine(LoadSceneWithFade(buildIndex));

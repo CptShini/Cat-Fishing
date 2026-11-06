@@ -32,14 +32,6 @@ namespace Assets.Scripts.Aquarium.FishTank
             PauseController.SetPause(false);
         }
 
-        private void Update()
-        {
-            if (IsOpen && Keyboard.current.escapeKey.wasPressedThisFrame)
-            {
-                Close();
-            }
-        }
-
         public void Open(FishTank tank)
         {
             currentTank = tank;
