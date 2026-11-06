@@ -61,7 +61,7 @@ public class SwimScript : MonoBehaviour
     private void Swim(Vector2 direction)
     {
         Vector2 targetVelocity = direction.normalized * swimSpeed;
-        if (!stealth)
+        if (!stealth && swimSpeed != 0)
         {
             OnSwim.Invoke(direction, 250);
         }

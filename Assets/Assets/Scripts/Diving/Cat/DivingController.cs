@@ -122,7 +122,6 @@ public class DivingController : MonoBehaviour
         {
             return;
         }
-        defaultCollider.enabled = true;
         SetPlayerState(PlayerState.SWIM);
     }
     
@@ -146,7 +145,6 @@ public class DivingController : MonoBehaviour
             }
             case PlayerState.STUN:
                 {
-                    defaultCollider.enabled = false;
                     Stunned();
                     break;
                 }
