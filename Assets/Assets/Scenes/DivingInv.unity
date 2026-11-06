@@ -3676,7 +3676,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b297c2d255110a644b137d134425f69d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MinimapCameraFollow
-  target: {fileID: 2033680100}
+  target: {fileID: 907717792}
 --- !u!114 &1199019200
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10528,11 +10528,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
---- !u!4 &2033680100 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6619945467753677165, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
-  m_PrefabInstance: {fileID: 2012719187}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2035162231
 GameObject:
   m_ObjectHideFlags: 0
