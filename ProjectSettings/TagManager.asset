@@ -18,10 +18,13 @@ TagManager:
   - Obstacle
   - Presence
   - FakeFish
-  - 
   - AquariumObstacle
   - Interactable
   - PlacementBlocker
+  - Hazard
+  - 
+  - 
+  - 
   - 
   - 
   - 

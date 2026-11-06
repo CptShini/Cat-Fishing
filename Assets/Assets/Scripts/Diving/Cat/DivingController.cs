@@ -3,6 +3,7 @@ using Assets.Scripts.Fish;
 using Assets.Scripts.Fish.Movement;
 using Assets.Scripts.PlayerState;
 using UnityEngine;
+using UnityEngine.Events;
 using static UnityEngine.InputSystem.InputAction;
 
 
@@ -19,11 +20,12 @@ public class DivingController : MonoBehaviour
 
     public PlayerState state;
     private PounceScript _pounce;
-    private FishCatCommunicator curFish;
     private float curStunTimer = 0;
 
     private Rigidbody2D playerBody;
     private Vector2 velocityVector;
+
+    public readonly UnityEvent<PlayerState> OnStateChanged = new();
 
     void Awake()
     {
@@ -55,7 +57,7 @@ public class DivingController : MonoBehaviour
         }
     }
 
-    public void OnStealth(CallbackContext  input)
+    private void OnStealth(CallbackContext  input)
     {
         if (input.performed) // Did the player press?
         {
@@ -90,6 +92,7 @@ public class DivingController : MonoBehaviour
     public void SetPlayerState(PlayerState state)
     {
         this.state = state;
+        OnStateChanged.Invoke(state);
 
         switch (state)
         {
@@ -140,8 +143,6 @@ public class DivingController : MonoBehaviour
         CatchingMinigame.Instance.Init(fish, movement);
         SetPlayerState(PlayerState.GRAB);
     }
-
-
     public void OnToggle(CallbackContext  input)
     {
         if(state == PlayerState.GRAB)
