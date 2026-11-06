@@ -31,7 +31,7 @@ public class PlacementController : MonoBehaviour
         if (Mouse.current == null)
             return;
 
-        if (selectedItem == null || ghostObject == null)
+        if (selectedItem == null)
         {
             if (Mouse.current.leftButton.wasPressedThisFrame)
             {
@@ -63,15 +63,34 @@ public class PlacementController : MonoBehaviour
     {
         CancelPlacement();
 
-        if (itemSO == null || itemSO.prefab == null)
+        if (itemSO == null)
+            return;
+
+        selectedItem = itemSO;
+
+        // FLOOR TILE
+        if (itemSO.itemType == ItemType.FloorTile)
         {
-            Debug.LogWarning("Item or prefab is null!");
+            if (itemSO.floorTile == null)
+            {
+                Debug.LogWarning("Floor Tile is missing!");
+                CancelPlacement();
+                return;
+            }
+
+            currentSize = itemSO.floorSize;
             return;
         }
 
-        selectedItem = itemSO;
-        currentSize = itemSO.size;
+        // FURNITURE
+        if (itemSO.prefab == null)
+        {
+            Debug.LogWarning("Furniture prefab is missing!");
+            CancelPlacement();
+            return;
+        }
 
+        currentSize = itemSO.size;
         ghostObject = Instantiate(itemSO.prefab);
         FurnitureVisual visual = ghostObject.GetComponent<FurnitureVisual>();
         visual.SetSprite(itemSO.itemIcon);
@@ -84,8 +103,6 @@ public class PlacementController : MonoBehaviour
         FurnitureSortingUtility.ApplySorting(ghostObject, selectedItem);
 
         SetGhostColor(validColor);
-
-        Debug.Log("Selected item: " + itemSO.itemName);
     }
 
     private void TryPickUpFurniture()
@@ -128,21 +145,23 @@ public class PlacementController : MonoBehaviour
     private void UpdateGhostPosition()
     {
         Vector2 mousePosition = Mouse.current.position.ReadValue();
-
         float distanceToCamera = -mainCamera.transform.position.z;
-
         Vector3 screenPosition = new Vector3(mousePosition.x, mousePosition.y, distanceToCamera);
-
         Vector3 worldPosition = mainCamera.ScreenToWorldPoint(screenPosition);
-
         currentCell = roomGrid.WorldToCell(worldPosition);
 
+        // FLOOR TILE
+        if (selectedItem.itemType == ItemType.FloorTile)
+        {
+            canPlace = roomGrid.CanExpandRoom(currentCell, currentSize);
+            gridVisuals.ShowFootprint(currentCell, currentSize, canPlace);
+            return;
+        }
+
+        // FURNITURE
         ghostObject.transform.position = roomGrid.GetPlacementPosition(currentCell, currentSize);
-
         canPlace = roomGrid.CanPlace(currentCell, currentSize, selectedItem.blocksPlacement);
-
         SetGhostColor(canPlace ? validColor : invalidColor);
-        
         gridVisuals.ShowFootprint(currentCell, currentSize, canPlace);
     }
 
@@ -151,6 +170,20 @@ public class PlacementController : MonoBehaviour
         if (!canPlace)
             return;
 
+        // FLOOR TILE
+        if (selectedItem.itemType == ItemType.FloorTile)
+        {
+            bool placed = roomGrid.ExpandRoom(currentCell, currentSize, selectedItem.floorTile);
+
+            if (!placed)
+                return;
+
+            inventory.RemoveItem(selectedItem);
+            CancelPlacement();
+            return;
+        }
+
+        // FURNITURE
         GameObject placedObject = Instantiate(selectedItem.prefab, ghostObject.transform.position, Quaternion.identity, placedFurnitureRoot);
 
         FurnitureVisual visual = placedObject.GetComponent<FurnitureVisual>();

@@ -87,4 +87,72 @@ public class RoomGrid : MonoBehaviour
             }
         }
     }
+
+    public bool CanExpandRoom(Vector3Int origin, Vector2Int size)
+    {
+        if (placeableArea == null)
+            return false;
+
+        for (int x = 0; x < size.x; x++)
+        {
+            for (int y = 0; y < size.y; y++)
+            {
+                Vector3Int cell = origin + new Vector3Int(x, y, 0);
+
+                if (placeableArea.HasTile(cell))
+                    return false;
+
+                if (occupiedCells.Contains(cell))
+                    return false;
+
+                if (IsCellBlocked(cell))
+                    return false;
+            }
+        }
+
+        return HasAdjacentFloor(origin, size);
+    }
+
+    // area must be adjacent to existing floor tiles
+    private bool HasAdjacentFloor(Vector3Int origin, Vector2Int size)
+    {
+        // upper and lower edge
+        for (int x = 0; x < size.x; x++)
+        {
+            Vector3Int bottom = origin + new Vector3Int(x, -1, 0);
+            Vector3Int top = origin + new Vector3Int(x, size.y, 0);
+
+            if (placeableArea.HasTile(bottom) || placeableArea.HasTile(top))
+                return true;
+        }
+
+        // left and right edge
+        for (int y = 0; y < size.y; y++)
+        {
+            Vector3Int left = origin + new Vector3Int(-1, y, 0);
+            Vector3Int right = origin + new Vector3Int(size.x, y, 0);
+
+            if (placeableArea.HasTile(left) || placeableArea.HasTile(right))
+                return true;
+        }
+
+        return false;
+    }
+
+    public bool ExpandRoom(Vector3Int origin, Vector2Int size, TileBase floorTile)
+    {
+        if (floorTile == null || !CanExpandRoom(origin, size))
+            return false;
+
+        for (int x = 0; x < size.x; x++)
+        {
+            for (int y = 0; y < size.y; y++)
+            {
+                Vector3Int cell = origin + new Vector3Int(x, y, 0);
+                placeableArea.SetTile(cell, floorTile);
+            }
+        }
+
+        return true;
+    }
 }
