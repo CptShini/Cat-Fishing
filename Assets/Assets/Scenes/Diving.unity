@@ -4304,7 +4304,7 @@ MonoBehaviour:
   slotPrefab: {fileID: 8719399219098157219, guid: 0703ffa65894d4d4793c6c5d2e64d08e, type: 3}
   panel: {fileID: 1406573523}
   grid: {fileID: 1672064043}
-  weightBar: {fileID: 0}
+  weightBar: {fileID: 1975875026}
 --- !u!1 &1557516222
 GameObject:
   m_ObjectHideFlags: 0
@@ -4849,6 +4849,17 @@ Camera:
   m_CorrespondingSourceObject: {fileID: 4801324841402261902, guid: 00c4c735be6de9441b62ab6463139022, type: 3}
   m_PrefabInstance: {fileID: 1728644421}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1975875026 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6213074359607386840, guid: a1f5dd710e0e41c4ea3fbad66bc9efee, type: 3}
+  m_PrefabInstance: {fileID: 880628907}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08b3d7d2130641aeb925b3db05c1991e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.Bars.WeightBar
 --- !u!1 &1990810912
 GameObject:
   m_ObjectHideFlags: 0
