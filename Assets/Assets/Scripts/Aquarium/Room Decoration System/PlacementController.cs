@@ -153,6 +153,7 @@ public class PlacementController : MonoBehaviour
         // FLOOR TILE
         if (selectedItem.itemType == ItemType.FloorTile)
         {
+            currentCell = roomGrid.SnapFloorOrigin(currentCell);
             canPlace = roomGrid.CanExpandRoom(currentCell, currentSize);
             gridVisuals.ShowFootprint(currentCell, currentSize, canPlace);
             return;

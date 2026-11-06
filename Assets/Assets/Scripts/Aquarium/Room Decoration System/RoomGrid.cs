@@ -155,4 +155,13 @@ public class RoomGrid : MonoBehaviour
 
         return true;
     }
+
+    // snaps the origin of a floor tile placement to a 3x3 grid
+    public Vector3Int SnapFloorOrigin(Vector3Int cell)
+    {
+        int x = Mathf.FloorToInt(cell.x / 3f) * 3;
+        int y = Mathf.FloorToInt(cell.y / 3f) * 3;
+
+        return new Vector3Int(x, y, cell.z);
+    }
 }
