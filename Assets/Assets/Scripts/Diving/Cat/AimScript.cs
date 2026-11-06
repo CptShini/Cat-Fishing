@@ -10,8 +10,12 @@ public class AimScript : MonoBehaviour
 
     public readonly UnityEvent<Vector2, float> OnAiming = new();
 
-    private void Start() => 
+    private void Start()
+    {
         DivingController.Instance.OnStateChanged.AddListener(AimEnabler);
+        gameObject.SetActive(false);
+        aimPaw.AimPawEnabler(false);
+    }
 
     private void AimEnabler(PlayerState state)
     {
