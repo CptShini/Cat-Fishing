@@ -51,6 +51,15 @@ namespace Assets.Scripts.Diving.DivingInventory
 
             return true;
         }
+
+        public bool CanAdd(Collectible collectible){
+            if (!weightBar.CanAdd(collectible.Weight))
+            {
+                print($"No space in inventory for '{collectible.Name}' ({collectible.Weight:F1}kg)");
+                return false;
+            }
+            return true;
+        }
         
         public void Remove(Collectible collectible)
         {

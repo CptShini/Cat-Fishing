@@ -1,3 +1,4 @@
+using Assets.Scripts.Diving.DivingInventory;
 using Assets.Scripts.Fishies;
 using Assets.Scripts.Fishies.Domain;
 using Assets.Scripts.Fishies.Movement;
@@ -25,6 +26,14 @@ public class CatchScript : MonoBehaviour
         
         Fish fish = col.gameObject.GetComponent<FishController>().Fish;
         FishCaughtMovement movement = col.gameObject.GetComponent<FishCaughtMovement>();
+
+        FishCollectible fishCol = new(fish);
+        if (!DivingInventory.Instance.CanAdd(fishCol))
+        {
+            DivingController.Instance.SetPlayerState(PlayerState.STUN);
+            return;
+        }
+        
 
         col.gameObject.GetComponent<FishController>().Catch();
         CatchingMinigame.Instance.Init(fish, movement);

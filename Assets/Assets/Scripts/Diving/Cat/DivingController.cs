@@ -26,10 +26,7 @@ public class DivingController : MonoBehaviour
 
     [SerializeField] private Rigidbody2D playerBody;
     [SerializeField] private GameObject graphics;
-    private Vector2 velocityVector;
-
     public readonly UnityEvent<PlayerState> OnStateChanged = new();
-
 
     void Awake()
     {

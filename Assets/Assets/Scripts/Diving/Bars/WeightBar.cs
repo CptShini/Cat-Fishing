@@ -10,5 +10,12 @@
             CurrentValue += weight;
             return true;
         }
+        public bool CanAdd(float weight)
+        {
+            bool tooHeavy = CurrentValue + weight > _maxValue;
+            if (tooHeavy) return false;
+            
+            return true;
+        }
     }
 }
