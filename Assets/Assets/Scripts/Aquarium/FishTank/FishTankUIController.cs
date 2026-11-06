@@ -1,7 +1,6 @@
 using Assets.Scripts.Fishies.Domain;
 using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Assets.Scripts.Aquarium.FishTank
 {
