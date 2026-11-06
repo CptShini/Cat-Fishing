@@ -27,6 +27,7 @@ public class SwimScript : MonoBehaviour
         friction = DivingPlayerStats.Instance.friction;
         acceleration = DivingPlayerStats.Instance.acceleration;
         DivingController.Instance.OnStateChanged.AddListener(HandlePlayerStateChanged);
+        HandlePlayerStateChanged(DivingController.Instance.state);
         _pb = gameObject.GetComponent<Rigidbody2D>();
     }
 
