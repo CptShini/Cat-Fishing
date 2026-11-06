@@ -31,5 +31,8 @@ namespace Assets.Scripts.Fishies
             visuals.Init(fish.Species.Icon, Fish.RelativeWeight);
             _movement.Init(fish.Species.Speed);
         }
+
+        public void Grab() => _movement.enabled = false;
+        public void Release() => _movement.enabled = true;
     }
 }
