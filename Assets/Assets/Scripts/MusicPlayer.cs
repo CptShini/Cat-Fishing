@@ -30,7 +30,7 @@ namespace Assets.Scripts
 
         public void PlayTrack(int index, float fadeTime)
         {
-            if (_playing) return;
+            if (_playing || index >= music.Length) return;
             
             _playing = true;
             _player.clip = music[index];

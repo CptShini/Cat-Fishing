@@ -41,5 +41,21 @@ namespace Assets.Scripts.Aquarium.FishTank
             
             return true;
         }
+        
+        public void Clear()
+        {
+            foreach (GameObject fishObject in _fishes.Values)
+            {
+                Destroy(fishObject);
+            }
+            
+            _fishes.Clear();
+        }
+
+        public bool OutsideBounds(Vector2 pos) =>
+            pos.x < spawnPosRangeX.Min ||
+            pos.x > spawnPosRangeX.Max ||
+            pos.y < spawnPosRangeY.Min ||
+            pos.y > spawnPosRangeY.Max;
     }
 }
