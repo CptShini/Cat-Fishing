@@ -18,8 +18,12 @@ TagManager:
   - Obstacle
   - Presence
   - FakeFish
-  - 
-  - 
+  - AquariumObstacle
+  - Interactable
+  - PlacementBlocker
+  - Hazard
+  - Ignore
+  - Fog
   - 
   - 
   - 
@@ -42,6 +46,24 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 148949283
+    locked: 0
+  - name: Ground
+    uniqueID: 829537207
+    locked: 0
+  - name: FloorDecor
+    uniqueID: 196994331
+    locked: 0
+  - name: World
+    uniqueID: 3032973709
+    locked: 0
+  - name: AboveWorld
+    uniqueID: 775516703
+    locked: 0
+  - name: GridOverlay
+    uniqueID: 2970146887
     locked: 0
   m_RenderingLayers:
   - Default

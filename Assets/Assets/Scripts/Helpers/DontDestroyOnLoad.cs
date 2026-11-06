@@ -4,7 +4,10 @@ namespace Assets.Scripts.Helpers
 {
     public class DontDestroyOnLoad : MonoBehaviour
     {
-        private void Awake() => 
+        private void Awake()
+        {
+            transform.SetParent(null);
             DontDestroyOnLoad(gameObject);
+        }
     }
 }

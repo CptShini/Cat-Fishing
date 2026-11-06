@@ -1,3 +1,4 @@
+using Assets.Scripts.Diving.Bars;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,6 +9,7 @@ namespace Assets.Scripts.Diving.Cat
         [SerializeField] private Camera mainCamera;
         [SerializeField] private StatBar staminaBar;
     
+        private DamagedScript damaged;
         public float curPounceStamina; // currrent player stamina, and current stamina for pounce
     
         private float pounceDuration; // Tracker for when to stop pounceing. Can change based on 
@@ -17,11 +19,15 @@ namespace Assets.Scripts.Diving.Cat
 
         public float curPounceCooldown;
 
+
+
         private void Start()
         {
             _rb = gameObject.GetComponent<Rigidbody2D>();
             staminaBar.SetMaxValue(DivingPlayerStats.Instance.maxStamina);
             staminaBar.SetMinValue(5); // Idk, ask Andreas
+            damaged = gameObject.GetComponent<DamagedScript>();
+            damaged.OnDamaged.AddListener(CancelPounce);
         }
 
         public void ChargeUpPounce()
@@ -51,6 +57,11 @@ namespace Assets.Scripts.Diving.Cat
             _rb.linearVelocity = new Vector3(targetVelocity.x, targetVelocity.y, 0); // instantaneous max speed
         }
 
+        private void CancelPounce()
+        {
+            pounceDuration = float.MinValue;
+        }
+
         // Update is called once per frame
         private void Update()
         {
@@ -65,13 +76,14 @@ namespace Assets.Scripts.Diving.Cat
             {
                 case PlayerState.PlayerState.POUNCE:
                 {
-                    Pounce();
-                    pounceDuration -= Time.deltaTime;
-
-                    if (pounceDuration >= 0) return;
-
-                    curPounceCooldown = DivingPlayerStats.Instance.pounceCooldown;
-                    DivingController.Instance.SetPlayerState(PlayerState.PlayerState.SWIM);
+                    if (pounceDuration >= 0){
+                        Pounce();
+                        pounceDuration -= Time.deltaTime;
+                    }
+                    else{
+                        curPounceCooldown = DivingPlayerStats.Instance.pounceCooldown;
+                        DivingController.Instance.SetPlayerState(PlayerState.PlayerState.SWIM);
+                    }
                     break;
                 }
                 case PlayerState.PlayerState.SWIM:

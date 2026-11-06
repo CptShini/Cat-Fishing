@@ -1,4 +1,4 @@
-using Assets.Scripts.Fish;
+using Assets.Scripts.Fishies.Domain;
 using UnityEngine;
 
 public class FishCollectionUIController : MonoBehaviour
@@ -13,7 +13,7 @@ public class FishCollectionUIController : MonoBehaviour
         FishCollectionManager manager = FishCollectionManager.Instance;
 
         fishCollection = manager;
-        fishCollection.OnCollectionChanged += Refresh;
+        fishCollection.CollectionChanged.AddListener(Refresh);
 
         Refresh();
     }
@@ -28,7 +28,7 @@ public class FishCollectionUIController : MonoBehaviour
                 Destroy(child.gameObject);
         }
 
-        foreach (Fish fish in fishCollection.CollectedFish)
+        foreach (Fish fish in fishCollection.CollectedFish.Values)
         {
             if (fish == null)
                 continue;
@@ -43,6 +43,6 @@ public class FishCollectionUIController : MonoBehaviour
     private void OnDestroy()
     {
         if (fishCollection != null)
-            fishCollection.OnCollectionChanged -= Refresh;
+            fishCollection.CollectionChanged.RemoveListener(Refresh);
     }
 }

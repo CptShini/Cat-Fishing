@@ -35,6 +35,7 @@ public class DivingPlayerStats : MonoBehaviour
 
     [Header("Other")]
     public float stunDuration = 2; // The amount of time in seconds player will be stunned
+    public float carryingCapacity = 25f;
     
     private void Awake()
     {

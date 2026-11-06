@@ -1,4 +1,4 @@
-using Assets.Scripts.Fish;
+using Assets.Scripts.Fishies.Domain;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -30,9 +30,9 @@ public class FishInventorySlot : MonoBehaviour, IBeginDragHandler, IDragHandler,
         if (fish == null) return;
 
         Fish = fish;
-        fishIcon.sprite = fish.sprite;
-        fishName.text = fish.fishName;
-        fishIcon.enabled = fish.sprite != null;
+        fishIcon.sprite = fish.Species.Icon;
+        fishName.text = fish.Species.Name;
+        fishIcon.enabled = fish.Species.Icon != null;
     }
 
 

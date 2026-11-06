@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using Assets.Scripts.Diving.DivingInventory;
 using UnityEngine;
 
 namespace Assets.Scripts.Helpers
@@ -15,8 +17,9 @@ namespace Assets.Scripts.Helpers
             {
                 if (DivingController.Instance.state == PlayerState.PlayerState.GRAB)
                     return;
-            
-                FishCollectionManager.Instance.TransferFishCollectibles(DivingInventory.Instance.GetCollectibleofType<FishCollectible>());
+
+                List<FishCollectible> fishCollectibles = DivingInventory.Instance.GetCollectiblesOfType<FishCollectible>();
+                FishCollectionManager.Instance.AddCollectibles(fishCollectibles);
             }
         
             SceneTransition.Instance.LoadScene(targetSceneIndex);
