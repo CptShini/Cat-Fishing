@@ -247,7 +247,7 @@ GameObject:
   - component: {fileID: 5595691730511454377}
   m_Layer: 6
   m_Name: DivingCat
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -486,6 +486,7 @@ MonoBehaviour:
   stealthPresence: 1
   pouncePresence: 4
   stunDuration: 2
+  carryingCapacity: 25
 --- !u!114 &5595691730511454377
 MonoBehaviour:
   m_ObjectHideFlags: 0

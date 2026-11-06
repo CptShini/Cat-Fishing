@@ -1,81 +1,80 @@
 using System.Collections.Generic;
 using System.Linq;
-using Assets.Scripts.Diving;
+using Assets.Scripts.Diving.Bars;
 using UnityEngine;
 
-public class DivingInventory : MonoBehaviour
+namespace Assets.Scripts.Diving.DivingInventory
 {
-    [SerializeField] private DivingInventorySlot slotPrefab;
-    [SerializeField] public GameObject panel;
-    [SerializeField] private Transform grid;
-    [SerializeField] private StatBar weightBar;
-
-    public static DivingInventory Instance { get; private set; }
-    public List<Collectible> collectibles;
-
-    public float maxWeight;
-    public bool isEnabled;
-    private float curWeight;
-
-    private void Awake()
+    public class DivingInventory : MonoBehaviour
     {
-        collectibles = new();
-        weightBar.SetMaxValue(maxWeight, curWeight);
+        public static DivingInventory Instance { get; private set; }
         
-        if (Instance != null && Instance != this) 
-            Destroy(gameObject);
-        else
-            Instance = this;
-    }
+        public bool IsEnabled { get; private set; }
+        
+        private List<Collectible> _collectibles;
+        
+        [SerializeField] private DivingInventorySlot slotPrefab;
+        [SerializeField] public GameObject panel;
+        [SerializeField] private Transform grid;
+        [SerializeField] private WeightBar weightBar;
 
-    public bool Add(Collectible collectible)
-    {
-        if (IsFull(collectible.weight))
+        private void Awake()
         {
-            print("INVENTORY IS FULL");
-            return false;
+            if (Instance != null && Instance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            Instance = this;
+        }
+
+        private void Start()
+        {
+            _collectibles = new();
+            weightBar.SetMaxValue(DivingPlayerStats.Instance.carryingCapacity, 0f);
         }
         
-        collectibles.Add(collectible);
+        public List<T> GetCollectiblesOfType<T>() where T : Collectible => 
+            _collectibles.OfType<T>().ToList();
+
+        public bool Add(Collectible collectible)
+        {
+            if (!weightBar.TryAdd(collectible.Weight))
+            {
+                print($"No space in inventory for '{collectible.Name}' ({collectible.Weight:F1}kg)");
+                return false;
+            }
+
+            _collectibles.Add(collectible);
+            CreateSlot(collectible);
+
+            return true;
+        }
         
-        SetWeight(collectible.weight);
-        CreateSlot(collectible);
+        public void Remove(Collectible collectible)
+        {
+            _collectibles.Remove(collectible);
+            weightBar.CurrentValue -= collectible.Weight;
+        }
 
-        return true;
+        private void CreateSlot(Collectible collectible)
+        {
+            DivingInventorySlot slot = Instantiate(slotPrefab, grid, false);
+            slot.Setup(collectible);
+        }
+
+        public void Drag(DivingInventorySlot inventorySlot)
+        {
+            Debug.Log("DRAGGING");
+        }
+
+        public void Toggle() => SetEnabled(!IsEnabled);
+        
+        public void SetEnabled(bool enable)
+        {
+            IsEnabled = enable;
+            panel.SetActive(IsEnabled);
+        }
     }
-
-    private void SetWeight(float weight)
-    {
-        curWeight += weight;
-        weightBar.CurrentValue = curWeight;
-    }
-
-    private void CreateSlot(Collectible collectible)
-    {
-        DivingInventorySlot slot = Instantiate(slotPrefab, grid, false);
-        slot.Setup(collectible);
-    }
-
-    public void Drag(DivingInventorySlot inventorySlot)
-    {
-        Debug.Log("DRAGGING");
-    }
-
-    public void Toggle() => SetEnabled(!isEnabled);
-    public void SetEnabled(bool enable)
-    {
-        isEnabled = enable;
-        panel.SetActive(isEnabled);
-    }
-
-    public void Remove(Collectible collectible)
-    {
-        collectibles.Remove(collectible);
-    }
-
-    private bool IsFull(float weightToAdd) => 
-        curWeight + weightToAdd > maxWeight;
-
-    public List<T> GetCollectibleofType<T>() where T : Collectible => 
-        collectibles.OfType<T>().ToList();
 }
