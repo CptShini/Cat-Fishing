@@ -4,6 +4,11 @@ using System.Linq;
 using Assets.Scripts.Data.Domain;
 using UnityEngine;
 
+#if !UNITY_EDITOR
+using System.Security.Cryptography;
+using System.Text;
+#endif
+
 namespace Assets.Scripts.Data.Persistence.DataIO
 {
     public class JsonDataHandler : MonoBehaviour, DataIOHandler
@@ -53,7 +58,7 @@ namespace Assets.Scripts.Data.Persistence.DataIO
                 string dataToLoad = sr.ReadToEnd();
 
                 #if !UNITY_EDITOR
-                EncryptDecrypt(ref dataToLoad);
+                Decrypt(ref dataToLoad);
                 #endif
                 
                 return JsonUtility.FromJson<GameData>(dataToLoad);
@@ -77,7 +82,7 @@ namespace Assets.Scripts.Data.Persistence.DataIO
                 string dataToSave = JsonUtility.ToJson(data, true);
                 
                 #if !UNITY_EDITOR
-                EncryptDecrypt(ref dataToSave);
+                Encrypt(ref dataToSave);
                 #endif
                 
                 using FileStream fs = new(fullPath, FileMode.Create);
@@ -107,17 +112,56 @@ namespace Assets.Scripts.Data.Persistence.DataIO
         }
 
         #if !UNITY_EDITOR
-        private static void EncryptDecrypt(ref string data)
+        private static readonly byte[] Key = SHA256.Create().ComputeHash(Encoding.UTF8.GetBytes("KoiKat"));
+
+        private static void Encrypt(ref string data)
         {
-            const string codeword = "KoiKat";
-            
-            string modifiedData = "";
-            for (int i = 0; i < data.Length; i++)
+            byte[] nonce = new byte[12];
+            using (var rng = RandomNumberGenerator.Create())
             {
-                modifiedData += (char) (data[i] ^ codeword[i % codeword.Length]);
+                rng.GetBytes(nonce);
             }
-            
-            data = modifiedData;
+
+            byte[] plain = Encoding.UTF8.GetBytes(data);
+            byte[] encrypted = new byte[plain.Length];
+            byte[] tag = new byte[16];
+
+            using (var aes = new AesGcm(Key))
+            {
+                aes.Encrypt(nonce, plain, encrypted, tag);
+            }
+
+            byte[] result = new byte[nonce.Length + tag.Length + encrypted.Length];
+
+            Buffer.BlockCopy(nonce, 0, result, 0, 12);
+            Buffer.BlockCopy(tag, 0, result, 12, 16);
+            Buffer.BlockCopy(encrypted, 0, result, 28, encrypted.Length);
+
+            data = Convert.ToBase64String(result);
+        }
+
+        private static void Decrypt(ref string data)
+        {
+            byte[] input = Convert.FromBase64String(data);
+
+            if (input.Length < 28)
+                throw new CryptographicException("Invalid encrypted data.");
+
+            byte[] nonce = new byte[12];
+            byte[] tag = new byte[16];
+            byte[] encrypted = new byte[input.Length - 28];
+            byte[] plain = new byte[encrypted.Length];
+
+            Buffer.BlockCopy(input, 0, nonce, 0, 12);
+            Buffer.BlockCopy(input, 12, tag, 0, 16);
+            Buffer.BlockCopy(input, 28, encrypted, 0, encrypted.Length);
+
+            using (var aes = new AesGcm(Key))
+            {
+                aes.Decrypt(nonce, encrypted, tag, plain);
+            }
+
+            data = Encoding.UTF8.GetString(plain);
         }
         #endif
     }

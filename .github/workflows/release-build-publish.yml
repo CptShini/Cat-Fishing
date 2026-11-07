@@ -83,6 +83,7 @@ jobs:
         with:
           targetPlatform: StandaloneWindows64
           versioning: Tag
+          buildProfile: 'Assets/Settings/Build Profiles/Windows.asset'
 
       - name: Prepare release ZIP
         env:
