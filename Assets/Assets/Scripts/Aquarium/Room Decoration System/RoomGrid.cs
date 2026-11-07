@@ -11,7 +11,20 @@ public class RoomGrid : MonoBehaviour
     [Header("Collision")]
     [SerializeField] private LayerMask placementBlockerMask;
 
+    [Header("Floor Bottom Edge")]
+    [SerializeField] private Transform floorEdgeRoot;
+    [SerializeField] private Sprite bottomEdgeSprite;
+    [SerializeField] private Vector2 bottomEdgeOffset;
+    [SerializeField] private int bottomEdgeSortingOrder = 0;
+
+    private Dictionary<Vector3Int, GameObject> bottomEdges = new();
+
     private HashSet<Vector3Int> occupiedCells = new();
+
+    private void Start()
+    {
+        RefreshBottomEdges();
+    }
 
     public Vector3Int WorldToCell(Vector3 worldPosition)
     {
@@ -153,6 +166,8 @@ public class RoomGrid : MonoBehaviour
             }
         }
 
+        RefreshBottomEdges();
+
         return true;
     }
 
@@ -163,5 +178,69 @@ public class RoomGrid : MonoBehaviour
         int y = Mathf.FloorToInt(cell.y / 3f) * 3;
 
         return new Vector3Int(x, y, cell.z);
+    }
+
+    public void RefreshBottomEdges()
+    {
+        if (placeableArea == null || bottomEdgeSprite == null)
+            return;
+
+        HashSet<Vector3Int> requiredEdges = new HashSet<Vector3Int>();
+
+        BoundsInt bounds = placeableArea.cellBounds;
+
+        // bottom edges
+        foreach (Vector3Int cell in bounds.allPositionsWithin)
+        {
+            if (!placeableArea.HasTile(cell))
+                continue;
+
+            Vector3Int cellBelow = cell + Vector3Int.down;
+
+            if (!placeableArea.HasTile(cellBelow))
+            {
+                requiredEdges.Add(cell);
+            }
+        }
+
+        // deleting old bottom edge
+        List<Vector3Int> edgesToRemove = new List<Vector3Int>();
+
+        foreach (var edge in bottomEdges)
+        {
+            if (!requiredEdges.Contains(edge.Key))
+            {
+                if (edge.Value != null)
+                    Destroy(edge.Value);
+
+                edgesToRemove.Add(edge.Key);
+            }
+        }
+
+        foreach (Vector3Int cell in edgesToRemove)
+        {
+            bottomEdges.Remove(cell);
+        }
+
+        // creating new bottom edges
+        foreach (Vector3Int cell in requiredEdges)
+        {
+            if (bottomEdges.ContainsKey(cell))
+                continue;
+
+            GameObject edgeObject = new GameObject("FloorBottomEdge");
+
+            edgeObject.transform.SetParent(floorEdgeRoot);
+
+            edgeObject.transform.position = grid.GetCellCenterWorld(cell) + (Vector3)bottomEdgeOffset;
+
+            SpriteRenderer renderer = edgeObject.AddComponent<SpriteRenderer>();
+
+            renderer.sprite = bottomEdgeSprite;
+            renderer.sortingLayerName = "AboveWorld";
+            renderer.sortingOrder = bottomEdgeSortingOrder;
+
+            bottomEdges.Add(cell, edgeObject);
+        }
     }
 }
