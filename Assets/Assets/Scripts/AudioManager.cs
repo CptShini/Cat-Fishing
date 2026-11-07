@@ -9,7 +9,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioSource sfxSource;
     [SerializeField] private AudioSource loopSource;
 
-    [Header("Player")]
+    [Header("Aquarium Cat")]
     [SerializeField] private AudioClip walkSFX;
 
     [Header("Shop")]
@@ -24,9 +24,14 @@ public class AudioManager : MonoBehaviour
     [Header("Doors")]
     [SerializeField] private AudioClip openingDoorSFX;
 
-    [Header("Cat")]
+    [Header("Diving Cat")]
+    [SerializeField] private AudioClip catSwimSFX;
     [SerializeField] private AudioClip stealthSFX;
     [SerializeField] private AudioClip pounceSFX;
+
+
+    [Header("Fish")]
+    [SerializeField] private AudioClip fishSwimSFX;
 
     private void Awake()
     {
@@ -49,28 +54,49 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void PlayWalking()
+    // Play loop audio
+    public void PlayLoop(AudioClip clip)
     {
-        if (walkSFX == null || loopSource == null)
+        if (clip == null || loopSource == null)
             return;
 
-        if (!loopSource.isPlaying)
-        {
-            loopSource.clip = walkSFX;
-            loopSource.loop = true;
-            loopSource.Play();
-        }
+        if (loopSource.clip == clip && loopSource.isPlaying)
+            return;
+
+        loopSource.clip = clip;
+        loopSource.loop = true;
+        loopSource.Play();
     }
 
-    public void StopWalking()
+    public void StopLoop()
     {
         if (loopSource != null && loopSource.isPlaying)
         {
             loopSource.Stop();
-        }                                        
+            loopSource.clip = null;
+        }
     }
 
-    // Shop
+    // Audios
+    public void PlayWalking()
+    {
+        PlayLoop(walkSFX);
+    }
+
+    public void PlayCatSwimming()
+    {
+        PlayLoop(catSwimSFX);
+    }
+    public void PlayFishSwimming()
+    {
+        PlayLoop(fishSwimSFX);
+    }
+    public void StopPlaying()
+    {
+        StopLoop();
+    }
+
+
     public void PlayPurchaseSuccess()
     {
         PlaySFX(purchaseSuccessSFX);
@@ -108,7 +134,7 @@ public class AudioManager : MonoBehaviour
     {
         PlaySFX(pounceSFX);
     }
-    
+
     public void PlayStealth()
     {
         PlaySFX(stealthSFX);

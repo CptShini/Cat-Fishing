@@ -74,6 +74,16 @@ public class SwimScript : MonoBehaviour
             currentAcceleration * Time.deltaTime
         ); 
         _pb.linearVelocity = new Vector3(newVelocity.x, newVelocity.y, 0);
+
+        // Play swimming audio only when actually moving
+        if (!stealth && _pb.linearVelocity.magnitude > 0.1f)
+        {
+            AudioManager.Instance.PlayCatSwimming();
+        }
+        else
+        {
+            AudioManager.Instance.StopPlaying();
+        }
     }
 
     void FixedUpdate()

@@ -20,7 +20,7 @@ public class PlayerMovementAquarium : MonoBehaviour
         {
             rb.linearVelocity = Vector2.zero;
             animator.SetBool("isWalking", false);
-            AudioManager.Instance.StopWalking();
+            AudioManager.Instance.StopPlaying();
             return;
         }
 
@@ -32,7 +32,7 @@ public class PlayerMovementAquarium : MonoBehaviour
         if (isWalking)
             AudioManager.Instance.PlayWalking();
         else
-            AudioManager.Instance.StopWalking();
+            AudioManager.Instance.StopPlaying();
     }
 
     public void Move(InputAction.CallbackContext context)

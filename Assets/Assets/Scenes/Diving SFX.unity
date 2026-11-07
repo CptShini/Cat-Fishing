@@ -9272,12 +9272,14 @@ MonoBehaviour:
   sfxSource: {fileID: 895020244}
   loopSource: {fileID: 895020243}
   walkSFX: {fileID: 8300000, guid: 698c4a689a0b16d41b9453c789f55544, type: 3}
+  swimSFX: {fileID: 0}
   purchaseSuccessSFX: {fileID: 8300000, guid: 468bf5b31e914404394ea1f92a7f6d13, type: 3}
   notEnoughGoldSFX: {fileID: 8300000, guid: 933986ebce455d14691e1ee1b2d2144a, type: 3}
   inventoryFullSFX: {fileID: 8300000, guid: aa63bd7e439bda94aa158cad40b7e1d3, type: 3}
   alreadyPurchasedSFX: {fileID: 8300000, guid: 03352951eee7b5b4aa00f22726919aa4, type: 3}
   buttonClickSFX: {fileID: 8300000, guid: d80f535dc3b7ff249af007eb547a9e9b, type: 3}
   openingDoorSFX: {fileID: 8300000, guid: bb26ca101972cc946bc33a9b39315b9b, type: 3}
+  stealthSFX: {fileID: 8300000, guid: 52c07f83673ac0f43869dcffaa988403, type: 3}
   pounceSFX: {fileID: 8300000, guid: fc343a24cf9784042bafe41396a59efc, type: 3}
 --- !u!82 &895020243
 AudioSource:
