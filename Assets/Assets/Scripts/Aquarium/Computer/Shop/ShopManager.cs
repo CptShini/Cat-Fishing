@@ -3,11 +3,24 @@ using System.Collections.Generic;
 
 public class ShopManager : MonoBehaviour
 {
-    [SerializeField] private ShopSlot[] shopSlots;
+    [Header("Shop Settings")]
+    [SerializeField] private ShopSlot shopSlotPrefab;
+    [SerializeField] private Transform shopContent;
 
+    [Header("Shop Items")]
+    [SerializeField] private List<ShopItems> shopItems = new();
+
+    [Header("Inventory")]
     [SerializeField] private DecorInventoryManager inventoryManager;
 
     private readonly HashSet<ItemSO> purchasedItems = new();
+
+    private readonly List<ShopSlot> spawnedSlots = new();
+
+    private void Start()
+    {
+        PopulateShopItems(shopItems);
+    }
 
     public bool IsPurchased(ItemSO itemSO)
     {
@@ -20,16 +33,25 @@ public class ShopManager : MonoBehaviour
 
     public void PopulateShopItems(List<ShopItems> shopItems)
     {
-        for (int i = 0; i < shopItems.Count && i < shopSlots.Length; i++)
+        // remove any existing slots before populating new ones
+        foreach (ShopSlot slot in spawnedSlots)
         {
-            ShopItems shopItem = shopItems[i];
-            shopSlots[i].Initialize(shopItem.itemSO, shopItem.price);
-            shopSlots[i].gameObject.SetActive(true);
+            if (slot != null)
+                Destroy(slot.gameObject);
         }
+        spawnedSlots.Clear();
 
-        for (int i = shopItems.Count; i < shopSlots.Length; i++)
+        // generate slots based on the number of ShopItems
+        foreach (ShopItems shopItem in shopItems)
         {
-            shopSlots[i].gameObject.SetActive(false);
+            if (shopItem == null || shopItem.itemSO == null)
+                continue;
+
+            ShopSlot newSlot = Instantiate(shopSlotPrefab, shopContent);
+
+            newSlot.Initialize(shopItem.itemSO, shopItem.price, this);
+
+            spawnedSlots.Add(newSlot);
         }
     }
 
@@ -54,7 +76,8 @@ public class ShopManager : MonoBehaviour
                 inventoryManager.gold -= price;
                 inventoryManager.goldText.text = inventoryManager.gold.ToString();
                 inventoryManager.AddItem(itemSO);
-                purchasedItems.Add(itemSO);
+                if (itemSO.itemType == ItemType.Furniture)
+                    purchasedItems.Add(itemSO);
                 RefreshShopSlots();
                 Debug.Log("Purchased: " + itemSO.itemName);
             /*}
@@ -80,7 +103,7 @@ public class ShopManager : MonoBehaviour
 
     private void RefreshShopSlots()
     {
-        foreach (ShopSlot slot in shopSlots)
+        foreach (ShopSlot slot in spawnedSlots)
         {
             if (slot.gameObject.activeSelf)
                 slot.UpdatePurchasedState();
