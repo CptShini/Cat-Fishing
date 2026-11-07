@@ -8,8 +8,6 @@ on:
 permissions:
   contents: read
 
-cache-mode: write
-
 jobs:
   validate-version:
     name: Validate pre-release version label
@@ -67,6 +65,7 @@ jobs:
     name: Build pre-release
     needs: create-tag
     runs-on: ubuntu-latest
+    cache-mode: write
     permissions:
       contents: read
     steps:
@@ -76,14 +75,14 @@ jobs:
           android: true
           dotnet: true
           haskell: true
-          large-packages: true
+          large-packages: false
           docker-images: true
 
       - name: "Checkout ${{ needs.create-tag.outputs.tag }}"
         uses: actions/checkout@v4
         with:
           ref: ${{ needs.create-tag.outputs.tag }}
-          fetch-depth: 0
+          fetch-depth: 1
           lfs: true
 
       - name: Checkout trusted scripts
@@ -125,6 +124,7 @@ jobs:
           path: dist/
           if-no-files-found: error
           retention-days: 14
+          compression-level: 0
 
       - name: Notify Discord about pre-release build
         if: ${{ always() }}

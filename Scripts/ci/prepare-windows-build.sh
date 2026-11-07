@@ -27,8 +27,7 @@ if [[ ! -d "$build_dir/StandaloneWindows64_Data" ]]; then
 fi
 
 rm -rf "$dist_dir"
-mkdir -p "$dist_dir"
-cp -a "$build_dir/." "$dist_dir/"
+mv "$build_dir" "$dist_dir"
 mv "$dist_dir/StandaloneWindows64.exe" "$dist_dir/${app_name}.exe"
 mv "$dist_dir/StandaloneWindows64_Data" "$dist_dir/${app_name}_Data"
 echo "Prepared ${app_name}.exe"

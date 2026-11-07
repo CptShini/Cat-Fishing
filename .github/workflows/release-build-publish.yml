@@ -49,14 +49,14 @@ jobs:
           android: true
           dotnet: true
           haskell: true
-          large-packages: true
+          large-packages: false
           docker-images: true
 
       - name: "Checkout ${{ needs.validate-release.outputs.tag }}"
         uses: actions/checkout@v4
         with:
           ref: ${{ needs.validate-release.outputs.tag }}
-          fetch-depth: 0
+          fetch-depth: 1
           lfs: true
 
       - name: Checkout trusted scripts
@@ -97,6 +97,7 @@ jobs:
           path: release-assets/CatFishing-${{ needs.validate-release.outputs.tag }}-Windows.zip
           if-no-files-found: error
           retention-days: 1
+          compression-level: 0
 
   publish-release:
     name: Publish GitHub release
