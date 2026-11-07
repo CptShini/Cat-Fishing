@@ -9,7 +9,6 @@ public class Computer : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        Debug.Log("INTERACTION");
         ComputerUIController computerUI = FindFirstObjectByType<ComputerUIController>();
         computerUI.Open();
     }
