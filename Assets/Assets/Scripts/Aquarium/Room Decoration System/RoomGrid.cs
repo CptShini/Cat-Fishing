@@ -29,7 +29,7 @@ public class RoomGrid : MonoBehaviour
         RefreshBottomEdges();
 
         // Register existing fixed furniture in the room
-        RoomFixedFurniture[] fixedFurniture = FindObjectsOfType<RoomFixedFurniture>();
+        RoomFixedFurniture[] fixedFurniture = FindObjectsByType<RoomFixedFurniture>(FindObjectsSortMode.None);
 
         foreach (RoomFixedFurniture furniture in fixedFurniture)
         {

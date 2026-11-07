@@ -140,11 +140,8 @@ public class PlacementController : MonoBehaviour
     private void TryPickUpFurniture()
     {
         Vector2 mousePosition = Mouse.current.position.ReadValue();
-
         float distanceToCamera = -mainCamera.transform.position.z;
-
         Vector3 screenPosition = new Vector3(mousePosition.x, mousePosition.y, distanceToCamera);
-
         Vector3 worldPosition = mainCamera.ScreenToWorldPoint(screenPosition);
 
         Collider2D[] hits = Physics2D.OverlapPointAll(worldPosition);
@@ -155,17 +152,7 @@ public class PlacementController : MonoBehaviour
 
             if (furniture != null)
             {
-                if (!inventory.AddItem(furniture.itemSO))
-                    return;
-
-                if (furniture.itemSO.blocksPlacement)
-                {
-                    roomGrid.UnregisterObject(furniture.origin, furniture.currentSize);
-                }
-
-                gridVisuals.UnregisterPlacedFurniture(furniture);
-
-                Destroy(furniture.gameObject);
+                PickUpPlacedFurniture(furniture);
                 return;
             }
 
@@ -176,6 +163,38 @@ public class PlacementController : MonoBehaviour
                 return;
             }
         }
+ 
+        // picking up by checking bounds and not only sprite
+        PlacedFurniture[] allFurniture = FindObjectsByType<PlacedFurniture>(FindObjectsSortMode.None);
+
+        foreach (PlacedFurniture furniture in allFurniture)
+        {
+            Vector3Int origin = furniture.origin;
+
+            Bounds bounds = new Bounds(roomGrid.GetPlacementPosition(origin, furniture.currentSize),
+                new Vector3(furniture.currentSize.x * roomGrid.Grid.cellSize.x, furniture.currentSize.y * roomGrid.Grid.cellSize.y, 0.1f));
+
+            if (bounds.Contains(worldPosition))
+            {
+                PickUpPlacedFurniture(furniture);
+                return;
+            }
+        }
+    }
+
+    private void PickUpPlacedFurniture(PlacedFurniture furniture)
+    {
+        if (!inventory.AddItem(furniture.itemSO))
+            return;
+
+        if (furniture.itemSO.blocksPlacement)
+        {
+            roomGrid.UnregisterObject(furniture.origin, furniture.currentSize);
+        }
+
+        gridVisuals.UnregisterPlacedFurniture(furniture);
+
+        Destroy(furniture.gameObject);
     }
 
     private void UpdateFixedFurniturePosition()
