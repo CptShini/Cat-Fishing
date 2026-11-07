@@ -13,7 +13,7 @@ namespace Assets.Scripts.Helpers
 
         public void Interact()
         {
-            if (SceneTransition.Instance.Transitioning) return;
+            if (GameManager.Instance.Transitioning) return;
             
             if (isDivingScene) // TODO: all of this is stupid
             {
@@ -24,7 +24,7 @@ namespace Assets.Scripts.Helpers
                 FishCollectionManager.Instance.AddCollectibles(fishCollectibles);
             }
         
-            SceneTransition.Instance.LoadScene(targetSceneIndex);
+            GameManager.Instance.ChangeScene(targetSceneIndex);
         }
     }
 }

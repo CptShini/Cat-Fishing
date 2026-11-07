@@ -27,8 +27,6 @@ public class FishCollectionManager : MonoBehaviour, IDataPersistence
         }
 
         Instance = this;
-        transform.parent = null;
-        DontDestroyOnLoad(gameObject);
     }
 
     public void Add(Fish fish)

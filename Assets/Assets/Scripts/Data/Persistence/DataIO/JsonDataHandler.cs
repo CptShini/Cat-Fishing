@@ -49,7 +49,11 @@ namespace Assets.Scripts.Data.Persistence.DataIO
         public GameData Load(string saveName)
         {
             string fullPath = GetSaveFilePath(saveName);
-            if (!File.Exists(fullPath)) return null;
+            if (!File.Exists(fullPath))
+            {
+                Debug.LogError($"Save file \"{saveName}\" does not exist.");
+                return null;
+            }
             
             try
             {

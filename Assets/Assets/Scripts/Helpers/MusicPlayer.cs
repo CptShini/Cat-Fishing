@@ -1,36 +1,21 @@
 using System.Collections;
 using UnityEngine;
 
-namespace Assets.Scripts
+namespace Assets.Scripts.Helpers
 {
     [RequireComponent(typeof(AudioSource))]
     public class MusicPlayer : MonoBehaviour
     {
-        public static MusicPlayer Instance { get; private set; }
-    
         [SerializeField] private AudioClip[] music;
         
         private bool _playing;
         private AudioSource _player;
     
-        private void Awake()
-        {
-            if (Instance != null && Instance != this)
-            {
-                Destroy(gameObject);
-                return;
-            }
-            
-            Instance = this;
-            transform.parent = null;
-            DontDestroyOnLoad(gameObject);
-            
-            _player = GetComponent<AudioSource>();
-        }
+        private void Awake() => _player = GetComponent<AudioSource>();
 
         public void PlayTrack(int index, float fadeTime)
         {
-            if (_playing || index >= music.Length) return;
+            if (_playing || index < 0 || index >= music.Length) return;
             
             _playing = true;
             _player.clip = music[index];
