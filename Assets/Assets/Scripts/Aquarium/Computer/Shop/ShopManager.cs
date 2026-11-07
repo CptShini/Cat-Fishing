@@ -11,6 +11,10 @@ public class ShopManager : MonoBehaviour
 
     public bool IsPurchased(ItemSO itemSO)
     {
+        // you can buy floor tiles multiple times
+        if (itemSO == null || itemSO.itemType == ItemType.FloorTile)
+            return false;
+
         return purchasedItems.Contains(itemSO);
     }
 
@@ -31,7 +35,7 @@ public class ShopManager : MonoBehaviour
 
     public void TryBuyItem(ItemSO itemSO, int price)
     {
-        if (IsPurchased(itemSO))
+        if (itemSO.itemType == ItemType.Furniture && IsPurchased(itemSO))
         {
             Debug.Log("Already purchased: " + itemSO.itemName);
             return;
