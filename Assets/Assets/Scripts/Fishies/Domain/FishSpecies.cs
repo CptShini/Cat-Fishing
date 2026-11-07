@@ -17,9 +17,9 @@ namespace Assets.Scripts.Fishies.Domain
 
         [field: SerializeField]
         public string LatinName { get; private set; } = "Fishus Maximus";
-        
-        [field: SerializeField]
-        public string Biome { get; private set; } = "Biome 1";
+
+        [field: SerializeField, NavMeshAreaMask]
+        public int Biome { get; private set; }
         
         // --- Visuals ---
         

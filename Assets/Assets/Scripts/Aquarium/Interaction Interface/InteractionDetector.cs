@@ -14,15 +14,38 @@ public class InteractionDetector : MonoBehaviour
 
     public void OnInteract(InputAction.CallbackContext context)
     {
+        if (CloseCurrentUI())
+            return;
+
+        interactableInRange?.Interact();
+    }
+
+    public void OnEscape(InputAction.CallbackContext context)
+    {
+        CloseCurrentUI();
+    }
+
+    private bool CloseCurrentUI()
+    {
         if (FishTankUIController.Instance != null && FishTankUIController.Instance.IsOpen)
         {
-            return;
+            FishTankUIController.Instance.Close();
+            return true;
         }
-        
-        if(context.performed)
+
+        if (WorkbenchUIController.Instance != null && WorkbenchUIController.Instance.IsOpen)
         {
-            interactableInRange?.Interact();
+            WorkbenchUIController.Instance.Close();
+            return true;
         }
+
+        if (ComputerUIController.Instance != null && ComputerUIController.Instance.IsOpen)
+        {
+            ComputerUIController.Instance.Close();
+            return true;
+        }
+
+        return false;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

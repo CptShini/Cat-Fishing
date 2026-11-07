@@ -11,10 +11,14 @@ namespace Assets.Scripts.Aquarium.FishTank
     public class FishTank : MonoBehaviour, IInteractable, IDataPersistence
     {
         [SerializeField] private string tankId;
+        [SerializeField] private string tankName;
         [SerializeField] private FishSpeciesDatabase fishSpeciesDatabase;
         
-        public IReadOnlyCollection<Fish> Fish => _fish.Values;
         private Dictionary<Guid, Fish> _fish = new();
+        
+        public string Id => tankId;
+        public string Name => tankName;
+        public IReadOnlyCollection<Fish> Fish => _fish.Values;
 
         public bool CanInteract() => true;
 
