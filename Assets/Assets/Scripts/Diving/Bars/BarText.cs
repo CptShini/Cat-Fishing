@@ -1,7 +1,5 @@
-using System.Threading.Tasks;
 using Assets.Scripts.Diving.Bars;
 using TMPro;
-using UnityEditor.SettingsManagement;
 using UnityEngine;
 
 public class BarText : MonoBehaviour
