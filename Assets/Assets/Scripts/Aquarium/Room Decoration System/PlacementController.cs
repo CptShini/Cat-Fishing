@@ -34,8 +34,24 @@ public class PlacementController : MonoBehaviour
 
     public bool IsPlacingItem => selectedItem != null || selectedFixedFurniture != null;
 
+    private bool isDecorationMode = false;
+
+    public void EnterDecorationMode()
+    {
+        isDecorationMode = true;
+    }
+
+    public void ExitDecorationMode()
+    {
+        isDecorationMode = false;
+        CancelPlacement();
+    }
+
     private void Update()
     {
+        if (!isDecorationMode)
+            return;
+
         if (Mouse.current == null)
             return;
 
@@ -267,6 +283,7 @@ public class PlacementController : MonoBehaviour
 
         FurnitureVisual visual = placedObject.GetComponent<FurnitureVisual>();
         visual.SetSprite(selectedItem.itemIcon);
+        FurnitureSortingUtility.ApplySorting(placedObject, selectedItem);
 
         SetupFurnitureCollider(placedObject, selectedItem);
 

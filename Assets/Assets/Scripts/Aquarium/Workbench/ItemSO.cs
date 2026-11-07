@@ -21,6 +21,10 @@ public class ItemSO : ScriptableObject
     public FurnitureSortingLayer sortingLayer = FurnitureSortingLayer.World;
     public int sortingOrder = 0;
 
+    [Header("Split Rendering")]
+    public bool splitRendering = false;
+    [Range(0f, 1f)] public float splitHeight = 0.5f;
+
     [Header("Floor Placement")]
     public TileBase floorTile;
     public Vector2Int floorSize = new Vector2Int(3, 3);

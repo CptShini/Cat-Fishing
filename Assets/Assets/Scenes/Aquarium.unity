@@ -11869,6 +11869,7 @@ GameObject:
   - component: {fileID: 825155558}
   - component: {fileID: 825155559}
   - component: {fileID: 825155560}
+  - component: {fileID: 825155561}
   m_Layer: 0
   m_Name: Room Decoration System
   m_TagString: Untagged
@@ -11966,6 +11967,18 @@ MonoBehaviour:
   sortingOrder: 0
   zOffset: -0.05
   placedColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+--- !u!114 &825155561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 825155553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa88dc09de33b9b4191d0fc0729013e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!224 &826556046 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7395917379702553603, guid: 1b6010ec7feec9f48ae9a37e0d09a3cd, type: 3}
@@ -12095,8 +12108,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.00011044741, y: -0.38429314}
-  m_Size: {x: 0.27342105, y: 0.27342117}
+  m_Offset: {x: 0.0027849376, y: -0.3401639}
+  m_Size: {x: 0.34295785, y: 0.43121636}
   m_Direction: 0
 --- !u!212 &832454664
 SpriteRenderer:
