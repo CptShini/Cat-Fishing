@@ -23,7 +23,10 @@ namespace Assets.Scripts.Helpers
                 List<FishCollectible> fishCollectibles = DivingInventory.Instance.GetCollectiblesOfType<FishCollectible>();
                 FishCollectionManager.Instance.AddCollectibles(fishCollectibles);
             }
-        
+
+            if (!isDivingScene) // TODO: Yep, fix the above
+                AudioManager.Instance.PlayDoorOpen();
+
             SceneTransition.Instance.LoadScene(targetSceneIndex);
         }
     }
