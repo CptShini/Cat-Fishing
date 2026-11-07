@@ -40,6 +40,8 @@ public class CatchScript : MonoBehaviour
         DivingController.Instance.SetPlayerState(PlayerState.GRAB);
         grabbing = true;
 
+        // Stop swimming
+        AudioManager.Instance.StopPlaying();
     }
 
     private void SetGrabbing(bool won)
