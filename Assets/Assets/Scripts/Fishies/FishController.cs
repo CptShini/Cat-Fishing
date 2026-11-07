@@ -33,6 +33,8 @@ namespace Assets.Scripts.Fishies
 
         public void Init(FishSpecies species)
         {
+            name = species.Name;
+            
             Fish = new(species);
             visuals.Init(species.Icon, Fish.RelativeWeight);
             

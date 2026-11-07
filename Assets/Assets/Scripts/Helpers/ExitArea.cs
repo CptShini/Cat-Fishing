@@ -13,6 +13,8 @@ namespace Assets.Scripts.Helpers
 
         public void Interact()
         {
+            if (SceneTransition.Instance.Transitioning) return;
+            
             if (isDivingScene) // TODO: all of this is stupid
             {
                 if (DivingController.Instance.state == PlayerState.PlayerState.GRAB)

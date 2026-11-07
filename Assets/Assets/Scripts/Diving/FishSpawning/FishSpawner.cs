@@ -30,7 +30,7 @@ namespace Assets.Scripts.Diving.FishSpawning
         private void SpawnRandomFish()
         {
             Transform randomSpawnPoint = spawnPoints.GetRandom();
-            Quaternion randomRotation = Quaternion.Euler(Random.onUnitCircle);
+            Quaternion randomRotation = Quaternion.Euler(0, 0, Random.Range(0, 360));
             GameObject fish = Instantiate(fishPrefab, randomSpawnPoint.position, randomRotation);
             FishController fc = fish.GetComponent<FishController>();
             

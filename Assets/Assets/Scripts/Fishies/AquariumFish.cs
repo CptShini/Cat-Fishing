@@ -22,6 +22,8 @@ namespace Assets.Scripts.Fishies
 
         public void Init(Fish fish)
         {
+            name = fish.Species.Name;
+            
             Fish = fish;
             visuals.Init(fish.Species.Icon, Fish.RelativeWeight);
             _movement.Init(fish.Species.Speed);
