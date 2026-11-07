@@ -21,16 +21,7 @@ jobs:
     name: Validate PR
     runs-on: ubuntu-latest
     permissions: { }
-    
-    if: >-
-      ${{
-        github.base_ref == 'pre-release' ||
-        contains(
-          fromJSON('["opened","synchronize","reopened","edited"]'),
-          github.event.action
-        )
-      }}
-    
+    if: ${{ github.base_ref == 'pre-release' }}
     outputs:
       version_label: ${{ steps.version.outputs.version_label }}
     
