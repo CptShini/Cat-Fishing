@@ -67723,6 +67723,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2208058878816517602, guid: a397eca061feaee4a99f6dd287d0cfe4, type: 3}
+      propertyPath: 'music.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 0d682b1f1dd857a4e8f2b052f2baec87, type: 3}
+    - target: {fileID: 2208058878816517602, guid: a397eca061feaee4a99f6dd287d0cfe4, type: 3}
+      propertyPath: 'music.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: cded4c05695de4643916e6992adf6a26, type: 3}
     - target: {fileID: 4919512496270982136, guid: a397eca061feaee4a99f6dd287d0cfe4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
