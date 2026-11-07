@@ -22,9 +22,24 @@ public class RoomGrid : MonoBehaviour
 
     private HashSet<Vector3Int> occupiedCells = new();
 
+    public Grid Grid => grid;
+
     private void Start()
     {
         RefreshBottomEdges();
+
+        // Register existing fixed furniture in the room
+        RoomFixedFurniture[] fixedFurniture = FindObjectsOfType<RoomFixedFurniture>();
+
+        foreach (RoomFixedFurniture furniture in fixedFurniture)
+        {
+            Vector3Int origin = furniture.GetOrigin(grid);
+
+            if (furniture.blocksPlacement)
+                RegisterObject(origin, furniture.size);
+
+            decorationGridVisuals.RegisterFixedFurniture(furniture, origin);
+        }
     }
 
     public Vector3Int WorldToCell(Vector3 worldPosition)

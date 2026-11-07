@@ -291,6 +291,18 @@ public class DecorationGridVisuals : MonoBehaviour
         line.SetPosition(4, AddZOffset(bottomLeft));
     }
 
+    public void UnregisterFixedFurniture(RoomFixedFurniture furniture)
+    {
+        if (furniture == null)
+            return;
+
+        if (fixedFrames.TryGetValue(furniture, out LineRenderer line))
+        {
+            Destroy(line.gameObject);
+            fixedFrames.Remove(furniture);
+        }
+    }
+
     private void ShowFixedFrames()
     {
         foreach (LineRenderer frame in fixedFrames.Values)

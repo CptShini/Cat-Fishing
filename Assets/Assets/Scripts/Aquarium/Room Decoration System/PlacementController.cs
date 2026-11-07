@@ -12,6 +12,14 @@ public class PlacementController : MonoBehaviour
     [SerializeField] private Camera mainCamera;
     [SerializeField] private DecorationGridVisuals gridVisuals;
 
+    [Header("Fixed Furniture")]
+    private RoomFixedFurniture selectedFixedFurniture;
+    private Vector3 fixedFurnitureOriginalPosition;
+    private Vector3Int fixedFurnitureOriginalOrigin;
+
+    private Collider2D[] fixedFurnitureColliders;
+    private bool[] fixedFurnitureColliderStates;
+
     [Header("Preview Colors")]
     [SerializeField] private Color validColor = new Color(0.3f, 1f, 0.3f, 0.5f);
     [SerializeField] private Color invalidColor = new Color(1f, 0.3f, 0.3f, 0.5f);
@@ -24,13 +32,36 @@ public class PlacementController : MonoBehaviour
 
     private bool canPlace;
 
-    public bool IsPlacingItem => selectedItem != null;
+    public bool IsPlacingItem => selectedItem != null || selectedFixedFurniture != null;
 
     private void Update()
     {
         if (Mouse.current == null)
             return;
 
+        // MOVING FIXED FURNITURE
+        if (selectedFixedFurniture != null)
+        {
+            UpdateFixedFurniturePosition();
+
+            if (Mouse.current.leftButton.wasPressedThisFrame)
+            {
+                if (EventSystem.current != null &&
+                    EventSystem.current.IsPointerOverGameObject())
+                    return;
+
+                TryPlaceFixedFurniture();
+            }
+
+            if (Mouse.current.rightButton.wasPressedThisFrame)
+            {
+                CancelPlacement();
+            }
+
+            return;
+        }
+
+        // NO ITEM SELECTED
         if (selectedItem == null)
         {
             if (Mouse.current.leftButton.wasPressedThisFrame)
@@ -43,6 +74,7 @@ public class PlacementController : MonoBehaviour
             return;
         }
 
+        // NORMAL ITEM PLACEMENT
         UpdateGhostPosition();
 
         if (Mouse.current.leftButton.wasPressedThisFrame)
@@ -121,25 +153,47 @@ public class PlacementController : MonoBehaviour
         {
             PlacedFurniture furniture = hit.GetComponentInParent<PlacedFurniture>();
 
-            if (furniture == null)
-                continue;
-
-            if (!inventory.AddItem(furniture.itemSO))
-                return;
-
-            if (furniture.itemSO.blocksPlacement)
+            if (furniture != null)
             {
-                roomGrid.UnregisterObject(furniture.origin, furniture.currentSize);
+                if (!inventory.AddItem(furniture.itemSO))
+                    return;
+
+                if (furniture.itemSO.blocksPlacement)
+                {
+                    roomGrid.UnregisterObject(furniture.origin, furniture.currentSize);
+                }
+
+                gridVisuals.UnregisterPlacedFurniture(furniture);
+
+                Destroy(furniture.gameObject);
+                return;
             }
 
-            gridVisuals.UnregisterPlacedFurniture(furniture);
-
-            Debug.Log("Picked up furniture: " + furniture.itemSO.itemName);
-
-            Destroy(furniture.gameObject);
-
-            return;
+            RoomFixedFurniture fixedFurniture = hit.GetComponentInParent<RoomFixedFurniture>();
+            if (fixedFurniture != null)
+            {
+                StartMovingFixedFurniture(fixedFurniture);
+                return;
+            }
         }
+    }
+
+    private void UpdateFixedFurniturePosition()
+    {
+        Vector2 mousePosition = Mouse.current.position.ReadValue();
+        float distanceToCamera = -mainCamera.transform.position.z;
+        Vector3 screenPosition = new Vector3(mousePosition.x, mousePosition.y, distanceToCamera);
+        Vector3 worldPosition = mainCamera.ScreenToWorldPoint(screenPosition);
+
+        currentCell = roomGrid.WorldToCell(worldPosition);
+
+        Vector3 placementPosition = roomGrid.GetPlacementPosition(currentCell, currentSize);
+
+        selectedFixedFurniture.transform.position = placementPosition;
+
+        canPlace = roomGrid.CanPlace(currentCell, currentSize, selectedFixedFurniture.blocksPlacement);
+
+        gridVisuals.ShowFootprint(currentCell, currentSize, canPlace);
     }
 
     private void UpdateGhostPosition()
@@ -221,6 +275,44 @@ public class PlacementController : MonoBehaviour
         CancelPlacement();
     }
 
+    private void TryPlaceFixedFurniture()
+    {
+        if (!canPlace)
+            return;
+
+        RoomFixedFurniture furniture = selectedFixedFurniture;
+
+        if (furniture.blocksPlacement)
+        {
+            roomGrid.RegisterObject(currentCell, currentSize);
+        }
+
+        RestoreFixedFurnitureColliders();
+
+        gridVisuals.RegisterFixedFurniture(furniture, currentCell);
+
+        selectedFixedFurniture = null;
+
+        gridVisuals.HideFootprint();
+    }
+
+    private void RestoreFixedFurnitureColliders()
+    {
+        if (fixedFurnitureColliders == null)
+            return;
+
+        for (int i = 0; i < fixedFurnitureColliders.Length; i++)
+        {
+            if (fixedFurnitureColliders[i] != null)
+            {
+                fixedFurnitureColliders[i].enabled = fixedFurnitureColliderStates[i];
+            }
+        }
+
+        fixedFurnitureColliders = null;
+        fixedFurnitureColliderStates = null;
+    }
+
     private void SetGhostColor(Color color)
     {
         if (ghostObject == null)
@@ -234,6 +326,20 @@ public class PlacementController : MonoBehaviour
 
     public void CancelPlacement()
     {
+        if (selectedFixedFurniture != null)
+        {
+            selectedFixedFurniture.transform.position = fixedFurnitureOriginalPosition;
+
+            if (selectedFixedFurniture.blocksPlacement)
+            {
+                roomGrid.RegisterObject(fixedFurnitureOriginalOrigin, selectedFixedFurniture.size);
+            }
+
+            RestoreFixedFurnitureColliders();
+            gridVisuals.RegisterFixedFurniture(selectedFixedFurniture, fixedFurnitureOriginalOrigin);
+            selectedFixedFurniture = null;
+        }
+
         if (ghostObject != null)
         {
             Destroy(ghostObject);
@@ -267,5 +373,37 @@ public class PlacementController : MonoBehaviour
             sprite.GetPhysicsShape(i, points);
             collider.SetPath(i, points);
         }
+    }
+
+    // FIXED FURNITURE
+    private void StartMovingFixedFurniture(RoomFixedFurniture furniture)
+    {
+        selectedFixedFurniture = furniture;
+
+        fixedFurnitureOriginalPosition = furniture.transform.position;
+
+        fixedFurnitureOriginalOrigin = furniture.GetOrigin(roomGrid.Grid);
+
+        currentCell = fixedFurnitureOriginalOrigin;
+        currentSize = furniture.size;
+
+        // unregister the furniture from the grid
+        if (furniture.blocksPlacement)
+        {
+            roomGrid.UnregisterObject(fixedFurnitureOriginalOrigin, currentSize);
+        }
+
+        // disable colliders
+        fixedFurnitureColliders = furniture.GetComponentsInChildren<Collider2D>();
+        fixedFurnitureColliderStates = new bool[fixedFurnitureColliders.Length];
+
+        for (int i = 0; i < fixedFurnitureColliders.Length; i++)
+        {
+            fixedFurnitureColliderStates[i] = fixedFurnitureColliders[i].enabled;
+            fixedFurnitureColliders[i].enabled = false;
+        }
+
+        // delete the furniture from the grid visuals
+        gridVisuals.UnregisterFixedFurniture(furniture);
     }
 }
