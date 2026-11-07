@@ -16,6 +16,10 @@ public class PlacementController : MonoBehaviour
     [SerializeField] private Color validColor = new Color(0.3f, 1f, 0.3f, 0.5f);
     [SerializeField] private Color invalidColor = new Color(1f, 0.3f, 0.3f, 0.5f);
 
+    [Header("Audio Timer CD")]
+    [SerializeField] private float wrongPlacementCooldown = 0.5f;
+    private float nextWrongPlacementSoundTime;
+
     private ItemSO selectedItem;
     private GameObject ghostObject;
 
@@ -150,8 +154,14 @@ public class PlacementController : MonoBehaviour
 
     private void TryPlaceItem()
     {
-        if (!canPlace) {
-            AudioManager.Instance.PlayPlacementWrong();
+        if (!canPlace)
+        {
+            if (Time.time >= nextWrongPlacementSoundTime)
+            {
+                AudioManager.Instance.PlayPlacementWrong();
+                nextWrongPlacementSoundTime = Time.time + wrongPlacementCooldown;
+            }
+
             return;
         }
 
