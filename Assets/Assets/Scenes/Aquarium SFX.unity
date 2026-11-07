@@ -14420,6 +14420,7 @@ MonoBehaviour:
   alreadyPurchasedSFX: {fileID: 8300000, guid: 03352951eee7b5b4aa00f22726919aa4, type: 3}
   buttonClickSFX: {fileID: 8300000, guid: d80f535dc3b7ff249af007eb547a9e9b, type: 3}
   openingDoorSFX: {fileID: 8300000, guid: bb26ca101972cc946bc33a9b39315b9b, type: 3}
+  pounceSFX: {fileID: 8300000, guid: fc343a24cf9784042bafe41396a59efc, type: 3}
 --- !u!82 &674555694
 AudioSource:
   m_ObjectHideFlags: 0

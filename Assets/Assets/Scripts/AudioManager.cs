@@ -24,6 +24,10 @@ public class AudioManager : MonoBehaviour
     [Header("Doors")]
     [SerializeField] private AudioClip openingDoorSFX;
 
+    [Header("Cat")]
+    [SerializeField] private AudioClip stealthSFX;
+    [SerializeField] private AudioClip pounceSFX;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -97,5 +101,17 @@ public class AudioManager : MonoBehaviour
     public void PlayButtonClick()
     {
         PlaySFX(buttonClickSFX);
-    }    
+    }
+
+    // Cat
+    public void PlayPounce()
+    {
+        PlaySFX(pounceSFX);
+    }
+    
+    public void PlayStealth()
+    {
+        PlaySFX(stealthSFX);
+    }
+
 }
