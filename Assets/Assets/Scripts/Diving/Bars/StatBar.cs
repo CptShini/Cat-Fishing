@@ -25,6 +25,8 @@ namespace Assets.Scripts.Diving.Bars
         private float _minValue;
         private protected float _maxValue;
 
+        public float MaxVal => _maxValue;
+
         public void SetMaxValue(float maxVal, float newVal = -1f)
         {
             _maxValue = maxVal;

@@ -25,14 +25,13 @@ namespace Assets.Scripts.Diving.DivingInventory
                 Destroy(gameObject);
                 return;
             }
-
             Instance = this;
+            weightBar.SetMaxValue(DivingPlayerStats.Instance.carryingCapacity, 0f);
         }
 
         private void Start()
         {
             _collectibles = new();
-            weightBar.SetMaxValue(DivingPlayerStats.Instance.carryingCapacity, 0f);
         }
         
         public List<T> GetCollectiblesOfType<T>() where T : Collectible => 
@@ -49,6 +48,15 @@ namespace Assets.Scripts.Diving.DivingInventory
             _collectibles.Add(collectible);
             CreateSlot(collectible);
 
+            return true;
+        }
+
+        public bool CanAdd(Collectible collectible){
+            if (!weightBar.CanAdd(collectible.Weight))
+            {
+                print($"No space in inventory for '{collectible.Name}' ({collectible.Weight:F1}kg)");
+                return false;
+            }
             return true;
         }
         

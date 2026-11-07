@@ -27,6 +27,7 @@ public class SwimScript : MonoBehaviour
         friction = DivingPlayerStats.Instance.friction;
         acceleration = DivingPlayerStats.Instance.acceleration;
         DivingController.Instance.OnStateChanged.AddListener(HandlePlayerStateChanged);
+        HandlePlayerStateChanged(DivingController.Instance.state);
         _pb = gameObject.GetComponent<Rigidbody2D>();
     }
 
@@ -61,7 +62,7 @@ public class SwimScript : MonoBehaviour
     private void Swim(Vector2 direction)
     {
         Vector2 targetVelocity = direction.normalized * swimSpeed;
-        if (!stealth)
+        if (!stealth && swimSpeed != 0)
         {
             OnSwim.Invoke(direction, 250);
         }
