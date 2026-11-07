@@ -18,6 +18,9 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip inventoryFullSFX;
     [SerializeField] private AudioClip alreadyPurchasedSFX;
 
+    [Header("UI")]
+    [SerializeField] private AudioClip buttonClickSFX;
+
     [Header("Doors")]
     [SerializeField] private AudioClip openingDoorSFX;
 
@@ -89,4 +92,10 @@ public class AudioManager : MonoBehaviour
     {
         PlaySFX(openingDoorSFX);
     }
+
+    // UI
+    public void PlayButtonClick()
+    {
+        PlaySFX(buttonClickSFX);
+    }    
 }

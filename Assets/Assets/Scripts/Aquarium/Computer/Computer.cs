@@ -10,6 +10,7 @@ public class Computer : MonoBehaviour, IInteractable
     public void Interact()
     {
         ComputerUIController computerUI = FindFirstObjectByType<ComputerUIController>();
+        AudioManager.Instance.PlayButtonClick();
         computerUI.Open();
     }
 }

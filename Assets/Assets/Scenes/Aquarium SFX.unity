@@ -14418,6 +14418,7 @@ MonoBehaviour:
   notEnoughGoldSFX: {fileID: 8300000, guid: 933986ebce455d14691e1ee1b2d2144a, type: 3}
   inventoryFullSFX: {fileID: 8300000, guid: aa63bd7e439bda94aa158cad40b7e1d3, type: 3}
   alreadyPurchasedSFX: {fileID: 8300000, guid: 03352951eee7b5b4aa00f22726919aa4, type: 3}
+  buttonClickSFX: {fileID: 8300000, guid: d80f535dc3b7ff249af007eb547a9e9b, type: 3}
   openingDoorSFX: {fileID: 8300000, guid: bb26ca101972cc946bc33a9b39315b9b, type: 3}
 --- !u!82 &674555694
 AudioSource:
