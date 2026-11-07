@@ -15,7 +15,6 @@ namespace Assets.Scripts.Data.Persistence
         
         private void Awake()
         {
-            UpdateDataPersistenceObjects();
             _dataIOHandler = GetComponent<DataIOHandler>();
             if (_dataIOHandler == null)
                 throw new MissingComponentException("No data IO handler attached.");
@@ -29,13 +28,10 @@ namespace Assets.Scripts.Data.Persistence
         public void LoadDataToGame() => _dataPersistenceObjects.ForEach(dpo => dpo.LoadData(_gameData));
         public void SaveGameToData() => _dataPersistenceObjects.ForEach(dpo => dpo.SaveData(ref _gameData));
 
-        public void UpdateDataPersistenceObjects()
-        {
-            _dataPersistenceObjects = 
+        public void UpdateDataPersistenceObjects() =>
+            _dataPersistenceObjects =
                 FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None)
                     .OfType<IDataPersistence>()
                     .ToList();
-            print(string.Join('\n', _dataPersistenceObjects));
-        }
     }
 }

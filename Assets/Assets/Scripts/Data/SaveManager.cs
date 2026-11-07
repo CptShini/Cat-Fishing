@@ -43,6 +43,8 @@ namespace Assets.Scripts.Data
             _dataPersistenceManager.SaveToSaveFile(_currentSaveName);
         }
 
+        public void RefreshDPOs() => _dataPersistenceManager.UpdateDataPersistenceObjects();
+
         private void OnApplicationQuit()
         {
             SaveData();

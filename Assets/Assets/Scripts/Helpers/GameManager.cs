@@ -36,6 +36,7 @@ namespace Assets.Scripts.Helpers
 
         private void Start()
         {
+            SceneManager.sceneLoaded += (_, _) => PostLoad();
             musicPlayer.PlayTrack(SceneManager.GetActiveScene().buildIndex,
                 musicFadeInTime
             );
@@ -44,6 +45,8 @@ namespace Assets.Scripts.Helpers
             if (saves.Length > 0) saveManager.Select(saves[0].Name);
             
             saveManager.Load();
+            
+            saveManager.RefreshDPOs();
             saveManager.LoadData();
         }
 
@@ -51,18 +54,34 @@ namespace Assets.Scripts.Helpers
 
         private IEnumerator LoadSceneWithFade(int buildIndex)
         {
+            PreLoad();
+            
+            yield return new WaitForSeconds(sceneTransitionTime);
+            
+            SceneManager.LoadScene(buildIndex);
+        }
+
+        private void PreLoad()
+        {
+            if (Transitioning) return;
+            
             Transitioning = true;
             
             saveManager.SaveData();
-            musicPlayer.StopTrack(sceneTransitionTime);
-            sceneTransition.FadeIn();
-
-            yield return new WaitForSeconds(sceneTransitionTime);
-
-            SceneManager.LoadScene(buildIndex);
             
+            sceneTransition.FadeIn();
+            musicPlayer.StopTrack(sceneTransitionTime);
+        }
+
+        private void PostLoad()
+        {
+            if (!Transitioning) return;
+            
+            int currentScene = SceneManager.GetActiveScene().buildIndex;
+            musicPlayer.PlayTrack(currentScene, musicFadeInTime);
             sceneTransition.FadeOut();
-            musicPlayer.PlayTrack(buildIndex, musicFadeInTime);
+            
+            saveManager.RefreshDPOs();
             saveManager.LoadData();
             
             Transitioning = false;
