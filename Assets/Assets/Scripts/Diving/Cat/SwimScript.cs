@@ -82,7 +82,7 @@ public class SwimScript : MonoBehaviour
         }
         else
         {
-            AudioManager.Instance.StopPlaying();
+            AudioManager.Instance.FadeOutLoop();
         }
     }
 

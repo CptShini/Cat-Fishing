@@ -1,4 +1,5 @@
 
+using System.Collections;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
@@ -72,16 +73,33 @@ public class AudioManager : MonoBehaviour
 
         loopSource.clip = clip;
         loopSource.loop = true;
+        loopSource.volume = 1f;
         loopSource.Play();
     }
 
-    public void StopLoop()
+    public void FadeOutLoop(float fadeDuration = 0.4f)
     {
-        if (loopSource != null && loopSource.isPlaying)
+        if (loopSource == null || !loopSource.isPlaying)
+            return;
+
+        StartCoroutine(FadeOutCoroutine(fadeDuration));
+    }
+
+    private IEnumerator FadeOutCoroutine(float duration)
+    {
+        float startVolume = loopSource.volume;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
         {
-            loopSource.Stop();
-            loopSource.clip = null;
+            elapsed += Time.deltaTime;
+            loopSource.volume = Mathf.Lerp(startVolume, 0f, elapsed / duration);
+            yield return null;
         }
+
+        loopSource.Stop();
+        loopSource.clip = null;
+        loopSource.volume = startVolume;
     }
 
     // Audios
@@ -98,11 +116,6 @@ public class AudioManager : MonoBehaviour
     {
         PlayLoop(fishSwimSFX);
     }
-    public void StopPlaying()
-    {
-        StopLoop();
-    }
-
 
     public void PlayPurchaseSuccess()
     {

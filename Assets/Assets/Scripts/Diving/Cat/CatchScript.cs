@@ -41,7 +41,7 @@ public class CatchScript : MonoBehaviour
         grabbing = true;
 
         // Stop swimming
-        AudioManager.Instance.StopPlaying();
+        AudioManager.Instance.FadeOutLoop();
     }
 
     private void SetGrabbing(bool won)
