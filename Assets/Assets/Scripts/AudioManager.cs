@@ -35,6 +35,9 @@ public class AudioManager : MonoBehaviour
     [Header("Battle")]
     [SerializeField] private AudioClip catchFishSuccessSFX;
 
+    [Header("Hazard")]
+    [SerializeField] private AudioClip hurtSFX;
+
 
 
     private void Awake()
@@ -147,5 +150,10 @@ public class AudioManager : MonoBehaviour
     public void PlayCatchFishSuccess()
     {
         PlaySFX(catchFishSuccessSFX);
+    }
+
+    public void PlayHurt()
+    {
+        PlaySFX(hurtSFX);
     }
 }

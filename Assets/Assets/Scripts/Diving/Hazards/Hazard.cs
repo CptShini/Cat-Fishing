@@ -11,6 +11,7 @@ public class Hazard : MonoBehaviour
         if(other.gameObject.TryGetComponent(out IDamageable damageable))
         {
             damageable.Damaged(damage, -other.GetContact(0).normal * power);
+            AudioManager.Instance.PlayHurt();
         }
     }
 }
