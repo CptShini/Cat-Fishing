@@ -29,9 +29,13 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip stealthSFX;
     [SerializeField] private AudioClip pounceSFX;
 
-
     [Header("Fish")]
     [SerializeField] private AudioClip fishSwimSFX;
+
+    [Header("Battle")]
+    [SerializeField] private AudioClip catchFishSuccessSFX;
+
+
 
     private void Awake()
     {
@@ -140,4 +144,8 @@ public class AudioManager : MonoBehaviour
         PlaySFX(stealthSFX);
     }
 
+    public void PlayCatchFishSuccess()
+    {
+        PlaySFX(catchFishSuccessSFX);
+    }
 }

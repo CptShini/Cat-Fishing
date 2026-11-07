@@ -39,12 +39,13 @@ public class CatchScript : MonoBehaviour
         CatchingMinigame.Instance.Init(fish, movement);
         DivingController.Instance.SetPlayerState(PlayerState.GRAB);
         grabbing = true;
+
     }
 
     private void SetGrabbing(bool won)
     {
+        AudioManager.Instance.PlayCatchFishSuccess();
         grabbing = false;
-        
     }
 
     public void OnGrabbing(CallbackContext input)
