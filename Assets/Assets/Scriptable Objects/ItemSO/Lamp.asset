@@ -14,13 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemSO
   itemName: Lamp
   itemIcon: {fileID: 21300000, guid: 4fbb94dcf13e27142a6b7ef13b738b43, type: 3}
-  itemType: 0
   prefab: {fileID: 3758215890295927942, guid: a5a94c7a89e9dbc46ab244137aea4e8d, type: 3}
   size: {x: 1, y: 1}
   blocksPlacement: 1
   sortingLayer: 1
   sortingOrder: 0
-  splitRendering: 1
-  splitHeight: 0.3
-  floorTile: {fileID: 0}
-  floorSize: {x: 3, y: 3}

@@ -30,8 +30,6 @@ public class WorkbenchUIController : MonoBehaviour
         panel.SetActive(true);
         IsOpen = true;
 
-        placementController.EnterDecorationMode();
-
         PauseController.SetPause(true);
     }
 
@@ -41,8 +39,6 @@ public class WorkbenchUIController : MonoBehaviour
         {
             return;
         }
-
-        placementController.ExitDecorationMode();
 
         gridVisuals.HideGrid();
         roomCameraZoom.ExitDecorationMode();

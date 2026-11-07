@@ -14,9 +14,6 @@ public class InteractionDetector : MonoBehaviour
 
     public void OnInteract(InputAction.CallbackContext context)
     {
-        if (!context.performed)
-            return;
-
         if (CloseCurrentUI())
             return;
 
@@ -25,9 +22,6 @@ public class InteractionDetector : MonoBehaviour
 
     public void OnEscape(InputAction.CallbackContext context)
     {
-        if (!context.performed)
-            return;
-            
         CloseCurrentUI();
     }
 

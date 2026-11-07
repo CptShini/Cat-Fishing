@@ -14,13 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemSO
   itemName: Flower
   itemIcon: {fileID: 21300000, guid: 47ff9ef7d0d669d4da7b1a853f971daf, type: 3}
-  itemType: 0
   prefab: {fileID: 3758215890295927942, guid: a5a94c7a89e9dbc46ab244137aea4e8d, type: 3}
-  size: {x: 1, y: 1}
+  size: {x: 1, y: 2}
   blocksPlacement: 1
   sortingLayer: 1
   sortingOrder: 0
-  splitRendering: 1
-  splitHeight: 0.4
-  floorTile: {fileID: 0}
-  floorSize: {x: 3, y: 3}

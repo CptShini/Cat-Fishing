@@ -9,18 +9,17 @@ public class ShopSlot : MonoBehaviour
     public TMP_Text priceText;
     public Image itemImage;
     public Image SoldIndicator;
-    
-    private ShopManager shopManager;
+
+    [SerializeField] private ShopManager shopManager;
 
     private int price;
 
-    public void Initialize(ItemSO newItemSO, int price, ShopManager shopManager)
+    public void Initialize(ItemSO newItemSO, int price)
     {
         itemSO = newItemSO;
         itemNameText.text = itemSO.itemName;
         itemImage.sprite = itemSO.itemIcon;
         this.price = price;
-        this.shopManager = shopManager;
         priceText.text = price.ToString();
 
         UpdatePurchasedState();

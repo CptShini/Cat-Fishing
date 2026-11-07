@@ -14,13 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemSO
   itemName: Chair
   itemIcon: {fileID: 21300000, guid: 9319481d53a934344bd16be2ff3c1c1f, type: 3}
-  itemType: 0
   prefab: {fileID: 3758215890295927942, guid: a5a94c7a89e9dbc46ab244137aea4e8d, type: 3}
-  size: {x: 2, y: 1}
+  size: {x: 2, y: 2}
   blocksPlacement: 1
   sortingLayer: 1
   sortingOrder: 0
-  splitRendering: 1
-  splitHeight: 0.7
-  floorTile: {fileID: 0}
-  floorSize: {x: 3, y: 3}
