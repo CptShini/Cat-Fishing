@@ -86,6 +86,8 @@ public class PlacementController : MonoBehaviour
         SetGhostColor(validColor);
 
         Debug.Log("Selected item: " + itemSO.itemName);
+
+        AudioManager.Instance.PlayPickUpItem();
     }
 
     private void TryPickUpFurniture()
@@ -148,8 +150,10 @@ public class PlacementController : MonoBehaviour
 
     private void TryPlaceItem()
     {
-        if (!canPlace)
+        if (!canPlace) {
+            AudioManager.Instance.PlayPlacementWrong();
             return;
+        }
 
         GameObject placedObject = Instantiate(selectedItem.prefab, ghostObject.transform.position, Quaternion.identity, placedFurnitureRoot);
 
@@ -178,6 +182,8 @@ public class PlacementController : MonoBehaviour
         inventory.RemoveItem(selectedItem);
 
         Debug.Log("Placed item: " + selectedItem.itemName);
+
+        AudioManager.Instance.PlayPlacementSuccess();
 
         CancelPlacement();
     }

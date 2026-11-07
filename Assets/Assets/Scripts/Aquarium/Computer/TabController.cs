@@ -20,5 +20,6 @@ public class TabController : MonoBehaviour
         }
         pages[tabIndex].SetActive(true);
         tabImages[tabIndex].color = Color.white;
+        AudioManager.Instance.PlayButtonClick();
     }
 }

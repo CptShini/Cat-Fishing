@@ -48,6 +48,8 @@ namespace Assets.Scripts.Aquarium.FishTank
             _dragging = true;
 
             fish.Grab();
+
+            AudioManager.Instance.PlayButtonClick();
         }
 
         private void Drag()

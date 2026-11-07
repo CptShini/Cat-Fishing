@@ -25,6 +25,11 @@ public class AudioManager : MonoBehaviour
     [Header("Doors")]
     [SerializeField] private AudioClip openingDoorSFX;
 
+    [Header("Item Placements")]
+    [SerializeField] private AudioClip placementSuccessSFX;
+    [SerializeField] private AudioClip placementWrongSFX;
+    [SerializeField] private AudioClip pickUpItemSFX;
+
     [Header("Diving Cat")]
     [SerializeField] private AudioClip catSwimSFX;
     [SerializeField] private AudioClip stealthSFX;
@@ -106,15 +111,20 @@ public class AudioManager : MonoBehaviour
         loopSource.volume = startVolume;
     }
 
-    // Audios
+    // Audio Loop
     public void PlayWalking()          { PlayLoop(walkSFX); }
     public void PlayCatSwimming()      { PlayLoop(catSwimSFX); }
     public void PlayFishSwimming()     { PlayLoop(fishSwimSFX); }
+
+    // Audio Single Play
     public void PlayPurchaseSuccess()  { PlaySFX(purchaseSuccessSFX); }
     public void PlayNotEnoughGold()    { PlaySFX(notEnoughGoldSFX); }
     public void PlayInventoryFull()    { PlaySFX(inventoryFullSFX); }
     public void PlayAlreadyPurchased() { PlaySFX(alreadyPurchasedSFX); }
     public void PlayDoorOpen()         { PlaySFX(openingDoorSFX); }
+    public void PlayPlacementSuccess() { PlaySFX(placementSuccessSFX); }
+    public void PlayPlacementWrong()   { PlaySFX(placementWrongSFX); }
+    public void PlayPickUpItem()       { PlaySFX(pickUpItemSFX); }
     public void PlayButtonClick()      { PlaySFX(buttonClickSFX); }
     public void PlayPounce()           { PlaySFX(pounceSFX); }
     public void PlayStealth()          { PlaySFX(stealthSFX); }

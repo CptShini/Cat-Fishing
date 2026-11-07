@@ -9272,15 +9272,19 @@ MonoBehaviour:
   sfxSource: {fileID: 895020244}
   loopSource: {fileID: 895020243}
   walkSFX: {fileID: 8300000, guid: 698c4a689a0b16d41b9453c789f55544, type: 3}
-  swimSFX: {fileID: 0}
   purchaseSuccessSFX: {fileID: 8300000, guid: 468bf5b31e914404394ea1f92a7f6d13, type: 3}
   notEnoughGoldSFX: {fileID: 8300000, guid: 933986ebce455d14691e1ee1b2d2144a, type: 3}
   inventoryFullSFX: {fileID: 8300000, guid: aa63bd7e439bda94aa158cad40b7e1d3, type: 3}
   alreadyPurchasedSFX: {fileID: 8300000, guid: 03352951eee7b5b4aa00f22726919aa4, type: 3}
   buttonClickSFX: {fileID: 8300000, guid: d80f535dc3b7ff249af007eb547a9e9b, type: 3}
   openingDoorSFX: {fileID: 8300000, guid: bb26ca101972cc946bc33a9b39315b9b, type: 3}
+  catSwimSFX: {fileID: 8300000, guid: 0e900d3f05eace74ca4590d8cd4fe5cf, type: 3}
   stealthSFX: {fileID: 8300000, guid: 52c07f83673ac0f43869dcffaa988403, type: 3}
   pounceSFX: {fileID: 8300000, guid: fc343a24cf9784042bafe41396a59efc, type: 3}
+  fishSwimSFX: {fileID: 8300000, guid: 0e77942da3e60cf438567ff3b69a1b1f, type: 3}
+  catchFishSuccessSFX: {fileID: 8300000, guid: e2a30cb23c711dd4bbb3bd5c6fc1603d, type: 3}
+  hurtSFX: {fileID: 8300000, guid: dc3550c0dc4780e4d9e8abef6a6eeca0, type: 3}
+  battleBGM: {fileID: 8300000, guid: 7130b8c8f1ce6a74d8d3841efecc5e81, type: 3}
 --- !u!82 &895020243
 AudioSource:
   m_ObjectHideFlags: 0
