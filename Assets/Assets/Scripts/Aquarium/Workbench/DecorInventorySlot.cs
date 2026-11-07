@@ -13,6 +13,15 @@ public class DecorInventorySlot : MonoBehaviour
 
     public int count = 1;
 
+    public void Setup(ItemSO itemSO, PlacementController controller)
+    {
+        ItemSO = itemSO;
+        placementController = controller;
+        count = 1;
+
+        UpdateUI();
+    }
+
     public void OnSlotClicked()
     {
         if (ItemSO == null)

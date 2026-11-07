@@ -49,24 +49,24 @@ public class ShopManager : MonoBehaviour
 
         if(itemSO != null && inventoryManager.gold >= price)
         {
-            if(HasSpaceForItem(itemSO))
-            {
+            /*if(HasSpaceForItem(itemSO))
+            {*/
                 inventoryManager.gold -= price;
                 inventoryManager.goldText.text = inventoryManager.gold.ToString();
                 inventoryManager.AddItem(itemSO);
                 purchasedItems.Add(itemSO);
                 RefreshShopSlots();
                 Debug.Log("Purchased: " + itemSO.itemName);
-            }
+            /*}
             else
             {
                 Debug.Log("No space in inventory.");
                 return;
-            }
+            }*/
         }
     }
 
-    private bool HasSpaceForItem(ItemSO itemSO)
+    /*private bool HasSpaceForItem(ItemSO itemSO)
     {
         foreach (var slot in inventoryManager.inventorySlots)
         {
@@ -76,7 +76,7 @@ public class ShopManager : MonoBehaviour
                 return true;
         }
         return false;
-    }
+    }*/
 
     private void RefreshShopSlots()
     {
