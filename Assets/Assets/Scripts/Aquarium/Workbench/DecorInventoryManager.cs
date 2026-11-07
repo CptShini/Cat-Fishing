@@ -14,21 +14,39 @@ public class DecorInventoryManager : MonoBehaviour
         foreach (var slot in inventorySlots)
         {
             slot.gameObject.SetActive(slot.ItemSO != null);
+
+            if (slot.ItemSO != null && slot.count <= 0)
+                slot.count = 1;
+
             slot.UpdateUI();
         }
     }
     
     public bool AddItem(ItemSO itemSO)
     {
-        if (itemSO == null)
-            return false;
-
         goldText.text = gold.ToString();
+
+        // if the item is a floor tile, check if it already exists in the inventory and increment the count
+        if (itemSO.itemType == ItemType.FloorTile)
+        {
+            foreach (var slot in inventorySlots)
+            {
+                if (slot.ItemSO == itemSO)
+                {
+                    slot.count++;
+                    slot.UpdateUI();
+                    return true;
+                }
+            }
+        }
+
+        // if the item is not a floor tile, or if it is a floor tile that doesn't exist in the inventory, add it to an empty slot
         foreach (var slot in inventorySlots)
         {
             if (slot.ItemSO == null)
             {
                 slot.ItemSO = itemSO;
+                slot.count = 1;
                 slot.gameObject.SetActive(true);
                 slot.UpdateUI();
                 return true;
@@ -41,21 +59,34 @@ public class DecorInventoryManager : MonoBehaviour
     {
         foreach (var slot in inventorySlots)
         {
-            if (slot.ItemSO == itemSO)
+            if (slot.ItemSO != itemSO)
+                continue;
+
+            // floor tiles
+            if (itemSO.itemType == ItemType.FloorTile)
             {
-                slot.ItemSO = null;
-                slot.gameObject.SetActive(false);
-                slot.UpdateUI();
-                return;
+                slot.count--;
+
+                if (slot.count > 0)
+                {
+                    slot.UpdateUI();
+                    return;
+                }
             }
+
+            // furniture
+            slot.ItemSO = null;
+            slot.count = 1;
+
+            slot.gameObject.SetActive(false);
+            slot.UpdateUI();
+
+            return;
         }
     }
 
     public void OnSlotClicked(ItemSO ItemSO)
     {
-        if (ItemSO == null)
-            return;
-
         placementController.SelectItem(ItemSO);
     }
 }
