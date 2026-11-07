@@ -180,7 +180,12 @@ public class PlacementController : MonoBehaviour
                 return;
 
             inventory.RemoveItem(selectedItem);
-            CancelPlacement();
+
+            // you can place floor tiles until you run out of them
+            if (!inventory.HasItem(selectedItem))
+            {
+                CancelPlacement();
+            }
             return;
         }
 

@@ -89,4 +89,16 @@ public class DecorInventoryManager : MonoBehaviour
     {
         placementController.SelectItem(ItemSO);
     }
+
+    // check if the inventory has a specific item
+    public bool HasItem(ItemSO itemSO)
+    {
+        foreach (var slot in inventorySlots)
+        {
+            if (slot.ItemSO == itemSO && slot.count > 0)
+                return true;
+        }
+
+        return false;
+    }
 }
