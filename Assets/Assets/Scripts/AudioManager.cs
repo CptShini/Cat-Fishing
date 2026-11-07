@@ -39,6 +39,10 @@ public class AudioManager : MonoBehaviour
     [Header("Hazard")]
     [SerializeField] private AudioClip hurtSFX;
 
+    [Header("Music")]
+    [SerializeField] private AudioClip battleBGM;
+
+
 
 
     private void Awake()
@@ -103,70 +107,18 @@ public class AudioManager : MonoBehaviour
     }
 
     // Audios
-    public void PlayWalking()
-    {
-        PlayLoop(walkSFX);
-    }
-
-    public void PlayCatSwimming()
-    {
-        PlayLoop(catSwimSFX);
-    }
-    public void PlayFishSwimming()
-    {
-        PlayLoop(fishSwimSFX);
-    }
-
-    public void PlayPurchaseSuccess()
-    {
-        PlaySFX(purchaseSuccessSFX);
-    }
-
-    public void PlayNotEnoughGold()
-    {
-        PlaySFX(notEnoughGoldSFX);
-    }
-
-    public void PlayInventoryFull()
-    {
-        PlaySFX(inventoryFullSFX);
-    }
-
-    public void PlayAlreadyPurchased()
-    {
-        PlaySFX(alreadyPurchasedSFX);
-    }
-
-    // Doors
-    public void PlayDoorOpen()
-    {
-        PlaySFX(openingDoorSFX);
-    }
-
-    // UI
-    public void PlayButtonClick()
-    {
-        PlaySFX(buttonClickSFX);
-    }
-
-    // Cat
-    public void PlayPounce()
-    {
-        PlaySFX(pounceSFX);
-    }
-
-    public void PlayStealth()
-    {
-        PlaySFX(stealthSFX);
-    }
-
-    public void PlayCatchFishSuccess()
-    {
-        PlaySFX(catchFishSuccessSFX);
-    }
-
-    public void PlayHurt()
-    {
-        PlaySFX(hurtSFX);
-    }
+    public void PlayWalking()          { PlayLoop(walkSFX); }
+    public void PlayCatSwimming()      { PlayLoop(catSwimSFX); }
+    public void PlayFishSwimming()     { PlayLoop(fishSwimSFX); }
+    public void PlayPurchaseSuccess()  { PlaySFX(purchaseSuccessSFX); }
+    public void PlayNotEnoughGold()    { PlaySFX(notEnoughGoldSFX); }
+    public void PlayInventoryFull()    { PlaySFX(inventoryFullSFX); }
+    public void PlayAlreadyPurchased() { PlaySFX(alreadyPurchasedSFX); }
+    public void PlayDoorOpen()         { PlaySFX(openingDoorSFX); }
+    public void PlayButtonClick()      { PlaySFX(buttonClickSFX); }
+    public void PlayPounce()           { PlaySFX(pounceSFX); }
+    public void PlayStealth()          { PlaySFX(stealthSFX); }
+    public void PlayCatchFishSuccess() { PlaySFX(catchFishSuccessSFX); }
+    public void PlayHurt()             { PlaySFX(hurtSFX); }
+    public void PlayBattleBGM()        { PlayLoop(battleBGM); }
 }
