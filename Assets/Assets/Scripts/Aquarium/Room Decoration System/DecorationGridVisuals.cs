@@ -39,13 +39,24 @@ public class DecorationGridVisuals : MonoBehaviour
         HideGrid();
     }
 
+    public void RefreshGrid()
+    {
+        CreateGrid();
+    }
+
     private void CreateGrid()
     {
+        // destroy existing grid root if it exists
+        if (gridRoot != null)
+            Destroy(gridRoot.gameObject);
+
         GameObject root = new GameObject("GridVisualLines");
         root.transform.SetParent(transform, false);
 
         gridRoot = root.transform;
 
+        // get the actual bounds of the room tilemap
+        roomTilemap.CompressBounds();
         BoundsInt bounds = roomTilemap.cellBounds;
 
         // vertical lines
@@ -65,6 +76,7 @@ public class DecorationGridVisuals : MonoBehaviour
 
             CreateLine("HorizontalLine", start, end, gridColor, gridLineWidth, gridRoot);
         }
+        gridRoot.gameObject.SetActive(isGridVisible);
     }
 
     private void CreateFootprint()

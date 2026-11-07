@@ -13301,6 +13301,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RoomGrid
   grid: {fileID: 942905342}
   placeableArea: {fileID: 248715201}
+  decorationGridVisuals: {fileID: 825155560}
   placementBlockerMask:
     serializedVersion: 2
     m_Bits: 8192

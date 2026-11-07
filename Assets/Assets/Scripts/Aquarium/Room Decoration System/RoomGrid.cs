@@ -7,6 +7,7 @@ public class RoomGrid : MonoBehaviour
     [Header("References")]
     [SerializeField] private Grid grid;
     [SerializeField] private Tilemap placeableArea;
+    [SerializeField] private DecorationGridVisuals decorationGridVisuals;
 
     [Header("Collision")]
     [SerializeField] private LayerMask placementBlockerMask;
@@ -167,6 +168,7 @@ public class RoomGrid : MonoBehaviour
         }
 
         RefreshBottomEdges();
+        decorationGridVisuals.RefreshGrid();
 
         return true;
     }
