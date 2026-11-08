@@ -9,18 +9,16 @@ namespace Assets.Scripts.Helpers
         [SerializeField] private Image image;
 
         private static readonly int Loaded = Animator.StringToHash("Loaded");
-        
-        private void Awake() => FadeOut();
-
-        public void FadeIn()
-        {
-            fadeAnim.SetBool(Loaded, false);
-            fadeAnim.Play("FadeIn");
-        }
 
         public void FadeOut()
         {
-            fadeAnim.Play("FadeOut");
+            fadeAnim.SetBool(Loaded, false);
+            fadeAnim.Play("FadeIn"); // Yeah names are wrong, whatever
+        }
+
+        public void FadeIn()
+        {
+            fadeAnim.Play("FadeOut"); // Yeah names are wrong, whatever
             fadeAnim.SetBool(Loaded, true);
         }
     }

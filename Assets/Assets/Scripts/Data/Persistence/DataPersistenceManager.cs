@@ -28,7 +28,7 @@ namespace Assets.Scripts.Data.Persistence
         public void LoadDataToGame() => _dataPersistenceObjects.ForEach(dpo => dpo.LoadData(_gameData));
         public void SaveGameToData() => _dataPersistenceObjects.ForEach(dpo => dpo.SaveData(ref _gameData));
 
-        public void UpdateDataPersistenceObjects() =>
+        public void FindDataPersistenceObjects() =>
             _dataPersistenceObjects =
                 FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None)
                     .OfType<IDataPersistence>()
