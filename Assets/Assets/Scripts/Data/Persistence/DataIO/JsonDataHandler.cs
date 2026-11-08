@@ -5,7 +5,6 @@ using Assets.Scripts.Data.Domain;
 using UnityEngine;
 
 #if !UNITY_EDITOR
-using System.Security.Cryptography;
 using System.Text;
 #endif
 
@@ -22,9 +21,6 @@ namespace Assets.Scripts.Data.Persistence.DataIO
             _saveDir = Path.Combine(_saveDir, "Dev");
             #endif
         }
-
-        private string GetSaveFilePath(string saveName) =>
-            Path.Combine(_saveDir, $"{saveName}.json");
 
         public SaveFile[] GetSaves()
         {
@@ -48,21 +44,21 @@ namespace Assets.Scripts.Data.Persistence.DataIO
 
         public GameData Load(string saveName)
         {
-            string fullPath = GetSaveFilePath(saveName);
-            if (!File.Exists(fullPath))
-            {
-                Debug.LogError($"Save file \"{saveName}\" does not exist.");
-                return null;
-            }
-            
+            string fullPath = string.Empty;
+
             try
             {
-                using FileStream fs = new(fullPath, FileMode.Open);
-                using StreamReader sr = new(fs);
-                string dataToLoad = sr.ReadToEnd();
+                fullPath = GetSaveFilePath(saveName);
+                if (!File.Exists(fullPath))
+                {
+                    Debug.LogError($"Save file \"{saveName}\" does not exist.");
+                    return null;
+                }
+
+                string dataToLoad = File.ReadAllText(fullPath);
 
                 #if !UNITY_EDITOR
-                Decrypt(ref dataToLoad);
+                dataToLoad = Deobfuscate(dataToLoad);
                 #endif
                 
                 return JsonUtility.FromJson<GameData>(dataToLoad);
@@ -76,22 +72,20 @@ namespace Assets.Scripts.Data.Persistence.DataIO
 
         public void Save(GameData data, string saveName)
         {
-            SanitizeFileName(ref saveName);
-            
-            string fullPath = GetSaveFilePath(saveName);
+            string fullPath = string.Empty;
+
             try
             {
+                fullPath = GetSaveFilePath(saveName);
                 CreateSaveDirectoryIfNotPresent();
             
                 string dataToSave = JsonUtility.ToJson(data, true);
                 
                 #if !UNITY_EDITOR
-                Encrypt(ref dataToSave);
+                dataToSave = Obfuscate(dataToSave);
                 #endif
-                
-                using FileStream fs = new(fullPath, FileMode.Create);
-                using StreamWriter sw = new(fs);
-                sw.Write(dataToSave);
+
+                File.WriteAllText(fullPath, dataToSave);
             }
             catch (Exception e)
             {
@@ -101,71 +95,55 @@ namespace Assets.Scripts.Data.Persistence.DataIO
         
         private void CreateSaveDirectoryIfNotPresent()
         {
-            bool saveDirExists = Directory.Exists(_saveDir);
-            if (!saveDirExists) Directory.CreateDirectory(_saveDir);
+            if (!Directory.Exists(_saveDir)) 
+                Directory.CreateDirectory(_saveDir);
         }
-
-        private static void SanitizeFileName(ref string fileName)
+        
+        private string GetSaveFilePath(string saveName)
         {
-            char[] invalidChars = Path.GetInvalidFileNameChars();
-            string newName =
-                string.Join("_", fileName.Split(invalidChars, StringSplitOptions.RemoveEmptyEntries))
-                .TrimEnd('.');
+            string safeName = SanitizeFileName();
+            return Path.Combine(_saveDir, $"{safeName}.json");
             
-            fileName = newName;
+            string SanitizeFileName()
+            {
+                if (string.IsNullOrWhiteSpace(saveName))
+                    throw new ArgumentException("Save name cannot be empty.");
+
+                char[] invalidChars = Path.GetInvalidFileNameChars();
+                string sanitized =
+                    string.Join("_", saveName.Split(invalidChars, StringSplitOptions.RemoveEmptyEntries))
+                        .TrimEnd('.');
+
+                return string.IsNullOrWhiteSpace(sanitized) 
+                    ? throw new ArgumentException("Invalid save name.") 
+                    : sanitized;
+            }
         }
 
         #if !UNITY_EDITOR
-        private static readonly byte[] Key = SHA256.Create().ComputeHash(Encoding.UTF8.GetBytes("KoiKat"));
+        private static readonly byte[] Key = 
+            Encoding.UTF8.GetBytes("KoiKat_Save_Obfuscation_v1");
 
-        private static void Encrypt(ref string data)
+        private static string Obfuscate(string data)
         {
-            byte[] nonce = new byte[12];
-            using (var rng = RandomNumberGenerator.Create())
+            byte[] bytes = Encoding.UTF8.GetBytes(data);
+            for (int i = 0; i < bytes.Length; i++)
             {
-                rng.GetBytes(nonce);
+                bytes[i] ^= Key[i % Key.Length];
             }
 
-            byte[] plain = Encoding.UTF8.GetBytes(data);
-            byte[] encrypted = new byte[plain.Length];
-            byte[] tag = new byte[16];
-
-            using (var aes = new AesGcm(Key))
-            {
-                aes.Encrypt(nonce, plain, encrypted, tag);
-            }
-
-            byte[] result = new byte[nonce.Length + tag.Length + encrypted.Length];
-
-            Buffer.BlockCopy(nonce, 0, result, 0, 12);
-            Buffer.BlockCopy(tag, 0, result, 12, 16);
-            Buffer.BlockCopy(encrypted, 0, result, 28, encrypted.Length);
-
-            data = Convert.ToBase64String(result);
+            return Convert.ToBase64String(bytes);
         }
 
-        private static void Decrypt(ref string data)
+        private static string Deobfuscate(string data)
         {
-            byte[] input = Convert.FromBase64String(data);
-
-            if (input.Length < 28)
-                throw new CryptographicException("Invalid encrypted data.");
-
-            byte[] nonce = new byte[12];
-            byte[] tag = new byte[16];
-            byte[] encrypted = new byte[input.Length - 28];
-            byte[] plain = new byte[encrypted.Length];
-
-            Buffer.BlockCopy(input, 0, nonce, 0, 12);
-            Buffer.BlockCopy(input, 12, tag, 0, 16);
-            Buffer.BlockCopy(input, 28, encrypted, 0, encrypted.Length);
-
-            using (var aes = new AesGcm(Key))
+            byte[] bytes = Convert.FromBase64String(data);
+            for (int i = 0; i < bytes.Length; i++)
             {
-                aes.Decrypt(nonce, encrypted, tag, plain);
+                bytes[i] ^= Key[i % Key.Length];
             }
 
-            data = Encoding.UTF8.GetString(plain);
+            return Encoding.UTF8.GetString(bytes);
         }
         #endif
     }
