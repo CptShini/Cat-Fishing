@@ -44,4 +44,33 @@ public class DivingPlayerStats : MonoBehaviour
         else
             Instance = this;
     }
+
+    public void ApplyStats(PlayerStatsManager stats)
+    {
+        // to apply stats from aquarium scene
+        speed = stats.speed;
+        stealthSpeed = stats.stealthSpeed;
+        pounceSpeed = stats.pounceSpeed;
+
+        acceleration = stats.acceleration;
+        friction = stats.friction;
+
+        maxStamina = stats.maxStamina;
+        maxPounceStamina = stats.maxPounceStamina;
+        staminaRegen = stats.staminaRegen;
+
+        strength = stats.strength;
+
+        chargeUpSpeed = stats.chargeUpSpeed;
+        pounceCooldown = stats.pounceCooldown;
+
+        oxygenCapacity = stats.oxygenCapacity;
+
+        defaultPresence = stats.defaultPresence;
+        stealthPresence = stats.stealthPresence;
+        pouncePresence = stats.pouncePresence;
+
+        stunDuration = stats.stunDuration;
+        carryingCapacity = stats.carryingCapacity;
+    }
 }
