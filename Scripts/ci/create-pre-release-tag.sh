@@ -12,8 +12,10 @@ case "${VERSION_LABEL:-}" in
   *) fail "Unsupported or missing VERSION_LABEL: ${VERSION_LABEL:-<empty>}" ;;
 esac
 
-git merge-base --is-ancestor "$TARGET_SHA" refs/remotes/origin/pre-release \
-  || fail "Merged commit $TARGET_SHA is not on pre-release."
+pre_release_sha="$(git rev-parse refs/remotes/origin/pre-release)"
+
+[[ "$TARGET_SHA" == "$pre_release_sha" ]] ||
+  fail "Merged commit $TARGET_SHA is not the current pre-release tip ($pre_release_sha)."
 
 matching_tag=""
 while IFS= read -r candidate; do
