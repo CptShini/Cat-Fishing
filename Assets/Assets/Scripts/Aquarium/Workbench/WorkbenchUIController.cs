@@ -2,13 +2,21 @@ using UnityEngine;
 
 public class WorkbenchUIController : MonoBehaviour
 {
+    public static WorkbenchUIController Instance { get; private set; }
+
     public GameObject panel;
     public RoomCameraZoom roomCameraZoom;
+    
     [SerializeField] private DecorationGridVisuals gridVisuals;
     [SerializeField] private PlacementController placementController;
 
     public bool IsOpen { get; private set; }
     
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     void Start()
     {
         panel.SetActive(false);
@@ -22,6 +30,8 @@ public class WorkbenchUIController : MonoBehaviour
         panel.SetActive(true);
         IsOpen = true;
 
+        placementController.EnterDecorationMode();
+
         PauseController.SetPause(true);
     }
 
@@ -31,6 +41,8 @@ public class WorkbenchUIController : MonoBehaviour
         {
             return;
         }
+
+        placementController.ExitDecorationMode();
 
         gridVisuals.HideGrid();
         roomCameraZoom.ExitDecorationMode();

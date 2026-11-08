@@ -4,9 +4,6 @@ set -euo pipefail
 fail() { echo "::error::$*" >&2; exit 1; }
 semver='^v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$'
 
-git fetch --force --tags origin
-git fetch --no-tags origin '+refs/heads/pre-release:refs/remotes/origin/pre-release'
-
 tag_for() {
   local tags
   mapfile -t tags < <(git tag --points-at "$1" --list 'v*' | grep -E "$semver" || true)
@@ -15,6 +12,7 @@ tag_for() {
 }
 
 if [[ "${GITHUB_EVENT_NAME:-push}" == pull_request_target ]]; then
+  [[ "${PR_HEAD_REPOSITORY:-}" == "${TARGET_REPOSITORY:-}" ]] || fail 'PRs must originate from this repository.'
   [[ "${BASE_REF:-}" == main && "${PR_HEAD_REF:-}" == pre-release ]] || fail 'Only pre-release can be promoted to main.'
   [[ "$PR_HEAD_SHA" == "$(git rev-parse refs/remotes/origin/pre-release)" ]] || fail 'Update the PR to the latest pre-release commit.'
   tag="$(tag_for "$PR_HEAD_SHA")"

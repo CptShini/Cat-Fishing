@@ -7,6 +7,8 @@ namespace Assets.Scripts.Fishies.Perception
     {
         public readonly UnityEvent<Vector2> OnSeePlayer = new();
 
+        [SerializeField] private LayerMask playerLayer;
+
         private protected override string TriggerTag() => "Player";
 
         private protected override bool IsOffset() => true;
@@ -33,7 +35,7 @@ namespace Assets.Scripts.Fishies.Perception
         private protected override bool PerceptionCheck(Collider2D other)
         {
             Vector2 direction = other.transform.position - transform.position;
-            var hit = Physics2D.Raycast(transform.position, direction);
+            var hit = Physics2D.Raycast(transform.position, direction, Mathf.Infinity, playerLayer);
             return hit.transform.CompareTag(_triggerTag);
         }
     }

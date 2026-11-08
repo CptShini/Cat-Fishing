@@ -42,21 +42,8 @@ namespace Assets.Scripts.Fishies.Navigation
             CurrentDirection = Random.onUnitCircle;
         }
 
-        public void Init(string biome)
-        {
-            areaMask = NavMesh.GetAreaFromName(biome);
-            if (areaMask != -1)
-            {
-                areaMask = 1 << areaMask;
-                return;
-            }
+        public void Init(int biome) => areaMask = biome;
 
-            if (biome.Equals("All"))
-                return;
-            
-            Debug.LogWarning($"Biome string \"{biome}\" not found!");
-        }
-        
         private void Update()
         {
             Navigate();

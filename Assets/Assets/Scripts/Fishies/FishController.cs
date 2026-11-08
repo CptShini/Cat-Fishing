@@ -10,8 +10,6 @@ namespace Assets.Scripts.Fishies
     [RequireComponent(typeof(FishCaughtMovement))]
     public class FishController : MonoBehaviour
     {
-        [SerializeField] private FishSpecies speciesFuck;
-        
         public Fish Fish { get; private set; }
         
         private FishNormalMovement _normalMovement;
@@ -21,7 +19,7 @@ namespace Assets.Scripts.Fishies
         [SerializeField] private FishSightHandler sightHandler;
         [SerializeField] private FishPerceptionHandler perceptionHandler;
 
-        private void Start()
+        private void Awake()
         {
             sightHandler.OnSeePlayer.AddListener(Flee);
             perceptionHandler.OnDetectPlayer.AddListener(Flee);
@@ -31,13 +29,12 @@ namespace Assets.Scripts.Fishies
             
             _normalMovement.MovementDone.AddListener(Wander);
             _caughtMovement.OnLose.AddListener(Flee);
-            
-            Init(speciesFuck); // Temporary until it's done by spawner
-            Wander();
         }
 
         public void Init(FishSpecies species)
         {
+            name = species.Name;
+            
             Fish = new(species);
             visuals.Init(species.Icon, Fish.RelativeWeight);
             
@@ -46,6 +43,8 @@ namespace Assets.Scripts.Fishies
             
             sightHandler.Init(species.Reaction, species.Sight);
             perceptionHandler.Init(species.Reaction, species.Perception);
+            
+            Wander();
         }
 
         private void Wander()

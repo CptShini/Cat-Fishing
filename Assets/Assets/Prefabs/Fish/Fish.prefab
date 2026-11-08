@@ -293,7 +293,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8c268f5061947818c25daf7049be8c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Fish.FishController
-  speciesFuck: {fileID: 0}
   visuals: {fileID: 9206399475325001486}
   sightHandler: {fileID: 2980226103878150663}
   perceptionHandler: {fileID: 3102036810922805875}
@@ -445,10 +444,10 @@ CircleCollider2D:
     m_Bits: 4294967295
   m_ContactCaptureLayers:
     serializedVersion: 2
-    m_Bits: 192
+    m_Bits: 64
   m_CallbackLayers:
     serializedVersion: 2
-    m_Bits: 192
+    m_Bits: 64
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
@@ -467,6 +466,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e685f0ba126548019dbed3bffe0e884a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Fish.Perception.FishSightHandler
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 65
 --- !u!1 &7583249011573028227
 GameObject:
   m_ObjectHideFlags: 0
@@ -585,10 +587,10 @@ CircleCollider2D:
     m_Bits: 4294967295
   m_ContactCaptureLayers:
     serializedVersion: 2
-    m_Bits: 4
+    m_Bits: 64
   m_CallbackLayers:
     serializedVersion: 2
-    m_Bits: 4
+    m_Bits: 64
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0

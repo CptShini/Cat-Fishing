@@ -7,7 +7,6 @@ public class AimPawScript : MonoBehaviour
     [SerializeField] private List<GameObject> paws;
     private Animator animator;
     public int activePaws = 0;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         animator = gameObject.GetComponent<Animator>();
@@ -31,7 +30,6 @@ public class AimPawScript : MonoBehaviour
             animator.SetBool("exit", true);
         } 
     }
-    // Update is called once per frame
     void Update()
     {
         for (int i = 0; i < activePaws; i++)
