@@ -29,13 +29,14 @@ namespace Assets.Scripts.Diving.DivingInventory
                 Destroy(gameObject);
                 return;
             }
+            
             Instance = this;
-            weightBar.SetMaxValue(DivingPlayerStats.Instance.carryingCapacity, 0f);
         }
 
         private void Start()
         {
             _collectibles = new();
+            weightBar.SetMaxValue(DivingPlayerStats.Instance.carryingCapacity, 0f);
         }
 
         public bool Add(Collectible collectible)
