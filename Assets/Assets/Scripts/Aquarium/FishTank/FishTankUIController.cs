@@ -36,13 +36,13 @@ namespace Assets.Scripts.Aquarium.FishTank
 
             PauseController.SetPause(true);
 
-            if (_prevTank && tank.Id == _prevTank.Id)
-                return;
+            if (!_prevTank || tank.Id != _prevTank.Id)
+            {
+                tankNameText.text = tank.Name;
+                spawner.Clear();
+            }
             
-            tankNameText.text = tank.Name;
-            
-            spawner.Clear();
-            foreach (Fish fish in _currentTank.Fish)
+            foreach (Fish fish in tank.Fish)
             {
                 spawner.SpawnFish(fish);
             }
