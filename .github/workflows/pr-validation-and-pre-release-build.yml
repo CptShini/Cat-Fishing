@@ -27,13 +27,6 @@ jobs:
     
     steps:
       - name: Validate source branch
-        if: >-
-          ${{
-            contains(
-              fromJSON('["opened","synchronize","reopened","edited"]'),
-              github.event.action
-            )
-          }}
         shell: bash
         env:
           BASE_REF: ${{ github.base_ref }}
@@ -181,6 +174,7 @@ jobs:
           targetPlatform: StandaloneWindows64
           versioning: Tag
           buildProfile: 'Assets/Settings/Build Profiles/Windows.asset'
+          chownFilesTo: runner
 
       - name: Prepare Windows build
         env:
