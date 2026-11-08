@@ -129,7 +129,7 @@ public class CatchingMinigame : MonoBehaviour
             catAndFish.anchoredPosition, 
             targetPos * 150, 
             Time.deltaTime * 500);
-        Debug.Log($"TARGET: {targetPos.ToString()}, CURRENT {catAndFish.anchoredPosition.ToString()}");
+            
         catAndFish.anchoredPosition = newPos;
     }
 
