@@ -108,7 +108,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Helpers.SceneManager
   sceneTransition: {fileID: 3976980917610927689}
-  saveManager: {fileID: 8694526852096338837}
   musicPlayer: {fileID: 4855906050645497207}
   sceneTransitionTime: 2
   musicFadeInTime: 2
@@ -327,7 +326,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3647262653372051858, guid: cdf9a3422f8bcc541a6980eaa7ae03f3, type: 3}
       propertyPath: m_Name
-      value: SaveManager
+      value: Save Manager
       objectReference: {fileID: 0}
     - target: {fileID: 3647262653372051858, guid: cdf9a3422f8bcc541a6980eaa7ae03f3, type: 3}
       propertyPath: m_IsActive
@@ -383,14 +382,3 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5047968358637387691, guid: cdf9a3422f8bcc541a6980eaa7ae03f3, type: 3}
   m_PrefabInstance: {fileID: 7105843020919959696}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8694526852096338837 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1888183138594806533, guid: cdf9a3422f8bcc541a6980eaa7ae03f3, type: 3}
-  m_PrefabInstance: {fileID: 7105843020919959696}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77b12478868f4e379e6c1317d9222aba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Data.SaveManager

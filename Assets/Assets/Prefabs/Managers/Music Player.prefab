@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.MusicPlayer
   music:
+  - {fileID: 8300000, guid: fc3bd10aa616f2f42859867b522e51ff, type: 3}
   - {fileID: 8300000, guid: b4cb5ed538ac247438f32cd57f45491a, type: 3}
   - {fileID: 8300000, guid: 8ddea10ea811f1e46a7c5eabbe491ad5, type: 3}
 --- !u!82 &1393914595477936152

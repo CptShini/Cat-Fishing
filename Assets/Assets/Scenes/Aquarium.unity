@@ -1534,17 +1534,9 @@ PrefabInstance:
       propertyPath: rawImage
       value: 
       objectReference: {fileID: 1154083801}
-    - target: {fileID: 6755517853734678291, guid: 1be1e419626099d4eb5d43e864fc6d0e, type: 3}
-      propertyPath: m_NavMeshData
-      value: 
-      objectReference: {fileID: 23800000, guid: 6ffe27c79a426e94cb3fb727bab3bae4, type: 2}
     - target: {fileID: 8169978185349357716, guid: 1be1e419626099d4eb5d43e864fc6d0e, type: 3}
       propertyPath: m_Name
       value: Fish Tank View
-      objectReference: {fileID: 0}
-    - target: {fileID: 8169978185349357716, guid: 1be1e419626099d4eb5d43e864fc6d0e, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8890437678621761349, guid: 1be1e419626099d4eb5d43e864fc6d0e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1846,7 +1838,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9f745797e5d1ab40b1500a3a04cb503, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ExitArea
-  targetSceneIndex: 1
+  targetSceneIndex: 2
   onExit:
     m_PersistentCalls:
       m_Calls: []
@@ -13660,18 +13652,6 @@ PrefabInstance:
     - target: {fileID: 3488762553112977489, guid: e74e4427df1273a40b40b650782f5436, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4855906050645497207, guid: e74e4427df1273a40b40b650782f5436, type: 3}
-      propertyPath: 'music.Array.data[0]'
-      value: 
-      objectReference: {fileID: 8300000, guid: b4cb5ed538ac247438f32cd57f45491a, type: 3}
-    - target: {fileID: 4855906050645497207, guid: e74e4427df1273a40b40b650782f5436, type: 3}
-      propertyPath: 'music.Array.data[1]'
-      value: 
-      objectReference: {fileID: 8300000, guid: 8ddea10ea811f1e46a7c5eabbe491ad5, type: 3}
-    - target: {fileID: 5764792908508381442, guid: e74e4427df1273a40b40b650782f5436, type: 3}
-      propertyPath: m_Name
-      value: Save Manager
       objectReference: {fileID: 0}
     - target: {fileID: 9157978287733485072, guid: e74e4427df1273a40b40b650782f5436, type: 3}
       propertyPath: m_Name

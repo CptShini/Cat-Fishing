@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using Assets.Scripts.Data;
-using Assets.Scripts.Data.Persistence;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,19 +8,18 @@ namespace Assets.Scripts.Helpers
     public class GameManager : MonoBehaviour
     {
         public static GameManager Instance { get; private set; }
-        
-        public bool Transitioning { get; private set; }
+
+        public bool Transitioning { get; private set; } = true;
         
         [Header("References")]
         [SerializeField] private SceneTransition sceneTransition;
-        [SerializeField] private SaveManager saveManager;
         [SerializeField] private MusicPlayer musicPlayer;
 
         [Space]
         
         [Header("Settings")]
-        [SerializeField] private float sceneTransitionTime = 3f;
-        [SerializeField] private float musicFadeInTime = 3f;
+        [SerializeField] private float sceneTransitionTime = 2f;
+        [SerializeField] private float musicFadeInTime = 2f;
 
         private void Awake()
         {
@@ -32,57 +30,50 @@ namespace Assets.Scripts.Helpers
             }
             
             Instance = this;
+            SceneManager.sceneLoaded += OnSceneLoaded;
         }
-
-        private void Start()
+        
+        private void OnDestroy()
         {
-            SceneManager.sceneLoaded += (_, _) => PostLoad();
-            musicPlayer.PlayTrack(SceneManager.GetActiveScene().buildIndex,
-                musicFadeInTime
-            );
-            
-            SaveFile[] saves = saveManager.GetSaves();
-            if (saves.Length > 0) saveManager.Select(saves[0].Name);
-            
-            saveManager.Load();
-            
-            saveManager.RefreshDPOs();
-            saveManager.LoadData();
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+
+            if (Instance == this)
+                Instance = null;
         }
 
         public void ChangeScene(int buildIndex) => StartCoroutine(LoadSceneWithFade(buildIndex));
 
         private IEnumerator LoadSceneWithFade(int buildIndex)
         {
-            PreLoad();
+            FadeOut();
             
             yield return new WaitForSeconds(sceneTransitionTime);
             
             SceneManager.LoadScene(buildIndex);
         }
 
-        private void PreLoad()
+        private void FadeOut()
         {
             if (Transitioning) return;
             
             Transitioning = true;
             
-            saveManager.SaveData();
+            SaveManager.Instance.SaveData();
             
-            sceneTransition.FadeIn();
+            sceneTransition.FadeOut();
             musicPlayer.StopTrack(sceneTransitionTime);
         }
 
-        private void PostLoad()
+        private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
             if (!Transitioning) return;
             
-            int currentScene = SceneManager.GetActiveScene().buildIndex;
-            musicPlayer.PlayTrack(currentScene, musicFadeInTime);
-            sceneTransition.FadeOut();
+            SaveManager.Instance.Initialize();
+            SaveManager.Instance.FindDPOs();
+            SaveManager.Instance.LoadData();
             
-            saveManager.RefreshDPOs();
-            saveManager.LoadData();
+            musicPlayer.PlayTrack(scene.buildIndex, musicFadeInTime);
+            sceneTransition.FadeIn();
             
             Transitioning = false;
         }
