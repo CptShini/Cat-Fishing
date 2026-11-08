@@ -6,11 +6,7 @@ namespace Assets.Scripts.Diving.Bars
     {
         private Animator _animator;
 
-        void Awake()
-        {
-            _animator = GetComponent<Animator>();
-        }
-
+        private void Awake() => _animator = GetComponent<Animator>();
 
         public bool TryAdd(float weight)
         {
@@ -23,13 +19,11 @@ namespace Assets.Scripts.Diving.Bars
         public bool CanAdd(float weight)
         {
             bool tooHeavy = CurrentValue + weight > _maxValue;
-            if (tooHeavy) {
-                _animator.Play("WeightWarn");
-                return false;
-                
-                }
+            if (!tooHeavy) return true;
             
-            return true;
+            _animator.Play("WeightWarn");
+            return false;
+
         }
     }
 }

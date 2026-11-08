@@ -193,7 +193,7 @@ jobs:
         with:
           targetPlatform: StandaloneWindows64
           versioning: Tag
-          buildProfile: 'Assets/Settings/Build Profiles/Windows.asset'
+          buildProfile: 'Assets/Settings/Build Profiles/Dev.asset'
 
       - name: Prepare Windows build
         env:
