@@ -6,11 +6,47 @@ namespace Assets.Scripts.Data
     [RequireComponent(typeof(DataPersistenceManager))]
     public class SaveManager : MonoBehaviour
     {
-        private string _currentSaveName = "default";
+        public static SaveManager Instance { get; private set; }
+        
+        public bool HasSave { get; private set; }
+        public SaveFile[] Saves { get; private set; }
+        
+        private bool _isInitialized;
+        private string _currentSaveName;
         private DataPersistenceManager _dataPersistenceManager;
         
-        private void Awake() => _dataPersistenceManager = GetComponent<DataPersistenceManager>();
-        
+        private void Awake()
+        {
+            if (Instance != null && Instance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
+            
+            Instance = this;
+            _dataPersistenceManager = GetComponent<DataPersistenceManager>();
+        }
+
+        public void Initialize()
+        {
+            if (_isInitialized) return;
+            
+            Saves = _dataPersistenceManager.GetSaves();
+            
+            HasSave = Saves.Length > 0;
+            if (HasSave)
+            {
+                Select(Saves[0].Name);
+                Load();
+            }
+            else
+            {
+                StartNew();
+            }
+            
+            _isInitialized = true;
+        }
+
         public void Select(string saveName) => _currentSaveName = saveName;
         
         public bool NoSaveSelected()
@@ -20,8 +56,6 @@ namespace Assets.Scripts.Data
             
             return invalidName;
         }
-        
-        public SaveFile[] GetSaves() => _dataPersistenceManager.GetSaves();
 
         public void StartNew() => _dataPersistenceManager.NewGameData();
         public void LoadData() => _dataPersistenceManager.LoadDataToGame();
@@ -43,7 +77,7 @@ namespace Assets.Scripts.Data
             _dataPersistenceManager.SaveToSaveFile(_currentSaveName);
         }
 
-        public void RefreshDPOs() => _dataPersistenceManager.UpdateDataPersistenceObjects();
+        public void FindDPOs() => _dataPersistenceManager.FindDataPersistenceObjects();
 
         private void OnApplicationQuit()
         {

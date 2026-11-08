@@ -8199,7 +8199,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9f745797e5d1ab40b1500a3a04cb503, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ExitArea
-  targetSceneIndex: 0
+  targetSceneIndex: 1
   onExit:
     m_PersistentCalls:
       m_Calls:
