@@ -118,7 +118,15 @@ jobs:
           ref: ${{ github.event.repository.default_branch }}
           fetch-depth: 0
 
-      
+      - name: Verify version label
+        env:
+          VERSION_LABEL: ${{ needs.validate-pr.outputs.version_label }}
+        run: |
+          echo "Selected version label: ${VERSION_LABEL:-<empty>}"
+          [[ -n "$VERSION_LABEL" ]] || {
+            echo "::error::Missing version label output."
+            exit 1
+          }
 
       - name: Create version tag for merged PR
         id: tag
