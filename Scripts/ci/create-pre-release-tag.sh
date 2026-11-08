@@ -8,11 +8,10 @@ fail() { echo "::error::$*" >&2; exit 1; }
 case "${VERSION_LABEL:-}" in
   version:major) bump=major ;;
   version:minor) bump=minor ;;
-  *) bump=patch ;;
+  version:patch) bump=patch ;;
+  *) fail "Unsupported or missing VERSION_LABEL: ${VERSION_LABEL:-<empty>}" ;;
 esac
 
-git fetch --force --tags origin
-git fetch --force --no-tags origin '+refs/heads/pre-release:refs/remotes/origin/pre-release'
 git merge-base --is-ancestor "$TARGET_SHA" refs/remotes/origin/pre-release \
   || fail "Merged commit $TARGET_SHA is not on pre-release."
 

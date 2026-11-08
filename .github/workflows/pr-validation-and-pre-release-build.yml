@@ -1,47 +1,116 @@
-name: Build Pre-Release
+name: PR Validation & Pre-Release Build
 
 on:
   pull_request_target:
-    branches: [pre-release]
-    types: [opened, synchronize, reopened, labeled, unlabeled, ready_for_review, closed]
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - edited
+      - labeled
+      - unlabeled
+      - ready_for_review
+      - closed
+    branches: [main, pre-release]
 
 permissions:
   contents: read
 
-cache-mode: write
-
 jobs:
-  validate-version:
-    name: Validate pre-release version label
+  validate-pr:
+    name: Validate PR
     runs-on: ubuntu-latest
+    permissions: { }
+    if: ${{ github.base_ref == 'pre-release' }}
     outputs:
-      version_label: ${{ steps.check.outputs.version_label }}
+      version_label: ${{ steps.version.outputs.version_label }}
+    
     steps:
+      - name: Validate source branch
+        if: >-
+          ${{
+            contains(
+              fromJSON('["opened","synchronize","reopened","edited"]'),
+              github.event.action
+            )
+          }}
+        shell: bash
+        env:
+          BASE_REF: ${{ github.base_ref }}
+          HEAD_REF: ${{ github.head_ref }}
+          HEAD_REPOSITORY: ${{ github.event.pull_request.head.repo.full_name }}
+          TARGET_REPOSITORY: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          
+          if [[ -z "$HEAD_REPOSITORY" || "$HEAD_REPOSITORY" != "$TARGET_REPOSITORY" ]]; then
+            echo '::error::PRs must originate from this repository.'
+            exit 1
+          fi
+          
+          case "$BASE_REF" in
+            main)
+              if [[ "$HEAD_REF" != "pre-release" ]]; then
+                echo '::error::PRs into main must come from pre-release.'
+                exit 1
+              fi
+              ;;
+          
+            pre-release)
+              if [[ ! "$HEAD_REF" =~ ^develop/.+ ]]; then
+                echo '::error::PRs into pre-release must come from develop/<name>.'
+                exit 1
+              fi
+              ;;
+          
+            *)
+              echo "::error::Unexpected target branch: $BASE_REF"
+              exit 1
+              ;;
+          esac
+          
+          echo 'PR source branch is allowed.'
+
       - name: Validate version labels
-        id: check
+        id: version
+        if: ${{ github.base_ref == 'pre-release' }}
         shell: bash
         env:
           PR_LABELS_JSON: ${{ toJSON(github.event.pull_request.labels) }}
         run: |
           set -euo pipefail
-          mapfile -t labels < <(jq -r '.[] | .name | select(startswith("version:"))' <<< "$PR_LABELS_JSON")
-          (( ${#labels[@]} <= 1 )) || { echo "::error::Use at most one version:* label."; exit 1; }
-
+          
+          mapfile -t labels < <(
+            jq -r '.[] | .name | select(startswith("version:"))' <<< "$PR_LABELS_JSON"
+          )
+          
+          (( ${#labels[@]} <= 1 )) || {
+            echo "::error::Use at most one version:* label."
+            exit 1
+          }
+          
           label="${labels[0]:-}"
+          
           case "$label" in
-            ''|version:major|version:minor|version:skip) ;;
-            *) echo "::error::Unsupported label '$label'. Use version:major, version:minor, or version:skip."; exit 1 ;;
+            ''|version:major|version:minor|version:patch) ;;
+            *)
+              echo "::error::Unsupported label '$label'. Use version:major, version:minor, or version:patch."
+              exit 1
+              ;;
           esac
+
+          echo "Version selection: ${label:-none (skip)}"
           echo "version_label=$label" >> "$GITHUB_OUTPUT"
 
   create-tag:
     name: Create pre-release version tag
-    needs: validate-version
+    needs: validate-pr
     if: >-
       ${{
+        github.base_ref == 'pre-release' &&
         github.event.action == 'closed' &&
         github.event.pull_request.merged == true &&
-        needs.validate-version.outputs.version_label != 'version:skip'
+        needs.validate-pr.outputs.version_label != ''
       }}
     runs-on: ubuntu-latest
     permissions:
@@ -67,6 +136,7 @@ jobs:
     name: Build pre-release
     needs: create-tag
     runs-on: ubuntu-latest
+    cache-mode: write
     permissions:
       contents: read
     steps:
@@ -76,14 +146,14 @@ jobs:
           android: true
           dotnet: true
           haskell: true
-          large-packages: true
+          large-packages: false
           docker-images: true
 
       - name: "Checkout ${{ needs.create-tag.outputs.tag }}"
         uses: actions/checkout@v4
         with:
           ref: ${{ needs.create-tag.outputs.tag }}
-          fetch-depth: 0
+          fetch-depth: 1
           lfs: true
 
       - name: Checkout trusted scripts
@@ -110,6 +180,7 @@ jobs:
         with:
           targetPlatform: StandaloneWindows64
           versioning: Tag
+          buildProfile: 'Assets/Settings/Build Profiles/Windows.asset'
 
       - name: Prepare Windows build
         env:
@@ -124,6 +195,7 @@ jobs:
           path: dist/
           if-no-files-found: error
           retention-days: 14
+          compression-level: 0
 
       - name: Notify Discord about pre-release build
         if: ${{ always() }}
