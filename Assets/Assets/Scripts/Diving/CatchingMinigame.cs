@@ -14,6 +14,9 @@ public class CatchingMinigame : MonoBehaviour
 
     private float angleRad = 0;
     private float wiggleRad = 0;
+
+    [SerializeField] private float inaccuracyPenalty = 3;
+
     [SerializeField] private float wiggleRange = 25;
     [SerializeField] private float wiggleSpeed = 250;
     float wiggleTime = 0;
@@ -55,7 +58,8 @@ public class CatchingMinigame : MonoBehaviour
     public void Grab(Vector2 velocityVector)
     {
         float angle = Vector2.Angle(velocityVector, movement.Direction);
-        float power = DivingPlayerStats.Instance.strength * (angle / 180);
+        float power = DivingPlayerStats.Instance.strength * Mathf.Pow(angle / 180, inaccuracyPenalty);
+        Debug.Log($"{angle / 180}, {Mathf.Pow(angle / 180, inaccuracyPenalty)}");
         float contest = Math.Clamp((power - _fish.Strength) / _fish.Strength, -10, 5);
         catchBar.CurrentValue += contest * Time.deltaTime;
 
@@ -101,14 +105,12 @@ public class CatchingMinigame : MonoBehaviour
         
         if(!flipped && 90f < (angleRad + 360) % 360 && (angleRad + 360) % 360 <= 268f)
         {
-            Debug.Log(angleRad);
             flipped = true;
             catAndFish.transform.localScale = new Vector3 (1f, -1f, 1);
             return;
         }
         else if(flipped && (!(90f < (angleRad + 360) % 360) || !((angleRad + 360) % 360 <= 272f)))
         {
-            Debug.Log(angleRad);
             flipped = false;
             catAndFish.transform.localScale = new Vector3 (1f, 1f, 1);
         }
@@ -131,7 +133,6 @@ public class CatchingMinigame : MonoBehaviour
             return;
         Rotate();
         Wiggle();
-        Debug.Log(wiggleRad);
         SetAngle(wiggleRad + angleRad);
     }
 }

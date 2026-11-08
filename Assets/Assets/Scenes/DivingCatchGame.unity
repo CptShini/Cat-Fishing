@@ -655,7 +655,6 @@ GameObject:
   - component: {fileID: 234567691}
   - component: {fileID: 234567693}
   - component: {fileID: 234567692}
-  - component: {fileID: 234567694}
   m_Layer: 5
   m_Name: Fish
   m_TagString: Untagged
@@ -720,18 +719,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 234567690}
   m_CullTransparentMesh: 1
---- !u!114 &234567694
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 234567690}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78c759363fa8d5642a83574ca440e0a2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Fish.FishSpriteRotator
 --- !u!1 &252061990
 GameObject:
   m_ObjectHideFlags: 0
@@ -11416,6 +11403,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79c01c0c2b336e444a613d25da8560d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CatchingMinigame
+  inaccuracyPenalty: 3
+  wiggleRange: 10
+  wiggleSpeed: 10
   catchBar: {fileID: 228957061}
   minigameCanvas: {fileID: 988630930}
   catAndFish: {fileID: 1440476227}
