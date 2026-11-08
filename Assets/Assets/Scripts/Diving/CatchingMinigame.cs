@@ -12,6 +12,8 @@ public class CatchingMinigame : MonoBehaviour
 {
     public static CatchingMinigame Instance { get; private set; }
 
+    float angleRad = 0;
+    bool flipped = false;
     private Fish _fish;
     private FishCaughtMovement movement;
 
@@ -41,6 +43,8 @@ public class CatchingMinigame : MonoBehaviour
         minigameCanvas.SetActive(true);
 
         catchBar.SetMaxValue(contestThreshold, contestThreshold / 2);
+        angleRad = ((Mathf.Atan2(movement.Direction.y, movement.Direction.x) * Mathf.Rad2Deg) + 360f) % 360f;
+
     }
 
     public void Grab(Vector2 velocityVector)
@@ -78,13 +82,43 @@ public class CatchingMinigame : MonoBehaviour
         }
     }
     
+    private void Rotate()
+    {
+
+        float targetRotation = ((Mathf.Atan2(movement.Direction.y, movement.Direction.x) * Mathf.Rad2Deg) + 360f) % 360f;
+
+
+        float newRotation = Mathf.MoveTowardsAngle(
+            angleRad,
+            targetRotation,
+            Time.deltaTime * 500
+        );
+
+        angleRad += Mathf.DeltaAngle(angleRad, newRotation);
+        
+        catAndFish.transform.eulerAngles = new Vector3(0,0, angleRad);
+
+        if(!flipped && 90f < (angleRad + 360) % 360 && (angleRad + 360) % 360 <= 268f)
+        {
+            Debug.Log(angleRad);
+            flipped = true;
+            catAndFish.transform.localScale = new Vector3 (1f, -1f, 1);
+            return;
+        }
+        else if(flipped && (!(90f < (angleRad + 360) % 360) || !((angleRad + 360) % 360 <= 272f)))
+        {
+            Debug.Log(angleRad);
+            flipped = false;
+            catAndFish.transform.localScale = new Vector3 (1f, 1f, 1);
+        }
+
+    }
+
     private void Update()
     {
         if (DivingController.Instance.state != PlayerState.GRAB)
             return;
+        Rotate();
         
-        float angleRad = Mathf.Atan2(movement.Direction.y, movement.Direction.x);
-        fishAngle = angleRad * (180 / Mathf.PI);
-        catAndFish.transform.eulerAngles = new Vector3(0,0, fishAngle);
     }
 }
