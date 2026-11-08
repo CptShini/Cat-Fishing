@@ -118,11 +118,13 @@ jobs:
           ref: ${{ github.event.repository.default_branch }}
           fetch-depth: 0
 
+      
+
       - name: Create version tag for merged PR
         id: tag
         env:
           TARGET_SHA: ${{ github.event.pull_request.merge_commit_sha }}
-          VERSION_LABEL: ${{ needs.validate-version.outputs.version_label }}
+          VERSION_LABEL: ${{ needs.validate-pr.outputs.version_label }}
         run: bash Scripts/ci/create-pre-release-tag.sh
 
   build:
