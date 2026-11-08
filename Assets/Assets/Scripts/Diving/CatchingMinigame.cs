@@ -18,7 +18,7 @@ public class CatchingMinigame : MonoBehaviour
     [SerializeField] private float inaccuracyPenalty = 3;
 
     [SerializeField] private float wiggleRange = 25;
-    [SerializeField] private float wiggleSpeed = 250;
+    [SerializeField] private float wiggleSpeed = 500;
     float wiggleTime = 0;
     private bool flipped = false;
     private Fish _fish;
@@ -26,10 +26,15 @@ public class CatchingMinigame : MonoBehaviour
 
     [SerializeField] private StatBar catchBar;
     [SerializeField] private GameObject minigameCanvas;
-    [SerializeField] private GameObject catAndFish;
+    [SerializeField] private RectTransform catAndFish;
     [SerializeField] private Image fishImage;
     private float contestThreshold = 5; // The value that contest must be to catch a fish succesfully
     private float fishAngle;
+
+    private float contest;
+    private float contestMod;
+    private float contestAngle;
+    private Vector2 playerContest;
 
     public readonly UnityEvent<bool> OnEnded = new();
     
@@ -57,10 +62,11 @@ public class CatchingMinigame : MonoBehaviour
 
     public void Grab(Vector2 velocityVector)
     {
-        float angle = Vector2.Angle(velocityVector, movement.Direction);
-        float power = DivingPlayerStats.Instance.strength * Mathf.Pow(angle / 180, inaccuracyPenalty);
-        Debug.Log($"{angle / 180}, {Mathf.Pow(angle / 180, inaccuracyPenalty)}");
-        float contest = Math.Clamp((power - _fish.Strength) / _fish.Strength, -10, 5);
+        playerContest = velocityVector;
+        contestAngle = Vector2.Angle(playerContest, movement.Direction);
+        contestMod = Mathf.Pow(contestAngle / 180, inaccuracyPenalty);
+        float power = DivingPlayerStats.Instance.strength * contestMod;
+        contest = Math.Clamp((power - _fish.Strength) / _fish.Strength, -10, 5);
         catchBar.CurrentValue += contest * Time.deltaTime;
 
         if (catchBar.CurrentValue >= contestThreshold)
@@ -116,6 +122,17 @@ public class CatchingMinigame : MonoBehaviour
         }
     }
 
+    private void Move()
+    {
+        Vector2 targetPos = movement.Direction + (playerContest * 1.2f) * contestMod;
+        Vector2 newPos = Vector2.MoveTowards(
+            catAndFish.anchoredPosition, 
+            targetPos * 150, 
+            Time.deltaTime * 500);
+        Debug.Log($"TARGET: {targetPos.ToString()}, CURRENT {catAndFish.anchoredPosition.ToString()}");
+        catAndFish.anchoredPosition = newPos;
+    }
+
     private void Wiggle()
     {
         wiggleTime += Time.deltaTime * wiggleSpeed;
@@ -134,5 +151,6 @@ public class CatchingMinigame : MonoBehaviour
         Rotate();
         Wiggle();
         SetAngle(wiggleRad + angleRad);
+        Move();
     }
 }

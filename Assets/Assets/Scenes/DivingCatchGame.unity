@@ -9333,7 +9333,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &988630931
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11405,10 +11405,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CatchingMinigame
   inaccuracyPenalty: 5
   wiggleRange: 10
-  wiggleSpeed: 10
+  wiggleSpeed: 30
   catchBar: {fileID: 228957061}
   minigameCanvas: {fileID: 988630930}
-  catAndFish: {fileID: 1440476227}
+  catAndFish: {fileID: 1440476228}
   fishImage: {fileID: 234567692}
 --- !u!114 &2035162236
 MonoBehaviour:
