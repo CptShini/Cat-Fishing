@@ -131,7 +131,7 @@ jobs:
       - name: Create version tag for merged PR
         id: tag
         env:
-          TARGET_SHA: ${{ github.event.pull_request.merge_commit_sha }}
+          TARGET_SHA: ${{ github.event.pull_request.head.sha }}
           VERSION_LABEL: ${{ needs.validate-pr.outputs.version_label }}
         run: bash Scripts/ci/create-pre-release-tag.sh
 
