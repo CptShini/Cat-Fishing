@@ -7,6 +7,9 @@ public class RoomDecorationManager : MonoBehaviour
     [SerializeField] private Transform fixedFurnitureRoot;
     [SerializeField] private Grid grid;
     [SerializeField] private DecorationGridVisuals gridVisuals;
+    [SerializeField] private PlacementController placementController;
+
+    private bool isDecorationMode;
 
     private void Awake()
     {
@@ -25,10 +28,33 @@ public class RoomDecorationManager : MonoBehaviour
             Vector3Int origin = item.GetOrigin(grid);
             gridVisuals.RegisterFixedFurniture(item, origin);
 
-            if (!item.blocksPlacement)
-                continue;
-
-            roomGrid.RegisterObject(origin, item.size);
+            if (item.blocksPlacement)
+                roomGrid.RegisterObject(origin, item.size);
         }
+    }
+
+    public void EnterDecorationMode()
+    {
+        if (isDecorationMode)
+            return;
+
+        isDecorationMode = true;
+
+        placementController.EnterDecorationMode();
+
+        gridVisuals.ShowGrid();
+    }
+
+    public void ExitDecorationMode()
+    {
+        if (!isDecorationMode)
+            return;
+
+        isDecorationMode = false;
+
+        placementController.ExitDecorationMode();
+
+        gridVisuals.HideGrid();
+        gridVisuals.HideFootprint();
     }
 }

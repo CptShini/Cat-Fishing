@@ -26,10 +26,7 @@ public class DivingController : MonoBehaviour
 
     [SerializeField] private Rigidbody2D playerBody;
     [SerializeField] private GameObject graphics;
-    private Vector2 velocityVector;
-
     public readonly UnityEvent<PlayerState> OnStateChanged = new();
-
 
     void Awake()
     {
@@ -125,7 +122,6 @@ public class DivingController : MonoBehaviour
         {
             return;
         }
-        defaultCollider.enabled = true;
         SetPlayerState(PlayerState.SWIM);
     }
     
@@ -149,7 +145,6 @@ public class DivingController : MonoBehaviour
             }
             case PlayerState.STUN:
                 {
-                    defaultCollider.enabled = false;
                     Stunned();
                     break;
                 }

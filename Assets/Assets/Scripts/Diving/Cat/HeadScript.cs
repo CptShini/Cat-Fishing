@@ -1,5 +1,6 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class HeadScript : MonoBehaviour
 {
@@ -8,7 +9,9 @@ public class HeadScript : MonoBehaviour
     private HingeJoint2D _hj;
     [SerializeField] private Rigidbody2D _body;
     [SerializeField] private AimScript _aimScript;
-
+    
+    bool flipped = false;
+    public readonly UnityEvent<bool> OnFlipping = new();
     private float mainLower;
     private float mainUpper;
     private float curLower;
@@ -52,16 +55,26 @@ public class HeadScript : MonoBehaviour
 
         _pb.rotation += Mathf.DeltaAngle(_pb.rotation, newRotation);
 
-        if(90f < (newRotation + 360) % 360 && (newRotation + 360) % 360 < 270f)
+        if(!flipped && 90f < (_pb.rotation + 360) % 360 && (_pb.rotation + 360) % 360 <= 268f)
         {
+            Debug.Log(_pb.rotation);
+            flipped = true;
             SetHingeBounds(-mainUpper, mainLower);
             _pb.transform.localScale = new Vector3 (0.5f, -0.5f, 1);
             _body.transform.localScale = new Vector3 (0.5f, -0.5f, 1);
+            OnFlipping.Invoke(flipped);
             return;
         }
-        SetHingeBounds(mainLower, mainUpper);
-        _pb.transform.localScale = new Vector3 (0.5f, 0.5f, 1);
-        _body.transform.localScale = new Vector3 (0.5f, 0.5f, 1);
+        else if(flipped && (!(90f < (_pb.rotation + 360) % 360) || !((_pb.rotation + 360) % 360 <= 272f)))
+        {
+            Debug.Log(_pb.rotation);
+            flipped = false;
+            _pb.transform.localScale = new Vector3 (0.5f, 0.5f, 1);
+            _body.transform.localScale = new Vector3 (0.5f, 0.5f, 1);
+            SetHingeBounds(mainLower, mainUpper);
+            OnFlipping.Invoke(flipped);
+        }
+        
     }
 
 }
