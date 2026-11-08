@@ -27,13 +27,6 @@ jobs:
     
     steps:
       - name: Validate source branch
-        if: >-
-          ${{
-            contains(
-              fromJSON('["opened","synchronize","reopened","edited"]'),
-              github.event.action
-            )
-          }}
         shell: bash
         env:
           BASE_REF: ${{ github.base_ref }}
