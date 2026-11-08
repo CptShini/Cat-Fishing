@@ -12,8 +12,12 @@ public class CatchingMinigame : MonoBehaviour
 {
     public static CatchingMinigame Instance { get; private set; }
 
-    float angleRad = 0;
-    bool flipped = false;
+    private float angleRad = 0;
+    private float wiggleRad = 0;
+    [SerializeField] private float wiggleRange = 25;
+    [SerializeField] private float wiggleSpeed = 250;
+    float wiggleTime = 0;
+    private bool flipped = false;
     private Fish _fish;
     private FishCaughtMovement movement;
 
@@ -44,7 +48,8 @@ public class CatchingMinigame : MonoBehaviour
 
         catchBar.SetMaxValue(contestThreshold, contestThreshold / 2);
         angleRad = ((Mathf.Atan2(movement.Direction.y, movement.Direction.x) * Mathf.Rad2Deg) + 360f) % 360f;
-
+        wiggleTime = 0;
+        wiggleRad = 0;
     }
 
     public void Grab(Vector2 velocityVector)
@@ -84,9 +89,7 @@ public class CatchingMinigame : MonoBehaviour
     
     private void Rotate()
     {
-
         float targetRotation = ((Mathf.Atan2(movement.Direction.y, movement.Direction.x) * Mathf.Rad2Deg) + 360f) % 360f;
-
 
         float newRotation = Mathf.MoveTowardsAngle(
             angleRad,
@@ -96,8 +99,6 @@ public class CatchingMinigame : MonoBehaviour
 
         angleRad += Mathf.DeltaAngle(angleRad, newRotation);
         
-        catAndFish.transform.eulerAngles = new Vector3(0,0, angleRad);
-
         if(!flipped && 90f < (angleRad + 360) % 360 && (angleRad + 360) % 360 <= 268f)
         {
             Debug.Log(angleRad);
@@ -111,7 +112,17 @@ public class CatchingMinigame : MonoBehaviour
             flipped = false;
             catAndFish.transform.localScale = new Vector3 (1f, 1f, 1);
         }
+    }
 
+    private void Wiggle()
+    {
+        wiggleTime += Time.deltaTime * wiggleSpeed;
+        wiggleRad = Mathf.Cos(wiggleTime) * wiggleRange;
+    }
+
+    private void SetAngle(float angle)
+    {
+        catAndFish.transform.eulerAngles = new Vector3(0,0, angle);
     }
 
     private void Update()
@@ -119,6 +130,8 @@ public class CatchingMinigame : MonoBehaviour
         if (DivingController.Instance.state != PlayerState.GRAB)
             return;
         Rotate();
-        
+        Wiggle();
+        Debug.Log(wiggleRad);
+        SetAngle(wiggleRad + angleRad);
     }
 }
