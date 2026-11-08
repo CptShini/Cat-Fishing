@@ -82,7 +82,6 @@ jobs:
           targetPlatform: StandaloneWindows64
           versioning: Tag
           buildProfile: 'Assets/Settings/Build Profiles/Windows.asset'
-          chownFilesTo: runner
 
       - name: Prepare release ZIP
         env:
