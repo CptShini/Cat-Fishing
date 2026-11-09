@@ -48,4 +48,16 @@ public class EncyclopediaSlot : MonoBehaviour
         }
     }
 
+    public void OnClickSlot()
+    {
+        if(fish == null)
+        {
+            EncyclopediaManager.Instance.SetPageToUnknownFish(species);
+        }
+        else
+        {
+            EncyclopediaManager.Instance.SetPageToFish(fish);
+        }
+    }
+
 }
