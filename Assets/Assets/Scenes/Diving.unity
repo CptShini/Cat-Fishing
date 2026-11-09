@@ -21328,7 +21328,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Helpers.DebugDrawer
   EnableDebug: 1
-  Fish_Perception: 1
+  Fish_Perception: 0
   Fish_Perception_DrawCircle: 0
   Fish_Perception_DrawReactionTime: 1
   Fish_Nav: 1
