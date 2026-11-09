@@ -1,7 +1,5 @@
 ﻿using Assets.Scripts.Helpers;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.UI;
 
 namespace Assets.Scripts.Fishies.Perception
 {

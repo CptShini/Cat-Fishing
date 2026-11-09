@@ -1,3 +1,4 @@
+using Assets.Scripts.Audio;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,5 +21,6 @@ public class TabController : MonoBehaviour
         }
         pages[tabIndex].SetActive(true);
         tabImages[tabIndex].color = Color.white;
+        AudioManager.Instance.Play(AudioId.ButtonClick);
     }
 }

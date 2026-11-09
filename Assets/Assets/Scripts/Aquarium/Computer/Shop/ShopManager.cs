@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.Scripts.Audio;
 
 public class ShopManager : MonoBehaviour
 {
@@ -52,12 +53,14 @@ public class ShopManager : MonoBehaviour
         if (itemSO.itemType == ItemType.Furniture && IsPurchased(itemSO))
         {
             Debug.Log("Already purchased: " + itemSO.itemName);
+            AudioManager.Instance.Play(AudioId.AlreadyPurchased);
             return;
         }
 
         if (inventoryManager.gold < price)
         {
             Debug.Log("Not enough gold.");
+            AudioManager.Instance.Play(AudioId.NotEnoughGold);
             return;
         }
 
@@ -72,10 +75,12 @@ public class ShopManager : MonoBehaviour
                     purchasedItems.Add(itemSO);
                 RefreshShopSlots();
                 Debug.Log("Purchased: " + itemSO.itemName);
+                AudioManager.Instance.Play(AudioId.PurchaseSuccess);
             /*}
             else
             {
                 Debug.Log("No space in inventory.");
+                AudioManager.Instance.PlayInventoryFull();
                 return;
             }*/
         }

@@ -1,3 +1,4 @@
+using Assets.Scripts.Audio;
 using Assets.Scripts.Diving.Bars;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -19,7 +20,7 @@ namespace Assets.Scripts.Diving.Cat
 
         public float curPounceCooldown;
 
-
+        private bool isStealthPlaying;
 
         private void Start()
         {
@@ -37,6 +38,11 @@ namespace Assets.Scripts.Diving.Cat
         
             float pounceChargeStamina = DivingPlayerStats.Instance.chargeUpSpeed * Time.deltaTime;
             curPounceStamina = Mathf.Clamp(curPounceStamina + pounceChargeStamina, 0,maxPounceStamina);
+
+            if (isStealthPlaying) return;
+            
+            AudioManager.Instance.Play(AudioId.Stealth);
+            isStealthPlaying = true;
         }
     
         public void StartPounce()
@@ -48,6 +54,9 @@ namespace Assets.Scripts.Diving.Cat
         
             DivingController.Instance.SetPlayerState(PlayerState.PlayerState.POUNCE);
             staminaBar.CurrentValue -= curPounceStamina;
+
+            AudioManager.Instance.Play(AudioId.Pounce);
+            isStealthPlaying = false;
         }
 
         public void Pounce()

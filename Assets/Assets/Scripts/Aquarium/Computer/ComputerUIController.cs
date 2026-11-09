@@ -1,3 +1,4 @@
+using Assets.Scripts.Audio;
 using UnityEngine;
 
 public class ComputerUIController : MonoBehaviour
@@ -25,6 +26,7 @@ public class ComputerUIController : MonoBehaviour
         IsOpen = true;
 
         PauseController.SetPause(true);
+        AudioManager.Instance.Play(AudioId.ButtonClick);
     }
 
     public void Close()
@@ -33,5 +35,6 @@ public class ComputerUIController : MonoBehaviour
         IsOpen = false;
 
         PauseController.SetPause(false);
+        AudioManager.Instance.Play(AudioId.ButtonClick);
     }
 }

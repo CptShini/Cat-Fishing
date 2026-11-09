@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Assets.Scripts.Audio;
 using Assets.Scripts.Fishies;
 using Assets.Scripts.Fishies.Domain;
 using UnityEngine;
@@ -48,6 +48,8 @@ namespace Assets.Scripts.Aquarium.FishTank
             _dragging = true;
 
             fish.Grab();
+
+            AudioManager.Instance.Play(AudioId.FishGrab);
         }
 
         private void Drag()

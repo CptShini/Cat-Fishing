@@ -1,16 +1,19 @@
+using Assets.Scripts.Audio;
 using UnityEngine;
 
-public class Hazard : MonoBehaviour
+namespace Assets.Scripts.Diving.Hazards
 {
-
-    [SerializeField] public int damage;
-    [SerializeField] public int power;
-
-    void OnCollisionEnter2D(Collision2D other)
+    public class Hazard : MonoBehaviour
     {
-        if(other.gameObject.TryGetComponent(out IDamageable damageable))
+        [SerializeField] public int damage;
+        [SerializeField] public int power;
+
+        private void OnCollisionEnter2D(Collision2D other)
         {
+            if (!other.gameObject.TryGetComponent(out IDamageable damageable)) return;
+        
             damageable.Damaged(damage, -other.GetContact(0).normal * power);
+            AudioManager.Instance.Play(AudioId.Hurt);
         }
     }
 }
