@@ -13,6 +13,13 @@ public class ShopStatsUI : MonoBehaviour
     [SerializeField] private TMP_Text clawsStrengthText;
     [SerializeField] private TMP_Text oxygenText;
     [SerializeField] private TMP_Text carryingCapacityText;
+
+    [SerializeField] private TMP_Text speedLevelText;
+    [SerializeField] private TMP_Text pounceSpeedLevelText;
+    [SerializeField] private TMP_Text clawsStrengthLevelText;
+    [SerializeField] private TMP_Text oxygenCapacityLevelText;
+    [SerializeField] private TMP_Text carryingCapacityLevelText;
+
     [SerializeField] private TMP_Text miniMapStatusText;
 
     private void Start()
@@ -32,6 +39,12 @@ public class ShopStatsUI : MonoBehaviour
         clawsStrengthText.text = stats.clawsStrength.ToString();
         oxygenText.text = stats.oxygenCapacity.ToString();
         carryingCapacityText.text = stats.carryingCapacity.ToString();
+
+        speedLevelText.text = $"LEVEL {stats.speedLevel}/5";
+        pounceSpeedLevelText.text = $"LEVEL {stats.pounceSpeedLevel}/5";
+        clawsStrengthLevelText.text = $"LEVEL {stats.clawsStrengthLevel}/5";
+        oxygenCapacityLevelText.text = $"LEVEL {stats.oxygenCapacityLevel}/5";
+        carryingCapacityLevelText.text = $"LEVEL {stats.carryingCapacityLevel}/5";
 
         if (miniMapStatusText != null)
         {
