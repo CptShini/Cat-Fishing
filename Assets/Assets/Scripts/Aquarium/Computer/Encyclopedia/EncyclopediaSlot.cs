@@ -11,21 +11,6 @@ public class EncyclopediaSlot : MonoBehaviour
     public Fish fish { get; private set; }
     public FishSpecies species { get; private set; }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        if (!_discovered)
-        {
-            fishIcon.color = Color.black;
-            _name.text = "???";
-        }
-        else
-        {
-            fishIcon.color = Color.white;
-            _name.text = fish.Species.Name;
-        }
-    }
-
     public void Setup(FishSpecies species, Fish fish, bool discovered)
     {
         if (fish == null) return;

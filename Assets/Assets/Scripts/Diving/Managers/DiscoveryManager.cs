@@ -52,7 +52,6 @@ public class DiscoveryManager : MonoBehaviour, IDataPersistence
 
     private void NewDiscovery(Fish fish)
     {
-        Debug.Log("NEW DISCOVERY");
         _discoveries.Add(fish.Id, fish);
     }
 
@@ -60,6 +59,7 @@ public class DiscoveryManager : MonoBehaviour, IDataPersistence
     public void LoadData(GameData data)
     {
         _discoveries = data.Discoveries.ToDictionary(species);
+        _discoveries.Clear();
     }
 
     public void SaveData(ref GameData data)

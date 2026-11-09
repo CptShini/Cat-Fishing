@@ -29,31 +29,32 @@ public class EncyclopediaManager : MonoBehaviour, IDataPersistence
         Instance = this;
     }
 
-    void Start()
-    {
-        Init();
-    }
-
     private void Init()
     {
+        Debug.Log($"DISCOVERIES {_discoveries.Count}");
         foreach (FishSpecies specie in species.GetSpecies())
         {
             EncyclopediaSlot slot = Instantiate(slotPrefab, grid, false);
+
+            slot.Setup(specie);
+
             foreach (var discovery in _discoveries.Values)
             {
-                if(discovery.Species == specie)
+                Debug.Log($"{discovery.Species.Id}, {specie.Id}");
+                if(discovery.Species.Id == specie.Id)
                 {
+                    Debug.Log("AAAAHHHH");
                     slot.Setup(specie, discovery, true);
                     break;
                 }
             }
-            slot.Setup(specie);
         }
     }
 
     public void LoadData(GameData data)
     {
         _discoveries = data.Discoveries.ToDictionary(species);
+        Init();
     }
 
     public void SaveData(ref GameData data)
