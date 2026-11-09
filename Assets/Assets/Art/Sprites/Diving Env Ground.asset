@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af7181f404f1447c0a7a17b3070b952b, type: 3}
+  m_Name: Diving Env Ground
+  m_EditorClassIdentifier: 
+  m_Angles:
+  - m_Start: -45
+    m_End: 45
+    m_Order: 0
+    m_Sprites:
+    - {fileID: -6515008961041940159, guid: cb72e97ba2e0b624fb33fba8205d9912, type: 3}
+  - m_Start: 45
+    m_End: 134
+    m_Order: 0
+    m_Sprites:
+    - {fileID: -7210979448898945888, guid: c0b958bc04f1d9d44be71c75fc7c7032, type: 3}
+  - m_Start: 134
+    m_End: 224
+    m_Order: 0
+    m_Sprites:
+    - {fileID: -4988380421777723444, guid: 4f7662d62552c23458ac121f5c14cfa7, type: 3}
+  - m_Start: -134
+    m_End: -45
+    m_Order: 0
+    m_Sprites:
+    - {fileID: 4037883109495823386, guid: 1a68170c4eb29cb4b9d05d23b5a2c04c, type: 3}
+  m_FillTexture: {fileID: 2800000, guid: ed0970adac5b5ff4ab5a85226bad8e26, type: 3}
+  m_CornerSprites:
+  - m_CornerType: 0
+    m_Sprites:
+    - {fileID: 0}
+  - m_CornerType: 1
+    m_Sprites:
+    - {fileID: 0}
+  - m_CornerType: 2
+    m_Sprites:
+    - {fileID: 0}
+  - m_CornerType: 3
+    m_Sprites:
+    - {fileID: 0}
+  - m_CornerType: 4
+    m_Sprites:
+    - {fileID: 21300000, guid: 608e61deb05c54660bebf5a4dd2ee02d, type: 3}
+  - m_CornerType: 5
+    m_Sprites:
+    - {fileID: 21300000, guid: 608e61deb05c54660bebf5a4dd2ee02d, type: 3}
+  - m_CornerType: 6
+    m_Sprites:
+    - {fileID: 21300000, guid: 608e61deb05c54660bebf5a4dd2ee02d, type: 3}
+  - m_CornerType: 7
+    m_Sprites:
+    - {fileID: 21300000, guid: 608e61deb05c54660bebf5a4dd2ee02d, type: 3}
+  m_FillOffset: 0
+  m_UseSpriteBorders: 1
