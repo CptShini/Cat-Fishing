@@ -19,6 +19,8 @@ public class CatchingMinigame : MonoBehaviour
 
     [SerializeField] private float wiggleRange = 25;
     [SerializeField] private float wiggleSpeed = 500;
+    [SerializeField] private float movingBackgroundSpeed = 0.5f;
+
     float wiggleTime = 0;
     private bool flipped = false;
     private Fish _fish;
@@ -28,6 +30,8 @@ public class CatchingMinigame : MonoBehaviour
     [SerializeField] private GameObject minigameCanvas;
     [SerializeField] private RectTransform catAndFish;
     [SerializeField] private Image fishImage;
+    [SerializeField] private RawImage MovingBackground;
+
     private float contestThreshold = 5; // The value that contest must be to catch a fish succesfully
     private float fishAngle;
 
@@ -131,6 +135,8 @@ public class CatchingMinigame : MonoBehaviour
             Time.deltaTime * 500);
             
         catAndFish.anchoredPosition = newPos;
+        Debug.Log((newPos.normalized).ToString());
+        MovingBackground.uvRect = new Rect(MovingBackground.uvRect.position + targetPos * Time.deltaTime * movingBackgroundSpeed, MovingBackground.uvRect.size);
     }
 
     private void Wiggle()
