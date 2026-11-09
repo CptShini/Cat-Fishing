@@ -11,6 +11,7 @@ public class ShopStatsData : MonoBehaviour, IDataPersistence
     public float clawsStrength = 10f;
     public float oxygenCapacity = 100f;
     public float carryingCapacity = 25f;
+    public bool hasMiniMap { get; private set; }
 
     [Header("Upgrade Amounts")]
     [SerializeField] private float speedUpgrade = 2f;
@@ -29,6 +30,7 @@ public class ShopStatsData : MonoBehaviour, IDataPersistence
         clawsStrength = GetStat(data, "ClawsStrength", 10f);
         oxygenCapacity = GetStat(data, "OxygenCapacity", 100f);
         carryingCapacity = GetStat(data, "CarryingCapacity", 25f);
+        hasMiniMap = GetStat(data, "HasMiniMap", 0f) >= 1f;
     }
 
     public void SaveData(ref GameData data)
@@ -41,6 +43,7 @@ public class ShopStatsData : MonoBehaviour, IDataPersistence
         data.PlayerStats["ClawsStrength"] = clawsStrength;
         data.PlayerStats["OxygenCapacity"] = oxygenCapacity;
         data.PlayerStats["CarryingCapacity"] = carryingCapacity;
+        data.PlayerStats["HasMiniMap"] = hasMiniMap ? 1f : 0f;
     }
 
     private float GetStat(GameData data, string key, float defaultValue)
@@ -84,6 +87,19 @@ public class ShopStatsData : MonoBehaviour, IDataPersistence
         SaveUpgrade();
     }
 
+    public void PurchaseMiniMap()
+    {
+        if (hasMiniMap)
+        {
+            Debug.Log("Minimap is already purchased");
+            return;
+        }
+
+        hasMiniMap = true;
+        SaveUpgrade();
+
+        Debug.Log("Minimap purchased");
+    }
 
     private void SaveUpgrade()
     {
@@ -100,6 +116,7 @@ public class ShopStatsData : MonoBehaviour, IDataPersistence
         clawsStrength = 10f;
         oxygenCapacity = 100f;
         carryingCapacity = 25f;
+        hasMiniMap = false;
 
         SaveUpgrade();
 

@@ -21,7 +21,8 @@ namespace Assets.Scripts.Data.Domain
                 { "PounceSpeed", 20f },
                 { "ClawsStrength", 10f },
                 { "OxygenCapacity", 100f },
-                { "CarryingCapacity", 25f }
+                { "CarryingCapacity", 25f },
+                { "HasMiniMap", 0}
             };
         }
     }

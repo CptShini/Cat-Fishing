@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class ShopStatsUI : MonoBehaviour
@@ -12,6 +13,7 @@ public class ShopStatsUI : MonoBehaviour
     [SerializeField] private TMP_Text clawsStrengthText;
     [SerializeField] private TMP_Text oxygenText;
     [SerializeField] private TMP_Text carryingCapacityText;
+    [SerializeField] private TMP_Text miniMapStatusText;
 
     private void Start()
     {
@@ -30,6 +32,13 @@ public class ShopStatsUI : MonoBehaviour
         clawsStrengthText.text = stats.clawsStrength.ToString();
         oxygenText.text = stats.oxygenCapacity.ToString();
         carryingCapacityText.text = stats.carryingCapacity.ToString();
+
+        if (miniMapStatusText != null)
+        {
+            miniMapStatusText.text = stats.hasMiniMap
+                ? "PURCHASED"
+                : "NOT PURCHASED";
+        }
     }
 
     public void UpgradeSpeed()
@@ -59,6 +68,18 @@ public class ShopStatsUI : MonoBehaviour
     public void UpgradeCarryingCapacity()
     {
         stats.UpgradeCarryingCapacity();
+        UpdateUI();
+    }
+
+    public void PurchaseMiniMap()
+    {
+        if (stats == null)
+        stats = FindFirstObjectByType<ShopStatsData>();
+
+        if (stats == null)
+            return;
+
+        stats.PurchaseMiniMap();
         UpdateUI();
     }
 
