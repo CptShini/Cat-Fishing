@@ -1,6 +1,8 @@
 using UnityEngine;
+using Assets.Scripts.Data.Domain;
+using Assets.Scripts.Data.Persistence;
 
-public class DivingPlayerStats : MonoBehaviour
+public class DivingPlayerStats : MonoBehaviour, IDataPersistence
 {
     public static DivingPlayerStats Instance { get; private set; }
 
@@ -45,32 +47,36 @@ public class DivingPlayerStats : MonoBehaviour
             Instance = this;
     }
 
-    public void ApplyStats(PlayerStatsManager stats)
+    public void LoadData(GameData data)
     {
-        // to apply stats from aquarium scene
-        speed = stats.speed;
-        stealthSpeed = stats.stealthSpeed;
-        pounceSpeed = stats.pounceSpeed;
+        if (data.PlayerStats == null)
+            return;
 
-        acceleration = stats.acceleration;
-        friction = stats.friction;
+        if (data.PlayerStats.TryGetValue("Speed", out float savedSpeed))
+            speed = savedSpeed;
 
-        maxStamina = stats.maxStamina;
-        maxPounceStamina = stats.maxPounceStamina;
-        staminaRegen = stats.staminaRegen;
+        if (data.PlayerStats.TryGetValue("PounceSpeed", out float savedPounceSpeed))
+            pounceSpeed = savedPounceSpeed;
 
-        strength = stats.strength;
+        if (data.PlayerStats.TryGetValue("ClawsStrength", out float savedClawsStrength))
+            strength = savedClawsStrength;
 
-        chargeUpSpeed = stats.chargeUpSpeed;
-        pounceCooldown = stats.pounceCooldown;
+        if (data.PlayerStats.TryGetValue("OxygenCapacity", out float savedOxygen))
+            oxygenCapacity = savedOxygen;
 
-        oxygenCapacity = stats.oxygenCapacity;
+        if (data.PlayerStats.TryGetValue("CarryingCapacity", out float savedCapacity))
+            carryingCapacity = savedCapacity;
+    }
 
-        defaultPresence = stats.defaultPresence;
-        stealthPresence = stats.stealthPresence;
-        pouncePresence = stats.pouncePresence;
+    public void SaveData(ref GameData data)
+    {
+        if (data.PlayerStats == null)
+            data.PlayerStats = new();
 
-        stunDuration = stats.stunDuration;
-        carryingCapacity = stats.carryingCapacity;
+        data.PlayerStats["Speed"] = speed;
+        data.PlayerStats["PounceSpeed"] = pounceSpeed;
+        data.PlayerStats["ClawsStrength"] = strength;
+        data.PlayerStats["OxygenCapacity"] = oxygenCapacity;
+        data.PlayerStats["CarryingCapacity"] = carryingCapacity;
     }
 }
