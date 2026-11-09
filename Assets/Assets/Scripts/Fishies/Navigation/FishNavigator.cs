@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Helpers;
 using UnityEngine;
-using UnityEngine.AI;
 using UnityEngine.Events;
 using Random = UnityEngine.Random;
 using Range = Assets.Scripts.Helpers.Range;
@@ -26,7 +25,7 @@ namespace Assets.Scripts.Fishies.Navigation
         private bool _hasWaypoint;
         private Vector2 _waypoint;
 
-        private int areaMask;
+        private int _areaMask;
         
         private FishEyes _eyes;
 
@@ -42,7 +41,7 @@ namespace Assets.Scripts.Fishies.Navigation
             CurrentDirection = Random.onUnitCircle;
         }
 
-        public void Init(int biome) => areaMask = biome;
+        public void Init(int biome) => _areaMask = biome;
 
         private void Update()
         {
@@ -86,9 +85,9 @@ namespace Assets.Scripts.Fishies.Navigation
 
         public void Wander()
         {
-            Vector2[] path = Pathfind(0.5f, () =>
+            Vector2[] path = Pathfind(0.5f, urgency =>
             {
-                Vector2 newDirection = MixWithRandom(CurrentDirection);
+                Vector2 newDirection = MixWithRandom(CurrentDirection, urgency);
                 float wanderDistance = wanderDist.Random();
 
                 var hit = Physics2D.Raycast(eyePoint.position, newDirection, wanderDistance);
@@ -104,10 +103,10 @@ namespace Assets.Scripts.Fishies.Navigation
         
         public void Flee(Vector2 fleePoint)
         {
-            Vector2[] path = Pathfind(fleeDist.Max, () =>
+            Vector2[] path = Pathfind(fleeDist.Max, urgency =>
             {
                 Vector2 awayDir = ((Vector2)transform.position - fleePoint).normalized;
-                Vector2 fleeDir = MixWithRandom(awayDir);
+                Vector2 fleeDir = MixWithRandom(awayDir, urgency);
             
                 float fleeDistance = fleeDist.Random();
                 Vector2 fleeTarget = (Vector2)transform.position + fleeDir * fleeDistance;
@@ -172,12 +171,13 @@ namespace Assets.Scripts.Fishies.Navigation
             SetPath(path);
         }
 
-        private Vector2[] Pathfind(float tolerance, Func<Vector2> randomDestinationFunc)
+        private Vector2[] Pathfind(float tolerance, Func<float, Vector2> randomDestinationFunc)
         {
-            const int maxIterations = 25;
+            const int maxIterations = 50;
             for (int i = 0; i < maxIterations; i++)
             {
-                bool validPath = TryPathfind(randomDestinationFunc(), tolerance, out Vector2[] path);
+                float urgency = (float)i / maxIterations;
+                bool validPath = TryPathfind(randomDestinationFunc(urgency), tolerance, out Vector2[] path);
                 if (validPath) return path;
             }
             
@@ -186,12 +186,16 @@ namespace Assets.Scripts.Fishies.Navigation
         }
         
         private bool TryPathfind(Vector2 destination, float tolerance, out Vector2[] path) =>
-            NavQuery.TryGetPath(transform.position, destination, out path, areaMask, tolerance);
+            NavQuery.TryGetPath(transform.position, destination, out path, _areaMask, tolerance);
 
-        private static Vector2 MixWithRandom(Vector2 vec)
+        private static Vector2 MixWithRandom(Vector2 vec, float urgency = 0f)
         {
-            float r = Random.Range(0f, 1f); // Completely arbitrary
-            return Vector3.Slerp(vec, Random.onUnitCircle, r*r);
+            float r = Random.Range(0f, 1f);
+            return Vector3.Slerp(
+                vec,
+                Random.onUnitCircle,
+                Mathf.Lerp(r*r, 1f, urgency)
+            );
         }
 
         private void OnEnable() => _eyes.enabled = true;
