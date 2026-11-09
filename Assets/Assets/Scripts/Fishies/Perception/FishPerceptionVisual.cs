@@ -12,44 +12,68 @@ namespace Assets.Scripts.Fishies.Perception
             detectingColor,
             notDetectedColor;
 
+        [SerializeField] private float cooldownTime = 1f;
+        
         private Vector2 _initialSize;
-        private Quaternion _initialRotation;
         private FishPerception _perception;
+
+        private bool _cooldownActive;
+        private float _cooldownTimer;
+
+        private float _fillAmount;
+        private Color _color;
         
         private void Awake()
         {
             _perception = GetComponent<FishPerception>();
             _initialSize = perceptionImage.size;
-            _initialRotation = perceptionImage.transform.rotation;
         }
 
         private void Update()
         {
-            bool visualActive = _perception.ReactionPercent > 0f;
-            if (!visualActive)
+            UpdateVisualState();
+            ApplyVisualState();
+        }
+
+        private void UpdateVisualState()
+        {
+            if (_cooldownActive)
             {
-                perceptionImage.size = Vector2.zero;
+                _cooldownTimer -= Time.deltaTime;
+                if (_perception.ReactionPercent > 0f) _cooldownTimer = cooldownTime;
+                else if (_cooldownTimer <= 0f) _cooldownActive = false;
                 return;
             }
 
-            float fillAmount;
-            Color color;
+            if (_perception.ReactionPercent <= 0f)
+            {
+                _fillAmount = 0f;
+                return;
+            }
 
-            if (_perception.Cooldown)
-            {
-                fillAmount = 1f;
-                color = detectedColor;
-            }
-            else
-            {
-                fillAmount = _perception.ReactionPercent;
-                color = _perception.Detecting ? detectingColor : notDetectedColor;
-            }
+            _fillAmount = _perception.ReactionPercent;
+            _color = _perception.Detecting ? detectingColor : notDetectedColor;
+
+            if (!_perception.Cooldown)
+                return;
             
-            perceptionImage.size = new(_initialSize.x, _initialSize.y * fillAmount);
-            perceptionImage.color = color;
-            perceptionImage.transform.position = transform.position + transform.right + offset;
-            perceptionImage.transform.rotation = _initialRotation;
+            _fillAmount = 1f;
+            _color = detectedColor;
+            
+            _cooldownActive = true;
+            _cooldownTimer = cooldownTime;
+        }
+
+        private void ApplyVisualState()
+        {
+            perceptionImage.size = new(_initialSize.x, _initialSize.y * _fillAmount);
+            perceptionImage.color = _color;
+
+            perceptionImage.transform.position =
+                transform.position +
+                transform.right * offset.x +
+                Vector3.up * offset.y;
+            perceptionImage.transform.rotation = Quaternion.identity;
         }
     }
 }
