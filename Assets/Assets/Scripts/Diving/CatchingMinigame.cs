@@ -1,4 +1,5 @@
 using System;
+using Assets.Scripts.Audio;
 using Assets.Scripts.Diving.Bars;
 using Assets.Scripts.Diving.DivingInventory;
 using Assets.Scripts.Fishies.Domain;
@@ -62,6 +63,8 @@ public class CatchingMinigame : MonoBehaviour
         angleRad = ((Mathf.Atan2(movement.Direction.y, movement.Direction.x) * Mathf.Rad2Deg) + 360f) % 360f;
         wiggleTime = 0;
         wiggleRad = 0;
+        
+        AudioManager.Instance.PlayLoop(AudioId.BattleBGM);
     }
 
     public void Grab(Vector2 velocityVector)
@@ -90,6 +93,7 @@ public class CatchingMinigame : MonoBehaviour
                 OnEnded.Invoke(false);
             }
             minigameCanvas.SetActive(false);
+            AudioManager.Instance.FadeOutLoop(AudioId.BattleBGM);
 
         } else if (catchBar.CurrentValue <= 0)
         {
@@ -98,6 +102,7 @@ public class CatchingMinigame : MonoBehaviour
             movement.Lose(DivingController.Instance.gameObject.transform.position);
             minigameCanvas.SetActive(false);
             OnEnded.Invoke(false);
+            AudioManager.Instance.FadeOutLoop(AudioId.BattleBGM);
         }
     }
     

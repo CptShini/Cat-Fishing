@@ -7145,6 +7145,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ExitArea
   targetSceneIndex: 1
+  triggerAudio: 18
   onExit:
     m_PersistentCalls:
       m_Calls:
@@ -25219,6 +25220,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2054088895}
+  - {fileID: 1630345701}
   - {fileID: 1797614256}
   m_Father: {fileID: 751409321}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -30453,13 +30455,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1630345700}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.507, z: 0}
-  m_LocalScale: {x: 0.97948635, y: 5.2360334, z: 1}
+  m_LocalRotation: {x: -0, y: 0.000000014901161, z: 0.33471158, w: 0.94232064}
+  m_LocalPosition: {x: 5.059239, y: -1.0300066, z: -2.2399998}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1798115163}
-  m_Father: {fileID: 1797614256}
+  m_Father: {fileID: 1460074594}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &1630345702
 BoxCollider2D:
@@ -30495,7 +30497,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.00043217093, y: -0.01565282}
+  m_Offset: {x: 0, y: 1.65}
   m_SpriteTilingProperty:
     border: {x: 0.049999997, y: 0.049999997, z: 0.049999997, w: 0.049999997}
     pivot: {x: 0.5, y: 0.5}
@@ -30505,7 +30507,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.14425458, y: 0.12697223}
+  m_Size: {x: 1.5, y: 4}
   m_EdgeRadius: 0
 --- !u!114 &1630345703
 MonoBehaviour:
@@ -32539,7 +32541,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1797614256}
   - component: {fileID: 1797614258}
-  - component: {fileID: 1797614260}
   - component: {fileID: 1797614259}
   - component: {fileID: 1797614257}
   m_Layer: 14
@@ -32561,8 +32562,7 @@ Transform:
   m_LocalPosition: {x: 5.6893306, y: -1.8857996, z: 0}
   m_LocalScale: {x: 0.39999998, y: 0.39999998, z: 0.39999998}
   m_ConstrainProportionsScale: 1
-  m_Children:
-  - {fileID: 1630345701}
+  m_Children: []
   m_Father: {fileID: 1460074594}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 39.11}
 --- !u!95 &1797614257
@@ -32772,42 +32772,6 @@ PolygonCollider2D:
       - {x: -0.20135456, y: -2.015762}
       - {x: 0.1559188, y: -2.0042372}
   m_UseDelaunayMesh: 1
---- !u!58 &1797614260
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1797614255}
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Radius: 0.1
 --- !u!1 &1798115162
 GameObject:
   m_ObjectHideFlags: 0
@@ -32834,13 +32798,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1798115162}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7065371, y: 0.028377548, z: -0.028377548, w: 0.7065371}
-  m_LocalPosition: {x: 0.13, y: 0.41, z: -5.6}
+  m_LocalRotation: {x: -0.70710677, y: 0, z: 0, w: 0.70710677}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1630345701}
-  m_LocalEulerAnglesHint: {x: -85.4, y: 90, z: -90}
+  m_LocalEulerAnglesHint: {x: -90, y: 90, z: -90}
 --- !u!198 &1798115164
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -41166,7 +41130,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2054088895}
   - component: {fileID: 2054088899}
-  - component: {fileID: 2054088898}
   - component: {fileID: 2054088897}
   - component: {fileID: 2054088896}
   m_Layer: 14
@@ -41366,42 +41329,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   damage: 10
   power: 10
---- !u!58 &2054088898
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2054088894}
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: -0.0012008668, y: 0}
-  m_Radius: 0.09291496
 --- !u!212 &2054088899
 SpriteRenderer:
   serializedVersion: 2
@@ -41990,10 +41917,6 @@ PrefabInstance:
     - target: {fileID: 3488762553112977489, guid: e74e4427df1273a40b40b650782f5436, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5764792908508381442, guid: e74e4427df1273a40b40b650782f5436, type: 3}
-      propertyPath: m_Name
-      value: Save Manager
       objectReference: {fileID: 0}
     - target: {fileID: 9157978287733485072, guid: e74e4427df1273a40b40b650782f5436, type: 3}
       propertyPath: m_Name
