@@ -39,15 +39,24 @@ public class DiscoveryManager : MonoBehaviour, IDataPersistence
         }
         foreach (Fish discoveredFish in _discoveries.Values)
         {
-            Debug.Log($"HELLOOOOO??");
             Debug.Log(discoveredFish.RelativeWeight);
             if(fish.Species == discoveredFish.Species)
             {
-                Debug.Log("Uhm");
+                if(fish.Weight > discoveredFish.Weight)
+                {
+                    NewRecord(fish, discoveredFish);
+                }
                 return;
             }
         }
         NewDiscovery(fish);
+    }
+
+    private void NewRecord(Fish fish, Fish other)
+    {
+        Debug.Log("NEW RECORD!!! AMAZING! AAAAAAAAAAAAAAAAAAAHHHH");
+        _discoveries.Remove(other.Id);
+        _discoveries.Add(fish.Id, fish);
     }
 
     private void NewDiscovery(Fish fish)
@@ -55,11 +64,10 @@ public class DiscoveryManager : MonoBehaviour, IDataPersistence
         _discoveries.Add(fish.Id, fish);
     }
 
-
     public void LoadData(GameData data)
     {
         _discoveries = data.Discoveries.ToDictionary(species);
-        _discoveries.Clear();
+        //_discoveries.Clear();
     }
 
     public void SaveData(ref GameData data)
