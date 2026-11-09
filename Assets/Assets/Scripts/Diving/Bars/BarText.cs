@@ -1,24 +1,21 @@
-using Assets.Scripts.Diving.Bars;
 using TMPro;
 using UnityEngine;
 
-public class BarText : MonoBehaviour
+namespace Assets.Scripts.Diving.Bars
 {
-    [SerializeField] private StatBar bar;
-    private TextMeshProUGUI text;
-    private int _maxValue;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public class BarText : MonoBehaviour
     {
-        bar.ValueChanged.AddListener(SetText);
-        _maxValue = (int)bar.MaxVal;
-        text = GetComponent<TextMeshProUGUI>();
-        SetText(bar.CurrentValue);
-    }
+        [SerializeField] private StatBar bar;
+        
+        private TextMeshProUGUI _text;
+        
+        private void Awake()
+        {
+            _text = GetComponent<TextMeshProUGUI>();
+            bar.ValueChanged.AddListener(SetText);
+        }
 
-    void SetText(float value)
-    {
-        text.text = $"{(int) value}/{_maxValue} KG";
+        private void SetText(float value, float max) => 
+            _text.text = $"{value:N0}/{max} KG";
     }
-
 }
