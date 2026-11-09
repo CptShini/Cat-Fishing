@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using Assets.Scripts.Data.Domain;
 using Assets.Scripts.Data.Persistence;
-using Assets.Scripts.Diving.DivingInventory;
 using Assets.Scripts.Fishies.Domain;
 using UnityEngine;
 using UnityEngine.Events;
@@ -27,8 +26,6 @@ public class FishCollectionManager : MonoBehaviour, IDataPersistence
         }
 
         Instance = this;
-        transform.parent = null;
-        DontDestroyOnLoad(gameObject);
     }
 
     public void Add(Fish fish)
@@ -46,12 +43,6 @@ public class FishCollectionManager : MonoBehaviour, IDataPersistence
         CollectionChanged.Invoke();
 
         return true;
-    }
-    
-    public void AddCollectibles(List<FishCollectible> fishCollectibles)
-    {
-        fishCollectibles.ForEach(fc => _collectedFish.Add(fc.fish.Id, fc.fish));
-        CollectionChanged.Invoke();
     }
 
     public void LoadData(GameData data)

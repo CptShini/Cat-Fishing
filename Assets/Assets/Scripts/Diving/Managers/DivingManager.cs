@@ -35,7 +35,7 @@ namespace Assets.Scripts.Diving.Managers
             if (_noOxygen) return;
         
             _noOxygen = true;
-            SceneTransition.Instance.LoadScene(aquariumSceneIndex);
+            GameManager.Instance.ChangeScene(aquariumSceneIndex);
         }
     }
 }

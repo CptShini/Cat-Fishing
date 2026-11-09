@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using System.Text;
-using Assets.Scripts.Data.Persistence;
+﻿using Assets.Scripts.Data.Persistence;
 using UnityEngine;
 
 namespace Assets.Scripts.Data
@@ -10,6 +8,10 @@ namespace Assets.Scripts.Data
     {
         public static SaveManager Instance { get; private set; }
         
+        public bool HasSave { get; private set; }
+        public SaveFile[] Saves { get; private set; }
+        
+        private bool _isInitialized;
         private string _currentSaveName;
         private DataPersistenceManager _dataPersistenceManager;
         
@@ -20,33 +22,31 @@ namespace Assets.Scripts.Data
                 Destroy(gameObject);
                 return;
             }
-
+            
             Instance = this;
             _dataPersistenceManager = GetComponent<DataPersistenceManager>();
         }
-        
-        // TODO: Don't just load most recent save lol
-        private void Start()
-        {
-            SaveFile[] saves = GetSaves();
-            { // For literally no good reason
-                StringBuilder sb = new();
-                sb.Append($"{saves.Length} save");
-                if (saves.Length != 1) sb.Append('s');
-                sb.Append(" found");
-                if (saves.Length != 0)
-                {
-                    sb.Append(":\n");
-                    saves.ToList().ForEach(save => sb.AppendLine(save.ToString()));
-                }
-                
-                print(sb.ToString());
-            }
 
-            Select(saves.Length > 0 ? saves[0].Name : "default");
-            Load();
+        public void Initialize()
+        {
+            if (_isInitialized) return;
+            
+            Saves = _dataPersistenceManager.GetSaves();
+            
+            HasSave = Saves.Length > 0;
+            if (HasSave)
+            {
+                Select(Saves[0].Name);
+                Load();
+            }
+            else
+            {
+                StartNew();
+            }
+            
+            _isInitialized = true;
         }
-        
+
         public void Select(string saveName) => _currentSaveName = saveName;
         
         public bool NoSaveSelected()
@@ -56,17 +56,17 @@ namespace Assets.Scripts.Data
             
             return invalidName;
         }
+
+        public void StartNew() => _dataPersistenceManager.NewGameData();
+        public void LoadData() => _dataPersistenceManager.LoadDataToGame();
+        public void SaveData() => _dataPersistenceManager.SaveGameToData();
         
-        public SaveFile[] GetSaves() => _dataPersistenceManager.GetSaves();
-
-        public void StartNew() => _dataPersistenceManager.NewGame();
-
         public void Load()
         {
             if (NoSaveSelected())
                 return;
             
-            _dataPersistenceManager.LoadGame(_currentSaveName);
+            _dataPersistenceManager.LoadFromSaveFile(_currentSaveName);
         }
 
         public void Save()
@@ -74,9 +74,15 @@ namespace Assets.Scripts.Data
             if (NoSaveSelected())
                 return;
             
-            _dataPersistenceManager.SaveGame(_currentSaveName);
+            _dataPersistenceManager.SaveToSaveFile(_currentSaveName);
         }
 
-        private void OnDestroy() => Save();
+        public void FindDPOs() => _dataPersistenceManager.FindDataPersistenceObjects();
+
+        private void OnApplicationQuit()
+        {
+            SaveData();
+            Save();
+        }
     }
 }

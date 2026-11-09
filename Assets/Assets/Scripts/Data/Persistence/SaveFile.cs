@@ -15,6 +15,6 @@ namespace Assets.Scripts.Data.Persistence
         }
 
         public override string ToString() => 
-            $"{Name} ({Timestamp.ToShortTimeString()} - {Timestamp.ToShortDateString()})";
+            $"{Name}\n({Timestamp.ToShortTimeString()} - {Timestamp.ToShortDateString()})";
     }
 }

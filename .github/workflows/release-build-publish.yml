@@ -28,10 +28,10 @@ jobs:
         id: validate
         env:
           GH_TOKEN: ${{ github.token }}
-          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
-          PR_HEAD_REF: ${{ github.head_ref }}
           PR_HEAD_REPOSITORY: ${{ github.event.pull_request.head.repo.full_name }}
           TARGET_REPOSITORY: ${{ github.repository }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PR_HEAD_REF: ${{ github.head_ref }}
           BASE_REF: ${{ github.base_ref }}
         run: bash Scripts/ci/validate-promoted-release.sh
 
@@ -49,14 +49,14 @@ jobs:
           android: true
           dotnet: true
           haskell: true
-          large-packages: true
+          large-packages: false
           docker-images: true
 
       - name: "Checkout ${{ needs.validate-release.outputs.tag }}"
         uses: actions/checkout@v4
         with:
           ref: ${{ needs.validate-release.outputs.tag }}
-          fetch-depth: 0
+          fetch-depth: 1
           lfs: true
 
       - name: Checkout trusted scripts
@@ -83,6 +83,7 @@ jobs:
         with:
           targetPlatform: StandaloneWindows64
           versioning: Tag
+          buildProfile: 'Assets/Settings/Build Profiles/Windows.asset'
 
       - name: Prepare release ZIP
         env:
@@ -96,6 +97,7 @@ jobs:
           path: release-assets/CatFishing-${{ needs.validate-release.outputs.tag }}-Windows.zip
           if-no-files-found: error
           retention-days: 1
+          compression-level: 0
 
   publish-release:
     name: Publish GitHub release
@@ -112,12 +114,15 @@ jobs:
           persist-credentials: false
 
       - name: "Download release ${{ needs.validate-release.outputs.tag }} package"
+        if: ${{ needs.build-release.result == 'success' }}
         uses: actions/download-artifact@v4
         with:
           name: CatFishing-Release-${{ needs.validate-release.outputs.tag }}-${{ github.run_id }}-${{ github.run_attempt }}
           path: release-assets
 
       - name: Create GitHub release
+        id: create-release
+        if: ${{ needs.build-release.result == 'success' }}
         uses: softprops/action-gh-release@v3
         with:
           tag_name: ${{ needs.validate-release.outputs.tag }}
@@ -128,12 +133,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Notify Discord about release
-        if: ${{ always() }}
+        if: ${{ always() && needs.build-release.result != 'skipped' }}
         continue-on-error: true
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_RELEASE_WEBHOOK_URL }}
           VERSION_TAG: ${{ needs.validate-release.outputs.tag }}
           RELEASE_URL: ${{ github.server_url }}/${{ github.repository }}/releases/tag/${{ needs.validate-release.outputs.tag }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-          BUILD_STATUS: ${{ job.status }}
+          BUILD_STATUS: ${{ needs.build-release.result == 'success' && steps.create-release.outcome == 'success' && 'success' || 'failure' }}
         run: bash Scripts/ci/notify-discord.sh release

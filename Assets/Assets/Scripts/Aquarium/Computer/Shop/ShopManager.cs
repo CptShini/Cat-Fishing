@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 
 public class ShopManager : MonoBehaviour
 {
@@ -7,20 +8,12 @@ public class ShopManager : MonoBehaviour
     [SerializeField] private ShopSlot shopSlotPrefab;
     [SerializeField] private Transform shopContent;
 
-    [Header("Shop Items")]
-    [SerializeField] private List<ShopItems> shopItems = new();
-
     [Header("Inventory")]
     [SerializeField] private DecorInventoryManager inventoryManager;
 
     private readonly HashSet<ItemSO> purchasedItems = new();
 
     private readonly List<ShopSlot> spawnedSlots = new();
-
-    private void Start()
-    {
-        PopulateShopItems(shopItems);
-    }
 
     public bool IsPurchased(ItemSO itemSO)
     {
@@ -34,10 +27,9 @@ public class ShopManager : MonoBehaviour
     public void PopulateShopItems(List<ShopItems> shopItems)
     {
         // remove any existing slots before populating new ones
-        foreach (ShopSlot slot in spawnedSlots)
+        foreach (ShopSlot slot in spawnedSlots.Where(slot => slot))
         {
-            if (slot != null)
-                Destroy(slot.gameObject);
+            Destroy(slot.gameObject);
         }
         spawnedSlots.Clear();
 
@@ -103,10 +95,9 @@ public class ShopManager : MonoBehaviour
 
     private void RefreshShopSlots()
     {
-        foreach (ShopSlot slot in spawnedSlots)
+        foreach (ShopSlot slot in spawnedSlots.Where(slot => slot.gameObject.activeSelf))
         {
-            if (slot.gameObject.activeSelf)
-                slot.UpdatePurchasedState();
+            slot.UpdatePurchasedState();
         }
     }
 }

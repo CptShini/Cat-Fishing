@@ -15,11 +15,6 @@ namespace Assets.Scripts.Data.Persistence
         
         private void Awake()
         {
-            _dataPersistenceObjects = 
-                FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None)
-                .OfType<IDataPersistence>()
-                .ToList();
-            
             _dataIOHandler = GetComponent<DataIOHandler>();
             if (_dataIOHandler == null)
                 throw new MissingComponentException("No data IO handler attached.");
@@ -27,31 +22,16 @@ namespace Assets.Scripts.Data.Persistence
         
         public SaveFile[] GetSaves() => _dataIOHandler.GetSaves();
 
-        public void NewGame() => _gameData = new();
+        public void NewGameData() => _gameData = new();
+        public void LoadFromSaveFile(string saveName) => _gameData = _dataIOHandler.Load(saveName) ?? new();
+        public void SaveToSaveFile(string saveName) => _dataIOHandler.Save(_gameData, saveName);
+        public void LoadDataToGame() => _dataPersistenceObjects.ForEach(dpo => dpo.LoadData(_gameData));
+        public void SaveGameToData() => _dataPersistenceObjects.ForEach(dpo => dpo.SaveData(ref _gameData));
 
-        public void LoadGame(string saveName)
-        {
-            _gameData = _dataIOHandler.Load(saveName);
-            if (_gameData == null)
-            {
-                Debug.LogWarning($"Save file \"{saveName}\" not found! Loading blank save...");
-                NewGame();
-            }
-            
-            foreach (IDataPersistence dataPersistenceObj in _dataPersistenceObjects)
-            {
-                dataPersistenceObj.LoadData(_gameData);
-            }
-        }
-
-        public void SaveGame(string saveName)
-        {
-            foreach (IDataPersistence dataPersistenceObj in _dataPersistenceObjects)
-            {
-                dataPersistenceObj.SaveData(ref _gameData);
-            }
-            
-            _dataIOHandler.Save(_gameData, saveName);
-        }
+        public void FindDataPersistenceObjects() =>
+            _dataPersistenceObjects =
+                FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None)
+                    .OfType<IDataPersistence>()
+                    .ToList();
     }
 }
