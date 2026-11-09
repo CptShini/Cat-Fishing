@@ -3,6 +3,15 @@ using Assets.Scripts.Data;
 using Assets.Scripts.Data.Domain;
 using Assets.Scripts.Data.Persistence;
 
+public enum PlayerUpgradeType
+{
+    Speed,
+    PounceSpeed,
+    ClawsStrength,
+    OxygenCapacity,
+    CarryingCapacity
+}
+
 public class ShopStatsData : MonoBehaviour, IDataPersistence
 {
     [Header("Player Stats")]
@@ -28,7 +37,8 @@ public class ShopStatsData : MonoBehaviour, IDataPersistence
     public int oxygenCapacityLevel { get; private set; }
     public int carryingCapacityLevel { get; private set; }
 
-    private const int MaxUpgradeLevel = 5;
+    [Header("Max Upgrade Level")]
+    [SerializeField] private int MaxUpgradeLevel = 5;
 
     public void LoadData(GameData data)
     {
@@ -80,74 +90,93 @@ public class ShopStatsData : MonoBehaviour, IDataPersistence
         return data.PlayerStats[key];
     }
 
-
-    public void UpgradeSpeed()
+    public float GetStatValue(PlayerUpgradeType type)
     {
-        if (speedLevel >= MaxUpgradeLevel)
+        switch (type)
         {
-            Debug.Log("Speed is already at max level");
-            return;
+            case PlayerUpgradeType.Speed:
+                return speed;
+
+            case PlayerUpgradeType.PounceSpeed:
+                return pounceSpeed;
+
+            case PlayerUpgradeType.ClawsStrength:
+                return clawsStrength;
+
+            case PlayerUpgradeType.OxygenCapacity:
+                return oxygenCapacity;
+
+            case PlayerUpgradeType.CarryingCapacity:
+                return carryingCapacity;
+
+            default:
+                return 0f;
         }
-
-        speed += speedUpgrade;
-        speedLevel++;
-
-        SaveUpgrade();
     }
 
-    public void UpgradePounceSpeed()
+    public int GetUpgradeLevel(PlayerUpgradeType type)
     {
-        if (pounceSpeedLevel >= MaxUpgradeLevel)
+        switch (type)
         {
-            Debug.Log("Pounce speed is already at max level");
-            return;
+            case PlayerUpgradeType.Speed:
+                return speedLevel;
+
+            case PlayerUpgradeType.PounceSpeed:
+                return pounceSpeedLevel;
+
+            case PlayerUpgradeType.ClawsStrength:
+                return clawsStrengthLevel;
+
+            case PlayerUpgradeType.OxygenCapacity:
+                return oxygenCapacityLevel;
+
+            case PlayerUpgradeType.CarryingCapacity:
+                return carryingCapacityLevel;
+
+            default:
+                return 0;
         }
-
-        pounceSpeed += pounceSpeedUpgrade;
-        pounceSpeedLevel++;
-
-        SaveUpgrade();
     }
 
-    public void UpgradeClawsStrength()
+    public void UpgradeStat(PlayerUpgradeType type)
     {
-        if(clawsStrengthLevel >= MaxUpgradeLevel)
+        if (GetUpgradeLevel(type) >= MaxUpgradeLevel)
         {
-            Debug.Log("Claws strength is already at max level");
+            Debug.Log($"{type} is already at max level");
             return;
         }
 
-        clawsStrength += clawsStrengthUpgrade;
-        clawsStrengthLevel++;
-
-        SaveUpgrade();
-    }
-
-    public void UpgradeOxygen()
-    {
-        if(oxygenCapacityLevel >= MaxUpgradeLevel)
+        switch (type)
         {
-            Debug.Log("Oxygen capacity is already at max level");
-            return;
+            case PlayerUpgradeType.Speed:
+                speed += speedUpgrade;
+                speedLevel++;
+                break;
+
+            case PlayerUpgradeType.PounceSpeed:
+                pounceSpeed += pounceSpeedUpgrade;
+                pounceSpeedLevel++;
+                break;
+
+            case PlayerUpgradeType.ClawsStrength:
+                clawsStrength += clawsStrengthUpgrade;
+                clawsStrengthLevel++;
+                break;
+
+            case PlayerUpgradeType.OxygenCapacity:
+                oxygenCapacity += oxygenUpgrade;
+                oxygenCapacityLevel++;
+                break;
+
+            case PlayerUpgradeType.CarryingCapacity:
+                carryingCapacity += carryingCapacityUpgrade;
+                carryingCapacityLevel++;
+                break;
+
+            default:
+                return;
         }
 
-        oxygenCapacity += oxygenUpgrade;
-        oxygenCapacityLevel++;
-
-        SaveUpgrade();
-    }
-
-    public void UpgradeCarryingCapacity()
-    {
-        if(carryingCapacityLevel >= MaxUpgradeLevel)
-        {
-            Debug.Log("Carrying capacity is already at max level");
-            return;
-        }
-
-        carryingCapacity += carryingCapacityUpgrade;
-        carryingCapacityLevel++;
-        
         SaveUpgrade();
     }
 
