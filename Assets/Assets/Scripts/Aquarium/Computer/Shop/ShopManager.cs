@@ -52,12 +52,14 @@ public class ShopManager : MonoBehaviour
         if (itemSO.itemType == ItemType.Furniture && IsPurchased(itemSO))
         {
             Debug.Log("Already purchased: " + itemSO.itemName);
+            AudioManager.Instance.PlayAlreadyPurchased();
             return;
         }
 
         if (inventoryManager.gold < price)
         {
             Debug.Log("Not enough gold.");
+            AudioManager.Instance.PlayNotEnoughGold();
             return;
         }
 
@@ -72,10 +74,12 @@ public class ShopManager : MonoBehaviour
                     purchasedItems.Add(itemSO);
                 RefreshShopSlots();
                 Debug.Log("Purchased: " + itemSO.itemName);
+                AudioManager.Instance.PlayPurchaseSuccess();
             /*}
             else
             {
                 Debug.Log("No space in inventory.");
+                AudioManager.Instance.PlayInventoryFull();
                 return;
             }*/
         }

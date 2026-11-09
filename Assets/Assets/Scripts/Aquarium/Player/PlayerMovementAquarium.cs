@@ -25,6 +25,7 @@ public class PlayerMovementAquarium : MonoBehaviour
         {
             rb.linearVelocity = Vector2.zero;
             animator.SetBool("isWalking", false);
+            AudioManager.Instance.FadeOutLoop();
             return;
         }
 
@@ -35,8 +36,13 @@ public class PlayerMovementAquarium : MonoBehaviour
         {
             rb.MovePosition(targetPosition);
         }
-
-        animator.SetBool("isWalking", moveInput != Vector2.zero);
+        
+        bool isWalking = moveInput != Vector2.zero;
+        animator.SetBool("isWalking", isWalking);
+        if (isWalking)
+            AudioManager.Instance.PlayWalking();
+        else
+            AudioManager.Instance.FadeOutLoop();
     }
 
     bool CanMoveTo(Vector2 position)

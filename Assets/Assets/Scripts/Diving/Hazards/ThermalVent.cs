@@ -30,6 +30,7 @@ public class ThermalVent : MonoBehaviour
         if(other.gameObject.TryGetComponent(out IDamageable damageable))
         {
             damageable.Damaged(damage, new Vector2(gameObject.transform.up.x, gameObject.transform.up.y) * power);
+            AudioManager.Instance.PlayHurt();
         }
     }
 
