@@ -11,6 +11,11 @@ namespace Assets.Scripts.Fishies.Domain
         
         private Dictionary<int, FishSpecies> _lookup;
 
+        public IReadOnlyCollection<FishSpecies> GetSpecies()
+        {
+            return species;
+        }
+
         public FishSpecies this[int id] =>
             species
                 .ToDictionary(s => s.Id)

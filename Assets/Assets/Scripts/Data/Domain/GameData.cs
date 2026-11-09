@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Assets.Scripts.Fishies.Domain;
 
 namespace Assets.Scripts.Data.Domain
@@ -8,11 +9,13 @@ namespace Assets.Scripts.Data.Domain
     {
         public SerializableDictionary<string, FishDTO> Collection;
         public SerializableDictionary<string, TankData> Tanks;
+        public SerializableDictionary<string, FishDTO> Discoveries;
         
         public GameData()
         {
             Collection = new();
             Tanks = new();
+            Discoveries = new();
         }
     }
 }

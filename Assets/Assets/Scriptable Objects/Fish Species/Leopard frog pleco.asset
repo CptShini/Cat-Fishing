@@ -15,8 +15,8 @@ MonoBehaviour:
   <Id>k__BackingField: 2
   <Name>k__BackingField: Leopard Frog Pleco
   <LatinName>k__BackingField: Peckoltia compta
-  <Biome>k__BackingField: Biome 1
-  <Icon>k__BackingField: {fileID: 0}
+  <Biome>k__BackingField: 0
+  <Icon>k__BackingField: {fileID: -413902752057121818, guid: e688b9a95fda19d4c84f5566041b649c, type: 3}
   <CatchPattern>k__BackingField: {fileID: 11400000, guid: 9b63fb7c51593774b916c9de7a885971, type: 2}
   <Weight>k__BackingField:
     Min: 0.3
