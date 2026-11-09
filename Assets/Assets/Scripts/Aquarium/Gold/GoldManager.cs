@@ -1,6 +1,9 @@
 using UnityEngine;
+using Assets.Scripts.Data;
+using Assets.Scripts.Data.Domain;
+using Assets.Scripts.Data.Persistence;
 
-public class GoldManager : MonoBehaviour
+public class GoldManager : MonoBehaviour, IDataPersistence
 {
     public static GoldManager Instance { get; private set; }
 
@@ -31,6 +34,7 @@ public class GoldManager : MonoBehaviour
 
         gold += amount;
         UpdateUI();
+        SaveGold();
     }
 
     public bool SpendGold(int amount)
@@ -39,7 +43,9 @@ public class GoldManager : MonoBehaviour
             return false;
 
         gold -= amount;
+        
         UpdateUI();
+        SaveGold();
 
         return true;
     }
@@ -52,5 +58,32 @@ public class GoldManager : MonoBehaviour
     private void UpdateUI()
     {
         GoldUI.Instance.UpdateGold(gold);
+    }
+
+    private void SaveGold()
+    {
+        SaveManager.Instance.SaveData();
+        SaveManager.Instance.Save();
+    }
+
+    public void LoadData(GameData data)
+    {
+        gold = data.Gold;
+        UpdateUI();
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        data.Gold = gold;
+    }
+
+    // for testing
+    public void ResetGold()
+    {
+        gold = 100;
+        UpdateUI();
+        SaveGold();
+
+        Debug.Log("Gold reset to 100.");
     }
 }

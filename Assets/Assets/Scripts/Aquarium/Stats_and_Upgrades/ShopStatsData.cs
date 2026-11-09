@@ -40,45 +40,9 @@ public class ShopStatsData : MonoBehaviour, IDataPersistence
     [Header("Max Upgrade Level")]
     [SerializeField] private int MaxUpgradeLevel = 5;
 
-    public void LoadData(GameData data)
-    {
-        if (data.PlayerStats == null)
-            data.PlayerStats = new();
-
-        speed = GetStat(data, "Speed", 10f);
-        pounceSpeed = GetStat(data, "PounceSpeed", 20f);
-        clawsStrength = GetStat(data, "ClawsStrength", 10f);
-        oxygenCapacity = GetStat(data, "OxygenCapacity", 100f);
-        carryingCapacity = GetStat(data, "CarryingCapacity", 25f);
-
-        speedLevel = Mathf.Clamp(Mathf.RoundToInt(GetStat(data, "SpeedLevel", 0f)), 0, MaxUpgradeLevel);
-        pounceSpeedLevel = Mathf.Clamp(Mathf.RoundToInt(GetStat(data, "PounceSpeedLevel", 0f)), 0, MaxUpgradeLevel);
-        clawsStrengthLevel = Mathf.Clamp(Mathf.RoundToInt(GetStat(data, "ClawsStrengthLevel", 0f)), 0, MaxUpgradeLevel);
-        oxygenCapacityLevel = Mathf.Clamp(Mathf.RoundToInt(GetStat(data, "OxygenCapacityLevel", 0f)), 0, MaxUpgradeLevel);
-        carryingCapacityLevel = Mathf.Clamp(Mathf.RoundToInt(GetStat(data, "CarryingCapacityLevel", 0f)), 0, MaxUpgradeLevel);
-
-        hasMiniMap = GetStat(data, "HasMiniMap", 0f) >= 1f;
-    }
-
-    public void SaveData(ref GameData data)
-    {
-        if (data.PlayerStats == null)
-            data.PlayerStats = new();
-
-        data.PlayerStats["Speed"] = speed;
-        data.PlayerStats["PounceSpeed"] = pounceSpeed;
-        data.PlayerStats["ClawsStrength"] = clawsStrength;
-        data.PlayerStats["OxygenCapacity"] = oxygenCapacity;
-        data.PlayerStats["CarryingCapacity"] = carryingCapacity;
-
-        data.PlayerStats["SpeedLevel"] = speedLevel;
-        data.PlayerStats["PounceSpeedLevel"] = pounceSpeedLevel;
-        data.PlayerStats["ClawsStrengthLevel"] = clawsStrengthLevel;
-        data.PlayerStats["OxygenCapacityLevel"] = oxygenCapacityLevel;
-        data.PlayerStats["CarryingCapacityLevel"] = carryingCapacityLevel;
-
-        data.PlayerStats["HasMiniMap"] = hasMiniMap ? 1f : 0f;
-    }
+    [Header("Upgrade Base Prices")]
+    [SerializeField] private int[] upgradePrices = { 10, 30, 65, 250, 400 };
+    [SerializeField] private int miniMapPrice = 100;
 
     private float GetStat(GameData data, string key, float defaultValue)
     {
@@ -146,6 +110,14 @@ public class ShopStatsData : MonoBehaviour, IDataPersistence
             return;
         }
 
+        int cost = GetUpgradeCost(type);
+
+        if (!GoldManager.Instance.SpendGold(cost))
+        {
+            Debug.Log("Not enough gold!");
+            return;
+        }
+
         switch (type)
         {
             case PlayerUpgradeType.Speed:
@@ -188,10 +160,31 @@ public class ShopStatsData : MonoBehaviour, IDataPersistence
             return;
         }
 
+        if (!GoldManager.Instance.SpendGold(miniMapPrice))
+        {
+            Debug.Log("Not enough gold to purchase MiniMap!");
+            return;
+        }
+
         hasMiniMap = true;
         SaveUpgrade();
 
         Debug.Log("Minimap purchased");
+    }
+
+    public int GetMiniMapPrice()
+    {
+        return miniMapPrice;
+    }
+
+    public int GetUpgradeCost(PlayerUpgradeType type)
+    {
+        int level = GetUpgradeLevel(type);
+
+        if (level >= MaxUpgradeLevel)
+            return 0;
+
+        return upgradePrices[level];
     }
 
     private void SaveUpgrade()
@@ -200,8 +193,49 @@ public class ShopStatsData : MonoBehaviour, IDataPersistence
         SaveManager.Instance.Save();
     }
 
+        public void LoadData(GameData data)
+    {
+        if (data.PlayerStats == null)
+            data.PlayerStats = new();
 
-    // just to test
+        speed = GetStat(data, "Speed", 10f);
+        pounceSpeed = GetStat(data, "PounceSpeed", 20f);
+        clawsStrength = GetStat(data, "ClawsStrength", 10f);
+        oxygenCapacity = GetStat(data, "OxygenCapacity", 100f);
+        carryingCapacity = GetStat(data, "CarryingCapacity", 25f);
+
+        speedLevel = Mathf.Clamp(Mathf.RoundToInt(GetStat(data, "SpeedLevel", 0f)), 0, MaxUpgradeLevel);
+        pounceSpeedLevel = Mathf.Clamp(Mathf.RoundToInt(GetStat(data, "PounceSpeedLevel", 0f)), 0, MaxUpgradeLevel);
+        clawsStrengthLevel = Mathf.Clamp(Mathf.RoundToInt(GetStat(data, "ClawsStrengthLevel", 0f)), 0, MaxUpgradeLevel);
+        oxygenCapacityLevel = Mathf.Clamp(Mathf.RoundToInt(GetStat(data, "OxygenCapacityLevel", 0f)), 0, MaxUpgradeLevel);
+        carryingCapacityLevel = Mathf.Clamp(Mathf.RoundToInt(GetStat(data, "CarryingCapacityLevel", 0f)), 0, MaxUpgradeLevel);
+
+        hasMiniMap = GetStat(data, "HasMiniMap", 0f) >= 1f;
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        if (data.PlayerStats == null)
+            data.PlayerStats = new();
+
+        data.PlayerStats["Speed"] = speed;
+        data.PlayerStats["PounceSpeed"] = pounceSpeed;
+        data.PlayerStats["ClawsStrength"] = clawsStrength;
+        data.PlayerStats["OxygenCapacity"] = oxygenCapacity;
+        data.PlayerStats["CarryingCapacity"] = carryingCapacity;
+
+        data.PlayerStats["SpeedLevel"] = speedLevel;
+        data.PlayerStats["PounceSpeedLevel"] = pounceSpeedLevel;
+        data.PlayerStats["ClawsStrengthLevel"] = clawsStrengthLevel;
+        data.PlayerStats["OxygenCapacityLevel"] = oxygenCapacityLevel;
+        data.PlayerStats["CarryingCapacityLevel"] = carryingCapacityLevel;
+
+        data.PlayerStats["HasMiniMap"] = hasMiniMap ? 1f : 0f;
+    }
+
+
+    // just to test 😀👍🔥✨
+    // (˵◝ ⩊  ◜˵マ meow uwu
     public void ResetStats()
     {
         speed = 10f;

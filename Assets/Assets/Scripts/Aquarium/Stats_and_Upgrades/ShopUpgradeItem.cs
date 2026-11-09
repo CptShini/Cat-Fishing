@@ -21,6 +21,7 @@ public class ShopUpgradeItem : MonoBehaviour
     [SerializeField] private TMP_Text nameText;
     [SerializeField] private TMP_Text valueText;
     [SerializeField] private TMP_Text levelText;
+    [SerializeField] private TMP_Text costText;
     [SerializeField] private Button upgradeButton;
 
     private ShopStatsData stats;
@@ -41,6 +42,16 @@ public class ShopUpgradeItem : MonoBehaviour
             levelText.gameObject.SetActive(false);
             valueText.gameObject.SetActive(false);
             nameText.text = "Mini Map";
+
+            if (stats.hasMiniMap)
+            {
+                costText.text = "PURCHASED";
+            }
+            else
+            {
+                costText.text = $"COST: {stats.GetMiniMapPrice()} GOLD";
+            }
+
             return;
         }
 
@@ -49,6 +60,17 @@ public class ShopUpgradeItem : MonoBehaviour
         int level = stats.GetUpgradeLevel(upgradeType);
 
         levelText.text = $"LEVEL {level}/5";
+
+        if (level >= 5)
+        {
+            costText.text = "MAX LEVEL";
+        }
+        else
+        {
+            int cost = stats.GetUpgradeCost(upgradeType);
+
+            costText.text = $"COST: {cost} GOLD";
+        }
     }
 
     public void BuyUpgrade()

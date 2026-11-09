@@ -9,12 +9,15 @@ namespace Assets.Scripts.Data.Domain
         public SerializableDictionary<string, FishDTO> Collection;
         public SerializableDictionary<string, TankData> Tanks;
         public SerializableDictionary<string, float> PlayerStats;
+        public int Gold;
 
         public GameData()
         {
             Collection = new();
             Tanks = new();
 
+            Gold = 0;
+            
             PlayerStats = new()
             {
                 { "Speed", 10f },
