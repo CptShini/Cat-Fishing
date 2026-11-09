@@ -1,4 +1,3 @@
-using TMPro;
 using UnityEngine;
 
 public class DecorInventoryManager : MonoBehaviour
@@ -9,20 +8,10 @@ public class DecorInventoryManager : MonoBehaviour
 
     [Header("Placement")]
     [SerializeField] private PlacementController placementController;
-
-    [Header("Gold")]
-    public int gold;
-    public TMP_Text goldText;
     
-    public void Start()
-    {
-        goldText.text = gold.ToString();
-    }
     
     public bool AddItem(ItemSO itemSO)
     {
-        goldText.text = gold.ToString();
-
         // if the item is a floor tile, check if it already exists in the inventory and increment the count
         if (itemSO.itemType == ItemType.FloorTile)
         {

@@ -55,43 +55,25 @@ public class ShopManager : MonoBehaviour
             return;
         }
 
-        if (inventoryManager.gold < price)
+        if (!GoldManager.Instance.HasEnoughGold(price))
         {
             Debug.Log("Not enough gold.");
             return;
         }
 
-        if(itemSO != null && inventoryManager.gold >= price)
-        {
-            /*if(HasSpaceForItem(itemSO))
-            {*/
-                inventoryManager.gold -= price;
-                inventoryManager.goldText.text = inventoryManager.gold.ToString();
-                inventoryManager.AddItem(itemSO);
-                if (itemSO.itemType == ItemType.Furniture)
-                    purchasedItems.Add(itemSO);
-                RefreshShopSlots();
-                Debug.Log("Purchased: " + itemSO.itemName);
-            /*}
-            else
-            {
-                Debug.Log("No space in inventory.");
-                return;
-            }*/
-        }
-    }
 
-    /*private bool HasSpaceForItem(ItemSO itemSO)
-    {
-        foreach (var slot in inventoryManager.inventorySlots)
-        {
-            if(slot.ItemSO == itemSO)
-                return true;
-            else if(slot.ItemSO == null)
-                return true;
-        }
-        return false;
-    }*/
+        if (!GoldManager.Instance.SpendGold(price))
+            return;
+
+        inventoryManager.AddItem(itemSO);
+        
+        if (itemSO.itemType == ItemType.Furniture)
+            purchasedItems.Add(itemSO);
+        
+        RefreshShopSlots();
+        Debug.Log("Purchased: " + itemSO.itemName);
+     
+    }
 
     private void RefreshShopSlots()
     {
