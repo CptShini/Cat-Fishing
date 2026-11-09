@@ -23,6 +23,8 @@ public class EncyclopediaManager : MonoBehaviour, IDataPersistence
     [SerializeField] private Image fishImage;
     [SerializeField] private TextMeshProUGUI catchHighscore;
     [SerializeField] private TextMeshProUGUI title;
+    [SerializeField] private TextMeshProUGUI weightRange;
+    [SerializeField] private TextMeshProUGUI description;
     private Dictionary<Guid, Fish> _discoveries = new();
 
     private void Awake()
@@ -73,7 +75,8 @@ public class EncyclopediaManager : MonoBehaviour, IDataPersistence
         fishImage.sprite = species.Icon;
         fishImage.color = Color.black;
         title.text = "???";
-
+        description.text = "";
+        weightRange.text = "???-??? KG";
         catchHighscore.text = "???";
     }
 
@@ -82,6 +85,8 @@ public class EncyclopediaManager : MonoBehaviour, IDataPersistence
         fishImage.sprite = fish.Species.Icon;
         fishImage.color = Color.white;
         title.text = $"{fish.Species.Name}";
+        description.text = fish.Species.Description;
+        weightRange.text = $"{Math.Round(fish.Species.Weight.Min, 1)}-{Math.Round(fish.Species.Weight.Max, 1)} KG";
 
         catchHighscore.text = $"{Math.Round(fish.Weight, 1) } KG";
     }

@@ -48,5 +48,9 @@ namespace Assets.Scripts.Fishies.Domain
         
         [field: SerializeField, Range(0, 10)]
         public int Sight { get; private set; }
+
+         // --- Description text, funny warning ---
+        [field: SerializeField, Multiline, Header("Description")]
+        public string Description {get; private set; }
     }
 }
