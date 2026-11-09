@@ -1,0 +1,70 @@
+using System;
+using System.Collections.Generic;
+using Assets.Scripts.Data.Domain;
+using Assets.Scripts.Data.Persistence;
+using Assets.Scripts.Fishies.Domain;
+using UnityEngine;
+
+public class DiscoveryManager : MonoBehaviour, IDataPersistence
+{
+    public static DiscoveryManager Instance { get; private set; }
+        
+    public bool IsEnabled { get; private set; }
+
+    private Dictionary<Guid, Fish> _discoveries;
+    [SerializeField] private FishSpeciesDatabase species;
+
+    void Awake()
+    {
+        if (Instance != null && Instance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
+        Instance = this;
+        _discoveries = new();
+    }
+
+    void Start()
+    {
+        CatchingMinigame.Instance.OnWin.AddListener(CheckForDiscovery);
+    }
+    private void CheckForDiscovery(Fish fish)
+    {
+        Debug.Log($"AAAAHHHHHH {fish.Strength}, {_discoveries.Count}");
+        if(_discoveries.Count == 0)
+        {
+            NewDiscovery(fish);
+            return;
+        }
+        foreach (Fish discoveredFish in _discoveries.Values)
+        {
+            Debug.Log($"HELLOOOOO??");
+            Debug.Log(discoveredFish.RelativeWeight);
+            if(fish.Species == discoveredFish.Species)
+            {
+                Debug.Log("Uhm");
+                return;
+            }
+        }
+        NewDiscovery(fish);
+    }
+
+    private void NewDiscovery(Fish fish)
+    {
+        Debug.Log("NEW DISCOVERY");
+        _discoveries.Add(fish.Id, fish);
+    }
+
+
+    public void LoadData(GameData data)
+    {
+        _discoveries = data.Discoveries.ToDictionary(species);
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        data.Discoveries = _discoveries.ToSerializableDictionary();
+    }
+
+}

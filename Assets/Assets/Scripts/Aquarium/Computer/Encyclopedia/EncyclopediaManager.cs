@@ -17,7 +17,7 @@ public class EncyclopediaManager : MonoBehaviour, IDataPersistence
     [SerializeField] private Transform grid;
     [SerializeField] private FishSpeciesDatabase species;
 
-    private Dictionary<Guid, Fish> _discoveries;
+    private Dictionary<Guid, Fish> _discoveries = new();
 
     private void Awake()
     {
@@ -27,7 +27,6 @@ public class EncyclopediaManager : MonoBehaviour, IDataPersistence
             return;
         }
         Instance = this;
-        _discoveries = new();
     }
 
     void Start()
