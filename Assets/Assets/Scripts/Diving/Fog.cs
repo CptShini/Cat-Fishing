@@ -1,50 +1,39 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Assets.Scripts.Data.Domain;
+using Assets.Scripts.Data.Persistence;
 
-public class Fog : MonoBehaviour
+public class Fog : MonoBehaviour, IDataPersistence
 {
-    private static HashSet<string> exploredFogs = new HashSet<string>();
+    private static bool saved, loaded;
+    private static HashSet<int> exploredFogs = new();
 
-    [SerializeField] private string fogID;
+    [SerializeField] private int fogID;
 
-    private SpriteRenderer spriteRenderer;
-    private bool isFading;
+    private bool _isFading;
+    private SpriteRenderer _spriteRenderer;
 
-    private void Awake()
-    {
-        spriteRenderer = GetComponent<SpriteRenderer>();
+    private void Awake() => _spriteRenderer = GetComponent<SpriteRenderer>();
 
-        // Check if this fog has already been explored
-        if (exploredFogs.Contains(fogID))
-        {
-            gameObject.SetActive(false);
-        }
-    }
-
-    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
-    private static void ResetExploredFogs()
-    {
-        exploredFogs.Clear();
-    }
-
+    private void Start() => gameObject.SetActive(!exploredFogs.Contains(fogID));
+    
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player") && !isFading)
-        {
-            Debug.Log("Player entered the fog");
-            StartCoroutine(FadeOut());
-        }
+        if (!other.CompareTag("Player") || _isFading) return;
+        
+        StartCoroutine(FadeOut());
     }
 
     private IEnumerator FadeOut()
     {
-        isFading = true;
+        _isFading = true;
 
         float duration = 2f;
         float elapsed = 0f;
 
-        Color color = spriteRenderer.color;
+        Color color = _spriteRenderer.color;
         float startAlpha = color.a;
 
         while (elapsed < duration)
@@ -53,16 +42,32 @@ public class Fog : MonoBehaviour
 
             float alpha = Mathf.Lerp(startAlpha, 0f, elapsed / duration);
 
-            spriteRenderer.color = new Color(color.r, color.g, color.b, alpha);
+            _spriteRenderer.color = new(color.r, color.g, color.b, alpha);
 
             yield return null;
         }
 
-        spriteRenderer.color = new Color(color.r, color.g, color.b, 0f);
+        _spriteRenderer.color = new(color.r, color.g, color.b, 0f);
 
         // Remember explored state
         exploredFogs.Add(fogID);
 
         gameObject.SetActive(false);
+    }
+
+    public void LoadData(GameData data)
+    {
+        if (loaded) return;
+        
+        loaded = true;
+        exploredFogs = data.ExploredFogs.ToHashSet();
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        if (saved) return;
+        
+        saved = true;
+        data.ExploredFogs = exploredFogs.ToList();
     }
 }
