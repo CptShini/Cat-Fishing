@@ -57,7 +57,6 @@ public class HeadScript : MonoBehaviour
 
         if(!flipped && 90f < (_pb.rotation + 360) % 360 && (_pb.rotation + 360) % 360 <= 268f)
         {
-            Debug.Log(_pb.rotation);
             flipped = true;
             SetHingeBounds(-mainUpper, mainLower);
             _pb.transform.localScale = new Vector3 (0.5f, -0.5f, 1);
@@ -67,7 +66,6 @@ public class HeadScript : MonoBehaviour
         }
         else if(flipped && (!(90f < (_pb.rotation + 360) % 360) || !((_pb.rotation + 360) % 360 <= 272f)))
         {
-            Debug.Log(_pb.rotation);
             flipped = false;
             _pb.transform.localScale = new Vector3 (0.5f, 0.5f, 1);
             _body.transform.localScale = new Vector3 (0.5f, 0.5f, 1);
