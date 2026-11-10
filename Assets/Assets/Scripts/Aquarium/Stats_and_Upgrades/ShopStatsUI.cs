@@ -24,7 +24,7 @@ public class ShopStatsUI : MonoBehaviour
     {
         FindStats();
 
-        miniMapStatusText.text = stats.hasMiniMap
+        miniMapStatusText.text = stats.hasMinimap
             ? "PURCHASED"
             : "NOT PURCHASED";
     }

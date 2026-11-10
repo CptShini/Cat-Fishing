@@ -1,109 +1,38 @@
 using UnityEngine;
-using Assets.Scripts.Data;
 using Assets.Scripts.Data.Domain;
 using Assets.Scripts.Data.Persistence;
-
-public enum PlayerUpgradeType
-{
-    Speed,
-    PounceSpeed,
-    ClawsStrength,
-    OxygenCapacity,
-    CarryingCapacity
-}
+using Assets.Scripts.Upgrades;
 
 public class ShopStatsData : MonoBehaviour, IDataPersistence
 {
-    [Header("Player Stats")]
-    public float speed = 10f;
-    public float pounceSpeed = 20f;
-    public float clawsStrength = 10f;
-    public float oxygenCapacity = 100f;
-    public float carryingCapacity = 25f;
+    public bool hasMinimap { get; private set; }
 
-    public bool hasMiniMap { get; private set; }
+    [field: SerializeField] public UpgradeLedger UpgradeLedger { get; private set; }
 
-    [Header("Upgrade Amounts")]
-    [SerializeField] private float speedUpgrade = 2f;
-    [SerializeField] private float pounceSpeedUpgrade = 2f;
-    [SerializeField] private float clawsStrengthUpgrade = 2f;
-    [SerializeField] private float oxygenUpgrade = 20f;
-    [SerializeField] private float carryingCapacityUpgrade = 5f;
+    private int 
+        _speedLevel,
+        _pounceSpeedLevel,
+        _clawStrengthLevel,
+        _oxygenCapacityLevel,
+        _carryingCapacityLevel;
 
-    [Header("Upgrade Levels")]
-    public int speedLevel { get; private set; }
-    public int pounceSpeedLevel { get; private set; }
-    public int clawsStrengthLevel { get; private set; }
-    public int oxygenCapacityLevel { get; private set; }
-    public int carryingCapacityLevel { get; private set; }
+    public float GetStatValue(LevelUpgrade type, int level) =>
+        UpgradeLedger.GetUpgradeLevels(type)[level].Stat;
 
-    private int MaxUpgradeLevel = 5;
-
-    [Header("Upgrade Base Prices")]
-    [SerializeField] private int[] upgradePrices = { 10, 30, 65, 250, 400 };
-    [SerializeField] private int miniMapPrice = 100;
-
-    private float GetStat(GameData data, string key, float defaultValue)
-    {
-        if (!data.PlayerStats.ContainsKey(key))
+    public int GetUpgradeLevel(LevelUpgrade type) =>
+        type switch
         {
-            data.PlayerStats[key] = defaultValue;
-        }
+            LevelUpgrade.Speed => _speedLevel,
+            LevelUpgrade.PounceSpeed => _pounceSpeedLevel,
+            LevelUpgrade.ClawStrength => _clawStrengthLevel,
+            LevelUpgrade.OxygenCapacity => _oxygenCapacityLevel,
+            LevelUpgrade.CarryingCapacity => _carryingCapacityLevel,
+            _ => 0
+        };
 
-        return data.PlayerStats[key];
-    }
-
-    public float GetStatValue(PlayerUpgradeType type)
+    public void UpgradeStat(LevelUpgrade type)
     {
-        switch (type)
-        {
-            case PlayerUpgradeType.Speed:
-                return speed;
-
-            case PlayerUpgradeType.PounceSpeed:
-                return pounceSpeed;
-
-            case PlayerUpgradeType.ClawsStrength:
-                return clawsStrength;
-
-            case PlayerUpgradeType.OxygenCapacity:
-                return oxygenCapacity;
-
-            case PlayerUpgradeType.CarryingCapacity:
-                return carryingCapacity;
-
-            default:
-                return 0f;
-        }
-    }
-
-    public int GetUpgradeLevel(PlayerUpgradeType type)
-    {
-        switch (type)
-        {
-            case PlayerUpgradeType.Speed:
-                return speedLevel;
-
-            case PlayerUpgradeType.PounceSpeed:
-                return pounceSpeedLevel;
-
-            case PlayerUpgradeType.ClawsStrength:
-                return clawsStrengthLevel;
-
-            case PlayerUpgradeType.OxygenCapacity:
-                return oxygenCapacityLevel;
-
-            case PlayerUpgradeType.CarryingCapacity:
-                return carryingCapacityLevel;
-
-            default:
-                return 0;
-        }
-    }
-
-    public void UpgradeStat(PlayerUpgradeType type)
-    {
-        if (GetUpgradeLevel(type) >= MaxUpgradeLevel)
+        if (GetUpgradeLevel(type) >= UpgradeLedger.GetLevelCount(type))
         {
             Debug.Log($"{type} is already at max level");
             return;
@@ -119,140 +48,82 @@ public class ShopStatsData : MonoBehaviour, IDataPersistence
 
         switch (type)
         {
-            case PlayerUpgradeType.Speed:
-                speed += speedUpgrade;
-                speedLevel++;
+            case LevelUpgrade.Speed:
+                _speedLevel++;
                 break;
-
-            case PlayerUpgradeType.PounceSpeed:
-                pounceSpeed += pounceSpeedUpgrade;
-                pounceSpeedLevel++;
+            case LevelUpgrade.PounceSpeed:
+                _pounceSpeedLevel++;
                 break;
-
-            case PlayerUpgradeType.ClawsStrength:
-                clawsStrength += clawsStrengthUpgrade;
-                clawsStrengthLevel++;
+            case LevelUpgrade.ClawStrength:
+                _clawStrengthLevel++;
                 break;
-
-            case PlayerUpgradeType.OxygenCapacity:
-                oxygenCapacity += oxygenUpgrade;
-                oxygenCapacityLevel++;
+            case LevelUpgrade.OxygenCapacity:
+                _oxygenCapacityLevel++;
                 break;
-
-            case PlayerUpgradeType.CarryingCapacity:
-                carryingCapacity += carryingCapacityUpgrade;
-                carryingCapacityLevel++;
+            case LevelUpgrade.CarryingCapacity:
+                _carryingCapacityLevel++;
                 break;
-
             default:
                 return;
         }
-
-        SaveUpgrade();
     }
 
     public void PurchaseMiniMap()
     {
-        if (hasMiniMap)
+        if (hasMinimap)
         {
             Debug.Log("Minimap is already purchased");
             return;
         }
 
-        if (!GoldManager.Instance.SpendGold(miniMapPrice))
+        if (!GoldManager.Instance.SpendGold(UpgradeLedger.MinimapPrice))
         {
             Debug.Log("Not enough gold to purchase MiniMap!");
             return;
         }
 
-        hasMiniMap = true;
-        SaveUpgrade();
+        hasMinimap = true;
 
         Debug.Log("Minimap purchased");
     }
 
-    public int GetMiniMapPrice()
-    {
-        return miniMapPrice;
-    }
-
-    public int GetUpgradeCost(PlayerUpgradeType type)
+    public int GetUpgradeCost(LevelUpgrade type)
     {
         int level = GetUpgradeLevel(type);
-
-        if (level >= MaxUpgradeLevel)
-            return 0;
-
-        return upgradePrices[level];
+        UpgradeLevel[] upgradeLevels = UpgradeLedger.GetUpgradeLevels(type);
+        return upgradeLevels[level].Price;
     }
 
-    private void SaveUpgrade()
+    public void LoadData(GameData data)
     {
-        SaveManager.Instance.SaveData();
-        SaveManager.Instance.Save();
-    }
+        _speedLevel = data.LevelUpgrades[LevelUpgrade.Speed];
+        _pounceSpeedLevel = data.LevelUpgrades[LevelUpgrade.PounceSpeed];
+        _clawStrengthLevel = data.LevelUpgrades[LevelUpgrade.ClawStrength];
+        _oxygenCapacityLevel = data.LevelUpgrades[LevelUpgrade.OxygenCapacity];
+        _carryingCapacityLevel = data.LevelUpgrades[LevelUpgrade.CarryingCapacity];
 
-        public void LoadData(GameData data)
-    {
-        if (data.PlayerStats == null)
-            data.PlayerStats = new();
-
-        speed = GetStat(data, "Speed", 10f);
-        pounceSpeed = GetStat(data, "PounceSpeed", 20f);
-        clawsStrength = GetStat(data, "ClawsStrength", 10f);
-        oxygenCapacity = GetStat(data, "OxygenCapacity", 100f);
-        carryingCapacity = GetStat(data, "CarryingCapacity", 25f);
-
-        speedLevel = Mathf.Clamp(Mathf.RoundToInt(GetStat(data, "SpeedLevel", 0f)), 0, MaxUpgradeLevel);
-        pounceSpeedLevel = Mathf.Clamp(Mathf.RoundToInt(GetStat(data, "PounceSpeedLevel", 0f)), 0, MaxUpgradeLevel);
-        clawsStrengthLevel = Mathf.Clamp(Mathf.RoundToInt(GetStat(data, "ClawsStrengthLevel", 0f)), 0, MaxUpgradeLevel);
-        oxygenCapacityLevel = Mathf.Clamp(Mathf.RoundToInt(GetStat(data, "OxygenCapacityLevel", 0f)), 0, MaxUpgradeLevel);
-        carryingCapacityLevel = Mathf.Clamp(Mathf.RoundToInt(GetStat(data, "CarryingCapacityLevel", 0f)), 0, MaxUpgradeLevel);
-
-        hasMiniMap = GetStat(data, "HasMiniMap", 0f) >= 1f;
+        hasMinimap = data.OneTimeUpgrades[OneTimeUpgrade.Minimap];
     }
 
     public void SaveData(ref GameData data)
     {
-        if (data.PlayerStats == null)
-            data.PlayerStats = new();
+        data.LevelUpgrades[LevelUpgrade.Speed] = _speedLevel;
+        data.LevelUpgrades[LevelUpgrade.PounceSpeed] = _pounceSpeedLevel;
+        data.LevelUpgrades[LevelUpgrade.ClawStrength] = _clawStrengthLevel;
+        data.LevelUpgrades[LevelUpgrade.OxygenCapacity] = _oxygenCapacityLevel;
+        data.LevelUpgrades[LevelUpgrade.CarryingCapacity] = _carryingCapacityLevel;
 
-        data.PlayerStats["Speed"] = speed;
-        data.PlayerStats["PounceSpeed"] = pounceSpeed;
-        data.PlayerStats["ClawsStrength"] = clawsStrength;
-        data.PlayerStats["OxygenCapacity"] = oxygenCapacity;
-        data.PlayerStats["CarryingCapacity"] = carryingCapacity;
-
-        data.PlayerStats["SpeedLevel"] = speedLevel;
-        data.PlayerStats["PounceSpeedLevel"] = pounceSpeedLevel;
-        data.PlayerStats["ClawsStrengthLevel"] = clawsStrengthLevel;
-        data.PlayerStats["OxygenCapacityLevel"] = oxygenCapacityLevel;
-        data.PlayerStats["CarryingCapacityLevel"] = carryingCapacityLevel;
-
-        data.PlayerStats["HasMiniMap"] = hasMiniMap ? 1f : 0f;
+        data.OneTimeUpgrades[OneTimeUpgrade.Minimap] = hasMinimap;
     }
-
-
-    // just to test 😀👍🔥✨
-    // (˵◝ ⩊  ◜˵マ meow uwu
+    
     public void ResetStats()
     {
-        speed = 10f;
-        pounceSpeed = 20f;
-        clawsStrength = 10f;
-        oxygenCapacity = 100f;
-        carryingCapacity = 25f;
+        _speedLevel = 0;
+        _pounceSpeedLevel = 0;
+        _clawStrengthLevel = 0;
+        _oxygenCapacityLevel = 0;
+        _carryingCapacityLevel = 0;
 
-        speedLevel = 0;
-        pounceSpeedLevel = 0;
-        clawsStrengthLevel = 0;
-        oxygenCapacityLevel = 0;
-        carryingCapacityLevel = 0;
-
-        hasMiniMap = false;
-
-        SaveUpgrade();
-
-        Debug.Log("Player stats have been reset!");
+        hasMinimap = false;
     }
 }

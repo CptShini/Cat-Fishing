@@ -1,3 +1,4 @@
+using Assets.Scripts.Upgrades;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -14,7 +15,7 @@ public class ShopUpgradeItem : MonoBehaviour
     [SerializeField] private ShopItemType itemType;
 
     [Header("Upgrade")]
-    [SerializeField] private PlayerUpgradeType upgradeType;
+    [SerializeField] private LevelUpgrade upgradeType;
     [SerializeField] private string displayName;
 
     [Header("UI")]
@@ -46,14 +47,14 @@ public class ShopUpgradeItem : MonoBehaviour
             valueText.gameObject.SetActive(false);
             nameText.text = "Mini Map";
 
-            if (stats.hasMiniMap)
+            if (stats.hasMinimap)
             {
                 slotVisual.SetActive(true);
                 buyButton.SetActive(false);
             }
             else
             {
-                buyButtonText.text = $"{stats.GetMiniMapPrice()} GOLD";
+                buyButtonText.text = $"{stats.UpgradeLedger.MinimapPrice} GOLD";
 
                 slotVisual.SetActive(false);
                 buyButton.SetActive(true);
@@ -62,12 +63,10 @@ public class ShopUpgradeItem : MonoBehaviour
             return;
         }
 
-        valueText.text = stats.GetStatValue(upgradeType).ToString();
-
         int level = stats.GetUpgradeLevel(upgradeType);
+        valueText.text = stats.GetStatValue(upgradeType, level).ToString();
 
         bool isMaxLevel = level >= 5;
-
         if (isMaxLevel)
         {
             levelText.text = "MAX LEVEL";

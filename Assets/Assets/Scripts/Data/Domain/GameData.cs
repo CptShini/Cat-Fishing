@@ -1,41 +1,33 @@
 ﻿using System;
 using Assets.Scripts.Fishies.Domain;
+using Assets.Scripts.Upgrades;
+using static Assets.Scripts.Upgrades.LevelUpgrade;
+using static Assets.Scripts.Upgrades.OneTimeUpgrade;
 
 namespace Assets.Scripts.Data.Domain
 {
     [Serializable]
     public class GameData
     {
-        public DecorationSaveData Decoration;
-        public SerializableDictionary<string, FishDTO> Collection;
-        public SerializableDictionary<string, TankData> Tanks;
-        public SerializableDictionary<string, float> PlayerStats;
+        public DecorationSaveData Decoration = new();
+        public SerializableDictionary<string, FishDTO> Collection = new();
+        public SerializableDictionary<string, TankData> Tanks = new();
+        
+        // Shop
         public int Gold;
-
-        public GameData()
+        
+        public SerializableDictionary<OneTimeUpgrade, bool> OneTimeUpgrades = new()
         {
-            Decoration = new DecorationSaveData();
-            Collection = new();
-            Tanks = new();
-
-            Gold = 0;
-            
-            PlayerStats = new()
-            {
-                { "Speed", 10f },
-                { "PounceSpeed", 20f },
-                { "ClawsStrength", 10f },
-                { "OxygenCapacity", 100f },
-                { "CarryingCapacity", 25f },
-
-                { "SpeedLevel", 0f },
-                { "PounceSpeedLevel", 0f },
-                { "ClawsStrengthLevel", 0f },
-                { "OxygenCapacityLevel", 0f },
-                { "CarryingCapacityLevel", 0f },
-
-                { "HasMiniMap", 0}
-            };
-        }
+            { Minimap, false }
+        };
+        
+        public SerializableDictionary<LevelUpgrade, int> LevelUpgrades = new()
+        {
+            { Speed, 0 },
+            { PounceSpeed, 0 },
+            { ClawStrength, 0 },
+            { OxygenCapacity, 0 },
+            { CarryingCapacity, 0 }
+        };
     }
 }

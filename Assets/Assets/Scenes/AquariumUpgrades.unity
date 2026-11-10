@@ -1993,7 +1993,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.55, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3031,18 +3031,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b9f676d5a156454e987aa8b942144d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  speed: 10
-  pounceSpeed: 20
-  clawsStrength: 10
-  oxygenCapacity: 100
-  carryingCapacity: 25
-  speedUpgrade: 2
-  pounceSpeedUpgrade: 2
-  clawsStrengthUpgrade: 2
-  oxygenUpgrade: 20
-  carryingCapacityUpgrade: 5
-  upgradePrices: 0a0000001e00000041000000fa00000090010000
-  miniMapPrice: 100
+  <UpgradeLedger>k__BackingField: {fileID: 11400000, guid: c6313984491971b42a2590352c7d001d, type: 2}
 --- !u!4 &708620026
 Transform:
   m_ObjectHideFlags: 0

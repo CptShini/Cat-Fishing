@@ -1,10 +1,13 @@
 using UnityEngine;
 using Assets.Scripts.Data.Domain;
 using Assets.Scripts.Data.Persistence;
+using Assets.Scripts.Upgrades;
 
 public class DivingPlayerStats : MonoBehaviour, IDataPersistence
 {
     public static DivingPlayerStats Instance { get; private set; }
+
+    [SerializeField] private UpgradeLedger upgradeLedger;
 
     [Header("Speed")]
     public float speed = 10;
@@ -49,34 +52,24 @@ public class DivingPlayerStats : MonoBehaviour, IDataPersistence
 
     public void LoadData(GameData data)
     {
-        if (data.PlayerStats == null)
-            return;
+        speed = GetStat(LevelUpgrade.Speed);
+        pounceSpeed = GetStat(LevelUpgrade.PounceSpeed);
+        strength = GetStat(LevelUpgrade.ClawStrength);
+        oxygenCapacity = GetStat(LevelUpgrade.OxygenCapacity);
+        carryingCapacity = GetStat(LevelUpgrade.CarryingCapacity);
 
-        if (data.PlayerStats.TryGetValue("Speed", out float savedSpeed))
-            speed = savedSpeed;
+        return;
 
-        if (data.PlayerStats.TryGetValue("PounceSpeed", out float savedPounceSpeed))
-            pounceSpeed = savedPounceSpeed;
-
-        if (data.PlayerStats.TryGetValue("ClawsStrength", out float savedClawsStrength))
-            strength = savedClawsStrength;
-
-        if (data.PlayerStats.TryGetValue("OxygenCapacity", out float savedOxygen))
-            oxygenCapacity = savedOxygen;
-
-        if (data.PlayerStats.TryGetValue("CarryingCapacity", out float savedCapacity))
-            carryingCapacity = savedCapacity;
+        float GetStat(LevelUpgrade upgrade)
+        {
+            int statLevel = data.LevelUpgrades[upgrade];
+            UpgradeLevel[] upgradeLevels = upgradeLedger.GetUpgradeLevels(upgrade);
+            return upgradeLevels[statLevel].Stat;
+        }
     }
 
     public void SaveData(ref GameData data)
     {
-        if (data.PlayerStats == null)
-            data.PlayerStats = new();
-
-        data.PlayerStats["Speed"] = speed;
-        data.PlayerStats["PounceSpeed"] = pounceSpeed;
-        data.PlayerStats["ClawsStrength"] = strength;
-        data.PlayerStats["OxygenCapacity"] = oxygenCapacity;
-        data.PlayerStats["CarryingCapacity"] = carryingCapacity;
+        // Nothing to save
     }
 }
