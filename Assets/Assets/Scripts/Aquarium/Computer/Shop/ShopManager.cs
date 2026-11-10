@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.Scripts.Data;
 
 public class ShopManager : MonoBehaviour
 {
@@ -71,6 +72,10 @@ public class ShopManager : MonoBehaviour
             purchasedItems.Add(itemSO);
         
         RefreshShopSlots();
+
+        SaveManager.Instance.SaveData();
+        SaveManager.Instance.Save();
+        
         Debug.Log("Purchased: " + itemSO.itemName);
      
     }
@@ -80,6 +85,40 @@ public class ShopManager : MonoBehaviour
         foreach (ShopSlot slot in spawnedSlots.Where(slot => slot.gameObject.activeSelf))
         {
             slot.UpdatePurchasedState();
+        }
+    }
+
+    // for save
+    public void GetPurchasedItemsSaveData(List<string> saveData)
+    {
+        saveData.Clear();
+
+        foreach (ItemSO item in purchasedItems)
+        {
+            if (item != null && item.itemType != ItemType.FloorTile)
+                saveData.Add(item.itemID);
+        }
+    }
+
+    public void LoadPurchasedItems(List<string> savedItemIDs, ItemDatabase database)
+    {
+        purchasedItems.Clear();
+
+        if (savedItemIDs == null)
+            return;
+
+        foreach (string itemID in savedItemIDs)
+        {
+            ItemSO item = database.GetItem(itemID);
+
+            if (item != null && item.itemType != ItemType.FloorTile)
+                purchasedItems.Add(item);
+        }
+
+        foreach (ShopSlot slot in spawnedSlots)
+        {
+            if (slot != null)
+                slot.UpdatePurchasedState();
         }
     }
 }

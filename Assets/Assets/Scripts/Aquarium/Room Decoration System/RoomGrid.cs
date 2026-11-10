@@ -247,4 +247,59 @@ public class RoomGrid : MonoBehaviour
             bottomEdges.Add(cell, edgeObject);
         }
     }
+
+
+    // for save
+    public void GetPlacedFloorSaveData(List<PlacedFloorSaveData> saveData, ItemDatabase database)
+    {
+        saveData.Clear();
+
+        BoundsInt bounds = placeableArea.cellBounds;
+
+        foreach (Vector3Int cell in bounds.allPositionsWithin)
+        {
+            TileBase tile = placeableArea.GetTile(cell);
+
+            if (tile == null)
+                continue;
+
+            ItemSO item = database.GetItemByFloorTile(tile);
+
+            if (item == null)
+                continue;
+
+            saveData.Add(new PlacedFloorSaveData
+            {
+                itemID = item.itemID,
+                x = cell.x,
+                y = cell.y,
+                z = cell.z
+            });
+        }
+    }
+
+    public void LoadPlacedFloor(List<PlacedFloorSaveData> saveData, ItemDatabase database)
+    {
+        if (saveData == null)
+            return;
+
+        foreach (PlacedFloorSaveData saved in saveData)
+        {
+            ItemSO item = database.GetItem(saved.itemID);
+
+            if (item == null || item.floorTile == null)
+                continue;
+
+            Vector3Int cell = new Vector3Int(
+                saved.x,
+                saved.y,
+                saved.z
+            );
+
+            placeableArea.SetTile(cell, item.floorTile);
+        }
+
+        RefreshBottomEdges();
+        decorationGridVisuals.RefreshGrid();
+    }
 }

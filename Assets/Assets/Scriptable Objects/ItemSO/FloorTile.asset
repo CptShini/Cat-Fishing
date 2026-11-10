@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25013cbcc1d5830449af556e0fa64334, type: 3}
   m_Name: FloorTile
   m_EditorClassIdentifier: Assembly-CSharp::ItemSO
+  itemID: floor_tile
   itemName: Floor
   itemIcon: {fileID: 21300000, guid: e550abedb74837848a592012115d87f3, type: 3}
   itemType: 1

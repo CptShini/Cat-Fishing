@@ -6,6 +6,7 @@ namespace Assets.Scripts.Data.Domain
     [Serializable]
     public class GameData
     {
+        public DecorationSaveData Decoration;
         public SerializableDictionary<string, FishDTO> Collection;
         public SerializableDictionary<string, TankData> Tanks;
         public SerializableDictionary<string, float> PlayerStats;
@@ -13,6 +14,7 @@ namespace Assets.Scripts.Data.Domain
 
         public GameData()
         {
+            Decoration = new DecorationSaveData();
             Collection = new();
             Tanks = new();
 

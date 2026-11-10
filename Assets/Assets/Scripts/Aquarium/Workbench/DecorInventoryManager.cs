@@ -78,4 +78,44 @@ public class DecorInventoryManager : MonoBehaviour
 
         return false;
     }
+
+
+    public void GetInventorySaveData(System.Collections.Generic.List<InventoryItemSaveData> saveData)
+    {
+        saveData.Clear();
+
+        foreach (Transform child in inventoryContent)
+        {
+            DecorInventorySlot slot = child.GetComponent<DecorInventorySlot>();
+
+            if (slot == null || slot.ItemSO == null)
+                continue;
+
+            saveData.Add(new InventoryItemSaveData
+            {
+                itemID = slot.ItemSO.itemID,
+                count = slot.count
+            });
+        }
+    }
+
+    public void LoadInventory(System.Collections.Generic.List<InventoryItemSaveData> saveData, ItemDatabase database)
+    {
+        foreach (Transform child in inventoryContent)
+            Destroy(child.gameObject);
+
+        foreach (InventoryItemSaveData savedItem in saveData)
+        {
+            ItemSO item = database.GetItem(savedItem.itemID);
+
+            if (item == null)
+                continue;
+
+            DecorInventorySlot newSlot = Instantiate(slotPrefab, inventoryContent);
+
+            newSlot.Setup(item, placementController);
+            newSlot.count = savedItem.count;
+            newSlot.UpdateUI();
+        }
+    }
 }
