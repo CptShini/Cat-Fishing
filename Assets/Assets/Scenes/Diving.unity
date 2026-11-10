@@ -16120,6 +16120,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08b3d7d2130641aeb925b3db05c1991e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.Bars.WeightBar
+--- !u!114 &880628911 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4811992775916371431, guid: a1f5dd710e0e41c4ea3fbad66bc9efee, type: 3}
+  m_PrefabInstance: {fileID: 880628907}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+--- !u!114 &880628912 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6445541388295736072, guid: a1f5dd710e0e41c4ea3fbad66bc9efee, type: 3}
+  m_PrefabInstance: {fileID: 880628907}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+--- !u!95 &880628913 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 2472463741907261464, guid: a1f5dd710e0e41c4ea3fbad66bc9efee, type: 3}
+  m_PrefabInstance: {fileID: 880628907}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &903179573
 GameObject:
   m_ObjectHideFlags: 0
@@ -40928,6 +40955,7 @@ Transform:
   m_Children:
   - {fileID: 1557235998}
   - {fileID: 1300680660}
+  - {fileID: 2046627049}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2035162235
@@ -41120,6 +41148,69 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!1 &2046627048
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2046627049}
+  - component: {fileID: 2046627051}
+  - component: {fileID: 2046627050}
+  m_Layer: 0
+  m_Name: NotificationsManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2046627049
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2046627048}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2035162233}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2046627050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2046627048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fb66271b4459934f9a84da378b2404c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NotificationsManager
+  animator: {fileID: 880628913}
+  notificationImage: {fileID: 880628911}
+  text: {fileID: 880628912}
+  speed: 1
+  duration: 3
+--- !u!114 &2046627051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2046627048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e1901f7c6ebcd84db57307d892d38a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.Managers.DiscoveryManager
+  species: {fileID: 11400000, guid: 69c0a0e81678bc0419aa277dd4158367, type: 2}
 --- !u!1 &2054088894
 GameObject:
   m_ObjectHideFlags: 0
