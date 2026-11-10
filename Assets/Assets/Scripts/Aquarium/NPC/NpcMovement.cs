@@ -40,6 +40,8 @@ public class NpcMovement : MonoBehaviour
         curDestinationCooldown = destinationCooldownRange.Random();
     }
 
+    
+
     void SetNewTargetPosition()
     {
         Vector2 direction = Random.insideUnitCircle * maxWalkDistance;
@@ -49,7 +51,7 @@ public class NpcMovement : MonoBehaviour
         NavMesh.SamplePosition(direction, out hit, maxWalkDistance, 1);
 		
         Vector3 destination = hit.position;
-        
+
         navMeshAgent.SetDestination(destination);
         curCooldown = 0;
         SetDestionationCooldown();
@@ -57,14 +59,6 @@ public class NpcMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        if(PauseController.IsGamePaused)
-        {
-            rb.linearVelocity = Vector2.zero;
-            animator.SetBool("isWalking", false);
-            AudioManager.Instance.FadeOutLoop(AudioId.Walk);
-            return;
-        }
-
         //navMeshAgent.destination = targetTransform.position;
         if (curVelocity.x != navMeshAgent.velocity.x || curVelocity.y != navMeshAgent.velocity.y)
         {
