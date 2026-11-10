@@ -6,7 +6,7 @@ public class NavigationManager : MonoBehaviour
 {
 
     public static NavigationManager Instance { get; private set; }
-    [SerializeField] private NavMeshSurface surface;
+    [SerializeField] public NavMeshSurface surface;
 
     private void Awake()
     {

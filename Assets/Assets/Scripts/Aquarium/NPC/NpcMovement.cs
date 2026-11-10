@@ -1,4 +1,5 @@
 using Assets.Scripts.Audio;
+using Assets.Scripts.Helpers;
 using NavMeshPlus.Components;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -9,15 +10,21 @@ using UnityEngine.UI;
 
 public class NpcMovement : MonoBehaviour
 {
-    public float moveSpeed = 5f;
     private Rigidbody2D rb;
     private Animator animator;
-    private Vector2 moveInput;
+    private Vector2 curVelocity;
     private NavMeshAgent navMeshAgent;
-    [SerializeField] private Transform targetTransform; 
 
+    private NavMeshSurface surface;
     private CapsuleCollider2D playerCollider;
     public Tilemap groundTilemap;
+
+    [SerializeField] private float maxWalkDistance = 10f;
+
+    [SerializeField] private Range destinationCooldownRange = new();
+
+    private float curDestinationCooldown;
+    private float curCooldown = float.MaxValue;
 
     void Start()
     {
@@ -25,6 +32,27 @@ public class NpcMovement : MonoBehaviour
         animator = GetComponent<Animator>();
         playerCollider = GetComponent<CapsuleCollider2D>();
         navMeshAgent = GetComponent<NavMeshAgent>();
+        surface = NavigationManager.Instance.surface;
+    }
+
+    private void SetDestionationCooldown()
+    {
+        curDestinationCooldown = destinationCooldownRange.Random();
+    }
+
+    void SetNewTargetPosition()
+    {
+        Vector2 direction = Random.insideUnitCircle * maxWalkDistance;
+        direction = new Vector2(direction.x + transform.position.x, direction.y + transform.position.y);
+
+        NavMeshHit hit;
+        NavMesh.SamplePosition(direction, out hit, maxWalkDistance, 1);
+		
+        Vector3 destination = hit.position;
+        
+        navMeshAgent.SetDestination(destination);
+        curCooldown = 0;
+        SetDestionationCooldown();
     }
 
     void FixedUpdate()
@@ -37,17 +65,24 @@ public class NpcMovement : MonoBehaviour
             return;
         }
 
-        Vector2 movement = moveInput.normalized * moveSpeed;
-        //Vector2 targetPosition = rb.position + movement * Time.fixedDeltaTime;
+        //navMeshAgent.destination = targetTransform.position;
+        if (curVelocity.x != navMeshAgent.velocity.x || curVelocity.y != navMeshAgent.velocity.y)
+        {
+            Move(navMeshAgent.velocity);
+        }
 
-        //if (CanMoveTo(targetPosition))
-        //{
-       //     rb.MovePosition(targetPosition);
-       // }
+        curVelocity = navMeshAgent.velocity;        
 
-       navMeshAgent.destination = targetTransform.position;
-        
-        bool isWalking = moveInput != Vector2.zero;
+        if(curCooldown > curDestinationCooldown)
+        {
+            SetNewTargetPosition();
+        }
+        else
+        {
+            curCooldown += Time.deltaTime;
+        }
+
+        bool isWalking = curVelocity != Vector2.zero;
         animator.SetBool("isWalking", isWalking);
         if (isWalking)
             AudioManager.Instance.Play(AudioId.Walk);
@@ -55,46 +90,19 @@ public class NpcMovement : MonoBehaviour
             AudioManager.Instance.FadeOutLoop(AudioId.Walk);
     }
 
-    bool CanMoveTo(Vector2 position)
+    public void Move(Vector2 newDirection)
     {
-        Bounds bounds = playerCollider.bounds;
-
-        Vector2 offset = position - rb.position;
-
-        Vector2 min = (Vector2)bounds.min + offset;
-        Vector2 max = (Vector2)bounds.max + offset;
-
-        Vector3Int minCell = groundTilemap.WorldToCell(min);
-        Vector3Int maxCell = groundTilemap.WorldToCell(max);
-
-        for (int x = minCell.x; x <= maxCell.x; x++)
-        {
-            for (int y = minCell.y; y <= maxCell.y; y++)
-            {
-                if (!groundTilemap.HasTile(new Vector3Int(x, y, 0)))
-                {
-                    return false;
-                }
-            }
-        }
-
-        return true;
-    }
-
-    public void Move(InputAction.CallbackContext context)
-    {
-        moveInput = context.ReadValue<Vector2>();
+        Vector2 curVelocityNorm = newDirection.normalized;
         
-        if(context.canceled)
+        if(curVelocity == Vector2.zero)
         {
             animator.SetBool("isWalking", false);
-            animator.SetFloat("LastInputX", moveInput.x);
-            animator.SetFloat("LastInputY", moveInput.y);
+            animator.SetFloat("LastInputX", curVelocityNorm.x);
+            animator.SetFloat("LastInputY", curVelocityNorm.y);
         }
 
-        moveInput = context.ReadValue<Vector2>();
-        animator.SetFloat("InputX", moveInput.x);
-        animator.SetFloat("InputY", moveInput.y);
+        animator.SetFloat("InputX", curVelocityNorm.x);
+        animator.SetFloat("InputY", curVelocityNorm.y);
     }
 
 }
