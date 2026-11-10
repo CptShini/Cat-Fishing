@@ -25,6 +25,7 @@ public class EncyclopediaManager : MonoBehaviour, IDataPersistence
     [SerializeField] private TextMeshProUGUI title;
     [SerializeField] private TextMeshProUGUI weightRange;
     [SerializeField] private TextMeshProUGUI description;
+    [SerializeField] private TextMeshProUGUI collection;
     private Dictionary<Guid, Fish> _discoveries = new();
 
     private void Awake()
@@ -49,10 +50,8 @@ public class EncyclopediaManager : MonoBehaviour, IDataPersistence
 
             foreach (var discovery in _discoveries.Values)
             {
-                Debug.Log($"{discovery.Species.Id}, {specie.Id}");
                 if(discovery.Species.Id == specie.Id)
                 {
-                    Debug.Log("AAAAHHHH");
                     slot.Setup(specie, discovery, true);
                     if (!pageSet)
                     {
@@ -68,6 +67,7 @@ public class EncyclopediaManager : MonoBehaviour, IDataPersistence
                 pageSet = true;
             }
         }
+        collection.text = $"{_discoveries.Count} / {species.GetSpecies().Count} Fish Collected";
     }
 
     public void SetPageToUnknownFish(FishSpecies species)
