@@ -11,6 +11,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Assets/Scenes/Diving.unity
     guid: 95583abe985d4f840ae21ba43214232f
+  - enabled: 1
+    path: Assets/Assets/Scenes/AquariumEncycloReal.unity
+    guid: 63f21fdc17e888d4581ddb6530116867
+  - enabled: 1
+    path: Assets/Assets/Scenes/DivingEncycloReal.unity
+    guid: 9448a9f605e30464c977c30ea74da651
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
