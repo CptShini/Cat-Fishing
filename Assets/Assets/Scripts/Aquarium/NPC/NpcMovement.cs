@@ -21,6 +21,8 @@ public class NpcMovement : MonoBehaviour
 
     [SerializeField] private float maxWalkDistance = 10f;
 
+    [SerializeField] private float centerWeight = 0.3f;
+
     [SerializeField] private Range destinationCooldownRange = new();
 
     private float curDestinationCooldown;
@@ -47,9 +49,12 @@ public class NpcMovement : MonoBehaviour
         Vector2 direction = Random.insideUnitCircle * maxWalkDistance;
         direction = new Vector2(direction.x + transform.position.x, direction.y + transform.position.y);
 
+        Vector2 weightedDirection = Vector2.Lerp(direction, surface.center, centerWeight); 
+
         NavMeshHit hit;
-        NavMesh.SamplePosition(direction, out hit, maxWalkDistance, 1);
+        NavMesh.SamplePosition(weightedDirection, out hit, maxWalkDistance, 1);
 		
+        
         Vector3 destination = hit.position;
 
         navMeshAgent.SetDestination(destination);
