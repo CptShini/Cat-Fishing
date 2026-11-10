@@ -1287,6 +1287,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 437987248}
   m_CullTransparentMesh: 1
+--- !u!114 &438893904 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 508414323439030233, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
+  m_PrefabInstance: {fileID: 6535148290749709827}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1 &443484855
 GameObject:
   m_ObjectHideFlags: 0
@@ -2387,6 +2398,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!224 &608912152 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3067879999955087857, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
+  m_PrefabInstance: {fileID: 1792703276}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &614596249
 GameObject:
   m_ObjectHideFlags: 0
@@ -2875,7 +2891,6 @@ MonoBehaviour:
   clawsStrengthUpgrade: 2
   oxygenUpgrade: 20
   carryingCapacityUpgrade: 5
-  MaxUpgradeLevel: 5
   upgradePrices: 0a0000001e00000041000000fa00000090010000
   miniMapPrice: 100
 --- !u!4 &708620026
@@ -2985,6 +3000,10 @@ PrefabInstance:
       propertyPath: displayName
       value: Speed
       objectReference: {fileID: 0}
+    - target: {fileID: 5370705862037373816, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
+      propertyPath: buyButtonText
+      value: 
+      objectReference: {fileID: 1346200753}
     - target: {fileID: 5897457494702203241, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
       propertyPath: m_Name
       value: SpeedUpgradeSlot
@@ -3003,7 +3022,7 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: c43cbc5cf7b75904496cc51a632c49a9, type: 3}
     - target: {fileID: 7301252646298691960, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7301252646298691960, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -3660,6 +3679,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 748809815}
   m_CullTransparentMesh: 1
+--- !u!1 &754973530 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8805050966383695370, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
+  m_PrefabInstance: {fileID: 2097114198}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &754973535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 754973530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.GraphicRaycaster
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!1 &762460195
 GameObject:
   m_ObjectHideFlags: 0
@@ -5383,6 +5424,7 @@ GameObject:
   - component: {fileID: 1058299129}
   - component: {fileID: 1058299130}
   - component: {fileID: 1058299131}
+  - component: {fileID: 1058299132}
   m_Layer: 5
   m_Name: UI Canvas
   m_TagString: Untagged
@@ -5549,6 +5591,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   stats: {fileID: 708620025}
   miniMapStatusText: {fileID: 2042869045}
+--- !u!114 &1058299132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1058299122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ff89154c2adac940aac81d829ae3ace, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!1 &1081586781
 GameObject:
   m_ObjectHideFlags: 0
@@ -6844,6 +6898,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7906811736917954770, guid: 3ac204e6af1c17e44be46f96f92c97c8, type: 3}
   m_PrefabInstance: {fileID: 1258078959}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1346200753 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 508414323439030233, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
+  m_PrefabInstance: {fileID: 726773328}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1 &1389313837
 GameObject:
   m_ObjectHideFlags: 0
@@ -6919,6 +6984,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1389313837}
   m_CullTransparentMesh: 1
+--- !u!114 &1391655754 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 508414323439030233, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
+  m_PrefabInstance: {fileID: 1965094448}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+--- !u!114 &1396034693 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 508414323439030233, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
+  m_PrefabInstance: {fileID: 2045379194}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1 &1411609420
 GameObject:
   m_ObjectHideFlags: 0
@@ -9963,8 +10050,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 2042869047}
+  m_Children: []
   m_Father: {fileID: 278016818}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
@@ -11286,6 +11372,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1702940995}
   m_CullTransparentMesh: 1
+--- !u!114 &1711828510 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 508414323439030233, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
+  m_PrefabInstance: {fileID: 1792703276}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1 &1743078470
 GameObject:
   m_ObjectHideFlags: 0
@@ -11799,17 +11896,33 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5370705862037373816, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
+      propertyPath: costText
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5370705862037373816, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
       propertyPath: itemType
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5370705862037373816, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
+      propertyPath: levelText
+      value: 
+      objectReference: {fileID: 2042869045}
     - target: {fileID: 5370705862037373816, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5370705862037373816, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
+      propertyPath: valueText
+      value: 
+      objectReference: {fileID: 2042869045}
+    - target: {fileID: 5370705862037373816, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
       propertyPath: displayName
       value: Minimap
       objectReference: {fileID: 0}
+    - target: {fileID: 5370705862037373816, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
+      propertyPath: buyButtonText
+      value: 
+      objectReference: {fileID: 1711828510}
     - target: {fileID: 5897457494702203241, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
       propertyPath: m_Name
       value: MinimapUpgradeSlot
@@ -11830,9 +11943,13 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 597ee133094664d4982850508bd548fd, type: 3}
+    - target: {fileID: 7147317209186839016, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7301252646298691960, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7301252646298691960, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -11863,8 +11980,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 6182025072706208634, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 3067879999955087857, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2042869047}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
 --- !u!224 &1792703277 stripped
@@ -12791,6 +12912,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1121045436}
     m_Modifications:
+    - target: {fileID: 1497474745346418994, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 4594369342965028942, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -12879,6 +13004,10 @@ PrefabInstance:
       propertyPath: upgradeType
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 5370705862037373816, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
+      propertyPath: buyButtonText
+      value: 
+      objectReference: {fileID: 1391655754}
     - target: {fileID: 5897457494702203241, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
       propertyPath: m_Name
       value: CarryingCapacityUpgradeSlot
@@ -12895,13 +13024,29 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 3457b05ebac462240b135e3efff7a01a, type: 3}
+    - target: {fileID: 6618558582039509511, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
+      propertyPath: m_fontSize
+      value: 33
+      objectReference: {fileID: 0}
+    - target: {fileID: 6618558582039509511, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
+      propertyPath: m_margin.x
+      value: -44.68215
+      objectReference: {fileID: 0}
+    - target: {fileID: 6618558582039509511, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
+      propertyPath: m_margin.z
+      value: -39.614983
+      objectReference: {fileID: 0}
+    - target: {fileID: 6618558582039509511, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 33
+      objectReference: {fileID: 0}
     - target: {fileID: 6946403971146335153, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 597ee133094664d4982850508bd548fd, type: 3}
     - target: {fileID: 7301252646298691960, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7301252646298691960, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -13311,6 +13456,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2025885015}
   m_CullTransparentMesh: 1
+--- !u!114 &2033780585 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 508414323439030233, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
+  m_PrefabInstance: {fileID: 2097114198}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1 &2042869044
 GameObject:
   m_ObjectHideFlags: 0
@@ -13436,16 +13592,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2042869044}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1600525207}
+  m_Father: {fileID: 608912152}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -221.4, y: -390.2}
+  m_AnchoredPosition: {x: 106.599915, y: 9}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &2045379194
@@ -13544,6 +13700,10 @@ PrefabInstance:
       propertyPath: upgradeType
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5370705862037373816, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
+      propertyPath: buyButtonText
+      value: 
+      objectReference: {fileID: 1396034693}
     - target: {fileID: 5897457494702203241, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
       propertyPath: m_Name
       value: PounceSpeedUpgradeSlot
@@ -13574,7 +13734,7 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 597ee133094664d4982850508bd548fd, type: 3}
     - target: {fileID: 7301252646298691960, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7301252646298691960, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -13990,6 +14150,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1121045436}
     m_Modifications:
+    - target: {fileID: 1497474745346418994, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3606358043196498561, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4594369342965028942, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -14078,6 +14246,10 @@ PrefabInstance:
       propertyPath: upgradeType
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 5370705862037373816, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
+      propertyPath: buyButtonText
+      value: 
+      objectReference: {fileID: 2033780585}
     - target: {fileID: 5897457494702203241, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
       propertyPath: m_Name
       value: OxygenUpgradeSlot
@@ -14094,13 +14266,53 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 934c4715ecc1b28459aa24f2c10ae475, type: 3}
+    - target: {fileID: 6607691140692923066, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6607691140692923066, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6607691140692923066, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6607691140692923066, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6946403971146335153, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 597ee133094664d4982850508bd548fd, type: 3}
+    - target: {fileID: 6946403971146335153, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6946403971146335153, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6946403971146335153, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7301252646298691960, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
+      propertyPath: m_Colors.m_NormalColor.b
+      value: 0.91372555
+      objectReference: {fileID: 0}
+    - target: {fileID: 7301252646298691960, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
+      propertyPath: m_Colors.m_NormalColor.g
+      value: 0.91372555
+      objectReference: {fileID: 0}
+    - target: {fileID: 7301252646298691960, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
+      propertyPath: m_Colors.m_NormalColor.r
+      value: 0.91372555
+      objectReference: {fileID: 0}
     - target: {fileID: 7301252646298691960, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7301252646298691960, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -14152,12 +14364,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8805050966383695370, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8884322933288065924, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
+      propertyPath: m_CullTransparentMesh
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8805050966383695370, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 754973535}
   m_SourcePrefab: {fileID: 100100000, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
 --- !u!1 &2126805480
 GameObject:
@@ -14575,6 +14794,10 @@ PrefabInstance:
       propertyPath: upgradeType
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 5370705862037373816, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
+      propertyPath: buyButtonText
+      value: 
+      objectReference: {fileID: 438893904}
     - target: {fileID: 5897457494702203241, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
       propertyPath: m_Name
       value: ClawsStrengthUpgradeSlot
@@ -14589,7 +14812,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7301252646298691960, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7301252646298691960, guid: 45f8bb2b7ae264044b7377786834c91c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode

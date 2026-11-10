@@ -21,8 +21,11 @@ public class ShopUpgradeItem : MonoBehaviour
     [SerializeField] private TMP_Text nameText;
     [SerializeField] private TMP_Text valueText;
     [SerializeField] private TMP_Text levelText;
-    [SerializeField] private TMP_Text costText;
+    [SerializeField] private TMP_Text buyButtonText;
     [SerializeField] private Button upgradeButton;
+
+    [SerializeField] private GameObject slotVisual;
+    [SerializeField] private GameObject buyButton;
 
     private ShopStatsData stats;
 
@@ -45,11 +48,15 @@ public class ShopUpgradeItem : MonoBehaviour
 
             if (stats.hasMiniMap)
             {
-                costText.text = "PURCHASED";
+                slotVisual.SetActive(true);
+                buyButton.SetActive(false);
             }
             else
             {
-                costText.text = $"COST: {stats.GetMiniMapPrice()} GOLD";
+                buyButtonText.text = $"{stats.GetMiniMapPrice()} GOLD";
+
+                slotVisual.SetActive(false);
+                buyButton.SetActive(true);
             }
 
             return;
@@ -59,17 +66,22 @@ public class ShopUpgradeItem : MonoBehaviour
 
         int level = stats.GetUpgradeLevel(upgradeType);
 
-        levelText.text = $"LEVEL {level}/5";
+        bool isMaxLevel = level >= 5;
 
-        if (level >= 5)
+        if (isMaxLevel)
         {
-            costText.text = "MAX LEVEL";
+            levelText.text = "MAX LEVEL";
+
+            slotVisual.SetActive(true);
+            buyButton.SetActive(false);
         }
         else
         {
-            int cost = stats.GetUpgradeCost(upgradeType);
+            levelText.text = $"Lvl {level} → Lvl {level + 1}";
+            buyButtonText.text = $"{stats.GetUpgradeCost(upgradeType)} GOLD";
 
-            costText.text = $"COST: {cost} GOLD";
+            slotVisual.SetActive(false);
+            buyButton.SetActive(true);
         }
     }
 

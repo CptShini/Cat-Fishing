@@ -37,8 +37,7 @@ public class ShopStatsData : MonoBehaviour, IDataPersistence
     public int oxygenCapacityLevel { get; private set; }
     public int carryingCapacityLevel { get; private set; }
 
-    [Header("Max Upgrade Level")]
-    [SerializeField] private int MaxUpgradeLevel = 5;
+    private int MaxUpgradeLevel = 5;
 
     [Header("Upgrade Base Prices")]
     [SerializeField] private int[] upgradePrices = { 10, 30, 65, 250, 400 };

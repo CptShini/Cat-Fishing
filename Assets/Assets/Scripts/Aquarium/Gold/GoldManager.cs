@@ -80,10 +80,10 @@ public class GoldManager : MonoBehaviour, IDataPersistence
     // for testing
     public void ResetGold()
     {
-        gold = 100;
+        gold = 500;
         UpdateUI();
         SaveGold();
 
-        Debug.Log("Gold reset to 100.");
+        Debug.Log("Gold reset to 500.");
     }
 }
