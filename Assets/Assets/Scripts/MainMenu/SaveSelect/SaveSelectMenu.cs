@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Data;
+﻿using Assets.Scripts.Audio;
+using Assets.Scripts.Data;
 using Assets.Scripts.Data.Persistence;
 using Assets.Scripts.Helpers;
 using UnityEngine;
@@ -27,6 +28,7 @@ namespace Assets.Scripts.MainMenu.SaveSelect
                 saveFileButton.GetComponentInChildren<TextMeshProUGUI>().text = saveFile.ToString();
                 saveFileButton.GetComponent<Button>().onClick.AddListener(() =>
                 {
+                    AudioManager.Instance.Play(AudioId.OpeningDoor);
                     SaveManager.Instance.Select(saveFile.Name);
                     SaveManager.Instance.Load();
                     GameManager.Instance.ChangeScene(1);
@@ -42,6 +44,7 @@ namespace Assets.Scripts.MainMenu.SaveSelect
 
         public void NewSave()
         {
+            AudioManager.Instance.Play(AudioId.OpeningDoor);
             SaveManager.Instance.Select(_newSaveName);
             SaveManager.Instance.StartNew();
             GameManager.Instance.ChangeScene(1);

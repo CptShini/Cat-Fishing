@@ -1,3 +1,4 @@
+using Assets.Scripts.Audio;
 using Assets.Scripts.Data;
 using Assets.Scripts.Helpers;
 using TMPro;
@@ -31,8 +32,11 @@ namespace Assets.Scripts.MainMenu
             if (!SaveManager.Instance.HasSave) 
                 SaveManager.Instance.Select("Default");
 
+            AudioManager.Instance.Play(AudioId.OpeningDoor);
             GameManager.Instance.ChangeScene(1);
         }
+        
+        public void ButtonClickSound() => AudioManager.Instance.Play(AudioId.ButtonClick);
 
         public void Quit() => Application.Quit();
     }

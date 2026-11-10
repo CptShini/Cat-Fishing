@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Assets.Scripts.PlayerState;
 using UnityEngine;
 
 public class AimPawScript : MonoBehaviour

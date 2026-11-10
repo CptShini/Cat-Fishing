@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using System.Collections.Generic;
 using Assets.Scripts.Fishies.Domain;
 using Assets.Scripts.Upgrades;
 using static Assets.Scripts.Upgrades.LevelUpgrade;
@@ -12,6 +13,8 @@ namespace Assets.Scripts.Data.Domain
         public DecorationSaveData Decoration = new();
         public SerializableDictionary<string, FishDTO> Collection = new();
         public SerializableDictionary<string, TankData> Tanks = new();
+        public SerializableDictionary<string, FishDTO> Discoveries = new();
+        public List<int> ExploredFogs = new();
         
         // Shop
         public int Gold;

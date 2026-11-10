@@ -1,5 +1,4 @@
 using UnityEngine;
-using Assets.Scripts.Data;
 
 public class DecorationDebugReset : MonoBehaviour
 {
@@ -15,9 +14,6 @@ public class DecorationDebugReset : MonoBehaviour
         inventoryManager.ClearInventory();
         shopManager.ResetPurchasedItems();
         roomGrid.RestoreInitialFloor();
-
-        SaveManager.Instance.SaveData();
-        SaveManager.Instance.Save();
 
         Debug.Log("Decoration save reset");
     }

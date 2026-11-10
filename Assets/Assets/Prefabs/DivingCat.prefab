@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3611704355303120038}
   - component: {fileID: 3569630654392250170}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: InteractionIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -266,6 +266,7 @@ Transform:
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 2598707453658501197}
   - {fileID: 3988479928123277851}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -480,14 +481,14 @@ MonoBehaviour:
   maxPounceStamina: 20
   staminaRegen: 5
   strength: 5
-  chargeUpSpeed: 10
+  chargeUpSpeed: 3
   pounceCooldown: 0.5
   oxygenCapacity: 70
   defaultPresence: 2
   stealthPresence: 1
   pouncePresence: 4
   stunDuration: 2
-  carryingCapacity: 25
+  carryingCapacity: 50
 --- !u!114 &5595691730511454377
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -516,7 +517,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2598707453658501197}
   - component: {fileID: 4688341667181619830}
-  m_Layer: 2
+  - component: {fileID: 5385816329092818411}
+  m_Layer: 6
   m_Name: Detection Circle
   m_TagString: Player Presence
   m_Icon: {fileID: 0}
@@ -532,11 +534,11 @@ Transform:
   m_GameObject: {fileID: 5409390633235530069}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.72, y: 0.66, z: 10}
-  m_LocalScale: {x: 1, y: 1, z: 10}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 547029068133216273}
+  m_Father: {fileID: 6619945467753677165}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!58 &4688341667181619830
 CircleCollider2D:
@@ -573,7 +575,20 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.1
+  m_Radius: 1
+--- !u!114 &5385816329092818411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5409390633235530069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2e193480d340404e9cb7999e216497b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Helpers.FollowObject
+  following: {fileID: 8004778144708095088}
 --- !u!1 &5560953002884090599
 GameObject:
   m_ObjectHideFlags: 0
@@ -1026,7 +1041,7 @@ GameObject:
   - component: {fileID: 8966860717013098395}
   - component: {fileID: 5152369979616298823}
   - component: {fileID: 4700860366048301466}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: InteractionDetector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1190,7 +1205,7 @@ GameObject:
   - component: {fileID: 7623553527521986661}
   m_Layer: 6
   m_Name: Cat-Head_0
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1208,7 +1223,6 @@ Transform:
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2598707453658501197}
   - {fileID: 8984494032151953292}
   m_Father: {fileID: 4722608374751236603}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

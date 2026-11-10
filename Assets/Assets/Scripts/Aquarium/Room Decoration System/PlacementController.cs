@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
+using Assets.Scripts.Audio;
 
 public class PlacementController : MonoBehaviour
 {
@@ -23,6 +24,10 @@ public class PlacementController : MonoBehaviour
     [Header("Preview Colors")]
     [SerializeField] private Color validColor = new Color(0.3f, 1f, 0.3f, 0.5f);
     [SerializeField] private Color invalidColor = new Color(1f, 0.3f, 0.3f, 0.5f);
+
+    [Header("Audio Timer CD")]
+    [SerializeField] private float wrongPlacementCooldown = 0.5f;
+    private float nextWrongPlacementSoundTime;
 
     private ItemSO selectedItem;
     private GameObject ghostObject;
@@ -163,6 +168,7 @@ public class PlacementController : MonoBehaviour
         FurnitureSortingUtility.ApplySorting(ghostObject, selectedItem);
 
         SetGhostColor(validColor);
+        AudioManager.Instance.Play(AudioId.PickUpItem);
     }
 
     private void TryPickUpFurniture()
@@ -270,7 +276,15 @@ public class PlacementController : MonoBehaviour
     private void TryPlaceItem()
     {
         if (!canPlace)
+        {
+            if (Time.time >= nextWrongPlacementSoundTime)
+            {
+                AudioManager.Instance.Play(AudioId.PlacementWrong);
+                nextWrongPlacementSoundTime = Time.time + wrongPlacementCooldown;
+            }
+
             return;
+        }
 
         // FLOOR TILE
         if (selectedItem.itemType == ItemType.FloorTile)
@@ -319,6 +333,8 @@ public class PlacementController : MonoBehaviour
         inventory.RemoveItem(selectedItem);
 
         Debug.Log("Placed item: " + selectedItem.itemName);
+
+        AudioManager.Instance.Play(AudioId.PlacementSuccess);
 
         CancelPlacement();
     }

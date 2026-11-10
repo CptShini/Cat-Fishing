@@ -8,6 +8,9 @@
         
         public float Average => (Min + Max) / 2f;
         public float Random() => UnityEngine.Random.Range(Min, Max);
+
+        public override string ToString() => 
+            $"{Min:F1} - {Max:F1}";
     }
 
     [System.Serializable]
@@ -18,5 +21,8 @@
         
         public float Average => (Min + Max) / 2f;
         public int Random() => UnityEngine.Random.Range(Min, Max + 1);
+        
+        public override string ToString() => 
+            $"{Min} - {Max}";
     }
 }
