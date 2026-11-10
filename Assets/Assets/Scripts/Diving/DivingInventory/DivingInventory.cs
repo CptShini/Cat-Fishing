@@ -1,16 +1,21 @@
 using System.Collections.Generic;
 using System.Linq;
+using Assets.Scripts.Audio;
+using Assets.Scripts.Data.Domain;
+using Assets.Scripts.Data.Persistence;
 using Assets.Scripts.Diving.Bars;
+using Assets.Scripts.Fishies.Domain;
 using UnityEngine;
 
 namespace Assets.Scripts.Diving.DivingInventory
 {
-    public class DivingInventory : MonoBehaviour
+    public class DivingInventory : MonoBehaviour, IDataPersistence
     {
         public static DivingInventory Instance { get; private set; }
         
         public bool IsEnabled { get; private set; }
-        
+
+        private bool _savable;
         private List<Collectible> _collectibles;
         
         [SerializeField] private DivingInventorySlot slotPrefab;
@@ -25,23 +30,22 @@ namespace Assets.Scripts.Diving.DivingInventory
                 Destroy(gameObject);
                 return;
             }
+            
             Instance = this;
-            weightBar.SetMaxValue(DivingPlayerStats.Instance.carryingCapacity, 0f);
         }
 
         private void Start()
         {
             _collectibles = new();
+            weightBar.SetMaxValue(DivingPlayerStats.Instance.carryingCapacity, 0f);
         }
-        
-        public List<T> GetCollectiblesOfType<T>() where T : Collectible => 
-            _collectibles.OfType<T>().ToList();
 
         public bool Add(Collectible collectible)
         {
             if (!weightBar.TryAdd(collectible.Weight))
             {
                 print($"No space in inventory for '{collectible.Name}' ({collectible.Weight:F1}kg)");
+                AudioManager.Instance.Play(AudioId.InventoryFull);
                 return false;
             }
 
@@ -55,6 +59,7 @@ namespace Assets.Scripts.Diving.DivingInventory
             if (!weightBar.CanAdd(collectible.Weight))
             {
                 print($"No space in inventory for '{collectible.Name}' ({collectible.Weight:F1}kg)");
+                AudioManager.Instance.Play(AudioId.InventoryFull);
                 return false;
             }
             return true;
@@ -83,6 +88,24 @@ namespace Assets.Scripts.Diving.DivingInventory
         {
             IsEnabled = enable;
             panel.SetActive(IsEnabled);
+        }
+        
+        public void SetSavable() => _savable = true;
+
+        public void LoadData(GameData data)
+        {
+            // No data to load
+        }
+
+        public void SaveData(ref GameData data)
+        {
+            if (!_savable) return;
+            
+            foreach (var fc in _collectibles.OfType<FishCollectible>())
+            {
+                FishDTO fishDTO = new(fc.fish);
+                data.Collection.Add(fishDTO.Id, fishDTO);
+            }
         }
     }
 }

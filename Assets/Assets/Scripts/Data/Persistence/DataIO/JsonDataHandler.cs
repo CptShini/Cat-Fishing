@@ -4,6 +4,10 @@ using System.Linq;
 using Assets.Scripts.Data.Domain;
 using UnityEngine;
 
+#if !UNITY_EDITOR
+using System.Text;
+#endif
+
 namespace Assets.Scripts.Data.Persistence.DataIO
 {
     public class JsonDataHandler : MonoBehaviour, DataIOHandler
@@ -17,9 +21,6 @@ namespace Assets.Scripts.Data.Persistence.DataIO
             _saveDir = Path.Combine(_saveDir, "Dev");
             #endif
         }
-
-        private string GetSaveFilePath(string saveName) =>
-            Path.Combine(_saveDir, $"{saveName}.json");
 
         public SaveFile[] GetSaves()
         {
@@ -43,17 +44,21 @@ namespace Assets.Scripts.Data.Persistence.DataIO
 
         public GameData Load(string saveName)
         {
-            string fullPath = GetSaveFilePath(saveName);
-            if (!File.Exists(fullPath)) return null;
-            
+            string fullPath = string.Empty;
+
             try
             {
-                using FileStream fs = new(fullPath, FileMode.Open);
-                using StreamReader sr = new(fs);
-                string dataToLoad = sr.ReadToEnd();
+                fullPath = GetSaveFilePath(saveName);
+                if (!File.Exists(fullPath))
+                {
+                    Debug.LogError($"Save file \"{saveName}\" does not exist.");
+                    return null;
+                }
+
+                string dataToLoad = File.ReadAllText(fullPath);
 
                 #if !UNITY_EDITOR
-                EncryptDecrypt(ref dataToLoad);
+                dataToLoad = Deobfuscate(dataToLoad);
                 #endif
                 
                 return JsonUtility.FromJson<GameData>(dataToLoad);
@@ -67,22 +72,20 @@ namespace Assets.Scripts.Data.Persistence.DataIO
 
         public void Save(GameData data, string saveName)
         {
-            SanitizeFileName(ref saveName);
-            
-            string fullPath = GetSaveFilePath(saveName);
+            string fullPath = string.Empty;
+
             try
             {
+                fullPath = GetSaveFilePath(saveName);
                 CreateSaveDirectoryIfNotPresent();
             
                 string dataToSave = JsonUtility.ToJson(data, true);
                 
                 #if !UNITY_EDITOR
-                EncryptDecrypt(ref dataToSave);
+                dataToSave = Obfuscate(dataToSave);
                 #endif
-                
-                using FileStream fs = new(fullPath, FileMode.Create);
-                using StreamWriter sw = new(fs);
-                sw.Write(dataToSave);
+
+                File.WriteAllText(fullPath, dataToSave);
             }
             catch (Exception e)
             {
@@ -92,32 +95,55 @@ namespace Assets.Scripts.Data.Persistence.DataIO
         
         private void CreateSaveDirectoryIfNotPresent()
         {
-            bool saveDirExists = Directory.Exists(_saveDir);
-            if (!saveDirExists) Directory.CreateDirectory(_saveDir);
+            if (!Directory.Exists(_saveDir)) 
+                Directory.CreateDirectory(_saveDir);
         }
-
-        private static void SanitizeFileName(ref string fileName)
+        
+        private string GetSaveFilePath(string saveName)
         {
-            char[] invalidChars = Path.GetInvalidFileNameChars();
-            string newName =
-                string.Join("_", fileName.Split(invalidChars, StringSplitOptions.RemoveEmptyEntries))
-                .TrimEnd('.');
+            string safeName = SanitizeFileName();
+            return Path.Combine(_saveDir, $"{safeName}.json");
             
-            fileName = newName;
+            string SanitizeFileName()
+            {
+                if (string.IsNullOrWhiteSpace(saveName))
+                    throw new ArgumentException("Save name cannot be empty.");
+
+                char[] invalidChars = Path.GetInvalidFileNameChars();
+                string sanitized =
+                    string.Join("_", saveName.Split(invalidChars, StringSplitOptions.RemoveEmptyEntries))
+                        .TrimEnd('.');
+
+                return string.IsNullOrWhiteSpace(sanitized) 
+                    ? throw new ArgumentException("Invalid save name.") 
+                    : sanitized;
+            }
         }
 
         #if !UNITY_EDITOR
-        private static void EncryptDecrypt(ref string data)
+        private static readonly byte[] Key = 
+            Encoding.UTF8.GetBytes("KoiKat_Save_Obfuscation_v1");
+
+        private static string Obfuscate(string data)
         {
-            const string codeword = "KoiKat";
-            
-            string modifiedData = "";
-            for (int i = 0; i < data.Length; i++)
+            byte[] bytes = Encoding.UTF8.GetBytes(data);
+            for (int i = 0; i < bytes.Length; i++)
             {
-                modifiedData += (char) (data[i] ^ codeword[i % codeword.Length]);
+                bytes[i] ^= Key[i % Key.Length];
             }
-            
-            data = modifiedData;
+
+            return Convert.ToBase64String(bytes);
+        }
+
+        private static string Deobfuscate(string data)
+        {
+            byte[] bytes = Convert.FromBase64String(data);
+            for (int i = 0; i < bytes.Length; i++)
+            {
+                bytes[i] ^= Key[i % Key.Length];
+            }
+
+            return Encoding.UTF8.GetString(bytes);
         }
         #endif
     }
