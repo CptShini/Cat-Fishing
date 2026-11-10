@@ -5,54 +5,51 @@ using Assets.Scripts.Data.Domain;
 using Assets.Scripts.Data.Persistence;
 using Assets.Scripts.Fishies.Domain;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EncyclopediaManager : MonoBehaviour, IDataPersistence
+namespace Assets.Scripts.Aquarium.Computer.Encyclopedia
 {
-
-    public static EncyclopediaManager Instance { get; private set; }
-        
-    public bool IsEnabled { get; private set; }
-        
-    [SerializeField] private EncyclopediaSlot slotPrefab;   
-    [SerializeField] private Transform grid;
-    [SerializeField] private FishSpeciesDatabase species;
-
-    [SerializeField] private Image fishImage;
-    [SerializeField] private TextMeshProUGUI catchHighscore;
-    [SerializeField] private TextMeshProUGUI title;
-    [SerializeField] private TextMeshProUGUI weightRange;
-    [SerializeField] private TextMeshProUGUI description;
-    [SerializeField] private TextMeshProUGUI collection;
-    private Dictionary<Guid, Fish> _discoveries = new();
-
-    private void Awake()
+    public class EncyclopediaManager : MonoBehaviour, IDataPersistence
     {
-        if (Instance != null && Instance != this)
+        public static EncyclopediaManager Instance { get; private set; }
+        
+        public bool IsEnabled { get; private set; }
+        
+        [SerializeField] private EncyclopediaSlot slotPrefab;   
+        [SerializeField] private Transform grid;
+        [SerializeField] private FishSpeciesDatabase speciesDb;
+
+        [SerializeField] private Image fishImage;
+        [SerializeField] private TextMeshProUGUI catchHighscore;
+        [SerializeField] private TextMeshProUGUI title;
+        [SerializeField] private TextMeshProUGUI weightRange;
+        [SerializeField] private TextMeshProUGUI description;
+        [SerializeField] private TextMeshProUGUI collection;
+        private Dictionary<Guid, Fish> _discoveries = new();
+
+        private void Awake()
         {
-            Destroy(gameObject);
-            return;
-        }
-        Instance = this;
-    }
-
-    private void Init()
-    {
-        Debug.Log($"DISCOVERIES {_discoveries.Count}");
-        bool pageSet = false;
-        foreach (FishSpecies specie in species.GetSpecies())
-        {
-            EncyclopediaSlot slot = Instantiate(slotPrefab, grid, false);
-
-            slot.Setup(specie);
-
-            foreach (var discovery in _discoveries.Values)
+            if (Instance != null && Instance != this)
             {
-                if(discovery.Species.Id == specie.Id)
+                Destroy(gameObject);
+                return;
+            }
+        
+            Instance = this;
+        }
+
+        private void Init()
+        {
+            bool pageSet = false;
+            foreach (FishSpecies species in speciesDb.Species)
+            {
+                EncyclopediaSlot slot = Instantiate(slotPrefab, grid, false);
+                slot.Setup(species);
+
+                foreach (Fish discovery in _discoveries.Values.Where(discovery => discovery.Species.Id == species.Id))
                 {
-                    slot.Setup(specie, discovery, true);
+                    slot.Setup(species, discovery, true);
                     if (!pageSet)
                     {
                         SetPageToFish(discovery);
@@ -60,45 +57,46 @@ public class EncyclopediaManager : MonoBehaviour, IDataPersistence
                     }
                     break;
                 }
-            }
-            if (!pageSet)
-            {
-                SetPageToUnknownFish(specie);
+
+                if (pageSet) continue;
+            
+                SetPageToUnknownFish(species);
                 pageSet = true;
             }
+        
+            collection.text = $"{_discoveries.Count} / {speciesDb.Species.Count} Fish Collected";
         }
-        collection.text = $"{_discoveries.Count} / {species.GetSpecies().Count} Fish Collected";
-    }
 
-    public void SetPageToUnknownFish(FishSpecies species)
-    {
-        fishImage.sprite = species.Icon;
-        fishImage.color = Color.black;
-        title.text = "???";
-        description.text = "";
-        weightRange.text = "???-??? KG";
-        catchHighscore.text = "???";
-    }
+        public void SetPageToUnknownFish(FishSpecies species)
+        {
+            fishImage.sprite = species.Icon;
+            fishImage.color = Color.black;
+            title.text = "???";
+            description.text = "";
+            weightRange.text = "??? - ??? KG";
+            catchHighscore.text = "???";
+        }
 
-    public void SetPageToFish(Fish fish)
-    {
-        fishImage.sprite = fish.Species.Icon;
-        fishImage.color = Color.white;
-        title.text = $"{fish.Species.Name}";
-        description.text = fish.Species.Description;
-        weightRange.text = $"{Math.Round(fish.Species.Weight.Min, 1)}-{Math.Round(fish.Species.Weight.Max, 1)} KG";
+        public void SetPageToFish(Fish fish)
+        {
+            fishImage.sprite = fish.Species.Icon;
+            fishImage.color = Color.white;
+            title.text = $"{fish.Species.Name}";
+            description.text = fish.Species.Description;
+            weightRange.text = $"{fish.Species.Weight} KG";
 
-        catchHighscore.text = $"{Math.Round(fish.Weight, 1) } KG";
-    }
+            catchHighscore.text = $"{fish.Weight:F1} KG";
+        }
 
-    public void LoadData(GameData data)
-    {
-        _discoveries = data.Discoveries.ToDictionary(species);
-        Init();
-    }
+        public void LoadData(GameData data)
+        {
+            _discoveries = data.Discoveries.ToDictionary(speciesDb);
+            Init();
+        }
 
-    public void SaveData(ref GameData data)
-    {
-        data.Discoveries = _discoveries.ToSerializableDictionary();
+        public void SaveData(ref GameData data)
+        {
+            data.Discoveries = _discoveries.ToSerializableDictionary();
+        }
     }
 }
