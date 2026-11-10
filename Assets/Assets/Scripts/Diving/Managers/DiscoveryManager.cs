@@ -4,6 +4,7 @@ using Assets.Scripts.Data.Domain;
 using Assets.Scripts.Data.Persistence;
 using Assets.Scripts.Fishies.Domain;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class DiscoveryManager : MonoBehaviour, IDataPersistence
 {
@@ -13,6 +14,9 @@ public class DiscoveryManager : MonoBehaviour, IDataPersistence
 
     private Dictionary<Guid, Fish> _discoveries;
     [SerializeField] private FishSpeciesDatabase species;
+
+    public readonly UnityEvent<Fish> OnDiscovered = new();
+    public readonly UnityEvent<Fish> OnNewRecord = new();
 
     void Awake()
     {
@@ -54,14 +58,15 @@ public class DiscoveryManager : MonoBehaviour, IDataPersistence
 
     private void NewRecord(Fish fish, Fish other)
     {
-        Debug.Log("NEW RECORD!!! AMAZING! AAAAAAAAAAAAAAAAAAAHHHH");
         _discoveries.Remove(other.Id);
         _discoveries.Add(fish.Id, fish);
+        OnNewRecord.Invoke(fish);
     }
 
     private void NewDiscovery(Fish fish)
     {
         _discoveries.Add(fish.Id, fish);
+        OnDiscovered.Invoke(fish);
     }
 
     public void LoadData(GameData data)
