@@ -4,12 +4,23 @@ using UnityEngine.AI;
 
 public class CrowdPopulator : MonoBehaviour
 {
-
+    public static CrowdPopulator Instance {get; private set;}
     [SerializeField] private GameObject NPCPrefab;
 
     [SerializeField] private int npcCount = 3;
 
     private NavMeshSurface surface;
+
+    void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+            
+        Instance = this;
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

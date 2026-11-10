@@ -298,12 +298,13 @@ public class PlacementController : MonoBehaviour
         if (selectedItem.itemType == ItemType.FloorTile)
         {
             bool placed = roomGrid.ExpandRoom(currentCell, currentSize, selectedItem.floorTile);
-
+            Debug.Log(currentCell.ToString());
+            Debug.Log(currentSize.ToString());
             if (!placed)
                 return;
 
             inventory.RemoveItem(selectedItem);
-
+            OnPlaced.Invoke();
             // you can place floor tiles until you run out of them
             if (!inventory.HasItem(selectedItem))
             {

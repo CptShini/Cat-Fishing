@@ -168,6 +168,7 @@ public class RoomGrid : MonoBehaviour
                 placeableArea.SetTile(cell, floorTile);
             }
         }
+        Debug.Log("AAAAHHH");
 
         RefreshBottomEdges();
         decorationGridVisuals.RefreshGrid();
