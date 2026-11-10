@@ -70,7 +70,6 @@ public class DiscoveryManager : MonoBehaviour, IDataPersistence
     public void LoadData(GameData data)
     {
         _discoveries = data.Discoveries.ToDictionary(species);
-        //_discoveries.Clear();
     }
 
     public void SaveData(ref GameData data)

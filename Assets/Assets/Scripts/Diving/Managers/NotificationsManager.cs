@@ -60,7 +60,7 @@ public class NotificationsManager : MonoBehaviour
 
     private void StopNotify()
     {
-        animator.SetBool("finished", false);
+        animator.SetBool("finished", true);
         started = false;
     }
 
@@ -79,5 +79,6 @@ public class NotificationsManager : MonoBehaviour
         {
             curDuration += Time.deltaTime;
         }
+        Debug.Log($"{curDuration}");
     }
 }
