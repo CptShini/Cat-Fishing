@@ -64,7 +64,7 @@ public class CatchingMinigame : MonoBehaviour
         wiggleTime = 0;
         wiggleRad = 0;
         
-        AudioManager.Instance.PlayLoop(AudioId.BattleBGM);
+        AudioManager.Instance.Play(AudioId.BattleBGM);
     }
 
     public void Grab(Vector2 velocityVector)

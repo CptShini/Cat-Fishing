@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a93c0cbd18c85e7428492ffc3486356e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AudioManager
-  AudioSFXInstancePrefab: {fileID: 2186188674788052055, guid: 0d6924240a7d1534db912d95b59860c7, type: 3}
+  audioSFXInstancePrefab: {fileID: 2186188674788052055, guid: 0d6924240a7d1534db912d95b59860c7, type: 3}
   audioSFXs:
   - {fileID: 11400000, guid: a3e9dffdd78279043ba9313a905021c9, type: 2}
   - {fileID: 11400000, guid: 02a180c090bf52c42b856934926639f8, type: 2}
