@@ -18,11 +18,23 @@ public class RoomGrid : MonoBehaviour
     [SerializeField] private Vector2 bottomEdgeOffset;
     [SerializeField] private int bottomEdgeSortingOrder = 0;
 
+    private BoundsInt initialFloorBounds;
+    private TileBase[] initialFloorTiles;
+
     private Dictionary<Vector3Int, GameObject> bottomEdges = new();
 
     private HashSet<Vector3Int> occupiedCells = new();
 
     public Grid Grid => grid;
+
+    private void Awake()
+    {
+        if (placeableArea == null)
+            return;
+
+        initialFloorBounds = placeableArea.cellBounds;
+        initialFloorTiles = placeableArea.GetTilesBlock(initialFloorBounds);
+    }
 
     private void Start()
     {
@@ -303,5 +315,25 @@ public class RoomGrid : MonoBehaviour
 
         RefreshBottomEdges();
         decorationGridVisuals.RefreshGrid();
+    }
+
+    // for testing
+    public void RestoreInitialFloor()
+    {
+        if (placeableArea == null)
+            return;
+
+        placeableArea.ClearAllTiles();
+
+        if (initialFloorTiles != null && initialFloorTiles.Length > 0)
+            placeableArea.SetTilesBlock(initialFloorBounds, initialFloorTiles);
+
+        RefreshBottomEdges();
+        decorationGridVisuals.RefreshGrid();
+    }
+
+    public void ClearOccupiedCells()
+    {
+        occupiedCells.Clear();
     }
 }

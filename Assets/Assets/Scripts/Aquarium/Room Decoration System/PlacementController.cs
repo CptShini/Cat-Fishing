@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
-using Assets.Scripts.Data;
 
 public class PlacementController : MonoBehaviour
 {
@@ -36,6 +35,18 @@ public class PlacementController : MonoBehaviour
     public bool IsPlacingItem => selectedItem != null || selectedFixedFurniture != null;
 
     private bool isDecorationMode = false;
+
+    private Dictionary<RoomFixedFurniture, Vector3> initialFixedFurniturePositions = new();
+
+    private void Awake()
+    {
+        RoomFixedFurniture[] fixedFurniture = FindObjectsByType<RoomFixedFurniture>(FindObjectsSortMode.None);
+
+        foreach (RoomFixedFurniture furniture in fixedFurniture)
+        {
+            initialFixedFurniturePositions[furniture] = furniture.transform.position;
+        }
+    }
 
     public void EnterDecorationMode()
     {
@@ -588,5 +599,49 @@ public class PlacementController : MonoBehaviour
                 break;
             }
         }
+    }
+
+    // for testing
+    public void ResetFurniture()
+    {
+        CancelPlacement();
+
+        // clear occupied cells before rebuilding them
+        roomGrid.ClearOccupiedCells();
+
+        // remove placed furniture
+        foreach (Transform child in placedFurnitureRoot)
+        {
+            PlacedFurniture furniture = child.GetComponent<PlacedFurniture>();
+
+            if (furniture != null)
+                gridVisuals.UnregisterPlacedFurniture(furniture);
+
+            child.gameObject.SetActive(false);
+            Destroy(child.gameObject);
+        }
+
+        // restore fixed furniture
+        foreach (var entry in initialFixedFurniturePositions)
+        {
+            RoomFixedFurniture furniture = entry.Key;
+
+            if (furniture == null)
+                continue;
+
+            gridVisuals.UnregisterFixedFurniture(furniture);
+
+            furniture.transform.position = entry.Value;
+
+            Vector3Int origin = furniture.GetOrigin(roomGrid.Grid);
+            furniture.currentOrigin = origin;
+
+            if (furniture.blocksPlacement)
+                roomGrid.RegisterObject(origin, furniture.size);
+
+            gridVisuals.RegisterFixedFurniture(furniture, origin);
+        }
+
+        gridVisuals.HideFootprint();
     }
 }

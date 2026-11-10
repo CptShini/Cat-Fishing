@@ -118,4 +118,14 @@ public class DecorInventoryManager : MonoBehaviour
             newSlot.UpdateUI();
         }
     }
+
+    // for testing
+    public void ClearInventory()
+    {
+        foreach (Transform child in inventoryContent)
+        {
+            child.gameObject.SetActive(false);
+            Destroy(child.gameObject);
+        }
+    }
 }

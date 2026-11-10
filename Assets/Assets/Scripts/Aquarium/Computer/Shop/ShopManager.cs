@@ -121,6 +121,13 @@ public class ShopManager : MonoBehaviour
                 slot.UpdatePurchasedState();
         }
     }
+
+    // for testing
+    public void ResetPurchasedItems()
+    {
+        purchasedItems.Clear();
+        RefreshShopSlots();
+    }
 }
 
 [System.Serializable]
