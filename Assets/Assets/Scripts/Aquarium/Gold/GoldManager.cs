@@ -7,9 +7,17 @@ public class GoldManager : MonoBehaviour, IDataPersistence
 {
     public static GoldManager Instance { get; private set; }
 
-    [SerializeField] private int gold;
+    private int _gold;
 
-    public int Gold => gold;
+    public int Gold
+    {
+        get => _gold;
+        private set
+        {
+            _gold = value;
+            UpdateUI();
+        }
+    }
 
     private void Awake()
     {
@@ -24,7 +32,7 @@ public class GoldManager : MonoBehaviour, IDataPersistence
 
     private void Start()
     {
-        GoldUI.Instance?.UpdateGold(gold);
+        UpdateUI();
     }
 
     public void AddGold(int amount)
@@ -32,57 +40,44 @@ public class GoldManager : MonoBehaviour, IDataPersistence
         if (amount <= 0)
             return;
 
-        gold += amount;
-        UpdateUI();
-        SaveGold();
+        Gold += amount;
     }
 
     public bool SpendGold(int amount)
     {
-        if (amount <= 0 || gold < amount)
+        if (amount <= 0 || Gold < amount)
             return false;
 
-        gold -= amount;
-        
-        UpdateUI();
-        SaveGold();
+        Gold -= amount;
 
         return true;
     }
 
     public bool HasEnoughGold(int amount)
     {
-        return amount >= 0 && gold >= amount;
+        return amount >= 0 && Gold >= amount;
     }
 
     private void UpdateUI()
     {
-        GoldUI.Instance.UpdateGold(gold);
-    }
-
-    private void SaveGold()
-    {
-        SaveManager.Instance.SaveData();
-        SaveManager.Instance.Save();
+        GoldUI.Instance.UpdateGold(Gold);
     }
 
     public void LoadData(GameData data)
     {
-        gold = data.Gold;
-        UpdateUI();
+        Gold = data.Gold;
     }
 
     public void SaveData(ref GameData data)
     {
-        data.Gold = gold;
+        data.Gold = Gold;
     }
 
     // for testing
     public void ResetGold()
     {
-        gold = 500;
+        Gold = 500;
         UpdateUI();
-        SaveGold();
 
         Debug.Log("Gold reset to 500.");
     }
