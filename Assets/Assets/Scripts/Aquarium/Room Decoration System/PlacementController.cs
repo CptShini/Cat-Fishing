@@ -3,9 +3,12 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
 using Assets.Scripts.Audio;
+using UnityEngine.Events;
 
 public class PlacementController : MonoBehaviour
 {
+    public static PlacementController Instance { get; private set; }
+
     [Header("References")]
     [SerializeField] private RoomGrid roomGrid;
     [SerializeField] private DecorInventoryManager inventory;
@@ -37,9 +40,23 @@ public class PlacementController : MonoBehaviour
 
     private bool canPlace;
 
+    public UnityEvent OnPlaced = new();
+
     public bool IsPlacingItem => selectedItem != null || selectedFixedFurniture != null;
 
     private bool isDecorationMode = false;
+
+
+    void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+            
+        Instance = this;
+    }
 
     public void EnterDecorationMode()
     {
@@ -321,7 +338,7 @@ public class PlacementController : MonoBehaviour
         inventory.RemoveItem(selectedItem);
 
         Debug.Log("Placed item: " + selectedItem.itemName);
-
+        OnPlaced.Invoke();
         AudioManager.Instance.Play(AudioId.PlacementSuccess);
 
         CancelPlacement();
