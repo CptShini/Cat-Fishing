@@ -13,7 +13,7 @@ public class SwimScript : MonoBehaviour
     private float friction = 0;
     private float acceleration = 0;
     public readonly UnityEvent<Vector2, float> OnSwim = new();
-    private Vector2 velocityVector;
+    private Vector2 velocityVector = new();
 
     bool swimming = false;
     bool stealth = false;
