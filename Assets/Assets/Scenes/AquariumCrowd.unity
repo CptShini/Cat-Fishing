@@ -3276,10 +3276,10 @@ GameObject:
   - component: {fileID: 742362238}
   - component: {fileID: 742362244}
   - component: {fileID: 742362243}
-  - component: {fileID: 742362242}
   - component: {fileID: 742362241}
   - component: {fileID: 742362240}
   - component: {fileID: 742362239}
+  - component: {fileID: 742362245}
   m_Layer: 0
   m_Name: Fish Tank 2
   m_TagString: Untagged
@@ -3378,44 +3378,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.4250631, y: 2.7607327}
   m_EdgeRadius: 0
---- !u!19719996 &742362242
-TilemapCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 742362237}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_MaximumTileChangeCount: 1000
-  m_ExtrusionFactor: 0
-  m_UseDelaunayMesh: 0
 --- !u!1839735485 &742362243
 Tilemap:
   m_ObjectHideFlags: 0
@@ -3513,6 +3475,22 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &742362245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 742362237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: 00000000
 --- !u!1 &748809815
 GameObject:
   m_ObjectHideFlags: 0
@@ -4789,10 +4767,10 @@ GameObject:
   - component: {fileID: 946427549}
   - component: {fileID: 946427555}
   - component: {fileID: 946427554}
-  - component: {fileID: 946427553}
   - component: {fileID: 946427552}
   - component: {fileID: 946427551}
   - component: {fileID: 946427550}
+  - component: {fileID: 946427556}
   m_Layer: 0
   m_Name: Workbench
   m_TagString: Untagged
@@ -4888,44 +4866,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.007319, y: 0.7741677}
   m_EdgeRadius: 0
---- !u!19719996 &946427553
-TilemapCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 946427548}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_MaximumTileChangeCount: 1000
-  m_ExtrusionFactor: 0
-  m_UseDelaunayMesh: 0
 --- !u!1839735485 &946427554
 Tilemap:
   m_ObjectHideFlags: 0
@@ -5023,6 +4963,22 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &946427556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 946427548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: 00000000
 --- !u!1 &953177425
 GameObject:
   m_ObjectHideFlags: 0
@@ -5542,9 +5498,6 @@ MonoBehaviour:
   validColor: {r: 0.3, g: 1, b: 0.3, a: 0.5}
   invalidColor: {r: 1, g: 0.3, b: 0.3, a: 0.5}
   wrongPlacementCooldown: 0.5
-  OnPlaced:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!4 &1055453414
 Transform:
   m_ObjectHideFlags: 0
@@ -11757,7 +11710,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 1752355891}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.17
+  m_Radius: 0.1
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
@@ -12560,10 +12513,10 @@ GameObject:
   - component: {fileID: 1863139704}
   - component: {fileID: 1863139710}
   - component: {fileID: 1863139709}
-  - component: {fileID: 1863139708}
   - component: {fileID: 1863139707}
   - component: {fileID: 1863139706}
   - component: {fileID: 1863139705}
+  - component: {fileID: 1863139711}
   m_Layer: 0
   m_Name: Computer
   m_TagString: Untagged
@@ -12659,44 +12612,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 2.103723, y: 2.4984221}
   m_EdgeRadius: 0
---- !u!19719996 &1863139708
-TilemapCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1863139703}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_MaximumTileChangeCount: 1000
-  m_ExtrusionFactor: 0
-  m_UseDelaunayMesh: 0
 --- !u!1839735485 &1863139709
 Tilemap:
   m_ObjectHideFlags: 0
@@ -12794,6 +12709,22 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &1863139711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1863139703}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: 00000000
 --- !u!1001 &1939686119
 PrefabInstance:
   m_ObjectHideFlags: 0

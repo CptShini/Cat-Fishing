@@ -21,6 +21,7 @@ public class NavigationManager : MonoBehaviour
     void Start()
     {
         PlacementController.Instance.OnPlaced.AddListener(RebuildNavigation);
+        PlacementController.Instance.OnPickedUp.AddListener(RebuildNavigation);
         RebuildNavigation();
     }
 
@@ -28,11 +29,5 @@ public class NavigationManager : MonoBehaviour
     private void RebuildNavigation()
     {
         surface.BuildNavMesh();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

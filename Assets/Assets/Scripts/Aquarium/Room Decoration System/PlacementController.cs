@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 using System.Collections.Generic;
 using Assets.Scripts.Audio;
 using UnityEngine.Events;
+using NavMeshPlus.Components;
 
 public class PlacementController : MonoBehaviour
 {
@@ -40,8 +41,8 @@ public class PlacementController : MonoBehaviour
 
     private bool canPlace;
 
-    public UnityEvent OnPlaced = new();
-
+    public readonly UnityEvent OnPlaced = new();
+    public readonly UnityEvent OnPickedUp = new();
     public bool IsPlacingItem => selectedItem != null || selectedFixedFurniture != null;
 
     private bool isDecorationMode = false;
@@ -234,6 +235,8 @@ public class PlacementController : MonoBehaviour
         gridVisuals.UnregisterPlacedFurniture(furniture);
 
         Destroy(furniture.gameObject);
+
+        OnPickedUp.Invoke();
     }
 
     private void UpdateFixedFurniturePosition()
@@ -441,6 +444,14 @@ public class PlacementController : MonoBehaviour
             List<Vector2> points = new List<Vector2>();
             sprite.GetPhysicsShape(i, points);
             collider.SetPath(i, points);
+        }
+
+        if (!collider.isTrigger)
+        {
+            NavMeshModifier navMod = spriteRenderer.gameObject.AddComponent<NavMeshModifier>();
+
+            navMod.overrideArea = true;
+            navMod.area = 1;
         }
     }
 
