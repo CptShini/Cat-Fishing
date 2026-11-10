@@ -16,5 +16,8 @@ namespace Assets.Scripts.Audio
         
         [field: SerializeField]
         public bool Looping { get; private set; }
+
+        public override string ToString() => 
+            $"{Id} ({(Looping ? "Loop" : "SFX")})";
     }
 }

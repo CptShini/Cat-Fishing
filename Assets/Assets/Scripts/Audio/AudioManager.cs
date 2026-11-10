@@ -8,10 +8,10 @@ namespace Assets.Scripts.Audio
     {
         public static AudioManager Instance { get; private set; }
         
-        [SerializeField] private GameObject AudioSFXInstancePrefab;
+        [SerializeField] private GameObject audioSFXInstancePrefab;
         [SerializeField] private AudioSFX[] audioSFXs;
         
-        private readonly Dictionary<AudioId, AudioSFXInstance> _loopingAudio = new();
+        private readonly Dictionary<AudioId, AudioSFXInstance> _audioInstances = new();
         
         private void Awake()
         {
@@ -24,35 +24,37 @@ namespace Assets.Scripts.Audio
             Instance = this;
         }
         
-        public AudioSFXInstance Play(AudioId id)
+        public bool Play(AudioId id)
         {
-            AudioSFX audioSFX = audioSFXs.FirstOrDefault(sfx => sfx.Id == id);
-            if (!audioSFX) return null;
+            bool alreadyPlaying = _audioInstances.TryGetValue(id, out AudioSFXInstance audioSFXInstance);
+            if (!alreadyPlaying)
+            {
+                AudioSFX audioSFX = audioSFXs.FirstOrDefault(sfx => sfx.Id == id);
+                if (!audioSFX) return false;
+                
+                audioSFXInstance = CreateInstance(audioSFX);
+                _audioInstances.Add(id, audioSFXInstance);
+            }
             
-            GameObject audioSFXInstanceObject = Instantiate(AudioSFXInstancePrefab);
-            AudioSFXInstance audioSFXInstance = audioSFXInstanceObject.GetComponent<AudioSFXInstance>();
-            audioSFXInstance.Play(audioSFX);
-
-            return audioSFXInstance;
+            audioSFXInstance.Play();
+            return true;
         }
-        
-        public void PlayLoop(AudioId id)
+
+        private AudioSFXInstance CreateInstance(AudioSFX sfx)
         {
-            if (_loopingAudio.ContainsKey(id))
-                return;
+            GameObject audioSFXInstanceObject = Instantiate(audioSFXInstancePrefab);
+            AudioSFXInstance audioSFXInstance = audioSFXInstanceObject.GetComponent<AudioSFXInstance>();
+            audioSFXInstance.Init(sfx, () => _audioInstances.Remove(sfx.Id));
             
-            AudioSFXInstance loopingAudio = Play(id);
-            if (!loopingAudio) return;
-            
-            _loopingAudio.Add(id, loopingAudio);
+            return audioSFXInstance;
         }
 
         public void FadeOutLoop(AudioId id, float fadeDuration = 0.4f)
         {
-            if (!_loopingAudio.TryGetValue(id, out AudioSFXInstance loopingAudio))
+            if (!_audioInstances.TryGetValue(id, out AudioSFXInstance loopingAudio))
                 return;
             
-            loopingAudio.FadeOutLoop(fadeDuration, () => _loopingAudio.Remove(id));
+            loopingAudio.FadeOutLoop(fadeDuration);
         }
     }
 }

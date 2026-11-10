@@ -78,7 +78,7 @@ public class SwimScript : MonoBehaviour
         // Play swimming audio only when actually moving
         if (!stealth && _pb.linearVelocity.magnitude > 0.1f)
         {
-            AudioManager.Instance.PlayLoop(AudioId.CatSwim);
+            AudioManager.Instance.Play(AudioId.CatSwim);
         }
         else
         {
