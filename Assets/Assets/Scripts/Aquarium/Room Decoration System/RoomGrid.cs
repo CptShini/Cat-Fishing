@@ -280,6 +280,8 @@ public class RoomGrid : MonoBehaviour
 
     public void LoadPlacedFloor(List<PlacedFloorSaveData> saveData, ItemDatabase database)
     {
+        placeableArea.ClearAllTiles();
+        
         if (saveData == null)
             return;
 

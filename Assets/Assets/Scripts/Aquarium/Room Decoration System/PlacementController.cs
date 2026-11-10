@@ -212,7 +212,6 @@ public class PlacementController : MonoBehaviour
         gridVisuals.UnregisterPlacedFurniture(furniture);
 
         Destroy(furniture.gameObject);
-        SaveDecorations();
     }
 
     private void UpdateFixedFurniturePosition()
@@ -271,7 +270,6 @@ public class PlacementController : MonoBehaviour
                 return;
 
             inventory.RemoveItem(selectedItem);
-            SaveDecorations();
 
             // you can place floor tiles until you run out of them
             if (!inventory.HasItem(selectedItem))
@@ -590,11 +588,5 @@ public class PlacementController : MonoBehaviour
                 break;
             }
         }
-    }
-
-    private void SaveDecorations()
-    {
-        SaveManager.Instance.SaveData();
-        SaveManager.Instance.Save();
     }
 }
