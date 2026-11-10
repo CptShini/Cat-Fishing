@@ -10,8 +10,6 @@ public class DiscoveryManager : MonoBehaviour, IDataPersistence
 {
     public static DiscoveryManager Instance { get; private set; }
         
-    public bool IsEnabled { get; private set; }
-
     private Dictionary<Guid, Fish> _discoveries;
     [SerializeField] private FishSpeciesDatabase species;
 
