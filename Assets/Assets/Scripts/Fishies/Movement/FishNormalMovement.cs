@@ -41,7 +41,8 @@ namespace Assets.Scripts.Fishies.Movement
 
         private void Update()
         {
-            _mover.DesiredDirection = _navigator.CurrentDirection;
+            _mover.Heading = _navigator.CurrentDirection;
+            _mover.NearDistance = _navigator.NearDistance;
             UpdateWanderSpeedRandomly();
         }
 

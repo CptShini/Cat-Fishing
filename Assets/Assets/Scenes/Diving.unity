@@ -21841,10 +21841,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 234ce3336e2b4536b7efdc05462514e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Helpers.DebugDrawer
-  EnableDebug: 1
+  EnableDebug: 0
   Fish_Perception: 0
   Fish_Perception_DrawCircle: 0
   Fish_Perception_DrawReactionTime: 1
+  Fish_Mover: 0
+  Fish_Mover_DrawHeading: 1
   Fish_Nav: 1
   Fish_Nav_DrawDirections: 1
   Fish_Nav_DrawPathing: 1
@@ -40512,9 +40514,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2969132433297625519, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
+      propertyPath: oxygenCapacity
+      value: 70
+      objectReference: {fileID: 0}
     - target: {fileID: 3808421035207708945, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
       propertyPath: m_Name
       value: DivingCat
+      objectReference: {fileID: 0}
+    - target: {fileID: 3808421035207708945, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4547274666616658480, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
       propertyPath: oxygenBar

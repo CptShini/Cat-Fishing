@@ -15,8 +15,10 @@ namespace Assets.Scripts.Fishies.Navigation
     {
         public readonly UnityEvent DestinationReached = new();
         
+        public float NearDistance { get; private set; }
         public Vector2 CurrentDirection { get; private set; }
         private Vector2 _desiredDirection;
+        private float _distanceToWaypoint;
         
         private bool _hasDestination;
         private Vector2 _destination;
@@ -48,10 +50,17 @@ namespace Assets.Scripts.Fishies.Navigation
             Navigate();
             
             if (!_hasDestination) return;
+
+            NearDistance = !_eyes.Spotted 
+                ? _distanceToWaypoint 
+                : Mathf.Min(_distanceToWaypoint, _eyes.NearDistance);
             
-            CurrentDirection = _eyes.Spotted
-                ? Vector3.Slerp(_desiredDirection, _eyes.AwayDirection, _eyes.Weight)
-                : _desiredDirection;
+            Vector2 targetDirection = !_eyes.Spotted
+                ? _desiredDirection
+                : Vector3.Slerp(_desiredDirection, _eyes.AwayDirection, _eyes.Weight);
+            
+            float t = 1f - Mathf.Exp(-5f * Time.deltaTime);
+            CurrentDirection = Vector3.Slerp(CurrentDirection, targetDirection, t);
         }
 
         private void Navigate()
@@ -64,8 +73,8 @@ namespace Assets.Scripts.Fishies.Navigation
                 _hasWaypoint = true;
             }
             
-            float distToWaypoint = Vector2.Distance(transform.position, _waypoint);
-            bool arrivedAtWaypoint = distToWaypoint <= arrivalDistanceTolerance;
+            _distanceToWaypoint = Vector2.Distance(transform.position, _waypoint);
+            bool arrivedAtWaypoint = _distanceToWaypoint <= arrivalDistanceTolerance;
             if (!arrivedAtWaypoint)
             {
                 _desiredDirection = (_waypoint - (Vector2)transform.position).normalized;
@@ -80,6 +89,7 @@ namespace Assets.Scripts.Fishies.Navigation
             
             _hasDestination = false;
             _desiredDirection = Vector2.zero;
+            _distanceToWaypoint = 99999f;
             DestinationReached.Invoke();
         }
 
