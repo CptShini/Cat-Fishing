@@ -1,4 +1,3 @@
-
 using UnityEngine;
 using Assets.Scripts.Data.Domain;
 using Assets.Scripts.Data.Persistence;
@@ -24,7 +23,7 @@ public class DecorationPersistence : MonoBehaviour, IDataPersistence
 
         shopManager.LoadPurchasedItems(data.Decoration.purchasedItemIDs, itemDatabase);
 
-        roomGrid.LoadPlacedFloor(data.Decoration.placedFloor, itemDatabase);
+        roomGrid.LoadFloor(data.Decoration.baseFloor, data.Decoration.additionalFloor, itemDatabase);
     }
 
     public void SaveData(ref GameData data)
@@ -39,6 +38,6 @@ public class DecorationPersistence : MonoBehaviour, IDataPersistence
 
         shopManager.GetPurchasedItemsSaveData(data.Decoration.purchasedItemIDs);
 
-        roomGrid.GetPlacedFloorSaveData( data.Decoration.placedFloor, itemDatabase);
+        roomGrid.GetFloorSaveData(data.Decoration.baseFloor, data.Decoration.additionalFloor, itemDatabase);
     }
 }

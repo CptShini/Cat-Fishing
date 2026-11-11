@@ -17,7 +17,7 @@ namespace Assets.Scripts.Data.Domain
         public List<int> ExploredFogs = new();
         
         // Shop
-        public int Gold;
+        public int Gold = 200;
         
         public SerializableDictionary<OneTimeUpgrade, bool> OneTimeUpgrades = new()
         {

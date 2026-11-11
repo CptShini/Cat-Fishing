@@ -13,7 +13,6 @@ public class DecorationDebugReset : MonoBehaviour
         placementController.ResetFurniture();
         inventoryManager.ClearInventory();
         shopManager.ResetPurchasedItems();
-        roomGrid.RestoreInitialFloor();
 
         Debug.Log("Decoration save reset");
     }

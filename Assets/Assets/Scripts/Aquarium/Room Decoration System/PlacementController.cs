@@ -515,7 +515,6 @@ public class PlacementController : MonoBehaviour
                 itemID = furniture.itemSO.itemID,
                 x = furniture.origin.x,
                 y = furniture.origin.y,
-                z = furniture.origin.z
             });
         }
     }
@@ -546,7 +545,7 @@ public class PlacementController : MonoBehaviour
             if (item == null || item.prefab == null)
                 continue;
 
-            Vector3Int origin = new Vector3Int(saved.x, saved.y, saved.z);
+            Vector3Int origin = new Vector3Int(saved.x, saved.y);
             Vector3 position = roomGrid.GetPlacementPosition(origin, item.size);
 
             GameObject placedObject = Instantiate(item.prefab, position, Quaternion.identity, placedFurnitureRoot);
@@ -596,7 +595,6 @@ public class PlacementController : MonoBehaviour
                 furnitureID = furniture.furnitureID,
                 x = position.x,
                 y = position.y,
-                z = position.z
             });
         }
     }
@@ -624,8 +622,7 @@ public class PlacementController : MonoBehaviour
 
                 furniture.transform.position = new Vector3(
                     saved.x,
-                    saved.y,
-                    saved.z
+                    saved.y
                 );
 
                 Vector3Int newOrigin = furniture.GetOrigin(roomGrid.Grid);
