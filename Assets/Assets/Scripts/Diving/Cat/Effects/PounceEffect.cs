@@ -20,7 +20,6 @@ public class PounceEffect : MonoBehaviour
 
         animator.Play("Effect");
         yield return new WaitForSeconds(animator.GetFloat("speed"));
-        Debug.Log("Finished??");
 
         Destroy(gameObject);
     }

@@ -33,7 +33,7 @@ namespace Assets.Scripts.Diving.Cat
         {
             _rb = gameObject.GetComponent<Rigidbody2D>();
             staminaBar.SetMaxValue(DivingPlayerStats.Instance.maxStamina);
-            staminaBar.SetMinValue(5); // Idk, ask Andreas
+            staminaBar.SetMinValue(0);
             damaged = gameObject.GetComponent<DamagedScript>();
             damaged.OnDamaged.AddListener(CancelPounce);
         }
@@ -62,6 +62,8 @@ namespace Assets.Scripts.Diving.Cat
             DivingController.Instance.SetPlayerState(PlayerState.PlayerState.POUNCE);
             staminaBar.CurrentValue -= curPounceStamina;
             Debug.Log(curPounceStamina);
+
+            curPounceStamina = 0;
 
             AudioManager.Instance.Play(AudioId.Pounce);
             isStealthPlaying = false;

@@ -552,10 +552,10 @@ MonoBehaviour:
   pounceSpeed: 10
   acceleration: 25
   friction: 7.5
-  maxStamina: 30
+  maxStamina: 25
   maxPounceStamina: 10
   minPounceStamina: 2.5
-  staminaRegen: 2
+  staminaRegen: 1.5
   strength: 5
   chargeUpSpeed: 5
   pounceCooldown: 0.5
