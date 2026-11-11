@@ -11,6 +11,8 @@ namespace Assets.Scripts.Fishies.Navigation
         public float Weight { get; private set; }
         public Vector2 AwayDirection { get; private set; }
         
+        public float NearDistance { get; private set; }
+        
         [SerializeField] private Transform eyes;
         [SerializeField] private float viewDistance = 1.5f;
 
@@ -37,7 +39,8 @@ namespace Assets.Scripts.Fishies.Navigation
         
             Vector2 closestPoint = GetClosestHit(hits);
             Vector2 awayDir = (Vector2)eyes.position - closestPoint;
-        
+
+            NearDistance = awayDir.magnitude;
             Weight = (viewDistance - awayDir.magnitude) / viewDistance;
             AwayDirection = awayDir.normalized;
 
