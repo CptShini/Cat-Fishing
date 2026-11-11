@@ -33,9 +33,9 @@ namespace Assets.Scripts.Fishies
 
         public void Init(FishSpecies species)
         {
-            name = species.Name;
-            
             Fish = new(species);
+
+            name = Fish.ToString();
             visuals.Init(species.Icon, Fish.RelativeWeight);
             
             _normalMovement.Init(species.Speed, species.Biome);

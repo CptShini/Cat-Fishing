@@ -21845,8 +21845,10 @@ MonoBehaviour:
   Fish_Perception: 0
   Fish_Perception_DrawCircle: 0
   Fish_Perception_DrawReactionTime: 1
+  Fish_Mover: 0
+  Fish_Mover_DrawHeading: 1
   Fish_Nav: 1
-  Fish_Nav_DrawDirections: 1
+  Fish_Nav_DrawDirections: 0
   Fish_Nav_DrawPathing: 1
   Fish_Eyes: 0
   Fish_Eyes_DrawRaycasts: 1
@@ -40516,9 +40518,17 @@ PrefabInstance:
       propertyPath: upgradeLedger
       value: 
       objectReference: {fileID: 11400000, guid: c6313984491971b42a2590352c7d001d, type: 2}
+    - target: {fileID: 2969132433297625519, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
+      propertyPath: oxygenCapacity
+      value: 70
+      objectReference: {fileID: 0}
     - target: {fileID: 3808421035207708945, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
       propertyPath: m_Name
       value: DivingCat
+      objectReference: {fileID: 0}
+    - target: {fileID: 3808421035207708945, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4547274666616658480, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
       propertyPath: oxygenBar

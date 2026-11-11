@@ -318,18 +318,22 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5206029193779855580}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 95b6be2da70e4ee59a69b617590d5376, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Fish.Movement.FishMover
-  maxTurnRate: 720
-  turnResponsiveness: 10
-  turnAcceleration: 720
-  wanderAngle: 12
-  wanderFrequency: 0.2
-  lateralSlipDamping: 1.5
-  DesiredDirection: {x: 0, y: 0}
+  minTurnRate: 90
+  turnSmoothTime: 0.2
+  turnBraking: 7
+  slowTurnAngle: 50
+  minSpeedWhileTurning: 0.4
+  lateralSlipDamping: 60
+  wanderAngle: 30
+  wanderFrequency: 1.5
+  slowDownDistance: 2
+  Heading: {x: 0, y: 0}
+  NearDistance: 0
 --- !u!114 &272854619560324941
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -343,13 +347,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Fish.Navigation.FishNavigator
   eyePoint: {fileID: 7665592108927822498}
-  arrivalDistanceTolerance: 1
-  fleeDist:
-    Min: 10
-    Max: 15
-  wanderDist:
-    Min: 3
-    Max: 8
   reNavTime:
     Min: 5
     Max: 10
