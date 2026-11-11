@@ -304,7 +304,6 @@ public class PlacementController : MonoBehaviour
                 return;
 
             inventory.RemoveItem(selectedItem);
-            Debug.Log("INVOKING PLACED");
             OnPlaced.Invoke();
             // you can place floor tiles until you run out of them
             if (!inventory.HasItem(selectedItem))

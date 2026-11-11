@@ -111,7 +111,6 @@ public class RoomGrid : MonoBehaviour
     {
         if (placeableArea == null)
         {
-            Debug.Log("NO PLACEABLE AREA!!!!!");
             return false;
         }
 
@@ -127,23 +126,18 @@ public class RoomGrid : MonoBehaviour
 
                     if(tile == voidTile)
                     {
-                        Debug.Log("VOID TILE");
                         continue;
                     }
-
-                    Debug.Log("HAS TILE");
                     return false;
                 }
 
                 if (occupiedCells.Contains(cell))
                 {
-                    Debug.Log("CONTAINS SOMETHING");
                     return false;
                 }
 
                 if (IsCellBlocked(cell))
                 {
-                    Debug.Log("CELL IS BLOCKED AAAHHHHHH");
                     return false;
                 }
                     
@@ -205,13 +199,10 @@ public class RoomGrid : MonoBehaviour
         if(min.x > placeableArea.cellBounds.min.x || max.x < placeableArea.cellBounds.max.x)
         {
             FillVoid(new Vector3Int(origin.x, placeableArea.cellBounds.min.y, origin.z), new Vector2Int(size.x, max.y - min.y));
-
-            Debug.Log($"MIN:: {min.ToString()}, {placeableArea.cellBounds.min.ToString()}");
         }
         if(min.y > placeableArea.cellBounds.min.y || max.y < placeableArea.cellBounds.max.y)
         {
             FillVoid(new Vector3Int(placeableArea.cellBounds.min.x, origin.y, origin.z), new Vector2Int(max.x - min.x, size.y));
-            Debug.Log($"MAX:: {max.ToString()}, {placeableArea.cellBounds.max.ToString()}");
         }
         RefreshBottomEdges();
         decorationGridVisuals.RefreshGrid();
