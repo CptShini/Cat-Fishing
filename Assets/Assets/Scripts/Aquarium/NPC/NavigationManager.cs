@@ -1,4 +1,3 @@
-using System;
 using NavMeshPlus.Components;
 using UnityEngine;
 
@@ -24,7 +23,7 @@ public class NavigationManager : MonoBehaviour
     {
         PlacementController.Instance.OnPlaced.AddListener(ReadyBuild);
         PlacementController.Instance.OnPickedUp.AddListener(ReadyBuild);
-        RebuildNavigation();
+        Invoke(nameof(RebuildNavigation), 0.1f);
     }
 
     private void ReadyBuild()

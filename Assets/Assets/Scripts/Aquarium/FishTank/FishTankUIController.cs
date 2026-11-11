@@ -34,7 +34,7 @@ namespace Assets.Scripts.Aquarium.FishTank
             IsOpen = true;
             grabber.enabled = true;
 
-            PauseController.SetPause(true);
+            PauseController.IsGamePaused = true;
 
             if (!_prevTank || tank.Id != _prevTank.Id)
             {
@@ -59,7 +59,7 @@ namespace Assets.Scripts.Aquarium.FishTank
             IsOpen = false;
             grabber.enabled = false;
 
-            PauseController.SetPause(false);
+            PauseController.IsGamePaused = false;
         }
 
         private void OnFishDropped(Fish fish, Vector2 dropPos)

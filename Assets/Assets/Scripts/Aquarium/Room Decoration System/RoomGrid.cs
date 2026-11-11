@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -21,11 +19,23 @@ public class RoomGrid : MonoBehaviour
     [SerializeField] private Vector2 bottomEdgeOffset;
     [SerializeField] private int bottomEdgeSortingOrder = 0;
 
+    private BoundsInt initialFloorBounds;
+    private TileBase[] initialFloorTiles;
+
     private Dictionary<Vector3Int, GameObject> bottomEdges = new();
 
     private HashSet<Vector3Int> occupiedCells = new();
 
     public Grid Grid => grid;
+
+    private void Awake()
+    {
+        if (placeableArea == null)
+            return;
+
+        initialFloorBounds = placeableArea.cellBounds;
+        initialFloorTiles = placeableArea.GetTilesBlock(initialFloorBounds);
+    }
 
     private void Start()
     {
@@ -157,7 +167,7 @@ public class RoomGrid : MonoBehaviour
             Vector3Int top = origin + new Vector3Int(x, size.y, 0);
 
             if (placeableArea.HasTile(bottom) && placeableArea.GetTile(bottom) != voidTile 
-                || placeableArea.HasTile(top) && placeableArea.GetTile(bottom) != voidTile)
+                || placeableArea.HasTile(top) && placeableArea.GetTile(top) != voidTile)
             {
                 return true;
             }
@@ -217,10 +227,8 @@ public class RoomGrid : MonoBehaviour
             for (int y = 0; y < size.y; y++)
             {
                 Vector3Int cell = origin + new Vector3Int(x, y, 0);
-                if (placeableArea.HasTile(cell))
-                {
-                    continue;
-                }
+                if (placeableArea.HasTile(cell)) continue;
+                
                 placeableArea.SetTile(cell, voidTile);
             }
         }
@@ -297,5 +305,120 @@ public class RoomGrid : MonoBehaviour
 
             bottomEdges.Add(cell, edgeObject);
         }
+    }
+
+
+    // for save
+    public void GetFloorSaveData(BaseFloorSaveData baseFloor, AdditionalFloorSaveData additionalFloor, ItemDatabase database)
+    {
+        additionalFloor.tiles.Clear();
+
+        TileBase floorTile = database.GetItem("floor_tile").floorTile;
+
+        BoundsInt bounds = placeableArea.cellBounds;
+
+        int minX = int.MaxValue;
+        int minY = int.MaxValue;
+        int maxX = int.MinValue;
+        int maxY = int.MinValue;
+
+        // additional floor bounds
+        foreach (Vector3Int cell in bounds.allPositionsWithin)
+        {
+            if (placeableArea.GetTile(cell) != floorTile)
+                continue;
+
+            Vector3Int origin = SnapFloorOrigin(cell);
+
+            // skip base floor
+            if (origin.x >= baseFloor.x && origin.x + 3 <= baseFloor.x + baseFloor.width && origin.y >= baseFloor.y && origin.y + 3 <= baseFloor.y + baseFloor.height)
+                continue;
+
+            minX = Mathf.Min(minX, origin.x);
+            minY = Mathf.Min(minY, origin.y);
+            maxX = Mathf.Max(maxX, origin.x);
+            maxY = Mathf.Max(maxY, origin.y);
+        }
+
+        if (minX == int.MaxValue)
+        {
+            additionalFloor.x = 0;
+            additionalFloor.y = 0;
+            additionalFloor.width = 0;
+            additionalFloor.height = 0;
+            return;
+        }
+
+        additionalFloor.x = minX;
+        additionalFloor.y = minY;
+        additionalFloor.width = (maxX - minX) / 3 + 1;
+        additionalFloor.height = (maxY - minY) / 3 + 1;
+
+        // save additional 3x3 tiles skipping base floor
+        for (int y = 0; y < additionalFloor.height; y++)
+        {
+            for (int x = 0; x < additionalFloor.width; x++)
+            {
+                Vector3Int origin = new Vector3Int(minX + x * 3, minY + y * 3, 0);
+
+                // skip base floor
+                if (origin.x >= baseFloor.x && origin.x + 3 <= baseFloor.x + baseFloor.width && origin.y >= baseFloor.y && origin.y + 3 <= baseFloor.y + baseFloor.height)
+                    continue;
+                    
+                if (placeableArea.GetTile(origin) == floorTile)
+                {
+                    int index = y * additionalFloor.width + x + 1;
+                    additionalFloor.tiles.Add(index);
+                }
+            }
+        }
+    }
+
+    public void LoadFloor(BaseFloorSaveData baseFloor, AdditionalFloorSaveData additionalFloor, ItemDatabase database)
+    {
+        placeableArea.ClearAllTiles();
+
+        TileBase baseTile = database.GetItem(baseFloor.itemID).floorTile;
+        TileBase floorTile = database.GetItem("floor_tile").floorTile;
+
+        // load base floor
+        for (int x = 0; x < baseFloor.width; x++)
+        {
+            for (int y = 0; y < baseFloor.height; y++)
+            {
+                placeableArea.SetTile(new Vector3Int(baseFloor.x + x, baseFloor.y + y, 0), baseTile);
+            }
+        }
+
+        // load additional floor
+        foreach (int index in additionalFloor.tiles)
+        {
+            int localX = (index - 1) % additionalFloor.width;
+            int localY = (index - 1) / additionalFloor.width;
+
+            int tileX = additionalFloor.x + localX * 3;
+            int tileY = additionalFloor.y + localY * 3;
+
+            for (int x = 0; x < 3; x++)
+            {
+                for (int y = 0; y < 3; y++)
+                {
+                    placeableArea.SetTile(new Vector3Int(tileX + x, tileY + y, 0), floorTile);
+                }
+            }
+        }
+        
+        Vector3Int origin = placeableArea.cellBounds.min;
+        Vector2Int size = (Vector2Int)placeableArea.cellBounds.size;
+        FillVoid(origin, size);
+
+        RefreshBottomEdges();
+        decorationGridVisuals.RefreshGrid();
+    }
+
+
+    public void ClearOccupiedCells()
+    {
+        occupiedCells.Clear();
     }
 }

@@ -1,8 +1,13 @@
 using UnityEngine;
+using Assets.Scripts.Data.Domain;
+using Assets.Scripts.Data.Persistence;
+using Assets.Scripts.Upgrades;
 
-public class DivingPlayerStats : MonoBehaviour
+public class DivingPlayerStats : MonoBehaviour, IDataPersistence
 {
     public static DivingPlayerStats Instance { get; private set; }
+
+    [SerializeField] private UpgradeLedger upgradeLedger;
 
     [Header("Speed")]
     public float speed = 10;
@@ -43,5 +48,28 @@ public class DivingPlayerStats : MonoBehaviour
             Destroy(gameObject);
         else
             Instance = this;
+    }
+
+    public void LoadData(GameData data)
+    {
+        speed = GetStat(LevelUpgrade.Speed);
+        pounceSpeed = GetStat(LevelUpgrade.PounceSpeed);
+        strength = GetStat(LevelUpgrade.ClawStrength);
+        oxygenCapacity = GetStat(LevelUpgrade.OxygenCapacity);
+        carryingCapacity = GetStat(LevelUpgrade.CarryingCapacity);
+
+        return;
+
+        float GetStat(LevelUpgrade upgrade)
+        {
+            int statLevel = data.LevelUpgrades[upgrade];
+            UpgradeLevel[] upgradeLevels = upgradeLedger.GetUpgradeLevels(upgrade);
+            return upgradeLevels[statLevel].Stat;
+        }
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        // Nothing to save
     }
 }

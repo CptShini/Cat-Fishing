@@ -200,6 +200,7 @@ public class DecorationGridVisuals : MonoBehaviour
 
         line.startColor = placedColor;
         line.endColor = placedColor;
+        line.enabled = isGridVisible;
 
         placedFrames.Add(furniture, line);
 

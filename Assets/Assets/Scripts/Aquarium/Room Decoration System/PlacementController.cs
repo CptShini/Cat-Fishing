@@ -47,7 +47,8 @@ public class PlacementController : MonoBehaviour
 
     private bool isDecorationMode = false;
 
-
+    private Dictionary<RoomFixedFurniture, Vector3> initialFixedFurniturePositions = new();
+    
     void Awake()
     {
         if (Instance != null && Instance != this)
@@ -57,6 +58,13 @@ public class PlacementController : MonoBehaviour
         }
             
         Instance = this;
+        
+        RoomFixedFurniture[] fixedFurniture = FindObjectsByType<RoomFixedFurniture>(FindObjectsSortMode.None);
+
+        foreach (RoomFixedFurniture furniture in fixedFurniture)
+        {
+            initialFixedFurniturePositions[furniture] = furniture.transform.position;
+        }
     }
 
     public void EnterDecorationMode()
@@ -486,5 +494,192 @@ public class PlacementController : MonoBehaviour
 
         // delete the furniture from the grid visuals
         gridVisuals.UnregisterFixedFurniture(furniture);
+    }
+
+
+
+    // FOR SAVE
+    public void GetPlacedFurnitureSaveData(System.Collections.Generic.List<PlacedFurnitureSaveData> saveData)
+    {
+        saveData.Clear();
+
+        PlacedFurniture[] furnitureObjects = placedFurnitureRoot.GetComponentsInChildren<PlacedFurniture>();
+
+        foreach (PlacedFurniture furniture in furnitureObjects)
+        {
+            if (furniture.itemSO == null)
+                continue;
+
+            saveData.Add(new PlacedFurnitureSaveData
+            {
+                itemID = furniture.itemSO.itemID,
+                x = furniture.origin.x,
+                y = furniture.origin.y,
+            });
+        }
+    }
+    public void LoadPlacedFurniture(System.Collections.Generic.List<PlacedFurnitureSaveData> saveData, ItemDatabase database)
+    {
+        // delete previous
+        foreach (Transform child in placedFurnitureRoot)
+        {
+            PlacedFurniture oldFurniture = child.GetComponent<PlacedFurniture>();
+
+            if (oldFurniture != null && oldFurniture.itemSO != null)
+            {
+                if (oldFurniture.itemSO.blocksPlacement)
+                {
+                    roomGrid.UnregisterObject(oldFurniture.origin, oldFurniture.currentSize);
+                }
+
+                gridVisuals.UnregisterPlacedFurniture(oldFurniture);
+            }
+
+            Destroy(child.gameObject);
+        }
+
+        foreach (PlacedFurnitureSaveData saved in saveData)
+        {
+            ItemSO item = database.GetItem(saved.itemID);
+
+            if (item == null || item.prefab == null)
+                continue;
+
+            Vector3Int origin = new Vector3Int(saved.x, saved.y);
+            Vector3 position = roomGrid.GetPlacementPosition(origin, item.size);
+
+            GameObject placedObject = Instantiate(item.prefab, position, Quaternion.identity, placedFurnitureRoot);
+
+            FurnitureVisual visual = placedObject.GetComponent<FurnitureVisual>();
+
+            if (visual != null)
+                visual.SetSprite(item.itemIcon);
+
+            FurnitureSortingUtility.ApplySorting(placedObject, item);
+
+            SetupFurnitureCollider(placedObject, item);
+
+            PlacedFurniture furniture =
+                placedObject.GetComponent<PlacedFurniture>();
+
+            if (furniture == null)
+                furniture = placedObject.AddComponent<PlacedFurniture>();
+
+            furniture.Initialize(item, origin, item.size);
+
+            if (item.blocksPlacement)
+                roomGrid.RegisterObject(origin, item.size);
+
+            gridVisuals.RegisterPlacedFurniture(furniture);
+        }
+    }
+
+    public void GetFixedFurnitureSaveData(List<FixedFurnitureSaveData> saveData)
+    {
+        saveData.Clear();
+
+        RoomFixedFurniture[] furnitureObjects =FindObjectsByType<RoomFixedFurniture>(FindObjectsSortMode.None);
+
+        foreach (RoomFixedFurniture furniture in furnitureObjects)
+        {
+            if (string.IsNullOrEmpty(furniture.furnitureID))
+            {
+                Debug.LogWarning("Fixed furniture has no ID: " + furniture.name);
+                continue;
+            }
+
+            Vector3 position = furniture.transform.position;
+
+            saveData.Add(new FixedFurnitureSaveData
+            {
+                furnitureID = furniture.furnitureID,
+                x = position.x,
+                y = position.y,
+            });
+        }
+    }
+
+    public void LoadFixedFurniture(List<FixedFurnitureSaveData> saveData)
+    {
+        if (saveData == null)
+            return;
+
+        RoomFixedFurniture[] furnitureObjects = FindObjectsByType<RoomFixedFurniture>(FindObjectsSortMode.None);
+
+        foreach (FixedFurnitureSaveData saved in saveData)
+        {
+            foreach (RoomFixedFurniture furniture in furnitureObjects)
+            {
+                if (furniture.furnitureID != saved.furnitureID)
+                    continue;
+
+                Vector3Int oldOrigin = furniture.GetOrigin(roomGrid.Grid);
+
+                if (furniture.blocksPlacement)
+                    roomGrid.UnregisterObject(oldOrigin, furniture.size);
+
+                gridVisuals.UnregisterFixedFurniture(furniture);
+
+                furniture.transform.position = new Vector3(
+                    saved.x,
+                    saved.y
+                );
+
+                Vector3Int newOrigin = furniture.GetOrigin(roomGrid.Grid);
+
+                furniture.currentOrigin = newOrigin;
+
+                if (furniture.blocksPlacement)
+                    roomGrid.RegisterObject(newOrigin, furniture.size);
+
+                gridVisuals.RegisterFixedFurniture(furniture, newOrigin);
+
+                break;
+            }
+        }
+    }
+
+    // for testing
+    public void ResetFurniture()
+    {
+        CancelPlacement();
+
+        // clear occupied cells before rebuilding them
+        roomGrid.ClearOccupiedCells();
+
+        // remove placed furniture
+        foreach (Transform child in placedFurnitureRoot)
+        {
+            PlacedFurniture furniture = child.GetComponent<PlacedFurniture>();
+
+            if (furniture != null)
+                gridVisuals.UnregisterPlacedFurniture(furniture);
+
+            child.gameObject.SetActive(false);
+            Destroy(child.gameObject);
+        }
+
+        // restore fixed furniture
+        foreach (var entry in initialFixedFurniturePositions)
+        {
+            RoomFixedFurniture furniture = entry.Key;
+
+            if (furniture == null)
+                continue;
+
+            gridVisuals.UnregisterFixedFurniture(furniture);
+
+            furniture.transform.position = entry.Value;
+
+            Vector3Int origin = furniture.GetOrigin(roomGrid.Grid);
+            furniture.currentOrigin = origin;
+
+            if (furniture.blocksPlacement)
+                roomGrid.RegisterObject(origin, furniture.size);
+
+            gridVisuals.RegisterFixedFurniture(furniture, origin);
+        }
+
+        gridVisuals.HideFootprint();
     }
 }
