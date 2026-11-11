@@ -25,7 +25,7 @@ public class ComputerUIController : MonoBehaviour
         panel.SetActive(true);
         IsOpen = true;
 
-        PauseController.SetPause(true);
+        PauseController.IsGamePaused = true;
         AudioManager.Instance.Play(AudioId.ButtonClick);
     }
 
@@ -34,7 +34,7 @@ public class ComputerUIController : MonoBehaviour
         panel.SetActive(false);
         IsOpen = false;
 
-        PauseController.SetPause(false);
+        PauseController.IsGamePaused = false;
         AudioManager.Instance.Play(AudioId.ButtonClick);
     }
 }

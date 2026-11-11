@@ -227,10 +227,8 @@ public class RoomGrid : MonoBehaviour
             for (int y = 0; y < size.y; y++)
             {
                 Vector3Int cell = origin + new Vector3Int(x, y, 0);
-                if (placeableArea.HasTile(cell))
-                {
-                    continue;
-                }
+                if (placeableArea.HasTile(cell)) continue;
+                
                 placeableArea.SetTile(cell, voidTile);
             }
         }
@@ -409,6 +407,10 @@ public class RoomGrid : MonoBehaviour
                 }
             }
         }
+        
+        Vector3Int origin = placeableArea.cellBounds.min;
+        Vector2Int size = (Vector2Int)placeableArea.cellBounds.size;
+        FillVoid(origin, size);
 
         RefreshBottomEdges();
         decorationGridVisuals.RefreshGrid();
