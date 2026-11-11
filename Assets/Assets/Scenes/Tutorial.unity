@@ -4528,7 +4528,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1644999093
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5303,7 +5303,6 @@ GameObject:
   - component: {fileID: 2091105197}
   - component: {fileID: 2091105198}
   - component: {fileID: 2091105199}
-  - component: {fileID: 2091105200}
   - component: {fileID: 2091105201}
   m_Layer: 0
   m_Name: Menu Manager
@@ -5356,26 +5355,6 @@ MonoBehaviour:
   saveFileButtonPrefab: {fileID: 5730387638139546502, guid: 6a6cbbc078a5b6c47baafbbd6da6e5eb, type: 3}
   saveFileButtonContent: {fileID: 477734226}
   newSaveButton: {fileID: 1970287914}
---- !u!114 &2091105200
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2091105196}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a7aec202dec210040804771651704a67, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TutorialBackground
-  tutorial: {fileID: 1469001866}
-  backgroundImage: {fileID: 1089703030}
-  transparency: 0.1
-  originalColor:
-    r: 0
-    g: 0
-    b: 0
-    a: 0
 --- !u!114 &2091105201
 MonoBehaviour:
   m_ObjectHideFlags: 0
