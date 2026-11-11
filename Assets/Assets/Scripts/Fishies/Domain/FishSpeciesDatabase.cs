@@ -9,12 +9,7 @@ namespace Assets.Scripts.Fishies.Domain
     {
         [SerializeField] private List<FishSpecies> species;
         
-        private Dictionary<int, FishSpecies> _lookup;
-
-        public IReadOnlyCollection<FishSpecies> GetSpecies()
-        {
-            return species;
-        }
+        public IReadOnlyCollection<FishSpecies> Species => species;
 
         public FishSpecies this[int id] =>
             species

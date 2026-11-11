@@ -8,20 +8,17 @@ using static UnityEngine.InputSystem.InputAction;
 
 public class SwimScript : MonoBehaviour
 {
-
-    private float swimSpeed = 0;
-    private float friction = 0;
-    private float acceleration = 0;
+    private float swimSpeed;
+    private float friction;
+    private float acceleration;
     public readonly UnityEvent<Vector2, float> OnSwim = new();
-    private Vector2 velocityVector = new();
+    private Vector2 velocityVector;
 
-    bool swimming = false;
-    bool stealth = false;
+    private bool swimming, stealth;
 
     private Rigidbody2D _pb;
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    
+    private void Start()
     {
         swimSpeed = DivingPlayerStats.Instance.speed;
         friction = DivingPlayerStats.Instance.friction;
@@ -86,7 +83,7 @@ public class SwimScript : MonoBehaviour
         }
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         if (swimming)
         {

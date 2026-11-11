@@ -14,12 +14,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Assets/Scenes/Diving.unity
     guid: 95583abe985d4f840ae21ba43214232f
-  - enabled: 1
-    path: Assets/Assets/Scenes/DivingMergeEncyclo.unity
-    guid: 95501cd5ff5cf7a4091214d739deaf60
-  - enabled: 1
-    path: Assets/Assets/Scenes/AquariumMergeEncyclo.unity
-    guid: 09d809d49ca344848953bbbb0e042854
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
