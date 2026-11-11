@@ -3,9 +3,13 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
 using Assets.Scripts.Audio;
+using UnityEngine.Events;
+using NavMeshPlus.Components;
 
 public class PlacementController : MonoBehaviour
 {
+    public static PlacementController Instance { get; private set; }
+
     [Header("References")]
     [SerializeField] private RoomGrid roomGrid;
     [SerializeField] private DecorInventoryManager inventory;
@@ -37,9 +41,23 @@ public class PlacementController : MonoBehaviour
 
     private bool canPlace;
 
+    public readonly UnityEvent OnPlaced = new();
+    public readonly UnityEvent OnPickedUp = new();
     public bool IsPlacingItem => selectedItem != null || selectedFixedFurniture != null;
 
     private bool isDecorationMode = false;
+
+
+    void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+            
+        Instance = this;
+    }
 
     public void EnterDecorationMode()
     {
@@ -217,6 +235,8 @@ public class PlacementController : MonoBehaviour
         gridVisuals.UnregisterPlacedFurniture(furniture);
 
         Destroy(furniture.gameObject);
+
+        OnPickedUp.Invoke();
     }
 
     private void UpdateFixedFurniturePosition()
@@ -278,12 +298,13 @@ public class PlacementController : MonoBehaviour
         if (selectedItem.itemType == ItemType.FloorTile)
         {
             bool placed = roomGrid.ExpandRoom(currentCell, currentSize, selectedItem.floorTile);
-
+            Debug.Log(currentCell.ToString());
+            Debug.Log(currentSize.ToString());
             if (!placed)
                 return;
 
             inventory.RemoveItem(selectedItem);
-
+            OnPlaced.Invoke();
             // you can place floor tiles until you run out of them
             if (!inventory.HasItem(selectedItem))
             {
@@ -321,7 +342,7 @@ public class PlacementController : MonoBehaviour
         inventory.RemoveItem(selectedItem);
 
         Debug.Log("Placed item: " + selectedItem.itemName);
-
+        OnPlaced.Invoke();
         AudioManager.Instance.Play(AudioId.PlacementSuccess);
 
         CancelPlacement();
@@ -424,6 +445,14 @@ public class PlacementController : MonoBehaviour
             List<Vector2> points = new List<Vector2>();
             sprite.GetPhysicsShape(i, points);
             collider.SetPath(i, points);
+        }
+
+        if (!collider.isTrigger)
+        {
+            NavMeshModifier navMod = spriteRenderer.gameObject.AddComponent<NavMeshModifier>();
+
+            navMod.overrideArea = true;
+            navMod.area = 1;
         }
     }
 
