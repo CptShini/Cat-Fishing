@@ -23,7 +23,7 @@ namespace Assets.Scripts.Diving.Cat
 
         private bool isStealthPlaying;
 
-        public UnityEvent<Vector2> OnPouncing;
+        public readonly UnityEvent<Vector2> OnPouncing = new();
 
         private void Start()
         {

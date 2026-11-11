@@ -8,6 +8,8 @@ using static UnityEngine.InputSystem.InputAction;
 
 public class SwimScript : MonoBehaviour
 {
+
+    [SerializeField] Animator animator;
     private float swimSpeed;
     private float friction;
     private float acceleration;
@@ -82,9 +84,17 @@ public class SwimScript : MonoBehaviour
         if (!stealth && _pb.linearVelocity.magnitude > 0.1f)
         {
             AudioManager.Instance.Play(AudioId.CatSwim);
+            bool isSwimming = true;
+            float speed = 1f;
+            animator.SetBool("swimming", isSwimming);
+            animator.SetFloat("speed", speed);
         }
         else
         {
+            bool isSwimming = true;
+            float speed = .4f;
+            animator.SetBool("swimming", isSwimming);
+            animator.SetFloat("speed", speed);
             AudioManager.Instance.FadeOutLoop(AudioId.CatSwim);
         }
     }
