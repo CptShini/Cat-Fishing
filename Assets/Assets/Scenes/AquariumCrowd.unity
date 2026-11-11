@@ -1630,7 +1630,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: 3.468, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8288,7 +8288,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EncyclopediaManager
   slotPrefab: {fileID: 6338484940384194760, guid: 4b621bcb4fb71a847b33519d230e4e4a, type: 3}
   grid: {fileID: 1705899532}
-  species: {fileID: 11400000, guid: 69c0a0e81678bc0419aa277dd4158367, type: 2}
+  speciesDb: {fileID: 11400000, guid: 69c0a0e81678bc0419aa277dd4158367, type: 2}
   fishImage: {fileID: 1705899531}
   catchHighscore: {fileID: 1705899530}
   title: {fileID: 1705899529}
