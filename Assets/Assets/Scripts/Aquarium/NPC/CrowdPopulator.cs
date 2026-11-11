@@ -50,12 +50,8 @@ public class CrowdPopulator : MonoBehaviour
     public Vector2 SetStartPosition(float maxRadius)
     {
         Vector2 direction = Random.insideUnitCircle * maxRadius;
-        NavMeshHit hit;
-        NavMesh.SamplePosition(direction, out hit, maxRadius, 1);
-		
-        Vector3 destination = hit.position;
-
-        return destination;
+        NavMesh.SamplePosition((Vector2)transform.position + direction, out NavMeshHit hit, maxRadius, 1);
+        return hit.position;
     }
 
     // Update is called once per frame
