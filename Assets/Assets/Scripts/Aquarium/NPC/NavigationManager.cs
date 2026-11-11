@@ -8,6 +8,8 @@ public class NavigationManager : MonoBehaviour
     public static NavigationManager Instance { get; private set; }
     [SerializeField] public NavMeshSurface surface;
 
+    bool buildReady = true;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -20,14 +22,29 @@ public class NavigationManager : MonoBehaviour
 
     void Start()
     {
-        PlacementController.Instance.OnPlaced.AddListener(RebuildNavigation);
-        PlacementController.Instance.OnPickedUp.AddListener(RebuildNavigation);
+        PlacementController.Instance.OnPlaced.AddListener(ReadyBuild);
+        PlacementController.Instance.OnPickedUp.AddListener(ReadyBuild);
         RebuildNavigation();
+    }
+
+    private void ReadyBuild()
+    {
+        buildReady = true;
     }
 
 
     private void RebuildNavigation()
     {
         surface.BuildNavMesh();
+        buildReady = false;
+    }
+
+    void LateUpdate()
+    {
+        if (!buildReady)
+        {
+            return;
+        }
+        RebuildNavigation();
     }
 }

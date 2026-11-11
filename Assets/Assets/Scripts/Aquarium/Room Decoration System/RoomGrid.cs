@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -189,6 +190,9 @@ public class RoomGrid : MonoBehaviour
         if (floorTile == null || !CanExpandRoom(origin, size))
             return false;
 
+        var min = placeableArea.cellBounds.min;
+        var max = placeableArea.cellBounds.max;
+
         for (int x = 0; x < size.x; x++)
         {
             for (int y = 0; y < size.y; y++)
@@ -197,10 +201,38 @@ public class RoomGrid : MonoBehaviour
                 placeableArea.SetTile(cell, floorTile);
             }
         }
+
+        if(min.x > placeableArea.cellBounds.min.x || max.x < placeableArea.cellBounds.max.x)
+        {
+            FillVoid(new Vector3Int(origin.x, placeableArea.cellBounds.min.y, origin.z), new Vector2Int(size.x, max.y - min.y));
+
+            Debug.Log($"MIN:: {min.ToString()}, {placeableArea.cellBounds.min.ToString()}");
+        }
+        if(min.y > placeableArea.cellBounds.min.y || max.y < placeableArea.cellBounds.max.y)
+        {
+            FillVoid(new Vector3Int(placeableArea.cellBounds.min.x, origin.y, origin.z), new Vector2Int(max.x - min.x, size.y));
+            Debug.Log($"MAX:: {max.ToString()}, {placeableArea.cellBounds.max.ToString()}");
+        }
         RefreshBottomEdges();
         decorationGridVisuals.RefreshGrid();
 
         return true;
+    }
+
+    public void FillVoid(Vector3Int origin, Vector2Int size)
+    {
+        for (int x = 0; x < size.x; x++)
+        {
+            for (int y = 0; y < size.y; y++)
+            {
+                Vector3Int cell = origin + new Vector3Int(x, y, 0);
+                if (placeableArea.HasTile(cell))
+                {
+                    continue;
+                }
+                placeableArea.SetTile(cell, voidTile);
+            }
+        }
     }
 
     // snaps the origin of a floor tile placement to a 3x3 grid
@@ -224,12 +256,12 @@ public class RoomGrid : MonoBehaviour
         // bottom edges
         foreach (Vector3Int cell in bounds.allPositionsWithin)
         {
-            if (!placeableArea.HasTile(cell))
+            if (!placeableArea.HasTile(cell) || placeableArea.GetTile(cell) == voidTile)
                 continue;
 
             Vector3Int cellBelow = cell + Vector3Int.down;
 
-            if (!placeableArea.HasTile(cellBelow))
+            if (!placeableArea.HasTile(cellBelow) || placeableArea.GetTile(cellBelow) == voidTile)
             {
                 requiredEdges.Add(cell);
             }
