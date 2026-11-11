@@ -4,11 +4,11 @@ using UnityEngine.Events;
 public class HeadScript : MonoBehaviour
 {
 
-    private Rigidbody2D _pb;
-    private HingeJoint2D _hj;
-    [SerializeField] private Rigidbody2D _body;
+    //private Rigidbody2D _pb;
+    //private HingeJoint2D _hj;
+    //[SerializeField] private Rigidbody2D _body;
     [SerializeField] private AimScript _aimScript;
-    
+    [SerializeField] private GameObject _head;
     bool flipped = false;
     public readonly UnityEvent<bool> OnFlipping = new();
     private float mainLower;
@@ -20,26 +20,27 @@ public class HeadScript : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        _pb = gameObject.GetComponent<Rigidbody2D>();
-        _hj = gameObject.GetComponent<HingeJoint2D>();
+        //_pb = gameObject.GetComponent<Rigidbody2D>();
+        //_hj = gameObject.GetComponent<HingeJoint2D>();
         gameObject.GetComponent<SwimScript>().OnSwim.AddListener(RotateHead);
         _aimScript.OnAiming.AddListener(RotateHead);
-        mainLower = _hj.limits.min;
-        mainUpper = _hj.limits.max;
+        //mainLower = _hj.limits.min;
+        //mainUpper = _hj.limits.max;
         curLower = mainLower;
         curUpper = mainUpper;
     }
 
     private void SetHingeBounds(float min, float max)
     {
-        JointAngleLimits2D limits = _hj.limits;
-        limits.min = min;
-        limits.max = max;
-        _hj.limits = limits;
+        //JointAngleLimits2D limits = _hj.limits;
+        //limits.min = min;
+        //limits.max = max;
+        //_hj.limits = limits;
     }
 
     public void RotateHead(Vector2 direction, float speed)
     {
+        float curRotation = _head.transform.rotation.eulerAngles.z;
         float targetRotation = ((Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg) + 360f) % 360f;
         if(direction == Vector2.zero)
         {
@@ -47,27 +48,31 @@ public class HeadScript : MonoBehaviour
         }
 
         float newRotation = Mathf.MoveTowardsAngle(
-            _pb.rotation,
+            curRotation,
             targetRotation,
             Time.deltaTime * speed
         );
+        
+        newRotation += Mathf.DeltaAngle(curRotation, newRotation);
+        Debug.Log($"TARGET: {targetRotation}");
+        Debug.Log($"{newRotation}, CURRENT ROTATION {curRotation}");
+        _head.transform.rotation = Quaternion.Euler(0,0, newRotation);
 
-        _pb.rotation += Mathf.DeltaAngle(_pb.rotation, newRotation);
 
-        if(!flipped && 90f < (_pb.rotation + 360) % 360 && (_pb.rotation + 360) % 360 <= 268f)
+        if(!flipped && 90f < (curRotation + 360) % 360 && (curRotation + 360) % 360 <= 268f)
         {
             flipped = true;
             SetHingeBounds(-mainUpper, mainLower);
-            _pb.transform.localScale = new Vector3 (0.5f, -0.5f, 1);
-            _body.transform.localScale = new Vector3 (0.5f, -0.5f, 1);
+            _head.transform.localScale = new Vector3 (1f, -1f, 1);
+            //_body.transform.localScale = new Vector3 (1f, -1f, 1);
             OnFlipping.Invoke(flipped);
             return;
         }
-        else if(flipped && (!(90f < (_pb.rotation + 360) % 360) || !((_pb.rotation + 360) % 360 <= 272f)))
+        else if(flipped && (!(90f < (curRotation + 360) % 360) || !((curRotation + 360) % 360 <= 272f)))
         {
             flipped = false;
-            _pb.transform.localScale = new Vector3 (0.5f, 0.5f, 1);
-            _body.transform.localScale = new Vector3 (0.5f, 0.5f, 1);
+            _head.transform.localScale = new Vector3 (1f, 1f, 1);
+            //_body.transform.localScale = new Vector3 (1f, 1f, 1);
             SetHingeBounds(mainLower, mainUpper);
             OnFlipping.Invoke(flipped);
         }
