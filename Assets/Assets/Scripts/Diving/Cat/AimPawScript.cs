@@ -21,7 +21,7 @@ public class AimPawScript : MonoBehaviour
                 activePaws = 0;
             }
             animator.Play("Paw");
-            animator.SetFloat("speed", 1.0f / DivingPlayerStats.Instance.chargeUpSpeed);
+            animator.SetFloat("speed", DivingPlayerStats.Instance.chargeUpSpeed / DivingPlayerStats.Instance.maxPounceStamina);
             animator.SetBool("exit", false);
         }
         else

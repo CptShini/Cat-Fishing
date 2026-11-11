@@ -21,24 +21,9 @@ public class AimScript : MonoBehaviour
     private void Start()
     {
         DivingController.Instance.OnStateChanged.AddListener(AimEnabler);
-        //headScript.OnFlipping.AddListener(CounterFlip);
         gameObject.SetActive(false);
         aimPaw.AimPawEnabler(false);
         
-    }
-    private void CounterFlip(bool flipped)
-    {
-        if (flipped)
-        {
-            //gameObject.transform.localScale = originalScale;
-            gameObject.transform.localScale = new Vector3 (originalScale.x, -originalScale.y, originalScale.z);
-        }
-        else
-        {
-            gameObject.transform.localScale = originalScale;
-            //gameObject.transform.localScale = new Vector3 (originalScale.x, -originalScale.y, originalScale.z);
-
-        }
     }
 
     private void AimEnabler(PlayerState state)

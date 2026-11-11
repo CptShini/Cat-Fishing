@@ -1,3 +1,4 @@
+using System;
 using Assets.Scripts.Audio;
 using Assets.Scripts.Diving.Bars;
 using UnityEngine;
@@ -40,8 +41,8 @@ namespace Assets.Scripts.Diving.Cat
         public void ChargeUpPounce()
         {
             float maxPounceStamina =
-                Mathf.Min(staminaBar.CurrentValue, DivingPlayerStats.Instance.maxPounceStamina);
-        
+                Mathf.Min(staminaBar.CurrentValue, DivingPlayerStats.Instance.maxPounceStamina);      
+
             float pounceChargeStamina = DivingPlayerStats.Instance.chargeUpSpeed * Time.deltaTime;
             curPounceStamina = Mathf.Clamp(curPounceStamina + pounceChargeStamina, 0,maxPounceStamina);
 
@@ -54,12 +55,13 @@ namespace Assets.Scripts.Diving.Cat
         public void StartPounce()
         {
             Vector2 mousePos = mainCamera.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-
+            curPounceStamina = Math.Max(DivingPlayerStats.Instance.minPounceStamina, curPounceStamina);
             pounceDirection = mousePos - (Vector2)transform.position;
             pounceDuration = curPounceStamina / 20; // 5 stamina = 1 second, for now
         
             DivingController.Instance.SetPlayerState(PlayerState.PlayerState.POUNCE);
             staminaBar.CurrentValue -= curPounceStamina;
+            Debug.Log(curPounceStamina);
 
             AudioManager.Instance.Play(AudioId.Pounce);
             isStealthPlaying = false;

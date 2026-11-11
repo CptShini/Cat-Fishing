@@ -16,6 +16,7 @@ public class DivingPlayerStats : MonoBehaviour
     [Header("Stamina")]
     public float maxStamina = 60;
     public float maxPounceStamina = 20;
+    public float minPounceStamina = 5;
     public float staminaRegen = 5;
     
     [Header("Strength")]

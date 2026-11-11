@@ -547,16 +547,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d6f27059eeb5d247bacd91476a33180, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DivingPlayerStats
-  speed: 3
+  speed: 3.5
   stealthSpeed: 1.5
   pounceSpeed: 10
   acceleration: 25
-  friction: 20
-  maxStamina: 60
-  maxPounceStamina: 20
-  staminaRegen: 5
+  friction: 7.5
+  maxStamina: 30
+  maxPounceStamina: 10
+  minPounceStamina: 2.5
+  staminaRegen: 2
   strength: 5
-  chargeUpSpeed: 3
+  chargeUpSpeed: 5
   pounceCooldown: 0.5
   oxygenCapacity: 70
   defaultPresence: 2

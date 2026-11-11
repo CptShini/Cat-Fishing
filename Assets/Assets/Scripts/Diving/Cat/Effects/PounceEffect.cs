@@ -19,7 +19,6 @@ public class PounceEffect : MonoBehaviour
     private IEnumerator Play() {
 
         animator.Play("Effect");
-        Debug.Log("HEELLOOOO??");
         yield return new WaitForSeconds(animator.GetFloat("speed"));
         Debug.Log("Finished??");
 
