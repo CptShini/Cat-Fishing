@@ -51,9 +51,7 @@ public class HeadScript : MonoBehaviour
             curRotation,
             targetRotation,
             Time.deltaTime * speed
-        );
-        
-        newRotation += Mathf.DeltaAngle(curRotation, newRotation);
+        );        
         Debug.Log($"TARGET: {targetRotation}");
         Debug.Log($"{newRotation}, CURRENT ROTATION {curRotation}");
         _head.transform.rotation = Quaternion.Euler(0,0, newRotation);

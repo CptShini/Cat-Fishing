@@ -253,6 +253,7 @@ GameObject:
   - component: {fileID: 3678904851395479760}
   - component: {fileID: 3491246828249289069}
   - component: {fileID: 1302676522152893563}
+  - component: {fileID: 4562404921713660414}
   m_Layer: 6
   m_Name: DivingCat
   m_TagString: Player
@@ -649,6 +650,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HeadScript
   _aimScript: {fileID: 5778309398152115365}
   _head: {fileID: 8004778144708095088}
+--- !u!114 &4562404921713660414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3808421035207708945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c1d0c1aae3eae74ea18fa17ba36167f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!1 &5409390633235530069
 GameObject:
   m_ObjectHideFlags: 0
