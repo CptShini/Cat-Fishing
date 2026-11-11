@@ -564,7 +564,7 @@ MonoBehaviour:
   stealthPresence: 1
   pouncePresence: 4
   stunDuration: 2
-  carryingCapacity: 50
+  carryingCapacity: 150
 --- !u!114 &5595691730511454377
 MonoBehaviour:
   m_ObjectHideFlags: 0
