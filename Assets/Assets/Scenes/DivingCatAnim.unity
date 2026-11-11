@@ -25251,22 +25251,6 @@ Transform:
   - {fileID: 1797614256}
   m_Father: {fileID: 751409321}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1464729065 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3678904851395479760, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
-  m_PrefabInstance: {fileID: 2012719187}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 075d1af87eec80c46803bacae5766985, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PounceScript
---- !u!58 &1464729068 stripped
-CircleCollider2D:
-  m_CorrespondingSourceObject: {fileID: 2866009369074163179, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
-  m_PrefabInstance: {fileID: 2012719187}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1468429896
 GameObject:
   m_ObjectHideFlags: 0
@@ -40528,6 +40512,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 547029068133216273, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9957167
+      objectReference: {fileID: 0}
+    - target: {fileID: 547029068133216273, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.0924575
+      objectReference: {fileID: 0}
+    - target: {fileID: 547029068133216273, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -10.61
+      objectReference: {fileID: 0}
+    - target: {fileID: 2349262949346076865, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
+      propertyPath: m_Constraints
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 3491246828249289069, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
       propertyPath: oxygenBar
       value: 
@@ -40556,14 +40556,6 @@ PrefabInstance:
       propertyPath: staminaBar
       value: 
       objectReference: {fileID: 880628909}
-    - target: {fileID: 5595691730511454377, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
-      propertyPath: _pounce
-      value: 
-      objectReference: {fileID: 1464729065}
-    - target: {fileID: 5595691730511454377, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
-      propertyPath: defaultCollider
-      value: 
-      objectReference: {fileID: 1464729068}
     - target: {fileID: 5778309398152115365, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
       propertyPath: mainCamera
       value: 
