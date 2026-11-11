@@ -211,8 +211,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2752659967056307800}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.36, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.405, y: 0.326, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -233,7 +233,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   mainCamera: {fileID: 0}
   aimPaw: {fileID: 3683296912823381623}
-  headScript: {fileID: 0}
+  headScript: {fileID: 1302676522152893563}
 --- !u!1 &3808421035207708945
 GameObject:
   m_ObjectHideFlags: 0
@@ -622,6 +622,9 @@ MonoBehaviour:
   staminaBar: {fileID: 0}
   curPounceStamina: 0
   curPounceCooldown: 0
+  OnPouncing:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &3491246828249289069
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -662,6 +665,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c1d0c1aae3eae74ea18fa17ba36167f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  _body: {fileID: 5560953002884090599}
+  _head: {fileID: 8004778144708095088}
+  dragSpeedMod: 1000
 --- !u!1 &5409390633235530069
 GameObject:
   m_ObjectHideFlags: 0
@@ -770,7 +776,7 @@ Transform:
   m_GameObject: {fileID: 5560953002884090599}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.229, y: 0.032, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1290,14 +1296,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8004778144708095088}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: -0.027921675, w: 0.9996101}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8984494032151953292}
   m_Father: {fileID: 4722608374751236603}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -3.2}
 --- !u!212 &6760478591923334611
 SpriteRenderer:
   serializedVersion: 2

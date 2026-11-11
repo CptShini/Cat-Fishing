@@ -11,31 +11,14 @@ public class HeadScript : MonoBehaviour
     [SerializeField] private GameObject _head;
     bool flipped = false;
     public readonly UnityEvent<bool> OnFlipping = new();
-    private float mainLower;
-    private float mainUpper;
-    private float curLower;
-    private float curUpper;
 
+    public readonly UnityEvent<float> OnRotating = new();
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        //_pb = gameObject.GetComponent<Rigidbody2D>();
-        //_hj = gameObject.GetComponent<HingeJoint2D>();
         gameObject.GetComponent<SwimScript>().OnSwim.AddListener(RotateHead);
         _aimScript.OnAiming.AddListener(RotateHead);
-        //mainLower = _hj.limits.min;
-        //mainUpper = _hj.limits.max;
-        curLower = mainLower;
-        curUpper = mainUpper;
-    }
-
-    private void SetHingeBounds(float min, float max)
-    {
-        //JointAngleLimits2D limits = _hj.limits;
-        //limits.min = min;
-        //limits.max = max;
-        //_hj.limits = limits;
     }
 
     public void RotateHead(Vector2 direction, float speed)
@@ -52,29 +35,23 @@ public class HeadScript : MonoBehaviour
             targetRotation,
             Time.deltaTime * speed
         );        
-        Debug.Log($"TARGET: {targetRotation}");
-        Debug.Log($"{newRotation}, CURRENT ROTATION {curRotation}");
+        
         _head.transform.rotation = Quaternion.Euler(0,0, newRotation);
-
+        OnRotating.Invoke(_head.transform.rotation.eulerAngles.z);
 
         if(!flipped && 90f < (curRotation + 360) % 360 && (curRotation + 360) % 360 <= 268f)
         {
             flipped = true;
-            SetHingeBounds(-mainUpper, mainLower);
-            _head.transform.localScale = new Vector3 (1f, -1f, 1);
-            //_body.transform.localScale = new Vector3 (1f, -1f, 1);
+           
+            _head.GetComponent<SpriteRenderer>().flipY = true;
             OnFlipping.Invoke(flipped);
             return;
         }
         else if(flipped && (!(90f < (curRotation + 360) % 360) || !((curRotation + 360) % 360 <= 272f)))
         {
             flipped = false;
-            _head.transform.localScale = new Vector3 (1f, 1f, 1);
-            //_body.transform.localScale = new Vector3 (1f, 1f, 1);
-            SetHingeBounds(mainLower, mainUpper);
+            _head.GetComponent<SpriteRenderer>().flipY = false;
             OnFlipping.Invoke(flipped);
         }
-        
     }
-
 }

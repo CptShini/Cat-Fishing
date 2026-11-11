@@ -1,6 +1,7 @@
 using Assets.Scripts.Audio;
 using Assets.Scripts.Diving.Bars;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 namespace Assets.Scripts.Diving.Cat
@@ -21,6 +22,8 @@ namespace Assets.Scripts.Diving.Cat
         public float curPounceCooldown;
 
         private bool isStealthPlaying;
+
+        public UnityEvent<Vector2> OnPouncing;
 
         private void Start()
         {
@@ -64,6 +67,8 @@ namespace Assets.Scripts.Diving.Cat
             Vector2 targetVelocity = pounceDirection.normalized * (DivingPlayerStats.Instance.pounceSpeed + curPounceStamina * 0.5f);
 
             _rb.linearVelocity = new Vector3(targetVelocity.x, targetVelocity.y, 0); // instantaneous max speed
+
+            OnPouncing.Invoke(_rb.linearVelocity);
         }
 
         private void CancelPounce()

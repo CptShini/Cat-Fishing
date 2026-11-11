@@ -105,13 +105,13 @@ AnimationClip:
         time: 0
         value: 1
         inSlope: 0
-        outSlope: 3
+        outSlope: 2.5
         tangentMode: 69
         weightedMode: 0
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 0.33333334
+        time: 0.4
         value: 2
         inSlope: Infinity
         outSlope: 2.352941
@@ -120,7 +120,7 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.56666666
+        time: 0.73333335
         value: 3
         inSlope: Infinity
         outSlope: 0
@@ -420,13 +420,13 @@ AnimationClip:
         time: 0
         value: 1
         inSlope: 0
-        outSlope: 3
+        outSlope: 2.5
         tangentMode: 69
         weightedMode: 0
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 0.33333334
+        time: 0.4
         value: 2
         inSlope: Infinity
         outSlope: 2.352941
@@ -435,7 +435,7 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.56666666
+        time: 0.73333335
         value: 3
         inSlope: Infinity
         outSlope: 0

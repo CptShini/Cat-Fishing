@@ -12,6 +12,8 @@ public class SwimScript : MonoBehaviour
     private float friction;
     private float acceleration;
     public readonly UnityEvent<Vector2, float> OnSwim = new();
+    public readonly UnityEvent<Vector2> OnStealth = new();
+
     private Vector2 velocityVector;
 
     private bool swimming, stealth;
@@ -62,6 +64,10 @@ public class SwimScript : MonoBehaviour
         if (!stealth && swimSpeed != 0)
         {
             OnSwim.Invoke(direction, 250);
+        }
+        if (stealth)
+        {
+            OnStealth.Invoke(direction);
         }
         float currentAcceleration = (direction.x != 0) ? acceleration : friction;
 
