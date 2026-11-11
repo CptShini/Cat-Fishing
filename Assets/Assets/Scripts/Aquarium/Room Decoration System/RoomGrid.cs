@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -8,6 +9,7 @@ public class RoomGrid : MonoBehaviour
     [SerializeField] private Grid grid;
     [SerializeField] private Tilemap placeableArea;
     [SerializeField] private DecorationGridVisuals decorationGridVisuals;
+    [SerializeField] private TileBase voidTile;
 
     [Header("Collision")]
     [SerializeField] private LayerMask placementBlockerMask;
@@ -107,22 +109,43 @@ public class RoomGrid : MonoBehaviour
     public bool CanExpandRoom(Vector3Int origin, Vector2Int size)
     {
         if (placeableArea == null)
+        {
+            Debug.Log("NO PLACEABLE AREA!!!!!");
             return false;
+        }
 
         for (int x = 0; x < size.x; x++)
         {
             for (int y = 0; y < size.y; y++)
             {
                 Vector3Int cell = origin + new Vector3Int(x, y, 0);
-
+                
                 if (placeableArea.HasTile(cell))
+                {
+                    TileBase tile = placeableArea.GetTile(cell);
+
+                    if(tile == voidTile)
+                    {
+                        Debug.Log("VOID TILE");
+                        continue;
+                    }
+
+                    Debug.Log("HAS TILE");
                     return false;
+                }
 
                 if (occupiedCells.Contains(cell))
+                {
+                    Debug.Log("CONTAINS SOMETHING");
                     return false;
+                }
 
                 if (IsCellBlocked(cell))
+                {
+                    Debug.Log("CELL IS BLOCKED AAAHHHHHH");
                     return false;
+                }
+                    
             }
         }
 
@@ -138,8 +161,11 @@ public class RoomGrid : MonoBehaviour
             Vector3Int bottom = origin + new Vector3Int(x, -1, 0);
             Vector3Int top = origin + new Vector3Int(x, size.y, 0);
 
-            if (placeableArea.HasTile(bottom) || placeableArea.HasTile(top))
+            if (placeableArea.HasTile(bottom) && placeableArea.GetTile(bottom) != voidTile 
+                || placeableArea.HasTile(top) && placeableArea.GetTile(bottom) != voidTile)
+            {
                 return true;
+            }
         }
 
         // left and right edge
@@ -148,8 +174,11 @@ public class RoomGrid : MonoBehaviour
             Vector3Int left = origin + new Vector3Int(-1, y, 0);
             Vector3Int right = origin + new Vector3Int(size.x, y, 0);
 
-            if (placeableArea.HasTile(left) || placeableArea.HasTile(right))
+            if (placeableArea.HasTile(left) && placeableArea.GetTile(left) != voidTile 
+                || placeableArea.HasTile(right) && placeableArea.GetTile(right) != voidTile)
+            {
                 return true;
+            }
         }
 
         return false;
@@ -168,8 +197,6 @@ public class RoomGrid : MonoBehaviour
                 placeableArea.SetTile(cell, floorTile);
             }
         }
-        Debug.Log("AAAAHHH");
-
         RefreshBottomEdges();
         decorationGridVisuals.RefreshGrid();
 
