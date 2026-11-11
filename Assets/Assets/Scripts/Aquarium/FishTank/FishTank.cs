@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Data.Domain;
+using Assets.Scripts.Data.Domain.Aquarium;
 using Assets.Scripts.Data.Persistence;
 using Assets.Scripts.Fishies.Domain;
 using UnityEngine;
@@ -41,8 +42,8 @@ namespace Assets.Scripts.Aquarium.FishTank
             bool tankSaved = data.Tanks.ContainsKey(tankId);
             if (!tankSaved) return;
             
-            TankData tankData = data.Tanks[tankId];
-            _fish = tankData.Fishes.ToDictionary(fishSpeciesDatabase);
+            TankDTO tankDTO = data.Tanks[tankId];
+            _fish = tankDTO.Fishes.ToDictionary(fishSpeciesDatabase);
         }
 
         public void SaveData(ref GameData data)
@@ -51,7 +52,7 @@ namespace Assets.Scripts.Aquarium.FishTank
                 .ToDTOs()
                 .ToList();
             
-            if (data.Tanks.TryGetValue(tankId, out TankData tank))
+            if (data.Tanks.TryGetValue(tankId, out TankDTO tank))
             {
                 tank.Fishes = fishDTOs;
             }
