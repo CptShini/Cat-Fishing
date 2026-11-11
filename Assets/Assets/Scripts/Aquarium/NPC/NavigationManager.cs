@@ -32,7 +32,6 @@ public class NavigationManager : MonoBehaviour
         buildReady = true;
     }
 
-
     private void RebuildNavigation()
     {
         surface.BuildNavMesh();
