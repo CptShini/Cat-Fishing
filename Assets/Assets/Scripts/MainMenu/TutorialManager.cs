@@ -52,6 +52,14 @@ public class TutorialManager : MonoBehaviour
         backgroundImage.color = color;
     }
 
+    public void SelectPage(int index)
+    {
+        if (index < 0 || index >= tutorialImages.Length)
+            return;
+
+        ShowImage(index);
+    }
+
     public void NextImage()
     {
         if (tutorialImages.Length == 0)
