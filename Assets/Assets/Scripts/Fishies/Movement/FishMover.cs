@@ -10,14 +10,13 @@ namespace Assets.Scripts.Fishies.Movement
     {
         [Header("Steering")]
         [SerializeField] private float minTurnRate = 90f;
-        [SerializeField] private float maxTurnRate = 360f;
+        private float _maxTurnRate;
         [SerializeField] private float turnSmoothTime = 0.4f;
 
         private float _turnVelocity;
         private float _wanderTime;
 
-        [Header("Movement")]
-        [SerializeField] private float acceleration = 8f;
+        [Header("Movement")] 
         [SerializeField] private float turnBraking = 6f;
         [SerializeField] private float slowTurnAngle = 65f;
         [SerializeField, Range(0f, 1f)]
@@ -25,22 +24,19 @@ namespace Assets.Scripts.Fishies.Movement
 
         [SerializeField] private float lateralSlipDamping = 0.7f;
 
-        [Header("Speed Stat Conversion")]
-        [SerializeField] private float speedStatScale = 1f;
-
         [Header("Organic Movement")]
         [SerializeField] private float wanderAngle = 22f;
         [SerializeField] private float wanderFrequency = 0.35f;
         
         [Header("Destination")]
         [SerializeField] private float slowDownDistance = 5f;
-        [SerializeField] private float arrivalDeceleration = 12f;
 
         public Vector2 Heading;
         public float NearDistance;
 
         private float _maxSpeed;
         private float _speed;
+        private float _acceleration;
 
         private float _noiseSeed;
         private Rigidbody2D _rb;
@@ -56,7 +52,10 @@ namespace Assets.Scripts.Fishies.Movement
 
         public void Init(int speedStat)
         {
-            _maxSpeed = speedStat * speedStatScale;
+            float x = speedStat;
+            _maxSpeed = x*x*0.1f + x*0.5f + 0.4f;
+            _acceleration = _maxSpeed * 2f;
+            _maxTurnRate = 40*x + 320f;
         }
 
         private void FixedUpdate()
@@ -95,7 +94,7 @@ namespace Assets.Scripts.Fishies.Movement
 
             float currentMaxTurnRate = Mathf.Lerp(
                 minTurnRate,
-                maxTurnRate,
+                _maxTurnRate,
                 turnSpeed01
             );
 
@@ -130,7 +129,7 @@ namespace Assets.Scripts.Fishies.Movement
             
             float arrivalFactor = slowDownDistance > 0f
                 ? Mathf.SmoothStep(
-                    0f,
+                    0.25f,
                     1f,
                     Mathf.Clamp01(NearDistance / slowDownDistance)
                 )
@@ -141,7 +140,7 @@ namespace Assets.Scripts.Fishies.Movement
                                 * arrivalFactor;
 
             float currentAcceleration = Mathf.Lerp(
-                acceleration,
+                _acceleration,
                 turnBraking,
                 turnAmount
             );

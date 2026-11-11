@@ -324,18 +324,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Fish.Movement.FishMover
   minTurnRate: 90
-  maxTurnRate: 360
   turnSmoothTime: 0.2
-  acceleration: 3
   turnBraking: 7
-  slowTurnAngle: 65
+  slowTurnAngle: 50
   minSpeedWhileTurning: 0.4
-  lateralSlipDamping: 4
-  speedStatScale: 1
+  lateralSlipDamping: 60
   wanderAngle: 30
   wanderFrequency: 1.5
-  slowDownDistance: 1.5
-  arrivalDeceleration: 0.1
+  slowDownDistance: 2
   Heading: {x: 0, y: 0}
   NearDistance: 0
 --- !u!114 &272854619560324941
@@ -351,13 +347,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Fish.Navigation.FishNavigator
   eyePoint: {fileID: 7665592108927822498}
-  arrivalDistanceTolerance: 1
-  fleeDist:
-    Min: 10
-    Max: 15
-  wanderDist:
-    Min: 3
-    Max: 8
   reNavTime:
     Min: 5
     Max: 10
