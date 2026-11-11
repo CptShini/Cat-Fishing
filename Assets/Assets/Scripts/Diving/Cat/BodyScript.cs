@@ -8,7 +8,7 @@ public class BodyScript : MonoBehaviour
     [SerializeField] private GameObject _body;
     [SerializeField] private GameObject _head;
 
-    private bool flipped = false;
+    public bool flipped = false;
     private bool stealth = false;
 
     [SerializeField] private float dragSpeedMod = 100f;
@@ -31,7 +31,6 @@ public class BodyScript : MonoBehaviour
 
     void Flip(bool flipped)
     {
-        Debug.Log("FLIIIIIIIP");
         _body.GetComponent<SpriteRenderer>().flipY = flipped;
         this.flipped = flipped;
     }

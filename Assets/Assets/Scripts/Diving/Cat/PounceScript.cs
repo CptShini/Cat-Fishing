@@ -10,6 +10,9 @@ namespace Assets.Scripts.Diving.Cat
     {
         [SerializeField] private Camera mainCamera;
         [SerializeField] private StatBar staminaBar;
+        [SerializeField] private GameObject _body;
+        [SerializeField] private Vector3 effectOffset;
+        [SerializeField] private GameObject effect;
     
         private DamagedScript damaged;
         public float curPounceStamina; // currrent player stamina, and current stamina for pounce
@@ -60,6 +63,18 @@ namespace Assets.Scripts.Diving.Cat
 
             AudioManager.Instance.Play(AudioId.Pounce);
             isStealthPlaying = false;
+            GameObject effectInstance = Instantiate(effect);
+
+            if(_body.GetComponent<SpriteRenderer>().flipY == true)
+            {
+                effectInstance.transform.position = new Vector3(_body.transform.position.x + effectOffset.x, _body.transform.position.y - effectOffset.y, _body.transform.position.z);
+            }
+            else
+            {
+                effectInstance.transform.position = _body.transform.position + effectOffset;
+            }
+            effectInstance.transform.rotation = Quaternion.Euler(0,0,90); 
+            effectInstance.transform.RotateAround(_body.transform.position, new Vector3(0,0,1), _body.transform.rotation.eulerAngles.z); 
         }
 
         public void Pounce()
@@ -69,6 +84,8 @@ namespace Assets.Scripts.Diving.Cat
             _rb.linearVelocity = new Vector3(targetVelocity.x, targetVelocity.y, 0); // instantaneous max speed
 
             OnPouncing.Invoke(_rb.linearVelocity);
+
+           
         }
 
         private void CancelPounce()
