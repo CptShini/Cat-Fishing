@@ -45,7 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   NPCPrefab: {fileID: 230971709776260592, guid: c0daaffe07265e44fbbfb117215e8b3b, type: 3}
-  npcCount: 15
+  npcCount: 5
+  startPosRadius: 10
 --- !u!1 &5537740027494736574
 GameObject:
   m_ObjectHideFlags: 0
@@ -136,7 +137,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70bd44a44cd62c64fbfc1eea95b24880, type: 3}
   m_Name: 
   m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Extensions.CollectSources2d
-  m_OverrideByGrid: 1
+  m_OverrideByGrid: 0
   m_UseMeshPrefab: {fileID: 0}
   m_CompressBounds: 1
   m_OverrideVector: {x: 1, y: 1, z: 1}
