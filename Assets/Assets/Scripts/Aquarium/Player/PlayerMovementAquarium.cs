@@ -22,7 +22,6 @@ public class PlayerMovementAquarium : MonoBehaviour
 
     void FixedUpdate()
     {
-        print(PauseController.IsGamePaused);
         if (PauseController.IsGamePaused)
         {
             rb.linearVelocity = Vector2.zero;

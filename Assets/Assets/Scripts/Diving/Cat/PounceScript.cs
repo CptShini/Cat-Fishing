@@ -1,41 +1,51 @@
+using System;
 using Assets.Scripts.Audio;
 using Assets.Scripts.Diving.Bars;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 namespace Assets.Scripts.Diving.Cat
 {
+    [RequireComponent(typeof(Rigidbody2D))]
+    [RequireComponent(typeof(DamagedScript))]
     public class PounceScript : MonoBehaviour
     {
-        [SerializeField] private Camera mainCamera;
         [SerializeField] private StatBar staminaBar;
-    
-        private DamagedScript damaged;
+        [SerializeField] private SpriteRenderer _body;
+        [SerializeField] private Vector3 effectOffset;
+        [SerializeField] private GameObject effect;
+        
         public float curPounceStamina; // currrent player stamina, and current stamina for pounce
     
         private float pounceDuration; // Tracker for when to stop pounceing. Can change based on 
         private Vector2 pounceDirection; // For saving the pounce direction during multiple updates
     
+        private Camera _mainCamera;
         private Rigidbody2D _rb;
 
         public float curPounceCooldown;
 
         private bool isStealthPlaying;
 
+        public readonly UnityEvent<Vector2> OnPouncing = new();
+
         private void Start()
         {
-            _rb = gameObject.GetComponent<Rigidbody2D>();
+            _rb = GetComponent<Rigidbody2D>();
+            _mainCamera = Camera.main;
             staminaBar.SetMaxValue(DivingPlayerStats.Instance.maxStamina);
-            staminaBar.SetMinValue(5); // Idk, ask Andreas
-            damaged = gameObject.GetComponent<DamagedScript>();
+            staminaBar.SetMinValue(0);
+            
+            DamagedScript damaged = GetComponent<DamagedScript>();
             damaged.OnDamaged.AddListener(CancelPounce);
         }
 
         public void ChargeUpPounce()
         {
             float maxPounceStamina =
-                Mathf.Min(staminaBar.CurrentValue, DivingPlayerStats.Instance.maxPounceStamina);
-        
+                Mathf.Min(staminaBar.CurrentValue, DivingPlayerStats.Instance.maxPounceStamina);      
+
             float pounceChargeStamina = DivingPlayerStats.Instance.chargeUpSpeed * Time.deltaTime;
             curPounceStamina = Mathf.Clamp(curPounceStamina + pounceChargeStamina, 0,maxPounceStamina);
 
@@ -47,16 +57,31 @@ namespace Assets.Scripts.Diving.Cat
     
         public void StartPounce()
         {
-            Vector2 mousePos = mainCamera.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-
+            Vector2 mousePos = _mainCamera.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+            curPounceStamina = Math.Max(DivingPlayerStats.Instance.minPounceStamina, curPounceStamina);
             pounceDirection = mousePos - (Vector2)transform.position;
             pounceDuration = curPounceStamina / 20; // 5 stamina = 1 second, for now
         
             DivingController.Instance.SetPlayerState(PlayerState.PlayerState.POUNCE);
             staminaBar.CurrentValue -= curPounceStamina;
+            Debug.Log(curPounceStamina);
+
+            curPounceStamina = 0;
 
             AudioManager.Instance.Play(AudioId.Pounce);
             isStealthPlaying = false;
+            GameObject effectInstance = Instantiate(effect);
+
+            if(_body.flipY)
+            {
+                effectInstance.transform.position = new Vector3(_body.transform.position.x + effectOffset.x, _body.transform.position.y - effectOffset.y, _body.transform.position.z);
+            }
+            else
+            {
+                effectInstance.transform.position = _body.transform.position + effectOffset;
+            }
+            effectInstance.transform.rotation = Quaternion.Euler(0,0,90); 
+            effectInstance.transform.RotateAround(_body.transform.position, new Vector3(0,0,1), _body.transform.rotation.eulerAngles.z); 
         }
 
         public void Pounce()
@@ -64,6 +89,10 @@ namespace Assets.Scripts.Diving.Cat
             Vector2 targetVelocity = pounceDirection.normalized * (DivingPlayerStats.Instance.pounceSpeed + curPounceStamina * 0.5f);
 
             _rb.linearVelocity = new Vector3(targetVelocity.x, targetVelocity.y, 0); // instantaneous max speed
+
+            OnPouncing.Invoke(_rb.linearVelocity);
+
+           
         }
 
         private void CancelPounce()

@@ -15,6 +15,7 @@ namespace Assets.Scripts.Fishies.Navigation
         
         [SerializeField] private Transform eyes;
         [SerializeField] private float viewDistance = 1.5f;
+        [SerializeField] private LayerMask layerMask;
 
         [Space]
         
@@ -62,7 +63,7 @@ namespace Assets.Scripts.Fishies.Navigation
                 && DebugDrawer.Instance.Fish_Eyes_DrawRaycasts
             ) Debug.DrawRay(source, dir * viewDistance, Color.red);
                 
-            return Physics2D.Raycast(source, dir, viewDistance);
+            return Physics2D.Raycast(source, dir, viewDistance, layerMask);
         }
 
         private Vector2 GetClosestHit(IEnumerable<RaycastHit2D> hits)

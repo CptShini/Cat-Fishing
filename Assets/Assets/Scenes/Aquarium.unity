@@ -459,7 +459,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0bd6275d84d0484bad6546cde8c8111, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomFixedFurniture
-  furnitureID: 
+  furnitureID: Exit Door
   size: {x: 2, y: 4}
   blocksPlacement: 1
   currentOrigin: {x: 0, y: 0, z: 0}
@@ -1933,7 +1933,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0bd6275d84d0484bad6546cde8c8111, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomFixedFurniture
-  furnitureID: 
+  furnitureID: Computer
   size: {x: 2, y: 3}
   blocksPlacement: 1
   currentOrigin: {x: 0, y: 0, z: 0}
@@ -4281,6 +4281,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 762665617}
+  - component: {fileID: 762665618}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -4311,6 +4312,18 @@ Transform:
   - {fileID: 1469357008}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &762665618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 762665616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a03d5e1ef75ef76449aff138ebdc5165, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PauseController
 --- !u!1 &775952875
 GameObject:
   m_ObjectHideFlags: 0
@@ -8861,7 +8874,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0bd6275d84d0484bad6546cde8c8111, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomFixedFurniture
-  furnitureID: 
+  furnitureID: Fish Tank 1
   size: {x: 2, y: 3}
   blocksPlacement: 1
   currentOrigin: {x: 0, y: 0, z: 0}
@@ -10433,7 +10446,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0bd6275d84d0484bad6546cde8c8111, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomFixedFurniture
-  furnitureID: 
+  furnitureID: Fish Tank 1
   size: {x: 2, y: 3}
   blocksPlacement: 1
   currentOrigin: {x: 0, y: 0, z: 0}
@@ -12611,7 +12624,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0bd6275d84d0484bad6546cde8c8111, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomFixedFurniture
-  furnitureID: 
+  furnitureID: Workbench
   size: {x: 3, y: 3}
   blocksPlacement: 1
   currentOrigin: {x: 0, y: 0, z: 0}

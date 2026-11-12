@@ -83,10 +83,10 @@ public class NpcMovement : MonoBehaviour
 
         bool isWalking = curVelocity != Vector2.zero;
         animator.SetBool("isWalking", isWalking);
-        if (isWalking)
+        /*if (isWalking)
             AudioManager.Instance.Play(AudioId.Walk);
         else
-            AudioManager.Instance.FadeOutLoop(AudioId.Walk);
+            AudioManager.Instance.FadeOutLoop(AudioId.Walk);*/
     }
 
     public void Move(Vector2 newDirection)

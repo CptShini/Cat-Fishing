@@ -364,6 +364,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Fish.Navigation.FishEyes
   eyes: {fileID: 7665592108927822498}
   viewDistance: 1.5
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 1
   fov: 120
   eyeCount: 4
 --- !u!1 &6653272373207468053

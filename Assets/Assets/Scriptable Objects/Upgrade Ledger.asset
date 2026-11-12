@@ -13,32 +13,19 @@ MonoBehaviour:
   m_Name: Upgrade Ledger
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Upgrades.UpgradeLedger
   <Speed>k__BackingField:
-  - Stat: 10
+  - Stat: 3
     Price: 10
-  - Stat: 12
+  - Stat: 4
     Price: 30
-  - Stat: 14
+  - Stat: 5
     Price: 65
-  - Stat: 16
+  - Stat: 6.5
     Price: 250
-  - Stat: 18
+  - Stat: 8
     Price: 400
-  - Stat: 20
+  - Stat: 10
     Price: 0
   <PounceSpeed>k__BackingField:
-  - Stat: 20
-    Price: 10
-  - Stat: 22
-    Price: 30
-  - Stat: 24
-    Price: 65
-  - Stat: 26
-    Price: 250
-  - Stat: 28
-    Price: 400
-  - Stat: 30
-    Price: 0
-  <ClawStrength>k__BackingField:
   - Stat: 10
     Price: 10
   - Stat: 12
@@ -48,6 +35,19 @@ MonoBehaviour:
   - Stat: 16
     Price: 250
   - Stat: 18
+    Price: 400
+  - Stat: 20
+    Price: 0
+  <ClawStrength>k__BackingField:
+  - Stat: 3
+    Price: 10
+  - Stat: 6
+    Price: 30
+  - Stat: 9
+    Price: 65
+  - Stat: 12
+    Price: 250
+  - Stat: 15
     Price: 400
   - Stat: 20
     Price: 0
@@ -67,14 +67,14 @@ MonoBehaviour:
   <CarryingCapacity>k__BackingField:
   - Stat: 25
     Price: 10
-  - Stat: 30
-    Price: 30
-  - Stat: 35
-    Price: 65
-  - Stat: 40
-    Price: 250
-  - Stat: 45
-    Price: 400
   - Stat: 50
+    Price: 30
+  - Stat: 100
+    Price: 65
+  - Stat: 200
+    Price: 250
+  - Stat: 300
+    Price: 400
+  - Stat: 500
     Price: 0
   <MinimapPrice>k__BackingField: 100

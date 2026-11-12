@@ -363,13 +363,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Fish.Navigation.FishNavigator
   eyePoint: {fileID: 7665592108927822498}
-  arrivalDistanceTolerance: 2
-  fleeDist:
-    Min: 10
-    Max: 15
-  wanderDist:
-    Min: 3
-    Max: 8
   reNavTime:
     Min: 5
     Max: 10
@@ -387,6 +380,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Fish.Navigation.FishEyes
   eyes: {fileID: 7665592108927822498}
   viewDistance: 1.5
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 1
   fov: 120
   eyeCount: 4
 --- !u!1 &5212580845433397734
