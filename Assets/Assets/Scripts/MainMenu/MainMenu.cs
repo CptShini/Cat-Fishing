@@ -1,5 +1,7 @@
+using Assets.Scripts.Audio;
 using Assets.Scripts.Data;
-using Assets.Scripts.Helpers;
+using Assets.Scripts.Data.Persistence;
+using Assets.Scripts.Management;
 using TMPro;
 using UnityEngine;
 
@@ -12,7 +14,14 @@ namespace Assets.Scripts.MainMenu
 
         private void Start()
         {
-            if (!SaveManager.Instance.HasSave)
+            Initialize();
+            SaveManager.Instance.CurrentSaveChanged.AddListener(Initialize);
+        }
+
+        private void Initialize()
+        {
+            SaveFile currentSave = SaveManager.Instance.CurrentSave;
+            if (currentSave == null)
             {
                 playButtonText.text = "New Game";
                 continueButtonText.text = "";
@@ -21,18 +30,21 @@ namespace Assets.Scripts.MainMenu
             else
             {
                 playButtonText.text = "Continue";
-                continueButtonText.text = SaveManager.Instance.Saves[0].ToString();
+                continueButtonText.text = currentSave.ToString();
                 continueButtonText.gameObject.SetActive(true);
             }
         }
 
         public void Play()
         {
-            if (!SaveManager.Instance.HasSave) 
-                SaveManager.Instance.Select("Default");
+            if (SaveManager.Instance.CurrentSave == null)
+                SaveManager.Instance.StartNew("Default");
 
-            GameManager.Instance.ChangeScene(1);
+            AudioManager.Instance.Play(AudioId.OpeningDoor);
+            GameManager.Instance.ChangeScene(Scenes.Aquarium);
         }
+        
+        public void ButtonClickSound() => AudioManager.Instance.Play(AudioId.ButtonClick);
 
         public void Quit() => Application.Quit();
     }

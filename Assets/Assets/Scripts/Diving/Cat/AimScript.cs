@@ -5,40 +5,18 @@ using UnityEngine.InputSystem;
 
 public class AimScript : MonoBehaviour
 {
-    [SerializeField] private Camera mainCamera;
     [SerializeField] private AimPawScript aimPaw;
-    [SerializeField] private HeadScript headScript;
-
-    private Vector3 originalScale;
+    
+    private Camera _mainCamera;
 
     public readonly UnityEvent<Vector2, float> OnAiming = new();
-
-    void Awake()
-    {
-        originalScale = gameObject.transform.localScale;
-    }
 
     private void Start()
     {
         DivingController.Instance.OnStateChanged.AddListener(AimEnabler);
-        //headScript.OnFlipping.AddListener(CounterFlip);
         gameObject.SetActive(false);
         aimPaw.AimPawEnabler(false);
-        
-    }
-    private void CounterFlip(bool flipped)
-    {
-        if (flipped)
-        {
-            //gameObject.transform.localScale = originalScale;
-            gameObject.transform.localScale = new Vector3 (originalScale.x, -originalScale.y, originalScale.z);
-        }
-        else
-        {
-            gameObject.transform.localScale = originalScale;
-            //gameObject.transform.localScale = new Vector3 (originalScale.x, -originalScale.y, originalScale.z);
-
-        }
+        _mainCamera = Camera.main;
     }
 
     private void AimEnabler(PlayerState state)
@@ -57,7 +35,8 @@ public class AimScript : MonoBehaviour
     
     private void Update()
     {
-        Vector2 mousePos = mainCamera.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        Vector2 mousePosScreen = Mouse.current.position.ReadValue();
+        Vector2 mousePos = _mainCamera.ScreenToWorldPoint(mousePosScreen);
         Vector2 pounceDirection = mousePos - (Vector2)transform.position;
         
         float angle = Mathf.Atan2(pounceDirection.y, pounceDirection.x) * Mathf.Rad2Deg;

@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class RoomFixedFurniture : MonoBehaviour
 {
+    [Header("Save")]
+    public string furnitureID;
+    
     [Header("Grid")]
     public Vector2Int size = Vector2Int.one;
 

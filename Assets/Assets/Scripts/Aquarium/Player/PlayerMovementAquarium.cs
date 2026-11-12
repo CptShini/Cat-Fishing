@@ -1,3 +1,4 @@
+using Assets.Scripts.Audio;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
@@ -21,10 +22,11 @@ public class PlayerMovementAquarium : MonoBehaviour
 
     void FixedUpdate()
     {
-        if(PauseController.IsGamePaused)
+        if (PauseController.IsGamePaused)
         {
             rb.linearVelocity = Vector2.zero;
             animator.SetBool("isWalking", false);
+            AudioManager.Instance.FadeOutLoop(AudioId.Walk);
             return;
         }
 
@@ -35,8 +37,13 @@ public class PlayerMovementAquarium : MonoBehaviour
         {
             rb.MovePosition(targetPosition);
         }
-
-        animator.SetBool("isWalking", moveInput != Vector2.zero);
+        
+        bool isWalking = moveInput != Vector2.zero;
+        animator.SetBool("isWalking", isWalking);
+        if (isWalking)
+            AudioManager.Instance.Play(AudioId.Walk);
+        else
+            AudioManager.Instance.FadeOutLoop(AudioId.Walk);
     }
 
     bool CanMoveTo(Vector2 position)

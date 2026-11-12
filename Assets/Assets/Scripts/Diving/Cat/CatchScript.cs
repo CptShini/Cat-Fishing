@@ -1,3 +1,4 @@
+using Assets.Scripts.Audio;
 using Assets.Scripts.Diving.DivingInventory;
 using Assets.Scripts.Fishies;
 using Assets.Scripts.Fishies.Domain;
@@ -39,12 +40,15 @@ public class CatchScript : MonoBehaviour
         CatchingMinigame.Instance.Init(fish, movement);
         DivingController.Instance.SetPlayerState(PlayerState.GRAB);
         grabbing = true;
+
+        // Stop swimming
+        // AudioManager.Instance.FadeOutLoop();
     }
 
     private void SetGrabbing(bool won)
     {
+        AudioManager.Instance.Play(AudioId.CatchFishSuccess);
         grabbing = false;
-        
     }
 
     public void OnGrabbing(CallbackContext input)

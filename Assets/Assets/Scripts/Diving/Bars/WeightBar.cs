@@ -2,6 +2,7 @@
 
 namespace Assets.Scripts.Diving.Bars
 {
+    [RequireComponent(typeof(Animator))]
     public class WeightBar : StatBar
     {
         private Animator _animator;
@@ -10,7 +11,7 @@ namespace Assets.Scripts.Diving.Bars
 
         public bool TryAdd(float weight)
         {
-            bool tooHeavy = CurrentValue + weight > _maxValue;
+            bool tooHeavy = CurrentValue + weight > MaxVal;
             if (tooHeavy) return false;
             
             CurrentValue += weight;
@@ -18,7 +19,7 @@ namespace Assets.Scripts.Diving.Bars
         }
         public bool CanAdd(float weight)
         {
-            bool tooHeavy = CurrentValue + weight > _maxValue;
+            bool tooHeavy = CurrentValue + weight > MaxVal;
             if (!tooHeavy) return true;
             
             _animator.Play("WeightWarn");

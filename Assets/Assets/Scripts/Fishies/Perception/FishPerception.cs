@@ -14,7 +14,10 @@ namespace Assets.Scripts.Fishies.Perception
         private float _reactionTime;
         private float _radius;
         
-        private bool _detecting, _cooldown;
+        public bool Detecting { get; private set; }
+        public bool Cooldown { get; private set; }
+        public float ReactionPercent => _reactionMeter / _reactionTime;
+        
         private float _reactionMeter;
 
         private Collider2D _other;
@@ -27,6 +30,7 @@ namespace Assets.Scripts.Fishies.Perception
         {
             _triggerTag = TriggerTag();
             _col = GetComponent<CircleCollider2D>();
+            Init(2, 2);
         }
 
         public void Init(int reactionStat, int sizeStat)
@@ -46,14 +50,14 @@ namespace Assets.Scripts.Fishies.Perception
 
         private void Update()
         {
-            if (!_detecting || _cooldown)
+            if (!Detecting || Cooldown)
             {
                 if (_reactionMeter > 0f)
                     _reactionMeter -= Time.deltaTime;
                 else
                 {
                     _reactionMeter = 0f;
-                    _cooldown = false;
+                    Cooldown = false;
                 }
 
                 return;
@@ -63,7 +67,7 @@ namespace Assets.Scripts.Fishies.Perception
             _reactionMeter += Time.deltaTime * closenessFactor;
             if (_reactionMeter < _reactionTime) return;
             
-            _cooldown = true;
+            Cooldown = true;
             Detect(_other);
         }
 
@@ -71,11 +75,11 @@ namespace Assets.Scripts.Fishies.Perception
         
         private void OnTriggerStay2D(Collider2D other)
         {
-            if (_cooldown || !other.CompareTag(_triggerTag))
+            if (Cooldown || !other.CompareTag(_triggerTag))
                 return;
             
-            _detecting = PerceptionCheck(other);
-            if (!_detecting)
+            Detecting = PerceptionCheck(other);
+            if (!Detecting)
                 return;
 
             _other = other;
@@ -89,7 +93,7 @@ namespace Assets.Scripts.Fishies.Perception
             if (!other.CompareTag(_triggerTag))
                 return;
             
-            _detecting = false;
+            Detecting = false;
         }
 
         private void OnDrawGizmos()
@@ -110,10 +114,10 @@ namespace Assets.Scripts.Fishies.Perception
 
             void DrawReactionTime()
             {
-                Gizmos.color = _cooldown 
+                Gizmos.color = Cooldown 
                     ? Color.blueViolet 
-                    : _detecting ? Color.hotPink : Color.white;
-                float r = _reactionMeter / _reactionTime * _col.radius;
+                    : Detecting ? Color.hotPink : Color.white;
+                float r = ReactionPercent * _col.radius;
                 Gizmos.DrawSphere(_col.bounds.center, r);
             }
         }

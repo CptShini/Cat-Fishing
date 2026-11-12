@@ -4,6 +4,9 @@ using UnityEngine.Tilemaps;
 [CreateAssetMenu(fileName = "NewItem", menuName = "ScriptableObjects/ItemSO")]
 public class ItemSO : ScriptableObject
 {
+    [Header("Save")]
+    public string itemID;
+
     [Header("Basic Info")]
     public string itemName;
     public Sprite itemIcon;

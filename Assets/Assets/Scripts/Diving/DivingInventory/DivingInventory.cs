@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Assets.Scripts.Audio;
 using Assets.Scripts.Data.Domain;
 using Assets.Scripts.Data.Persistence;
 using Assets.Scripts.Diving.Bars;
@@ -44,6 +45,7 @@ namespace Assets.Scripts.Diving.DivingInventory
             if (!weightBar.TryAdd(collectible.Weight))
             {
                 print($"No space in inventory for '{collectible.Name}' ({collectible.Weight:F1}kg)");
+                AudioManager.Instance.Play(AudioId.InventoryFull);
                 return false;
             }
 
@@ -53,13 +55,13 @@ namespace Assets.Scripts.Diving.DivingInventory
             return true;
         }
 
-        public bool CanAdd(Collectible collectible){
-            if (!weightBar.CanAdd(collectible.Weight))
-            {
-                print($"No space in inventory for '{collectible.Name}' ({collectible.Weight:F1}kg)");
-                return false;
-            }
-            return true;
+        public bool CanAdd(Collectible collectible)
+        {
+            if (weightBar.CanAdd(collectible.Weight)) return true;
+            
+            print($"No space in inventory for '{collectible.Name}' ({collectible.Weight:F1}kg)");
+            AudioManager.Instance.Play(AudioId.InventoryFull);
+            return false;
         }
         
         public void Remove(Collectible collectible)

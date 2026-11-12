@@ -15,13 +15,13 @@ NavMeshProjectSettings:
     cost: 1
   - name: Biome 2
     cost: 1
-  - name: 
+  - name: Biome 3
     cost: 1
-  - name: 
+  - name: Biome 4
     cost: 1
-  - name: 
+  - name: Biome 5
     cost: 1
-  - name: 
+  - name: Biome 6
     cost: 1
   - name: 
     cost: 1
@@ -73,7 +73,7 @@ NavMeshProjectSettings:
   m_Settings:
   - serializedVersion: 3
     agentTypeID: 0
-    agentRadius: 0.5
+    agentRadius: 0.2
     agentHeight: 2
     agentSlope: 45
     agentClimb: 0.75
