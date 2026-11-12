@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using TMPro;
 
 public class TutorialManager : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] private GameObject[] tutorialImages;
     [SerializeField] private GameObject[] pagesImages;
     [SerializeField] private Image backgroundImage;
+
+    [SerializeField] private TMP_Text pageNumberText;
 
     [SerializeField] private float selectedPageScale = 1.2f;
     [SerializeField] private Color selectedPageColor = new Color32(255, 255, 255, 200);
@@ -101,6 +104,12 @@ public class TutorialManager : MonoBehaviour
         }
     }
     
+    private void UpdatePageNumber()
+    {
+        if (pageNumberText != null)
+            pageNumberText.text = $"{currentImageIndex + 1} / {tutorialImages.Length}";
+    }
+    
     private void ShowImage(int index)
     {
         currentImageIndex = index;
@@ -110,6 +119,8 @@ public class TutorialManager : MonoBehaviour
         }
 
         UpdatePagination();
+        UpdatePageNumber();
+        
     }
 
 }
