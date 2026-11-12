@@ -1,4 +1,3 @@
-using TMPro;
 using UnityEngine;
 
 public class DecorInventoryManager : MonoBehaviour
@@ -9,20 +8,10 @@ public class DecorInventoryManager : MonoBehaviour
 
     [Header("Placement")]
     [SerializeField] private PlacementController placementController;
-
-    [Header("Gold")]
-    public int gold;
-    public TMP_Text goldText;
     
-    public void Start()
-    {
-        goldText.text = gold.ToString();
-    }
     
     public bool AddItem(ItemSO itemSO)
     {
-        goldText.text = gold.ToString();
-
         // if the item is a floor tile, check if it already exists in the inventory and increment the count
         if (itemSO.itemType == ItemType.FloorTile)
         {
@@ -88,5 +77,55 @@ public class DecorInventoryManager : MonoBehaviour
         }
 
         return false;
+    }
+
+
+    public void GetInventorySaveData(System.Collections.Generic.List<InventoryItemSaveData> saveData)
+    {
+        saveData.Clear();
+
+        foreach (Transform child in inventoryContent)
+        {
+            DecorInventorySlot slot = child.GetComponent<DecorInventorySlot>();
+
+            if (slot == null || slot.ItemSO == null)
+                continue;
+
+            saveData.Add(new InventoryItemSaveData
+            {
+                itemID = slot.ItemSO.itemID,
+                count = slot.count
+            });
+        }
+    }
+
+    public void LoadInventory(System.Collections.Generic.List<InventoryItemSaveData> saveData, ItemDatabase database)
+    {
+        foreach (Transform child in inventoryContent)
+            Destroy(child.gameObject);
+
+        foreach (InventoryItemSaveData savedItem in saveData)
+        {
+            ItemSO item = database.GetItem(savedItem.itemID);
+
+            if (item == null)
+                continue;
+
+            DecorInventorySlot newSlot = Instantiate(slotPrefab, inventoryContent);
+
+            newSlot.Setup(item, placementController);
+            newSlot.count = savedItem.count;
+            newSlot.UpdateUI();
+        }
+    }
+
+    // for testing
+    public void ClearInventory()
+    {
+        foreach (Transform child in inventoryContent)
+        {
+            child.gameObject.SetActive(false);
+            Destroy(child.gameObject);
+        }
     }
 }

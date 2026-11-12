@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25013cbcc1d5830449af556e0fa64334, type: 3}
   m_Name: Lamp
   m_EditorClassIdentifier: Assembly-CSharp::ItemSO
+  itemID: lamp
   itemName: Lamp
   itemIcon: {fileID: 21300000, guid: 4fbb94dcf13e27142a6b7ef13b738b43, type: 3}
   itemType: 0

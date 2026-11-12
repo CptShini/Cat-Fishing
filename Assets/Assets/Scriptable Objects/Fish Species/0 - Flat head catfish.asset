@@ -15,7 +15,8 @@ MonoBehaviour:
   <Id>k__BackingField: 0
   <Name>k__BackingField: Flat Head Catfish
   <LatinName>k__BackingField: Pylodictis Olivaris
-  <Biome>k__BackingField: 8
+  <Description>k__BackingField: haha Im a programmer haha
+  <Biome>k__BackingField: 24
   <Icon>k__BackingField: {fileID: 1541518512366775969, guid: 1e2484882d96f24489bf4c0eca395924, type: 3}
   <CatchPattern>k__BackingField: {fileID: 11400000, guid: fcb0eb18b19f283419f33ce26eb00aa8, type: 2}
   <Weight>k__BackingField:
@@ -26,4 +27,3 @@ MonoBehaviour:
   <Reaction>k__BackingField: 10
   <Perception>k__BackingField: 1
   <Sight>k__BackingField: 2
-  <Description>k__BackingField: haha Im a programmer haha

@@ -339,13 +339,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95b6be2da70e4ee59a69b617590d5376, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Fish.Movement.FishMover
-  maxTurnRate: 720
-  turnResponsiveness: 10
-  turnAcceleration: 720
-  wanderAngle: 12
-  wanderFrequency: 0.2
-  lateralSlipDamping: 1.5
-  DesiredDirection: {x: 0, y: 0}
+  minTurnRate: 90
+  turnSmoothTime: 0.2
+  turnBraking: 7
+  slowTurnAngle: 50
+  minSpeedWhileTurning: 0.4
+  lateralSlipDamping: 60
+  wanderAngle: 30
+  wanderFrequency: 1.5
+  slowDownDistance: 2
+  Heading: {x: 0, y: 0}
+  NearDistance: 0
 --- !u!114 &272854619560324941
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -359,13 +363,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Fish.Navigation.FishNavigator
   eyePoint: {fileID: 7665592108927822498}
-  arrivalDistanceTolerance: 1
-  fleeDist:
-    Min: 10
-    Max: 15
-  wanderDist:
-    Min: 3
-    Max: 8
   reNavTime:
     Min: 5
     Max: 10
@@ -383,6 +380,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Fish.Navigation.FishEyes
   eyes: {fileID: 7665592108927822498}
   viewDistance: 1.5
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 1
   fov: 120
   eyeCount: 4
 --- !u!1 &5212580845433397734
@@ -412,8 +412,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 1, w: 0}
   m_LocalPosition: {x: 0, y: -0.5, z: 0}
-  m_LocalScale: {x: 0.40000004, y: 0.40000004, z: 0.40000004}
-  m_ConstrainProportionsScale: 1
+  m_LocalScale: {x: 0.3, y: 0.3, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2043484034743167161}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
@@ -503,7 +503,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
   m_LocalPosition: {x: 0, y: -0.5, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 1}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6681622791064010376}
@@ -667,8 +667,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Fishies.Perception.FishPerceptionVisual
   perceptionImage: {fileID: 2568669962542211160}
   offset: {x: 0.6, y: 0.4, z: 0}
-  detectedColor: {r: 1, g: 0, b: 0, a: 0.101960786}
-  detectingColor: {r: 0.546, g: 0, b: 0, a: 0.101960786}
+  detectedColor: {r: 1, g: 0, b: 0, a: 0.2}
+  detectingColor: {r: 0.546, g: 0, b: 0, a: 0.29803923}
   notDetectedColor: {r: 0.54509807, g: 0.54509807, b: 0.54509807, a: 0.101960786}
   cooldownTime: 0.1
 --- !u!1 &7583249011573028227
@@ -827,7 +827,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Fishies.Perception.FishPerceptionVisual
   perceptionImage: {fileID: 6629357492722278643}
   offset: {x: 0, y: 0.4, z: 0}
-  detectedColor: {r: 1, g: 0, b: 0, a: 0.101960786}
-  detectingColor: {r: 0.546, g: 0, b: 0, a: 0.101960786}
+  detectedColor: {r: 1, g: 0, b: 0, a: 0.2}
+  detectingColor: {r: 0.546, g: 0, b: 0, a: 0.29803923}
   notDetectedColor: {r: 0.54509807, g: 0.54509807, b: 0.54509807, a: 0.101960786}
   cooldownTime: 0.1

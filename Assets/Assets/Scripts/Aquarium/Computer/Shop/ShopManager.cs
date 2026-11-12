@@ -57,46 +57,27 @@ public class ShopManager : MonoBehaviour
             return;
         }
 
-        if (inventoryManager.gold < price)
+        if (!GoldManager.Instance.HasEnoughGold(price))
         {
             Debug.Log("Not enough gold.");
             AudioManager.Instance.Play(AudioId.NotEnoughGold);
             return;
         }
 
-        if(itemSO != null && inventoryManager.gold >= price)
-        {
-            /*if(HasSpaceForItem(itemSO))
-            {*/
-                inventoryManager.gold -= price;
-                inventoryManager.goldText.text = inventoryManager.gold.ToString();
-                inventoryManager.AddItem(itemSO);
-                if (itemSO.itemType == ItemType.Furniture)
-                    purchasedItems.Add(itemSO);
-                RefreshShopSlots();
-                Debug.Log("Purchased: " + itemSO.itemName);
-                AudioManager.Instance.Play(AudioId.PurchaseSuccess);
-            /*}
-            else
-            {
-                Debug.Log("No space in inventory.");
-                AudioManager.Instance.PlayInventoryFull();
-                return;
-            }*/
-        }
-    }
 
-    /*private bool HasSpaceForItem(ItemSO itemSO)
-    {
-        foreach (var slot in inventoryManager.inventorySlots)
-        {
-            if(slot.ItemSO == itemSO)
-                return true;
-            else if(slot.ItemSO == null)
-                return true;
-        }
-        return false;
-    }*/
+        if (!GoldManager.Instance.SpendGold(price))
+            return;
+
+        inventoryManager.AddItem(itemSO);
+        
+        if (itemSO.itemType == ItemType.Furniture)
+            purchasedItems.Add(itemSO);
+        
+        RefreshShopSlots();
+        AudioManager.Instance.Play(AudioId.PurchaseSuccess);
+        
+        Debug.Log("Purchased: " + itemSO.itemName);
+    }
 
     private void RefreshShopSlots()
     {
@@ -104,6 +85,47 @@ public class ShopManager : MonoBehaviour
         {
             slot.UpdatePurchasedState();
         }
+    }
+
+    // for save
+    public void GetPurchasedItemsSaveData(List<string> saveData)
+    {
+        saveData.Clear();
+
+        foreach (ItemSO item in purchasedItems)
+        {
+            if (item != null && item.itemType != ItemType.FloorTile)
+                saveData.Add(item.itemID);
+        }
+    }
+
+    public void LoadPurchasedItems(List<string> savedItemIDs, ItemDatabase database)
+    {
+        purchasedItems.Clear();
+
+        if (savedItemIDs == null)
+            return;
+
+        foreach (string itemID in savedItemIDs)
+        {
+            ItemSO item = database.GetItem(itemID);
+
+            if (item != null && item.itemType != ItemType.FloorTile)
+                purchasedItems.Add(item);
+        }
+
+        foreach (ShopSlot slot in spawnedSlots)
+        {
+            if (slot != null)
+                slot.UpdatePurchasedState();
+        }
+    }
+
+    // for testing
+    public void ResetPurchasedItems()
+    {
+        purchasedItems.Clear();
+        RefreshShopSlots();
     }
 }
 

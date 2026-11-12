@@ -15,7 +15,8 @@ MonoBehaviour:
   <Id>k__BackingField: 1
   <Name>k__BackingField: Violet cory
   <LatinName>k__BackingField: Hoplisoma simile
-  <Biome>k__BackingField: 24
+  <Description>k__BackingField: 
+  <Biome>k__BackingField: 8
   <Icon>k__BackingField: {fileID: 1241098924550268165, guid: faa3d29b1d5727843a744c346c41bfaf, type: 3}
   <CatchPattern>k__BackingField: {fileID: 11400000, guid: 5903bed5835cdda46b0b4c215e60f13d, type: 2}
   <Weight>k__BackingField:

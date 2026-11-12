@@ -30,5 +30,8 @@ namespace Assets.Scripts.Fishies.Domain
             RelativeWeight = Weight / Species.Weight.Average;
             Strength = Species.Strength * RelativeWeight;
         }
+
+        public override string ToString() => 
+            $"{Species.Name} ({Weight:F1} KG)";
     }
 }

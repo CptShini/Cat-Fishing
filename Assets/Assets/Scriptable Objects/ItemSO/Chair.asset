@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25013cbcc1d5830449af556e0fa64334, type: 3}
   m_Name: Chair
   m_EditorClassIdentifier: Assembly-CSharp::ItemSO
+  itemID: chair
   itemName: Chair
   itemIcon: {fileID: 21300000, guid: 9319481d53a934344bd16be2ff3c1c1f, type: 3}
   itemType: 0

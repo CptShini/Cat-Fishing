@@ -12,10 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25013cbcc1d5830449af556e0fa64334, type: 3}
   m_Name: Carpet
   m_EditorClassIdentifier: Assembly-CSharp::ItemSO
+  itemID: carpet
   itemName: Carpet
   itemIcon: {fileID: 21300000, guid: 0e541ddf15ebec24cadd0f4b68d7f939, type: 3}
+  itemType: 0
   prefab: {fileID: 3758215890295927942, guid: a5a94c7a89e9dbc46ab244137aea4e8d, type: 3}
   size: {x: 2, y: 3}
   blocksPlacement: 0
   sortingLayer: 0
   sortingOrder: 0
+  splitRendering: 0
+  splitHeight: 0.5
+  floorTile: {fileID: 0}
+  floorSize: {x: 3, y: 3}

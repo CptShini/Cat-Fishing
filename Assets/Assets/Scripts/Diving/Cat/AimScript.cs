@@ -35,7 +35,8 @@ public class AimScript : MonoBehaviour
     
     private void Update()
     {
-        Vector2 mousePos = _mainCamera.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        Vector2 mousePosScreen = Mouse.current.position.ReadValue();
+        Vector2 mousePos = _mainCamera.ScreenToWorldPoint(mousePosScreen);
         Vector2 pounceDirection = mousePos - (Vector2)transform.position;
         
         float angle = Mathf.Atan2(pounceDirection.y, pounceDirection.x) * Mathf.Rad2Deg;

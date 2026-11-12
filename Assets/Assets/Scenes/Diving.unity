@@ -9060,8 +9060,6 @@ MonoBehaviour:
     Min: 4
     Max: 8
   spawnList:
-  - Species: {fileID: 11400000, guid: e5ee08445d645884093d25dd2a282203, type: 2}
-    Weight: 9
   - Species: {fileID: 11400000, guid: 918f73f4864a0af40833d047317409c6, type: 2}
     Weight: 1
   spawnPoints:
@@ -21706,14 +21704,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Helpers.DebugDrawer
   EnableDebug: 1
   Fish_Perception: 0
-  Fish_Perception_DrawCircle: 0
+  Fish_Perception_DrawCircle: 1
   Fish_Perception_DrawReactionTime: 1
+  Fish_Mover: 0
+  Fish_Mover_DrawHeading: 1
   Fish_Nav: 1
   Fish_Nav_DrawDirections: 1
   Fish_Nav_DrawPathing: 1
-  Fish_Eyes: 0
+  Fish_Eyes: 1
   Fish_Eyes_DrawRaycasts: 1
-  Fish_Eyes_DrawDirections: 1
+  Fish_Eyes_DrawDirections: 0
 --- !u!1 &1302879242
 GameObject:
   m_ObjectHideFlags: 0
@@ -24464,6 +24464,51 @@ MonoBehaviour:
   m_Area: 1
   m_IgnoreFromBuild: 0
   m_AffectedAgents: a98c17ec
+--- !u!1 &1377333312
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1377333313}
+  - component: {fileID: 1377333314}
+  m_Layer: 0
+  m_Name: UpgradesManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1377333313
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1377333312}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2035162233}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1377333314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1377333312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad3b13e8b33402c488690713a3b67fa5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MiniMapAccess
+  canvasMiniMap: {fileID: 1397849896}
 --- !u!1 &1378726677
 GameObject:
   m_ObjectHideFlags: 0
@@ -25674,9 +25719,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.FishSpawning.FishSpawner
   fishPrefab: {fileID: 5206029193779855580, guid: 161b5c02739f62b4fb82a7e106416081, type: 3}
   spawnCount:
-    Min: 0
-    Max: 0
-  spawnList: []
+    Min: 3
+    Max: 5
+  spawnList:
+  - Species: {fileID: 11400000, guid: e5ee08445d645884093d25dd2a282203, type: 2}
+    Weight: 1
   spawnPoints:
   - {fileID: 1102566652}
   - {fileID: 1730377318}
@@ -31754,6 +31801,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cameras
       objectReference: {fileID: 0}
+    - target: {fileID: 3869174312855331280, guid: 00c4c735be6de9441b62ab6463139022, type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 65585
+      objectReference: {fileID: 0}
     - target: {fileID: 5611013155603020470, guid: 00c4c735be6de9441b62ab6463139022, type: 3}
       propertyPath: target
       value: 
@@ -32222,6 +32273,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2969132433297625519, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
+      propertyPath: upgradeLedger
+      value: 
+      objectReference: {fileID: 11400000, guid: c6313984491971b42a2590352c7d001d, type: 2}
     - target: {fileID: 3491246828249289069, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
       propertyPath: oxygenBar
       value: 
@@ -40762,6 +40817,7 @@ Transform:
   - {fileID: 1557235998}
   - {fileID: 1300680660}
   - {fileID: 2046627049}
+  - {fileID: 1377333313}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2035162235

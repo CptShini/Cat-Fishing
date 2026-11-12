@@ -31,14 +31,15 @@ public class HeadScript : MonoBehaviour
         head.transform.rotation = Quaternion.Euler(0,0, newRotation);
         OnRotating.Invoke(head.transform.rotation.eulerAngles.z);
 
+        float wrappedRotation = (curRotation + 360) % 360;
         switch (flipped)
         {
-            case false when 90f < (curRotation + 360) % 360 && (curRotation + 360) % 360 <= 268f:
+            case false when wrappedRotation is > 90f and <= 268f:
                 flipped = true;
                 head.flipY = true;
                 OnFlipping.Invoke(flipped);
                 return;
-            case true when !(90f < (curRotation + 360) % 360 && (curRotation + 360) % 360 <= 272f):
+            case true when wrappedRotation is <= 90f or > 272f:
                 flipped = false;
                 head.flipY = false;
                 OnFlipping.Invoke(flipped);

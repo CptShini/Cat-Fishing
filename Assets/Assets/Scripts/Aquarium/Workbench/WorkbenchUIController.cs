@@ -32,7 +32,7 @@ public class WorkbenchUIController : MonoBehaviour
 
         placementController.EnterDecorationMode();
 
-        PauseController.SetPause(true);
+        PauseController.IsGamePaused = true;
     }
 
     public void Close()
@@ -49,6 +49,6 @@ public class WorkbenchUIController : MonoBehaviour
         panel.SetActive(false);
         IsOpen = false;
 
-        PauseController.SetPause(false);
+        PauseController.IsGamePaused = false;
     }
 }

@@ -84,23 +84,24 @@ public class BodyScript : MonoBehaviour
         CheckFlip();
     }
 
-    void CheckFlip()
+    private void CheckFlip()
     {
         float curRotation = _body.transform.rotation.eulerAngles.z;
+        float wrappedRotation = (curRotation + 360) % 360;
         switch (_flipped)
         {
-            case false when 90f < (curRotation + 360) % 360 && (curRotation + 360) % 360 <= 268f:
+            case false when wrappedRotation is > 90f and <= 268f:
                 _flipped = true;
                 _body.flipY = true;
                 return;
-            case true when (!(90f < (curRotation + 360) % 360) || !((curRotation + 360) % 360 <= 272f)):
+            case true when wrappedRotation is <= 90f or > 272f:
                 _flipped = false;
                 _body.flipY = false;
                 break;
         }
     }
 
-    void Drag(Vector2 movement, float speed)
+    private void Drag(Vector2 movement, float speed)
     {
         float curRotation = _body.transform.rotation.eulerAngles.z;
 

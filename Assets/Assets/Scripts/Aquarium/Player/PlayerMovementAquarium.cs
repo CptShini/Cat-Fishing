@@ -22,7 +22,7 @@ public class PlayerMovementAquarium : MonoBehaviour
 
     void FixedUpdate()
     {
-        if(PauseController.IsGamePaused)
+        if (PauseController.IsGamePaused)
         {
             rb.linearVelocity = Vector2.zero;
             animator.SetBool("isWalking", false);
