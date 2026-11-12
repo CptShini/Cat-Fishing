@@ -8,7 +8,7 @@ namespace Assets.Scripts.Data.Persistence
 {
     public class DataPersistenceManager : MonoBehaviour
     {
-        private GameData _gameData;
+        private GameData _gameData = new();
         private List<IDataPersistence> _dataPersistenceObjects;
         
         private DataIOHandler _dataIOHandler;
@@ -22,13 +22,18 @@ namespace Assets.Scripts.Data.Persistence
         
         public SaveFile[] GetSaves() => _dataIOHandler.GetSaves();
 
-        public void NewGameData() => _gameData = new();
-        public void LoadFromSaveFile(string saveName) => _gameData = _dataIOHandler.Load(saveName) ?? new();
-        public void SaveToSaveFile(string saveName) => _dataIOHandler.Save(_gameData, saveName);
+        public SaveFile StartNewSaveFile(string saveName)
+        {
+            _gameData = new();
+            return _dataIOHandler.Create(saveName);
+        }
+        public void LoadFromSaveFile(SaveFile saveFile) => _gameData = _dataIOHandler.Load(saveFile) ?? new();
+        public void SaveToSaveFile(SaveFile saveFile) => _dataIOHandler.Save(_gameData, saveFile);
+        public void DeleteSaveFile(SaveFile saveFile) => _dataIOHandler.Delete(saveFile);
+        
         public void LoadDataToGame() => _dataPersistenceObjects.ForEach(dpo => dpo.LoadData(_gameData));
         public void SaveGameToData() => _dataPersistenceObjects.ForEach(dpo => dpo.SaveData(ref _gameData));
-
-        public void FindDataPersistenceObjects() =>
+        public void FindDPOs() =>
             _dataPersistenceObjects =
                 FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None)
                     .OfType<IDataPersistence>()
