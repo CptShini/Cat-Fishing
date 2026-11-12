@@ -14,7 +14,8 @@ namespace Assets.Scripts.Aquarium.FishTank
         [SerializeField] private GameObject panel;
         [SerializeField] private TextMeshProUGUI 
             tankNameText,
-            tankCapacityText;
+            tankCapacityText,
+            tankEntertainmentText;
 
         [SerializeField] private Button feedButton;
         [SerializeField] private ParticleSystem feedParticles;
@@ -51,7 +52,7 @@ namespace Assets.Scripts.Aquarium.FishTank
             if (!_prevTank || tank.Tank.Id != _prevTank.Tank.Id)
             {
                 tankNameText.text = tank.Tank.Name;
-                UpdateCapacityText();
+                UpdateTankText();
                 spawner.Clear();
             }
             
@@ -67,7 +68,7 @@ namespace Assets.Scripts.Aquarium.FishTank
             
             _currentTank.AddFish(fish);
             spawner.SpawnFish(fish);
-            UpdateCapacityText();
+            UpdateTankText();
         }
 
         public void Feed()
@@ -77,6 +78,7 @@ namespace Assets.Scripts.Aquarium.FishTank
             _currentTank.Feed();
             feedParticles.Play();
             feedButton.interactable = GoldManager.Instance.HasEnoughGold(feedingPrice);
+            UpdateTankText();
         }
 
         public void Close()
@@ -102,10 +104,10 @@ namespace Assets.Scripts.Aquarium.FishTank
             _currentTank.RemoveFish(fish);
             spawner.RemoveFish(fish);
             FishCollectionManager.Instance.Add(fish);
-            UpdateCapacityText();
+            UpdateTankText();
         }
 
-        private void UpdateCapacityText()
+        private void UpdateTankText()
         {
             int count = _currentTank.Tank.Fishes.Count;
             int capacity = _currentTank.Tank.Capacity;
@@ -114,6 +116,8 @@ namespace Assets.Scripts.Aquarium.FishTank
                 count <= capacity 
                     ? Color.black 
                     : Color.red;
+
+            tankEntertainmentText.text = $"Entertainment: {_currentTank.Tank.Entertainment:F2}";
         }
     }
 }

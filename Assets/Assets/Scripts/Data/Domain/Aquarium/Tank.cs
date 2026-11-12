@@ -67,8 +67,9 @@ namespace Assets.Scripts.Data.Domain.Aquarium
                 int speciesId = fish.Fish.Species.Id;
                 speciesCount.TryAdd(speciesId, 0);
                 speciesCount[speciesId]++;
-                
-                entertainmentValue += fish.Entertainment * Mathf.Pow(2f, 1 - speciesCount[speciesId]);
+
+                float noveltyFactor = Mathf.Pow(2f, 1 - speciesCount[speciesId]);
+                entertainmentValue += fish.Entertainment * noveltyFactor;
             }
             
             Entertainment = entertainmentValue;
