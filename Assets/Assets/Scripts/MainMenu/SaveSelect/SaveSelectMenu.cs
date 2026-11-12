@@ -2,9 +2,9 @@
 using Assets.Scripts.Data;
 using Assets.Scripts.Data.Persistence;
 using Assets.Scripts.Helpers;
+using Assets.Scripts.Management;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 namespace Assets.Scripts.MainMenu.SaveSelect
 {
@@ -24,15 +24,9 @@ namespace Assets.Scripts.MainMenu.SaveSelect
             SaveFile[] saveFiles = SaveManager.Instance.Saves;
             foreach (SaveFile saveFile in saveFiles)
             {
-                GameObject saveFileButton = Instantiate(saveFileButtonPrefab, saveFileButtonContent);
-                saveFileButton.GetComponentInChildren<TextMeshProUGUI>().text = saveFile.ToString();
-                saveFileButton.GetComponent<Button>().onClick.AddListener(() =>
-                {
-                    AudioManager.Instance.Play(AudioId.OpeningDoor);
-                    SaveManager.Instance.Select(saveFile.Name);
-                    SaveManager.Instance.Load();
-                    GameManager.Instance.ChangeScene(1);
-                });
+                GameObject saveFileButtonObject = Instantiate(saveFileButtonPrefab, saveFileButtonContent);
+                SaveFileButton saveFileButton = saveFileButtonObject.GetComponent<SaveFileButton>();
+                saveFileButton.Init(saveFile);
             }
         }
 
@@ -45,9 +39,8 @@ namespace Assets.Scripts.MainMenu.SaveSelect
         public void NewSave()
         {
             AudioManager.Instance.Play(AudioId.OpeningDoor);
-            SaveManager.Instance.Select(_newSaveName);
-            SaveManager.Instance.StartNew();
-            GameManager.Instance.ChangeScene(1);
+            SaveManager.Instance.StartNew(_newSaveName);
+            GameManager.Instance.ChangeScene(Scenes.Aquarium);
         }
     }
 }

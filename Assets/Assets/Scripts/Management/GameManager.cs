@@ -1,18 +1,20 @@
 ﻿using System.Collections;
 using Assets.Scripts.Audio;
 using Assets.Scripts.Data;
+using Assets.Scripts.Data.Persistence;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Assets.Scripts.Helpers
+namespace Assets.Scripts.Management
 {
     public class GameManager : MonoBehaviour
     {
         public static GameManager Instance { get; private set; }
 
         public bool Transitioning { get; private set; } = true;
-        
-        [Header("References")]
+
+        [Header("References")] 
+        [SerializeField] private SceneList sceneList;
         [SerializeField] private SceneTransition sceneTransition;
         [SerializeField] private MusicPlayer musicPlayer;
 
@@ -21,6 +23,9 @@ namespace Assets.Scripts.Helpers
         [Header("Settings")]
         [SerializeField] private float sceneTransitionTime = 2f;
         [SerializeField] private float musicFadeInTime = 2f;
+
+        private SceneInfo _currentScene;
+        private DataPersistenceManager _dpm;
 
         private void Awake()
         {
@@ -31,6 +36,8 @@ namespace Assets.Scripts.Helpers
             }
             
             Instance = this;
+            _dpm = GetComponentInChildren<DataPersistenceManager>();
+            _currentScene = sceneList.GetCurrentScene();
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
         
@@ -42,15 +49,18 @@ namespace Assets.Scripts.Helpers
                 Instance = null;
         }
 
-        public void ChangeScene(int buildIndex) => StartCoroutine(LoadSceneWithFade(buildIndex));
+        private void OnSceneLoaded(Scene scene, LoadSceneMode mode) => FadeIn();
 
-        private IEnumerator LoadSceneWithFade(int buildIndex)
+        public void ChangeScene(Scenes scene) => StartCoroutine(LoadSceneWithFade(scene));
+
+        private IEnumerator LoadSceneWithFade(Scenes scene)
         {
+            _currentScene = sceneList.GetSceneInfo(scene);
             FadeOut();
             
             yield return new WaitForSeconds(sceneTransitionTime);
             
-            SceneManager.LoadScene(buildIndex);
+            SceneManager.LoadScene(_currentScene.BuildIndex);
         }
 
         private void FadeOut()
@@ -59,21 +69,22 @@ namespace Assets.Scripts.Helpers
             
             Transitioning = true;
             
-            SaveManager.Instance.SaveData();
+            _dpm.SaveGameToData();
             
             sceneTransition.FadeOut();
             musicPlayer.StopTrack(sceneTransitionTime);
         }
 
-        private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        private void FadeIn()
         {
             if (!Transitioning) return;
             
             SaveManager.Instance.Initialize();
-            SaveManager.Instance.FindDPOs();
-            SaveManager.Instance.LoadData();
+            SaveManager.Instance.RefetchSaves();
+            _dpm.FindDPOs();
+            _dpm.LoadDataToGame();
             
-            musicPlayer.PlayTrack(scene.buildIndex, musicFadeInTime);
+            musicPlayer.PlayTrack(_currentScene.BGM, musicFadeInTime);
             sceneTransition.FadeIn();
             
             Transitioning = false;

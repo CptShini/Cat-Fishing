@@ -6,15 +6,15 @@ namespace Assets.Scripts.Data.Persistence
     public record SaveFile
     {
         public readonly string Name;
-        public readonly DateTime Timestamp;
+        public readonly DateTime LastPlayed;
 
         public SaveFile(FileInfo file)
         {
             Name = Path.GetFileNameWithoutExtension(file.Name);
-            Timestamp = file.LastWriteTime;
+            LastPlayed = file.LastWriteTime;
         }
 
         public override string ToString() => 
-            $"{Name}\n({Timestamp.ToShortTimeString()} - {Timestamp.ToShortDateString()})";
+            $"{Name}\n({LastPlayed.ToShortTimeString()} - {LastPlayed.ToShortDateString()})";
     }
 }

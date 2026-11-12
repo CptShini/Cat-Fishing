@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.Scripts.Helpers
+namespace Assets.Scripts.Management
 {
     public class SceneTransition : MonoBehaviour
     {

@@ -12,6 +12,8 @@ namespace Assets.Scripts.Data.Persistence.DataIO
 {
     public class JsonDataHandler : MonoBehaviour, DataIOHandler
     {
+        private const string SAVE_FILE_EXT = ".catfish";
+        
         private string _saveDir;
 
         private void Awake()
@@ -20,16 +22,17 @@ namespace Assets.Scripts.Data.Persistence.DataIO
             #if UNITY_EDITOR
             _saveDir = Path.Combine(_saveDir, "Dev");
             #endif
+            
+            if (!Directory.Exists(_saveDir)) 
+                Directory.CreateDirectory(_saveDir);
         }
 
         public SaveFile[] GetSaves()
         {
             try
             {
-                CreateSaveDirectoryIfNotPresent();
-                
                 return new DirectoryInfo(_saveDir)
-                    .GetFiles("*.json")
+                    .GetFiles($"*{SAVE_FILE_EXT}")
                     .OrderByDescending(f => f.LastWriteTime)
                     .Select(fileInfo => new SaveFile(fileInfo))
                     .ToArray();
@@ -42,16 +45,34 @@ namespace Assets.Scripts.Data.Persistence.DataIO
             return Array.Empty<SaveFile>();
         }
 
-        public GameData Load(string saveName)
+        public SaveFile Create(string saveName)
         {
             string fullPath = string.Empty;
 
             try
             {
                 fullPath = GetSaveFilePath(saveName);
+                using FileStream fs = File.Create(fullPath);
+                return new(new(fs.Name));
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"Error creating save file at path \"{fullPath}\": {e.Message}");
+            }
+
+            return null;
+        }
+
+        public GameData Load(SaveFile saveFile)
+        {
+            string fullPath = string.Empty;
+
+            try
+            {
+                fullPath = GetSaveFilePath(saveFile.Name);
                 if (!File.Exists(fullPath))
                 {
-                    Debug.LogError($"Save file \"{saveName}\" does not exist.");
+                    Debug.LogError($"Save file \"{saveFile.Name}\" does not exist.");
                     return null;
                 }
 
@@ -70,14 +91,13 @@ namespace Assets.Scripts.Data.Persistence.DataIO
             }
         }
 
-        public void Save(GameData data, string saveName)
+        public void Save(GameData data, SaveFile saveFile)
         {
             string fullPath = string.Empty;
 
             try
             {
-                fullPath = GetSaveFilePath(saveName);
-                CreateSaveDirectoryIfNotPresent();
+                fullPath = GetSaveFilePath(saveFile.Name);
             
                 string dataToSave = JsonUtility.ToJson(data, true);
                 
@@ -92,17 +112,32 @@ namespace Assets.Scripts.Data.Persistence.DataIO
                 Debug.LogError($"Error saving data to path \"{fullPath}\": {e.Message}");
             }
         }
-        
-        private void CreateSaveDirectoryIfNotPresent()
+
+        public void Delete(SaveFile saveFile)
         {
-            if (!Directory.Exists(_saveDir)) 
-                Directory.CreateDirectory(_saveDir);
+            string fullPath = string.Empty;
+
+            try
+            {
+                fullPath = GetSaveFilePath(saveFile.Name);
+                if (!File.Exists(fullPath))
+                {
+                    Debug.LogError($"Save file \"{saveFile.Name}\" does not exist.");
+                    return;
+                }
+
+                File.Delete(fullPath);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"Error deleting save from path \"{fullPath}\": {e.Message}");
+            }
         }
         
         private string GetSaveFilePath(string saveName)
         {
             string safeName = SanitizeFileName();
-            return Path.Combine(_saveDir, $"{safeName}.json");
+            return Path.Combine(_saveDir, $"{safeName}{SAVE_FILE_EXT}");
             
             string SanitizeFileName()
             {

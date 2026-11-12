@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Data.Persistence;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Assets.Scripts.Data
 {
@@ -8,12 +9,13 @@ namespace Assets.Scripts.Data
     {
         public static SaveManager Instance { get; private set; }
         
-        public bool HasSave { get; private set; }
+        public SaveFile CurrentSave { get; private set; }
         public SaveFile[] Saves { get; private set; }
         
-        private bool _isInitialized;
-        private string _currentSaveName;
-        private DataPersistenceManager _dataPersistenceManager;
+        public readonly UnityEvent CurrentSaveChanged = new();
+        
+        private bool _isInitialized, _saveListDirty;
+        private DataPersistenceManager _dpm;
         
         private void Awake()
         {
@@ -24,49 +26,60 @@ namespace Assets.Scripts.Data
             }
             
             Instance = this;
-            _dataPersistenceManager = GetComponent<DataPersistenceManager>();
+            _dpm = GetComponent<DataPersistenceManager>();
         }
 
         public void Initialize()
         {
             if (_isInitialized) return;
             
-            Saves = _dataPersistenceManager.GetSaves();
-            
-            HasSave = Saves.Length > 0;
-            if (HasSave)
+            Saves = _dpm.GetSaves();
+            if (Saves.Length > 0)
             {
-                Select(Saves[0].Name);
+                Select(Saves[0]);
                 Load();
-            }
-            else
-            {
-                StartNew();
             }
             
             _isInitialized = true;
         }
 
-        public void Select(string saveName) => _currentSaveName = saveName;
-        
-        public bool NoSaveSelected()
+        public void RefetchSaves()
         {
-            bool invalidName = string.IsNullOrWhiteSpace(_currentSaveName);
-            if (invalidName) Debug.LogWarning("No save selected!");
+            if (!_saveListDirty) return;
             
-            return invalidName;
+            Saves = _dpm.GetSaves();
+            
+            _saveListDirty = false;
+        }
+        
+        public void Select(SaveFile saveFile)
+        {
+            CurrentSave = saveFile;
+            CurrentSaveChanged.Invoke();
         }
 
-        public void StartNew() => _dataPersistenceManager.NewGameData();
-        public void LoadData() => _dataPersistenceManager.LoadDataToGame();
-        public void SaveData() => _dataPersistenceManager.SaveGameToData();
-        
+        private bool NoSaveSelected()
+        {
+            bool noCurrentSave = CurrentSave == null;
+            if (noCurrentSave) Debug.LogWarning("No save selected!");
+            
+            return noCurrentSave;
+        }
+
+        public void StartNew(string saveName)
+        {
+            SaveFile newSaveFile = _dpm.StartNewSaveFile(saveName);
+            Select(newSaveFile);
+            
+            _saveListDirty = true;
+        }
+
         public void Load()
         {
             if (NoSaveSelected())
                 return;
             
-            _dataPersistenceManager.LoadFromSaveFile(_currentSaveName);
+            _dpm.LoadFromSaveFile(CurrentSave);
         }
 
         public void Save()
@@ -74,14 +87,20 @@ namespace Assets.Scripts.Data
             if (NoSaveSelected())
                 return;
             
-            _dataPersistenceManager.SaveToSaveFile(_currentSaveName);
+            _dpm.SaveToSaveFile(CurrentSave);
         }
 
-        public void FindDPOs() => _dataPersistenceManager.FindDataPersistenceObjects();
+        public void Delete(SaveFile saveFile)
+        {
+            _dpm.DeleteSaveFile(saveFile);
+            _saveListDirty = true;
+            
+            if (saveFile == CurrentSave) Select(null);
+        }
 
         private void OnApplicationQuit()
         {
-            SaveData();
+            _dpm.SaveGameToData();
             Save();
         }
     }

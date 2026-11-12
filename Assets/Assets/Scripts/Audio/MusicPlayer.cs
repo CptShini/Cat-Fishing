@@ -6,19 +6,17 @@ namespace Assets.Scripts.Audio
     [RequireComponent(typeof(AudioSource))]
     public class MusicPlayer : MonoBehaviour
     {
-        [SerializeField] private AudioClip[] music;
-        
         private bool _playing;
         private AudioSource _player;
     
         private void Awake() => _player = GetComponent<AudioSource>();
 
-        public void PlayTrack(int index, float fadeTime)
+        public void PlayTrack(AudioClip track, float fadeTime)
         {
-            if (_playing || index < 0 || index >= music.Length || music[index] == null) return;
+            if (_playing) return;
             
             _playing = true;
-            _player.clip = music[index];
+            _player.clip = track;
             StartCoroutine(_player.FadeIn(fadeTime));
         }
 

@@ -108,6 +108,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01483eadd43a4f93b92566db178a121f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Helpers.SceneManager
+  sceneList: {fileID: 11400000, guid: 3726c5fad2abb19428ff8875f5c1c231, type: 2}
   sceneTransition: {fileID: 3976980917610927689}
   musicPlayer: {fileID: 4855906050645497207}
   sceneTransitionTime: 2
