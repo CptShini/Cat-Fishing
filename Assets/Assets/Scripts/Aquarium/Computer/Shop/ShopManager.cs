@@ -57,14 +57,6 @@ public class ShopManager : MonoBehaviour
             return;
         }
 
-        if (!GoldManager.Instance.HasEnoughGold(price))
-        {
-            Debug.Log("Not enough gold.");
-            AudioManager.Instance.Play(AudioId.NotEnoughGold);
-            return;
-        }
-
-
         if (!GoldManager.Instance.SpendGold(price))
             return;
 
@@ -74,9 +66,6 @@ public class ShopManager : MonoBehaviour
             purchasedItems.Add(itemSO);
         
         RefreshShopSlots();
-        AudioManager.Instance.Play(AudioId.PurchaseSuccess);
-        
-        Debug.Log("Purchased: " + itemSO.itemName);
     }
 
     private void RefreshShopSlots()

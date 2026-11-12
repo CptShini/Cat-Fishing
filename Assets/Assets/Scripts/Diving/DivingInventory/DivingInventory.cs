@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Audio;
 using Assets.Scripts.Data.Domain;
+using Assets.Scripts.Data.Domain.Aquarium;
 using Assets.Scripts.Data.Persistence;
 using Assets.Scripts.Diving.Bars;
-using Assets.Scripts.Fishies.Domain;
 using UnityEngine;
 
 namespace Assets.Scripts.Diving.DivingInventory
@@ -102,8 +102,9 @@ namespace Assets.Scripts.Diving.DivingInventory
             
             foreach (var fc in _collectibles.OfType<FishCollectible>())
             {
-                FishDTO fishDTO = new(fc.fish);
-                data.Collection.Add(fishDTO.Id, fishDTO);
+                TankFish tankFish = new(fc.fish);
+                TankFishDTO tankFishDTO = new(tankFish);
+                data.Collection.Add(tankFishDTO.Fish.Id, tankFishDTO);
             }
         }
     }
