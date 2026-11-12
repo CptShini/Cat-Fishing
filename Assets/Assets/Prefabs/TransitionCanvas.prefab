@@ -12,8 +12,7 @@ GameObject:
   - component: {fileID: 6533589806579842731}
   - component: {fileID: 5753731417556213451}
   - component: {fileID: 6419121971208607811}
-  - component: {fileID: 4248815518437823904}
-  - component: {fileID: 2245637555574165907}
+  - component: {fileID: 746791542111430379}
   m_Layer: 5
   m_Name: TransitionCanvas
   m_TagString: Untagged
@@ -104,33 +103,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 0
---- !u!114 &4248815518437823904
-MonoBehaviour:
+--- !u!225 &746791542111430379
+CanvasGroup:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5483409371365655}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3fc34c1d992a1734ca9fab7ee2122e58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SceneTransition
-  fadeAnim: {fileID: 8247425466164966125}
-  image: {fileID: 5178574621326907143}
-  info: {fileID: 4713157725302526264}
---- !u!114 &2245637555574165907
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5483409371365655}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b76b9cb2df3185a4ba63faa8269f71a9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DontDestroyOnLoad
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &3441047653220625314
 GameObject:
   m_ObjectHideFlags: 0

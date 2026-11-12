@@ -40,7 +40,7 @@ namespace Assets.Scripts.MainMenu.SaveSelect
         {
             AudioManager.Instance.Play(AudioId.OpeningDoor);
             SaveManager.Instance.StartNew(_newSaveName);
-            GameManager.Instance.ChangeScene(Scenes.Aquarium, "...");
+            GameManager.Instance.ChangeScene(Scenes.Aquarium);
         }
     }
 }

@@ -41,7 +41,7 @@ namespace Assets.Scripts.MainMenu
                 SaveManager.Instance.StartNew("Default");
 
             AudioManager.Instance.Play(AudioId.OpeningDoor);
-            GameManager.Instance.ChangeScene(Scenes.Aquarium, "...");
+            GameManager.Instance.ChangeScene(Scenes.Aquarium);
         }
         
         public void ButtonClickSound() => AudioManager.Instance.Play(AudioId.ButtonClick);

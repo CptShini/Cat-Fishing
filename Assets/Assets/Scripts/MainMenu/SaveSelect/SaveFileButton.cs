@@ -21,7 +21,7 @@ namespace Assets.Scripts.MainMenu.SaveSelect
                 AudioManager.Instance.Play(AudioId.OpeningDoor);
                 SaveManager.Instance.Select(saveFile);
                 SaveManager.Instance.Load();
-                GameManager.Instance.ChangeScene(Scenes.Aquarium, "...");
+                GameManager.Instance.ChangeScene(Scenes.Aquarium);
             });
             deleteSaveButton.onClick.AddListener(() =>
             {

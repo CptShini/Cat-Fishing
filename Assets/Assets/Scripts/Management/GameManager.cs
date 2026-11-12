@@ -51,7 +51,7 @@ namespace Assets.Scripts.Management
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode) => FadeIn();
 
-        public void ChangeScene(Scenes scene, string info) => StartCoroutine(LoadSceneWithFade(scene, info));
+        public void ChangeScene(Scenes scene, string info = "...") => StartCoroutine(LoadSceneWithFade(scene, info));
 
         private IEnumerator LoadSceneWithFade(Scenes scene, string transitionInfo)
         {
