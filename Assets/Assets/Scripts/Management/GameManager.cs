@@ -51,19 +51,19 @@ namespace Assets.Scripts.Management
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode) => FadeIn();
 
-        public void ChangeScene(Scenes scene) => StartCoroutine(LoadSceneWithFade(scene));
+        public void ChangeScene(Scenes scene, string info = "...") => StartCoroutine(LoadSceneWithFade(scene, info));
 
-        private IEnumerator LoadSceneWithFade(Scenes scene)
+        private IEnumerator LoadSceneWithFade(Scenes scene, string transitionInfo)
         {
             _currentScene = sceneList.GetSceneInfo(scene);
-            FadeOut();
+            FadeOut(transitionInfo);
             
             yield return new WaitForSeconds(sceneTransitionTime);
             
             SceneManager.LoadScene(_currentScene.BuildIndex);
         }
 
-        private void FadeOut()
+        private void FadeOut(string text)
         {
             if (Transitioning) return;
             
@@ -71,7 +71,7 @@ namespace Assets.Scripts.Management
             
             _dpm.SaveGameToData();
             
-            sceneTransition.FadeOut();
+            sceneTransition.FadeOut(text);
             musicPlayer.StopTrack(sceneTransitionTime);
         }
 

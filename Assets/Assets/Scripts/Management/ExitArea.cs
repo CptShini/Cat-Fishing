@@ -9,7 +9,7 @@ namespace Assets.Scripts.Management
         [SerializeField] private Scenes targetScene;
         [SerializeField] private AudioId triggerAudio;
         [SerializeField] private UnityEvent onExit;
-
+        [SerializeField] private string exitingInfo = "...";
         public bool CanInteract() => true;
 
         public void Interact()
@@ -18,7 +18,7 @@ namespace Assets.Scripts.Management
             
             onExit.Invoke();
             AudioManager.Instance.Play(triggerAudio);
-            GameManager.Instance.ChangeScene(targetScene);
+            GameManager.Instance.ChangeScene(targetScene, exitingInfo);
         }
     }
 }
