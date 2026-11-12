@@ -2,47 +2,55 @@ using Assets.Scripts.Diving.Cat;
 using Assets.Scripts.PlayerState;
 using UnityEngine;
 
+[RequireComponent(typeof(SwimScript))]
 public class BodyScript : MonoBehaviour
 {
-
-    [SerializeField] private GameObject _body;
+    [SerializeField] private SpriteRenderer _body;
     [SerializeField] private GameObject _head;
 
-    public bool flipped = false;
-    private bool stealth = false;
+    private bool _flipped;
+    private bool _stealth;
 
     [SerializeField] private float dragSpeedMod = 100f;
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    
+    private void Start()
     {
-        gameObject.GetComponent<SwimScript>().OnSwim.AddListener(Drag);
-        gameObject.GetComponent<SwimScript>().OnStealth.AddListener(Drag);
-        gameObject.GetComponent<PounceScript>().OnPouncing.AddListener(Drag);
-        gameObject.GetComponent<HeadScript>().OnRotating.AddListener(Clamp);
-        gameObject.GetComponent<HeadScript>().OnFlipping.AddListener(Flip);
+        HeadScript headScript = GetComponent<HeadScript>();
+        headScript.OnRotating.AddListener(Clamp);
+        headScript.OnFlipping.AddListener(Flip);
+        
+        SwimScript swimScript = GetComponent<SwimScript>();
+        swimScript.OnSwim.AddListener(Drag);
+        swimScript.OnSwim.AddListener(headScript.RotateHead);
+        swimScript.OnStealth.AddListener(Drag);
+        
+        PounceScript pounceScript = GetComponent<PounceScript>();
+        pounceScript.OnPouncing.AddListener(Drag);
+        
+        
+        
         DivingController.Instance.OnStateChanged.AddListener(SetIsStealth);
     }
 
-    void SetIsStealth(PlayerState state)
+    private void SetIsStealth(PlayerState state)
     {
-        stealth = state == PlayerState.STEALTH;
+        _stealth = state == PlayerState.STEALTH;
     }
 
-    void Flip(bool flipped)
+    private void Flip(bool flipped)
     {
-        _body.GetComponent<SpriteRenderer>().flipY = flipped;
-        this.flipped = flipped;
+        _body.flipY = flipped;
+        _flipped = flipped;
     }
 
-    void Drag(Vector2 movement)
+    private void Drag(Vector2 movement)
     {
         Drag(movement, 1);
     }
 
-    void Clamp(float clampAngle)
+    private void Clamp(float clampAngle)
     {
-        if (!stealth)
+        if (!_stealth)
         {
             return;
         }
@@ -79,16 +87,16 @@ public class BodyScript : MonoBehaviour
     void CheckFlip()
     {
         float curRotation = _body.transform.rotation.eulerAngles.z;
-        if(!flipped && 90f < (curRotation + 360) % 360 && (curRotation + 360) % 360 <= 268f)
+        switch (_flipped)
         {
-            flipped = true;
-            _body.GetComponent<SpriteRenderer>().flipY = true;
-            return;
-        }
-        else if(flipped && (!(90f < (curRotation + 360) % 360) || !((curRotation + 360) % 360 <= 272f)))
-        {
-            flipped = false;
-            _body.GetComponent<SpriteRenderer>().flipY = false;
+            case false when 90f < (curRotation + 360) % 360 && (curRotation + 360) % 360 <= 268f:
+                _flipped = true;
+                _body.flipY = true;
+                return;
+            case true when (!(90f < (curRotation + 360) % 360) || !((curRotation + 360) % 360 <= 272f)):
+                _flipped = false;
+                _body.flipY = false;
+                break;
         }
     }
 
@@ -109,13 +117,5 @@ public class BodyScript : MonoBehaviour
         _body.transform.rotation = Quaternion.Euler(0,0, newRotation);
         //CheckFlip();
        
-    }
-
-    
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

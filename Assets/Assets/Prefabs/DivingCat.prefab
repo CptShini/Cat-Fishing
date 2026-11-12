@@ -231,9 +231,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b7f7129e2a3ecf4d9e0558d98de1057, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  mainCamera: {fileID: 0}
   aimPaw: {fileID: 3683296912823381623}
-  headScript: {fileID: 1302676522152893563}
 --- !u!1 &3808421035207708945
 GameObject:
   m_ObjectHideFlags: 0
@@ -620,9 +618,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 075d1af87eec80c46803bacae5766985, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PounceScript
-  mainCamera: {fileID: 0}
   staminaBar: {fileID: 0}
-  _body: {fileID: 5560953002884090599}
+  _body: {fileID: 8370455419162555338}
   effectOffset: {x: -1.19, y: -0.404, z: 0}
   effect: {fileID: 5865342791091411798, guid: bc381eb64a766f04dbf552fdeb14bca3, type: 3}
   curPounceStamina: 0
@@ -653,8 +650,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d76fe9bf121479a4db6200a193409feb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeadScript
-  _aimScript: {fileID: 5778309398152115365}
-  _head: {fileID: 8004778144708095088}
+  aimScript: {fileID: 5778309398152115365}
+  head: {fileID: 6760478591923334611}
 --- !u!114 &4562404921713660414
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -667,9 +664,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c1d0c1aae3eae74ea18fa17ba36167f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  _body: {fileID: 5560953002884090599}
+  _body: {fileID: 8370455419162555338}
   _head: {fileID: 8004778144708095088}
-  flipped: 0
   dragSpeedMod: 1500
 --- !u!1 &5409390633235530069
 GameObject:
@@ -681,7 +677,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2598707453658501197}
   - component: {fileID: 4688341667181619830}
-  - component: {fileID: 5385816329092818411}
   m_Layer: 6
   m_Name: Detection Circle
   m_TagString: Player Presence
@@ -740,19 +735,6 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 1
---- !u!114 &5385816329092818411
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5409390633235530069}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2e193480d340404e9cb7999e216497b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Helpers.FollowObject
-  following: {fileID: 8004778144708095088}
 --- !u!1 &5560953002884090599
 GameObject:
   m_ObjectHideFlags: 0
@@ -764,7 +746,7 @@ GameObject:
   - component: {fileID: 7785895094848131301}
   - component: {fileID: 8370455419162555338}
   - component: {fileID: 2963422900305313240}
-  m_Layer: 12
+  m_Layer: 6
   m_Name: Cat-Body_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1151,7 +1133,6 @@ GameObject:
   - component: {fileID: 1940725372656263050}
   - component: {fileID: 7689608337059063927}
   - component: {fileID: 8966860717013098395}
-  - component: {fileID: 5152369979616298823}
   - component: {fileID: 4700860366048301466}
   m_Layer: 2
   m_Name: InteractionDetector
@@ -1225,19 +1206,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   interactionIcon: {fileID: 1604295510390510315}
---- !u!114 &5152369979616298823
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7535969392875983473}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2e193480d340404e9cb7999e216497b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FollowObject
-  following: {fileID: 8004778144708095088}
 --- !u!50 &4700860366048301466
 Rigidbody2D:
   serializedVersion: 5
@@ -1322,14 +1290,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8004778144708095088}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: -0.027921675, w: 0.9996101}
+  m_LocalRotation: {x: 0, y: 0, z: -0.0924575, w: 0.9957167}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8984494032151953292}
   m_Father: {fileID: 4722608374751236603}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -3.2}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -10.61}
 --- !u!212 &6760478591923334611
 SpriteRenderer:
   serializedVersion: 2

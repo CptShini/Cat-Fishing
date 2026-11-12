@@ -3,29 +3,21 @@ using UnityEngine.Events;
 
 public class HeadScript : MonoBehaviour
 {
-
-    //private Rigidbody2D _pb;
-    //private HingeJoint2D _hj;
-    //[SerializeField] private Rigidbody2D _body;
-    [SerializeField] private AimScript _aimScript;
-    [SerializeField] private GameObject _head;
-    bool flipped = false;
+    [SerializeField] private AimScript aimScript;
+    [SerializeField] private SpriteRenderer head;
+    
+    private bool flipped;
+    
     public readonly UnityEvent<bool> OnFlipping = new();
-
     public readonly UnityEvent<float> OnRotating = new();
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        gameObject.GetComponent<SwimScript>().OnSwim.AddListener(RotateHead);
-        _aimScript.OnAiming.AddListener(RotateHead);
-    }
+    
+    private void Start() => aimScript.OnAiming.AddListener(RotateHead);
 
     public void RotateHead(Vector2 direction, float speed)
     {
-        float curRotation = _head.transform.rotation.eulerAngles.z;
+        float curRotation = head.transform.rotation.eulerAngles.z;
         float targetRotation = ((Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg) + 360f) % 360f;
-        if(direction == Vector2.zero)
+        if (direction == Vector2.zero)
         {
             return;
         }
@@ -36,22 +28,21 @@ public class HeadScript : MonoBehaviour
             Time.deltaTime * speed
         );        
         
-        _head.transform.rotation = Quaternion.Euler(0,0, newRotation);
-        OnRotating.Invoke(_head.transform.rotation.eulerAngles.z);
+        head.transform.rotation = Quaternion.Euler(0,0, newRotation);
+        OnRotating.Invoke(head.transform.rotation.eulerAngles.z);
 
-        if(!flipped && 90f < (curRotation + 360) % 360 && (curRotation + 360) % 360 <= 268f)
+        switch (flipped)
         {
-            flipped = true;
-           
-            _head.GetComponent<SpriteRenderer>().flipY = true;
-            OnFlipping.Invoke(flipped);
-            return;
-        }
-        else if(flipped && (!(90f < (curRotation + 360) % 360) || !((curRotation + 360) % 360 <= 272f)))
-        {
-            flipped = false;
-            _head.GetComponent<SpriteRenderer>().flipY = false;
-            OnFlipping.Invoke(flipped);
+            case false when 90f < (curRotation + 360) % 360 && (curRotation + 360) % 360 <= 268f:
+                flipped = true;
+                head.flipY = true;
+                OnFlipping.Invoke(flipped);
+                return;
+            case true when !(90f < (curRotation + 360) % 360 && (curRotation + 360) % 360 <= 272f):
+                flipped = false;
+                head.flipY = false;
+                OnFlipping.Invoke(flipped);
+                return;
         }
     }
 }

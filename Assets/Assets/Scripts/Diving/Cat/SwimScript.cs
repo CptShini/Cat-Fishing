@@ -20,7 +20,7 @@ public class SwimScript : MonoBehaviour
 
     private bool swimming, stealth;
 
-    private Rigidbody2D _pb;
+    private Rigidbody2D _rb;
     
     private void Start()
     {
@@ -29,7 +29,7 @@ public class SwimScript : MonoBehaviour
         acceleration = DivingPlayerStats.Instance.acceleration;
         DivingController.Instance.OnStateChanged.AddListener(HandlePlayerStateChanged);
         HandlePlayerStateChanged(DivingController.Instance.state);
-        _pb = gameObject.GetComponent<Rigidbody2D>();
+        _rb = GetComponent<Rigidbody2D>();
     }
 
     private void HandlePlayerStateChanged(PlayerState state)
@@ -74,14 +74,14 @@ public class SwimScript : MonoBehaviour
         float currentAcceleration = (direction.x != 0) ? acceleration : friction;
 
         Vector2 newVelocity = Vector2.MoveTowards(
-            _pb.linearVelocity,
+            _rb.linearVelocity,
             targetVelocity,
             currentAcceleration * Time.deltaTime
         ); 
-        _pb.linearVelocity = new Vector3(newVelocity.x, newVelocity.y, 0);
+        _rb.linearVelocity = new Vector3(newVelocity.x, newVelocity.y, 0);
 
         // Play swimming audio only when actually moving
-        if (!stealth && _pb.linearVelocity.magnitude > 0.1f)
+        if (!stealth && _rb.linearVelocity.magnitude > 0.1f)
         {
             AudioManager.Instance.Play(AudioId.CatSwim);
             bool isSwimming = true;

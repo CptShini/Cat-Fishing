@@ -1,23 +1,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Animator))]
 public class AimPawScript : MonoBehaviour
 {
     [SerializeField] private List<GameObject> paws;
+    
     private Animator animator;
-    public int activePaws = 0;
-    void Start()
+    
+    public int activePaws;
+    
+    private void Awake()
     {
-        animator = gameObject.GetComponent<Animator>();
+        animator = GetComponent<Animator>();
     }
 
     public void AimPawEnabler(bool enable)
     {
         if(enable)
         {
-            for (int i = 0; i < paws.Count; i++)
+            foreach (GameObject paw in paws)
             {
-                paws[i].SetActive(false);
+                paw.SetActive(false);
                 activePaws = 0;
             }
             animator.Play("Paw");

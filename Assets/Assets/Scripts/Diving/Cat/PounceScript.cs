@@ -7,20 +7,21 @@ using UnityEngine.InputSystem;
 
 namespace Assets.Scripts.Diving.Cat
 {
+    [RequireComponent(typeof(Rigidbody2D))]
+    [RequireComponent(typeof(DamagedScript))]
     public class PounceScript : MonoBehaviour
     {
-        [SerializeField] private Camera mainCamera;
         [SerializeField] private StatBar staminaBar;
-        [SerializeField] private GameObject _body;
+        [SerializeField] private SpriteRenderer _body;
         [SerializeField] private Vector3 effectOffset;
         [SerializeField] private GameObject effect;
-    
-        private DamagedScript damaged;
+        
         public float curPounceStamina; // currrent player stamina, and current stamina for pounce
     
         private float pounceDuration; // Tracker for when to stop pounceing. Can change based on 
         private Vector2 pounceDirection; // For saving the pounce direction during multiple updates
     
+        private Camera _mainCamera;
         private Rigidbody2D _rb;
 
         public float curPounceCooldown;
@@ -31,10 +32,12 @@ namespace Assets.Scripts.Diving.Cat
 
         private void Start()
         {
-            _rb = gameObject.GetComponent<Rigidbody2D>();
+            _rb = GetComponent<Rigidbody2D>();
+            _mainCamera = Camera.main;
             staminaBar.SetMaxValue(DivingPlayerStats.Instance.maxStamina);
             staminaBar.SetMinValue(0);
-            damaged = gameObject.GetComponent<DamagedScript>();
+            
+            DamagedScript damaged = GetComponent<DamagedScript>();
             damaged.OnDamaged.AddListener(CancelPounce);
         }
 
@@ -54,7 +57,7 @@ namespace Assets.Scripts.Diving.Cat
     
         public void StartPounce()
         {
-            Vector2 mousePos = mainCamera.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+            Vector2 mousePos = _mainCamera.ScreenToWorldPoint(Mouse.current.position.ReadValue());
             curPounceStamina = Math.Max(DivingPlayerStats.Instance.minPounceStamina, curPounceStamina);
             pounceDirection = mousePos - (Vector2)transform.position;
             pounceDuration = curPounceStamina / 20; // 5 stamina = 1 second, for now
@@ -69,7 +72,7 @@ namespace Assets.Scripts.Diving.Cat
             isStealthPlaying = false;
             GameObject effectInstance = Instantiate(effect);
 
-            if(_body.GetComponent<SpriteRenderer>().flipY == true)
+            if(_body.flipY)
             {
                 effectInstance.transform.position = new Vector3(_body.transform.position.x + effectOffset.x, _body.transform.position.y - effectOffset.y, _body.transform.position.z);
             }

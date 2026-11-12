@@ -2,6 +2,7 @@
 
 namespace Assets.Scripts.Diving.Bars
 {
+    [RequireComponent(typeof(Animator))]
     public class WeightBar : StatBar
     {
         private Animator _animator;
