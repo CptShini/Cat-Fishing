@@ -57,12 +57,12 @@ namespace Assets.Scripts.Diving.Managers
 
         public void LoadData(GameData data)
         {
-            _discoveries = data.Discoveries.ToDictionary(species);
+            _discoveries = data.Discoveries.ToDictionary(dto => new Fish(dto, species));
         }
 
         public void SaveData(ref GameData data)
         {
-            data.Discoveries = _discoveries.ToSerializableDictionary();
+            data.Discoveries = _discoveries.ToSerializableDictionary(fish => new FishDTO(fish));
         }
 
     }

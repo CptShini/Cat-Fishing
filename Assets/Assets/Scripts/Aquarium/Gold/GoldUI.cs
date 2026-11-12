@@ -5,7 +5,7 @@ public class GoldUI : MonoBehaviour
 {
     public static GoldUI Instance { get; private set; }
 
-    [SerializeField] private TMP_Text[] goldTexts;
+    [SerializeField] private TextMeshProUGUI[] goldTexts;
 
     private void Awake()
     {
@@ -14,10 +14,11 @@ public class GoldUI : MonoBehaviour
 
     public void UpdateGold(int amount)
     {
-        foreach (TMP_Text goldText in goldTexts)
+        foreach (TextMeshProUGUI goldText in goldTexts)
         {
-            if (goldText != null)
-                goldText.text = amount.ToString();
+            if (!goldText) continue;
+            
+            goldText.text = amount.ToString();
         }
     }
 }

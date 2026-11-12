@@ -20,6 +20,9 @@ namespace Assets.Scripts.Fishies.Domain
         
         [field: SerializeField, Multiline]
         public string Description { get; private set; }
+        
+        [field: SerializeField, Range(1, 10)]
+        public int Rarity { get; private set; }
 
         [field: SerializeField, NavMeshAreaMask]
         public int Biome { get; private set; }

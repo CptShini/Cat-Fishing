@@ -1,7 +1,6 @@
 ﻿using Assets.Scripts.Audio;
 using Assets.Scripts.Data;
 using Assets.Scripts.Data.Persistence;
-using Assets.Scripts.Helpers;
 using Assets.Scripts.Management;
 using UnityEngine;
 using UnityEngine.UI;
@@ -40,7 +39,7 @@ namespace Assets.Scripts.MainMenu.SaveSelect
         {
             AudioManager.Instance.Play(AudioId.OpeningDoor);
             SaveManager.Instance.StartNew(_newSaveName);
-            GameManager.Instance.ChangeScene(Scenes.Aquarium);
+            GameManager.Instance.ChangeScene(Scenes.Aquarium, "Going to aquarium...");
         }
     }
 }

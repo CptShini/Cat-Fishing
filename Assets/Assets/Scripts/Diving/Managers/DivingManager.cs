@@ -33,7 +33,7 @@ namespace Assets.Scripts.Diving.Managers
             if (_noOxygen) return;
         
             _noOxygen = true;
-            GameManager.Instance.ChangeScene(Scenes.Aquarium, "You ran out of oxygen. You have to go back without your fish..");
+            GameManager.Instance.ChangeScene(Scenes.Aquarium, "You ran out of oxygen. You have to go back without your fish...");
         }
     }
 }
