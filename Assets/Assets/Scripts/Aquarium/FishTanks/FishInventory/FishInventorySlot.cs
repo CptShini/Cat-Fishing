@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace Assets.Scripts.Aquarium.FishTank.FishInventory
+namespace Assets.Scripts.Aquarium.FishTanks.FishInventory
 {
     public class FishInventorySlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
     {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Fishies.Domain;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Assets.Scripts.Data.Domain.Aquarium
 {
@@ -17,6 +18,8 @@ namespace Assets.Scripts.Data.Domain.Aquarium
         
         public IReadOnlyList<TankFish> Fishes => _fishes;
         private readonly List<TankFish> _fishes;
+
+        public readonly UnityEvent TankChanged = new();
 
         public Tank(string name, int capacity)
         {
@@ -36,8 +39,17 @@ namespace Assets.Scripts.Data.Domain.Aquarium
             OnFishChanged();
         }
         
-        public void DayPassed() => _fishes.ForEach(f => f.DayPassed());
-        public void Feed() => _fishes.ForEach(f => f.Feed());
+        public void DayPassed()
+        {
+            _fishes.ForEach(f => f.DayPassed());
+            RecalculateEntertainment();
+        }
+
+        public void Feed()
+        {
+            _fishes.ForEach(f => f.Feed());
+            RecalculateEntertainment();
+        }
 
         public void AddFish(TankFish tankFish)
         {
@@ -73,6 +85,7 @@ namespace Assets.Scripts.Data.Domain.Aquarium
             }
             
             Entertainment = entertainmentValue;
+            TankChanged.Invoke();
         }
     }
 }

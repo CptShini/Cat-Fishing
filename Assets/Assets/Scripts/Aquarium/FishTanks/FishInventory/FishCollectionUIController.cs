@@ -1,7 +1,7 @@
 using Assets.Scripts.Data.Domain.Aquarium;
 using UnityEngine;
 
-namespace Assets.Scripts.Aquarium.FishTank.FishInventory
+namespace Assets.Scripts.Aquarium.FishTanks.FishInventory
 {
     public class FishCollectionUIController : MonoBehaviour
     {

@@ -1,9 +1,9 @@
-using Assets.Scripts.Aquarium.FishTank.FishInventory;
+using Assets.Scripts.Aquarium.FishTanks.FishInventory;
 using Assets.Scripts.Data.Domain.Aquarium;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Assets.Scripts.Aquarium.FishTank
+namespace Assets.Scripts.Aquarium.FishTanks
 {
     public class FishTankUIDropZone : MonoBehaviour, IDropHandler
     {

@@ -7,7 +7,7 @@ using Assets.Scripts.Fishies.Domain;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Assets.Scripts.Aquarium.FishTank
+namespace Assets.Scripts.Aquarium.FishTanks
 {
     public class FishCollectionManager : MonoBehaviour, IDataPersistence
     {
@@ -18,7 +18,7 @@ namespace Assets.Scripts.Aquarium.FishTank
         public IReadOnlyDictionary<Guid, TankFish> CollectedFish => _collectedFish;
         private Dictionary<Guid, TankFish> _collectedFish = new();
 
-        public bool DayPassing { get; private set; }
+        private bool _shouldClear;
     
         [SerializeField] private FishSpeciesDatabase fishSpeciesDatabase;
 
@@ -49,8 +49,8 @@ namespace Assets.Scripts.Aquarium.FishTank
 
             return true;
         }
-
-        public void DayPass() => DayPassing = true;
+        
+        public void ShouldClear() => _shouldClear = true;
         
         public void LoadData(GameData data)
         {
@@ -60,7 +60,7 @@ namespace Assets.Scripts.Aquarium.FishTank
 
         public void SaveData(ref GameData data)
         {
-            if (DayPassing)
+            if (_shouldClear)
                 data.Collection.Clear();
             else
                 data.Collection = _collectedFish.ToSerializableDictionary(tf => new TankFishDTO(tf));

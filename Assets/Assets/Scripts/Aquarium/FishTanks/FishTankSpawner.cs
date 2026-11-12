@@ -5,7 +5,7 @@ using Assets.Scripts.Fishies;
 using UnityEngine;
 using Range = Assets.Scripts.Helpers.Range;
 
-namespace Assets.Scripts.Aquarium.FishTank
+namespace Assets.Scripts.Aquarium.FishTanks
 {
     public class FishTankSpawner : MonoBehaviour
     {

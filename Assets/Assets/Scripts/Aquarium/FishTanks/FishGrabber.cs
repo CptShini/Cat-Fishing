@@ -6,7 +6,7 @@ using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-namespace Assets.Scripts.Aquarium.FishTank
+namespace Assets.Scripts.Aquarium.FishTanks
 {
     public class FishGrabber : MonoBehaviour
     {
