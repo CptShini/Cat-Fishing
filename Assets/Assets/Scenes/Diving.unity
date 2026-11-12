@@ -15954,16 +15954,12 @@ PrefabInstance:
     m_TransformParent: {fileID: 1795563576}
     m_Modifications:
     - target: {fileID: 1213193691314539756, guid: a1f5dd710e0e41c4ea3fbad66bc9efee, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 255
+      propertyPath: m_LocalPosition.x
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1213193691314539756, guid: a1f5dd710e0e41c4ea3fbad66bc9efee, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -315
-      objectReference: {fileID: 0}
-    - target: {fileID: 1213193691314539756, guid: a1f5dd710e0e41c4ea3fbad66bc9efee, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -22.5
+      propertyPath: m_LocalPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1598120113909672410, guid: a1f5dd710e0e41c4ea3fbad66bc9efee, type: 3}
       propertyPath: m_Name
@@ -16066,8 +16062,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4651415735339665302, guid: a1f5dd710e0e41c4ea3fbad66bc9efee, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -40
+      propertyPath: m_LocalPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6006111174390329934, guid: a1f5dd710e0e41c4ea3fbad66bc9efee, type: 3}
       propertyPath: m_AnchorMax.x
@@ -31624,6 +31620,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 741549643081215890, guid: 00c4c735be6de9441b62ab6463139022, type: 3}
+      propertyPath: Lens.OrthographicSize
+      value: 6.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 741549643081215890, guid: 00c4c735be6de9441b62ab6463139022, type: 3}
       propertyPath: Target.TrackingTarget
       value: 
       objectReference: {fileID: 651395430}
@@ -31634,6 +31634,10 @@ PrefabInstance:
     - target: {fileID: 3869174312855331280, guid: 00c4c735be6de9441b62ab6463139022, type: 3}
       propertyPath: m_CullingMask.m_Bits
       value: 65585
+      objectReference: {fileID: 0}
+    - target: {fileID: 4801324841402261902, guid: 00c4c735be6de9441b62ab6463139022, type: 3}
+      propertyPath: orthographic size
+      value: 6.5
       objectReference: {fileID: 0}
     - target: {fileID: 5611013155603020470, guid: 00c4c735be6de9441b62ab6463139022, type: 3}
       propertyPath: target
