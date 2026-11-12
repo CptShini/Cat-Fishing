@@ -1,5 +1,5 @@
+using Assets.Scripts.Audio;
 using UnityEngine;
-using Assets.Scripts.Data;
 using Assets.Scripts.Data.Domain;
 using Assets.Scripts.Data.Persistence;
 
@@ -46,17 +46,19 @@ public class GoldManager : MonoBehaviour, IDataPersistence
     public bool SpendGold(int amount)
     {
         if (amount <= 0 || Gold < amount)
+        {
+            AudioManager.Instance.Play(AudioId.NotEnoughGold);
             return false;
+        }
 
         Gold -= amount;
 
+        AudioManager.Instance.Play(AudioId.PurchaseSuccess);
         return true;
     }
 
-    public bool HasEnoughGold(int amount)
-    {
-        return amount >= 0 && Gold >= amount;
-    }
+    public bool HasEnoughGold(int amount) => 
+        amount >= 0 && Gold >= amount;
 
     private void UpdateUI()
     {

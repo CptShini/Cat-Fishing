@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.Data.Domain.Aquarium;
 using Assets.Scripts.Fishies.Movement;
 using Assets.Scripts.Fishies.Visuals;
+using TMPro;
 using UnityEngine;
 
 namespace Assets.Scripts.Fishies
@@ -9,10 +10,12 @@ namespace Assets.Scripts.Fishies
     public class AquariumFish : MonoBehaviour
     {
         public TankFish Fish { get; private set; }
-        
+
+        private bool _hovering;
         private FishNormalMovement _movement;
         
         [SerializeField] private FishVisuals visuals;
+        [SerializeField] private TextMeshProUGUI happinessText;
 
         private void Awake()
         {
@@ -30,6 +33,19 @@ namespace Assets.Scripts.Fishies
             
             _movement.Wander();
         }
+
+        private void LateUpdate()
+        {
+            if (happinessText.gameObject.activeSelf != _hovering)
+            {
+                happinessText.gameObject.SetActive(_hovering);
+                happinessText.text = $"{Fish.Happiness}/10";
+            }
+
+            _hovering = false;
+        }
+
+        public void Hovering() => _hovering = true;
 
         public void Grab() => _movement.enabled = false;
         public void Release() => _movement.enabled = true;

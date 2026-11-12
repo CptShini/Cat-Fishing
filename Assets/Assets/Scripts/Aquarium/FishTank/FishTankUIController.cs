@@ -1,6 +1,7 @@
 using Assets.Scripts.Data.Domain.Aquarium;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.Scripts.Aquarium.FishTank
 {
@@ -8,9 +9,16 @@ namespace Assets.Scripts.Aquarium.FishTank
     {
         public static FishTankUIController Instance { get; private set; }
 
+        [SerializeField] [Min(0)] private int feedingPrice = 5;
+        
         [SerializeField] private GameObject panel;
-        [SerializeField] private TMP_Text tankNameText;
+        [SerializeField] private TextMeshProUGUI 
+            tankNameText,
+            tankCapacityText;
 
+        [SerializeField] private Button feedButton;
+        [SerializeField] private ParticleSystem feedParticles;
+        
         [Space]
         
         [SerializeField] private FishTankSpawner spawner;
@@ -22,7 +30,11 @@ namespace Assets.Scripts.Aquarium.FishTank
 
         private void Awake() => Instance = this;
 
-        private void Start() => grabber.DropFish.AddListener(OnFishDropped);
+        private void Start()
+        {
+            grabber.DropFish.AddListener(OnFishDropped);
+            feedButton.interactable = GoldManager.Instance.HasEnoughGold(feedingPrice);
+        }
 
         public void Open(FishTank tank)
         {
@@ -36,13 +48,14 @@ namespace Assets.Scripts.Aquarium.FishTank
 
             PauseController.IsGamePaused = true;
 
-            if (!_prevTank || tank.Id != _prevTank.Id)
+            if (!_prevTank || tank.Tank.Id != _prevTank.Tank.Id)
             {
-                tankNameText.text = tank.Name;
+                tankNameText.text = tank.Tank.Name;
+                UpdateCapacityText();
                 spawner.Clear();
             }
             
-            foreach (TankFish fish in tank.Fish)
+            foreach (TankFish fish in tank.Tank.Fishes)
             {
                 spawner.SpawnFish(fish);
             }
@@ -54,6 +67,16 @@ namespace Assets.Scripts.Aquarium.FishTank
             
             _currentTank.AddFish(fish);
             spawner.SpawnFish(fish);
+            UpdateCapacityText();
+        }
+
+        public void Feed()
+        {
+            if (!IsOpen || !GoldManager.Instance.SpendGold(feedingPrice)) return;
+            
+            _currentTank.Feed();
+            feedParticles.Play();
+            feedButton.interactable = GoldManager.Instance.HasEnoughGold(feedingPrice);
         }
 
         public void Close()
@@ -66,6 +89,8 @@ namespace Assets.Scripts.Aquarium.FishTank
             panel.SetActive(false);
             IsOpen = false;
             grabber.enabled = false;
+            feedParticles.Stop();
+            feedParticles.Clear();
 
             PauseController.IsGamePaused = false;
         }
@@ -77,6 +102,18 @@ namespace Assets.Scripts.Aquarium.FishTank
             _currentTank.RemoveFish(fish);
             spawner.RemoveFish(fish);
             FishCollectionManager.Instance.Add(fish);
+            UpdateCapacityText();
+        }
+
+        private void UpdateCapacityText()
+        {
+            int count = _currentTank.Tank.Fishes.Count;
+            int capacity = _currentTank.Tank.Capacity;
+            tankCapacityText.text = $"{count}/{capacity}";
+            tankCapacityText.color = 
+                count <= capacity 
+                    ? Color.black 
+                    : Color.red;
         }
     }
 }

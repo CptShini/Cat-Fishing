@@ -18,7 +18,7 @@ namespace Assets.Scripts.Aquarium.FishTank
         public IReadOnlyDictionary<Guid, TankFish> CollectedFish => _collectedFish;
         private Dictionary<Guid, TankFish> _collectedFish = new();
 
-        private bool _shouldClear;
+        public bool DayPassing { get; private set; }
     
         [SerializeField] private FishSpeciesDatabase fishSpeciesDatabase;
 
@@ -50,6 +50,8 @@ namespace Assets.Scripts.Aquarium.FishTank
             return true;
         }
 
+        public void DayPass() => DayPassing = true;
+        
         public void LoadData(GameData data)
         {
             _collectedFish = data.Collection.ToDictionary(dto => new TankFish(dto, fishSpeciesDatabase));
@@ -58,7 +60,10 @@ namespace Assets.Scripts.Aquarium.FishTank
 
         public void SaveData(ref GameData data)
         {
-            data.Collection = _collectedFish.ToSerializableDictionary(tf => new TankFishDTO(tf));
+            if (DayPassing)
+                data.Collection.Clear();
+            else
+                data.Collection = _collectedFish.ToSerializableDictionary(tf => new TankFishDTO(tf));
         }
     }
 }

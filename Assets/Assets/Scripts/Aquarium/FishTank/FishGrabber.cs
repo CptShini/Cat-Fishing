@@ -27,20 +27,32 @@ namespace Assets.Scripts.Aquarium.FishTank
             var mouse = Mouse.current;
             _mousePos = mouse.position.ReadValue();
 
-            if (mouse.leftButton.wasPressedThisFrame) StartGrab();
-            if (mouse.leftButton.isPressed) Drag();
-            if (mouse.leftButton.wasReleasedThisFrame) Drop();
+            bool hasRay = GetMouseRay(out var ray);
+            AquariumFish hoveredFish = hasRay ? GetFishUnderMouse(ray) : null;
+            hoveredFish?.Hovering();
+            
+            if (mouse.leftButton.wasPressedThisFrame && hoveredFish)
+                StartGrab(hoveredFish, ray);
+
+            if (mouse.leftButton.isPressed)
+                Drag();
+
+            if (mouse.leftButton.wasReleasedThisFrame)
+                Drop();
         }
-        
-        private void StartGrab()
+
+        private AquariumFish GetFishUnderMouse(Ray ray)
         {
-            if (!GetMouseRay(out var ray)) return;
-
             var hit = Physics2D.GetRayIntersection(ray, Mathf.Infinity, draggableLayer);
-            if (!hit.collider) return;
 
-            var fish = hit.transform.GetComponent<AquariumFish>();
-            if (!fish || !GetWorldPosition(ray, fish.transform.position.z, out var mouseWorld))
+            return hit.collider
+                ? hit.transform.GetComponent<AquariumFish>()
+                : null;
+        }
+
+        private void StartGrab(AquariumFish fish, Ray ray)
+        {
+            if (!GetWorldPosition(ray, fish.transform.position.z, out var mouseWorld))
                 return;
 
             _targetFish = fish;

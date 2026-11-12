@@ -5,6 +5,7 @@ namespace Assets.Scripts.Aquarium.FishTank.FishInventory
 {
     public class FishCollectionUIController : MonoBehaviour
     {
+        [SerializeField] private GameObject collectionPanel;
         [SerializeField] private Transform content;
         [SerializeField] private FishInventorySlot slotPrefab;
 
@@ -30,6 +31,13 @@ namespace Assets.Scripts.Aquarium.FishTank.FishInventory
                     Destroy(child.gameObject);
             }
 
+            if (fishCollection.CollectedFish.Count == 0)
+            {
+                collectionPanel.SetActive(false);
+                return;
+            }
+            
+            collectionPanel.SetActive(true);
             foreach (TankFish fish in fishCollection.CollectedFish.Values)
             {
                 if (fish == null)
