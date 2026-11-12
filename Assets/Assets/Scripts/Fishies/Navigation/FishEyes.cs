@@ -11,8 +11,11 @@ namespace Assets.Scripts.Fishies.Navigation
         public float Weight { get; private set; }
         public Vector2 AwayDirection { get; private set; }
         
+        public float NearDistance { get; private set; }
+        
         [SerializeField] private Transform eyes;
         [SerializeField] private float viewDistance = 1.5f;
+        [SerializeField] private LayerMask layerMask;
 
         [Space]
         
@@ -37,7 +40,8 @@ namespace Assets.Scripts.Fishies.Navigation
         
             Vector2 closestPoint = GetClosestHit(hits);
             Vector2 awayDir = (Vector2)eyes.position - closestPoint;
-        
+
+            NearDistance = awayDir.magnitude;
             Weight = (viewDistance - awayDir.magnitude) / viewDistance;
             AwayDirection = awayDir.normalized;
 
@@ -59,7 +63,7 @@ namespace Assets.Scripts.Fishies.Navigation
                 && DebugDrawer.Instance.Fish_Eyes_DrawRaycasts
             ) Debug.DrawRay(source, dir * viewDistance, Color.red);
                 
-            return Physics2D.Raycast(source, dir, viewDistance);
+            return Physics2D.Raycast(source, dir, viewDistance, layerMask);
         }
 
         private Vector2 GetClosestHit(IEnumerable<RaycastHit2D> hits)

@@ -102,7 +102,7 @@ jobs:
   publish-release:
     name: Publish GitHub release
     needs: [validate-release, build-release]
-    if: ${{ always() && github.event_name == 'push' && needs.validate-release.outputs.publish == 'true' }}
+    if: ${{ !cancelled() && github.event_name == 'push' && needs.validate-release.outputs.publish == 'true' }}
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -133,7 +133,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Notify Discord about release
-        if: ${{ always() && needs.build-release.result != 'skipped' }}
+        if: ${{ !cancelled() && needs.build-release.result != 'skipped' }}
         continue-on-error: true
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_RELEASE_WEBHOOK_URL }}

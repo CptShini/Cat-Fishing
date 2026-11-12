@@ -5,7 +5,9 @@ namespace Assets.Scripts.Data.Persistence.DataIO
     public interface DataIOHandler
     {
         SaveFile[] GetSaves();
-        GameData Load(string saveName);
-        void Save(GameData data, string saveName);
+        SaveFile Create(string saveName);
+        GameData Load(SaveFile saveFile);
+        void Save(GameData data, SaveFile saveFile);
+        void Delete(SaveFile saveFile);
     }
 }

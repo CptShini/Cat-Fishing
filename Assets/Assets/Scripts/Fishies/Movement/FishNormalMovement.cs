@@ -35,13 +35,14 @@ namespace Assets.Scripts.Fishies.Movement
 
         public void Init(int speedStat, int biome = -1)
         {
-            _mover.Init(speedStat); // TODO: size and/or weight should probably also play a part in mobility
-            _navigator.Init(biome);
+            _mover.Init(speedStat);
+            _navigator.Init(biome, speedStat);
         }
 
         private void Update()
         {
-            _mover.DesiredDirection = _navigator.CurrentDirection;
+            _mover.Heading = _navigator.CurrentDirection;
+            _mover.NearDistance = _navigator.NearDistance;
             UpdateWanderSpeedRandomly();
         }
 

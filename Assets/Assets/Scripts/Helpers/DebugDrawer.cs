@@ -24,6 +24,11 @@ namespace Assets.Scripts.Helpers
         public bool Fish_Perception_DrawCircle;
         public bool Fish_Perception_DrawReactionTime;
         
+        [Header("Fish Mover")]
+        public bool Fish_Mover;
+        [Space]
+        public bool Fish_Mover_DrawHeading;
+        
         [Header("Fish Navigator")]
         public bool Fish_Nav;
         [Space]

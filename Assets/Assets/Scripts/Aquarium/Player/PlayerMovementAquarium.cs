@@ -22,7 +22,7 @@ public class PlayerMovementAquarium : MonoBehaviour
 
     void FixedUpdate()
     {
-        if(PauseController.IsGamePaused)
+        if (PauseController.IsGamePaused)
         {
             rb.linearVelocity = Vector2.zero;
             animator.SetBool("isWalking", false);
@@ -41,7 +41,7 @@ public class PlayerMovementAquarium : MonoBehaviour
         bool isWalking = moveInput != Vector2.zero;
         animator.SetBool("isWalking", isWalking);
         if (isWalking)
-            AudioManager.Instance.PlayLoop(AudioId.Walk);
+            AudioManager.Instance.Play(AudioId.Walk);
         else
             AudioManager.Instance.FadeOutLoop(AudioId.Walk);
     }

@@ -7,6 +7,9 @@ public class TabController : MonoBehaviour
     public Image[] tabImages;
     public GameObject[] pages;
 
+    public Sprite activeTab;
+    public Sprite inactiveTab;
+
     void Start()
     {
         ActivateTab(0);
@@ -17,10 +20,10 @@ public class TabController : MonoBehaviour
         for (int i = 0; i < pages.Length; i++)
         {
             pages[i].SetActive(false);
-            tabImages[i].color = Color.gray; //inactive tab color
+            tabImages[i].sprite = inactiveTab;
         }
         pages[tabIndex].SetActive(true);
-        tabImages[tabIndex].color = Color.white;
+        tabImages[tabIndex].sprite = activeTab;
         AudioManager.Instance.Play(AudioId.ButtonClick);
     }
 }

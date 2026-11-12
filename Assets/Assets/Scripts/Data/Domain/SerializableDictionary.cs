@@ -34,4 +34,41 @@ namespace Assets.Scripts.Data.Domain
             }
         }
     }
+
+    public static class SerializableDictionaryExtensions
+    {
+        public static Dictionary<Guid, TResult> ToDictionary<TSource, TResult>(
+            this SerializableDictionary<string, TSource> dic,
+            Func<TSource, TResult> converter
+        )
+        {
+            var dictionary = new Dictionary<Guid, TResult>();
+
+            foreach (string id in dic.Keys)
+            {
+                Guid key = Guid.Parse(id);
+                TResult value = converter(dic[id]);
+                dictionary.Add(key, value);
+            }
+            
+            return dictionary;
+        }
+
+        public static SerializableDictionary<string, TResult> ToSerializableDictionary<TSource, TResult>(
+            this Dictionary<Guid, TSource> guidDic,
+            Func<TSource,TResult> converter
+        )
+        {
+            var serializableDictionary = new SerializableDictionary<string, TResult>();
+            
+            foreach (Guid id in guidDic.Keys)
+            {
+                string key = id.ToString();
+                TResult value = converter(guidDic[id]);
+                serializableDictionary.Add(key, value);
+            }
+            
+            return serializableDictionary;
+        }
+    }
 }

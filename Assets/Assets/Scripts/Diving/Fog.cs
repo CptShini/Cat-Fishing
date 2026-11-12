@@ -15,7 +15,11 @@ public class Fog : MonoBehaviour, IDataPersistence
     private bool _isFading;
     private SpriteRenderer _spriteRenderer;
 
-    private void Awake() => _spriteRenderer = GetComponent<SpriteRenderer>();
+    private void Awake()
+    {
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _spriteRenderer.enabled = true;
+    }
 
     private void Start() => gameObject.SetActive(!exploredFogs.Contains(fogID));
     

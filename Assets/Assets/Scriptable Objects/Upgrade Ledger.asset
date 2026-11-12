@@ -1,0 +1,80 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce25c33088364493a5dbbcf5a8d26588, type: 3}
+  m_Name: Upgrade Ledger
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Upgrades.UpgradeLedger
+  <Speed>k__BackingField:
+  - Stat: 3
+    Price: 10
+  - Stat: 4
+    Price: 30
+  - Stat: 5
+    Price: 65
+  - Stat: 6.5
+    Price: 250
+  - Stat: 8
+    Price: 400
+  - Stat: 10
+    Price: 0
+  <PounceSpeed>k__BackingField:
+  - Stat: 10
+    Price: 10
+  - Stat: 12
+    Price: 30
+  - Stat: 14
+    Price: 65
+  - Stat: 16
+    Price: 250
+  - Stat: 18
+    Price: 400
+  - Stat: 20
+    Price: 0
+  <ClawStrength>k__BackingField:
+  - Stat: 3
+    Price: 10
+  - Stat: 6
+    Price: 30
+  - Stat: 9
+    Price: 65
+  - Stat: 12
+    Price: 250
+  - Stat: 15
+    Price: 400
+  - Stat: 20
+    Price: 0
+  <OxygenCapacity>k__BackingField:
+  - Stat: 50
+    Price: 10
+  - Stat: 75
+    Price: 30
+  - Stat: 100
+    Price: 65
+  - Stat: 150
+    Price: 250
+  - Stat: 200
+    Price: 400
+  - Stat: 300
+    Price: 0
+  <CarryingCapacity>k__BackingField:
+  - Stat: 25
+    Price: 10
+  - Stat: 50
+    Price: 30
+  - Stat: 100
+    Price: 65
+  - Stat: 200
+    Price: 250
+  - Stat: 300
+    Price: 400
+  - Stat: 500
+    Price: 0
+  <MinimapPrice>k__BackingField: 100

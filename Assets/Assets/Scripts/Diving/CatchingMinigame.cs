@@ -41,7 +41,11 @@ public class CatchingMinigame : MonoBehaviour
     private float contestAngle;
     private Vector2 playerContest;
 
+
+
     public readonly UnityEvent<bool> OnEnded = new();
+
+    public readonly UnityEvent<Fish> OnWin = new();
     
     void Awake()
     {
@@ -64,7 +68,7 @@ public class CatchingMinigame : MonoBehaviour
         wiggleTime = 0;
         wiggleRad = 0;
         
-        AudioManager.Instance.PlayLoop(AudioId.BattleBGM);
+        AudioManager.Instance.Play(AudioId.BattleBGM);
     }
 
     public void Grab(Vector2 velocityVector)
@@ -85,6 +89,7 @@ public class CatchingMinigame : MonoBehaviour
                 Destroy(movement.gameObject);
                 DivingController.Instance.SetPlayerState(PlayerState.SWIM);
                 OnEnded.Invoke(true);
+                OnWin.Invoke(_fish);
             }
             else // Cat cannot win, if their inventory is full
             {
@@ -140,6 +145,7 @@ public class CatchingMinigame : MonoBehaviour
             Time.deltaTime * 500);
             
         catAndFish.anchoredPosition = newPos;
+        //Debug.Log((newPos.normalized).ToString());
         MovingBackground.uvRect = new Rect(MovingBackground.uvRect.position + targetPos * Time.deltaTime * movingBackgroundSpeed, MovingBackground.uvRect.size);
     }
 

@@ -1,13 +1,11 @@
 using Assets.Scripts.Diving.Bars;
-using Assets.Scripts.Helpers;
+using Assets.Scripts.Management;
 using UnityEngine;
 
 namespace Assets.Scripts.Diving.Managers
 {
     public class DivingManager : MonoBehaviour
     {
-        [SerializeField] private int aquariumSceneIndex = 1;
-
         [SerializeField] private StatBar
             oxygenBar;
 
@@ -35,7 +33,7 @@ namespace Assets.Scripts.Diving.Managers
             if (_noOxygen) return;
         
             _noOxygen = true;
-            GameManager.Instance.ChangeScene(aquariumSceneIndex);
+            GameManager.Instance.ChangeScene(Scenes.Aquarium, "You ran out of oxygen. You have to go back without your fish...");
         }
     }
 }
