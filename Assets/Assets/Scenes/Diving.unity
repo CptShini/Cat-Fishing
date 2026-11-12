@@ -7166,6 +7166,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  exitingInfo: Going back to your Aquarium..
 --- !u!61 &635359992
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -32107,10 +32108,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2969132433297625519, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
-      propertyPath: upgradeLedger
-      value: 
-      objectReference: {fileID: 11400000, guid: c6313984491971b42a2590352c7d001d, type: 2}
     - target: {fileID: 3491246828249289069, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
       propertyPath: oxygenBar
       value: 

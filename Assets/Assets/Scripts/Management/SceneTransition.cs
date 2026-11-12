@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,11 +8,13 @@ namespace Assets.Scripts.Management
     {
         [SerializeField] private Animator fadeAnim;
         [SerializeField] private Image image;
+        [SerializeField] private TextMeshProUGUI info;
 
         private static readonly int Loaded = Animator.StringToHash("Loaded");
 
-        public void FadeOut()
+        public void FadeOut(string text)
         {
+            info.text = text;
             fadeAnim.SetBool(Loaded, false);
             fadeAnim.Play("FadeIn"); // Yeah names are wrong, whatever
         }

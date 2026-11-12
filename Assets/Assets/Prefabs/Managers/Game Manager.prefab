@@ -47,6 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SceneTransition
   fadeAnim: {fileID: 2787145605720988378}
   image: {fileID: 1370411247627190064}
+  info: {fileID: 1563078994029721871}
 --- !u!1 &9157978287733485072
 GameObject:
   m_ObjectHideFlags: 0
@@ -295,6 +296,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+--- !u!114 &1563078994029721871 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4713157725302526264, guid: 91072c6cfdb7ca94a9c21f16578f214d, type: 3}
+  m_PrefabInstance: {fileID: 6114010236036556855}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!95 &2787145605720988378 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 8247425466164966125, guid: 91072c6cfdb7ca94a9c21f16578f214d, type: 3}
