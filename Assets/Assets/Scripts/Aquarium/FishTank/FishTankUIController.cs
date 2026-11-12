@@ -48,6 +48,14 @@ namespace Assets.Scripts.Aquarium.FishTank
             }
         }
 
+        public void AddFish(TankFish fish)
+        {
+            if (!IsOpen) return;
+            
+            _currentTank.AddFish(fish);
+            spawner.SpawnFish(fish);
+        }
+
         public void Close()
         {
             if (!IsOpen) return;
