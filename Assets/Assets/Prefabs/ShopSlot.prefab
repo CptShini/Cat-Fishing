@@ -633,7 +633,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 1737216a68f62a849888569c3e8ca05d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 33888f2d581f14d4caf04465899fdca7, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -662,7 +662,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 2
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -673,7 +673,7 @@ MonoBehaviour:
     m_FadeDuration: 0.1
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 21300000, guid: e2b39fdd545283740a14b351864c7fa9, type: 3}
     m_SelectedSprite: {fileID: 0}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
@@ -716,7 +716,6 @@ MonoBehaviour:
   priceText: {fileID: 32451218902919530}
   itemImage: {fileID: 3444942536266849924}
   SoldIndicator: {fileID: 3145533263038146170}
-  shopManager: {fileID: 0}
 --- !u!1 &7878532962384872742
 GameObject:
   m_ObjectHideFlags: 0
