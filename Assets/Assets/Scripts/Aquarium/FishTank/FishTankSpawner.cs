@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using Assets.Scripts.Data.Domain.Aquarium;
 using Assets.Scripts.Fishies;
-using Assets.Scripts.Fishies.Domain;
 using UnityEngine;
 using Range = Assets.Scripts.Helpers.Range;
 
@@ -15,9 +15,9 @@ namespace Assets.Scripts.Aquarium.FishTank
         
         private readonly Dictionary<Guid, GameObject> _fishes = new();
 
-        public bool SpawnFish(Fish fish)
+        public bool SpawnFish(TankFish fish)
         {
-            if (_fishes.ContainsKey(fish.Id))
+            if (_fishes.ContainsKey(fish.Fish.Id))
                 return false;
             
             float x = transform.position.x + spawnPosRangeX.Random();
@@ -28,13 +28,13 @@ namespace Assets.Scripts.Aquarium.FishTank
             AquariumFish aquariumFish = fishObject.GetComponent<AquariumFish>();
             aquariumFish.Init(fish);
             
-            _fishes.Add(fish.Id, fishObject);
+            _fishes.Add(fish.Fish.Id, fishObject);
             return true;
         }
 
-        public bool RemoveFish(Fish fish)
+        public bool RemoveFish(TankFish fish)
         {
-            if (!_fishes.Remove(fish.Id, out GameObject fishObject))
+            if (!_fishes.Remove(fish.Fish.Id, out GameObject fishObject))
                 return false;
 
             Destroy(fishObject);

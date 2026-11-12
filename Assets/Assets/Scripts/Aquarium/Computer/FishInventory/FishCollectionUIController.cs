@@ -1,4 +1,5 @@
-using Assets.Scripts.Fishies.Domain;
+using Assets.Scripts.Aquarium.FishTank;
+using Assets.Scripts.Data.Domain.Aquarium;
 using UnityEngine;
 
 public class FishCollectionUIController : MonoBehaviour
@@ -28,7 +29,7 @@ public class FishCollectionUIController : MonoBehaviour
                 Destroy(child.gameObject);
         }
 
-        foreach (Fish fish in fishCollection.CollectedFish.Values)
+        foreach (TankFish fish in fishCollection.CollectedFish.Values)
         {
             if (fish == null)
                 continue;

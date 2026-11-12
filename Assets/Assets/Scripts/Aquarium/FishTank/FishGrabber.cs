@@ -1,6 +1,6 @@
 ﻿using Assets.Scripts.Audio;
+using Assets.Scripts.Data.Domain.Aquarium;
 using Assets.Scripts.Fishies;
-using Assets.Scripts.Fishies.Domain;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -20,7 +20,7 @@ namespace Assets.Scripts.Aquarium.FishTank
 
         private bool _dragging;
 
-        public readonly UnityEvent<Fish, Vector2> DropFish = new();
+        public readonly UnityEvent<TankFish, Vector2> DropFish = new();
 
         private void Update()
         {

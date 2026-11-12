@@ -1,4 +1,4 @@
-using Assets.Scripts.Fishies.Domain;
+using Assets.Scripts.Data.Domain.Aquarium;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -24,7 +24,7 @@ namespace Assets.Scripts.Aquarium.FishTank
 
         public void OnDrop(PointerEventData eventData)
         {
-            Fish fish = FishInventorySlot.DraggedFish;
+            TankFish fish = FishInventorySlot.DraggedFish;
 
             if (fish == null || fishTank == null)
                 return;
@@ -35,17 +35,15 @@ namespace Assets.Scripts.Aquarium.FishTank
                 return;
 
             // Check if the fish is in the collection before adding it to the tank
-            if (!collection.CollectedFish.ContainsKey(fish.Id))
+            if (!collection.CollectedFish.ContainsKey(fish.Fish.Id))
                 return;
 
             // Attempt to add the fish to the tank and remove it from the collection
-            if (!fishTank.AddFish(fish))
-                return;
-            if (!collection.Remove(fish))
-            {
-                fishTank.RemoveFish(fish);
-                return;
-            }
+            fishTank.AddFish(fish);
+
+            if (collection.Remove(fish)) return;
+            
+            fishTank.RemoveFish(fish);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Assets.Scripts.Fishies.Domain;
+﻿using Assets.Scripts.Data.Domain.Aquarium;
 using Assets.Scripts.Fishies.Movement;
 using Assets.Scripts.Fishies.Visuals;
 using UnityEngine;
@@ -8,7 +8,7 @@ namespace Assets.Scripts.Fishies
     [RequireComponent(typeof(FishNormalMovement))]
     public class AquariumFish : MonoBehaviour
     {
-        public Fish Fish { get; private set; }
+        public TankFish Fish { get; private set; }
         
         private FishNormalMovement _movement;
         
@@ -20,13 +20,13 @@ namespace Assets.Scripts.Fishies
             _movement.MovementDone.AddListener(_movement.Wander);
         }
 
-        public void Init(Fish fish)
+        public void Init(TankFish fish)
         {
-            name = fish.Species.Name;
+            name = fish.Fish.Species.Name;
             
             Fish = fish;
-            visuals.Init(fish.Species.Icon, Fish.RelativeWeight);
-            _movement.Init(fish.Species.Speed);
+            visuals.Init(fish.Fish.Species.Icon, Fish.Fish.RelativeWeight);
+            _movement.Init(fish.Fish.Species.Speed);
             
             _movement.Wander();
         }

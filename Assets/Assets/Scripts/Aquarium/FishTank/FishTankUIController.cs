@@ -1,4 +1,4 @@
-using Assets.Scripts.Fishies.Domain;
+using Assets.Scripts.Data.Domain.Aquarium;
 using TMPro;
 using UnityEngine;
 
@@ -42,7 +42,7 @@ namespace Assets.Scripts.Aquarium.FishTank
                 spawner.Clear();
             }
             
-            foreach (Fish fish in tank.Fish)
+            foreach (TankFish fish in tank.Fish)
             {
                 spawner.SpawnFish(fish);
             }
@@ -62,13 +62,11 @@ namespace Assets.Scripts.Aquarium.FishTank
             PauseController.IsGamePaused = false;
         }
 
-        private void OnFishDropped(Fish fish, Vector2 dropPos)
+        private void OnFishDropped(TankFish fish, Vector2 dropPos)
         {
             if (!_currentTank || !spawner.OutsideBounds(dropPos)) return;
-            
-            if (!_currentTank.RemoveFish(fish))
-                return;
 
+            _currentTank.RemoveFish(fish);
             spawner.RemoveFish(fish);
             FishCollectionManager.Instance.Add(fish);
         }

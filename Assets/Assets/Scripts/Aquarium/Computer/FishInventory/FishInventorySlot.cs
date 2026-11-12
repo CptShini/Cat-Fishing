@@ -1,4 +1,4 @@
-using Assets.Scripts.Fishies.Domain;
+using Assets.Scripts.Data.Domain.Aquarium;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -13,8 +13,8 @@ public class FishInventorySlot : MonoBehaviour, IBeginDragHandler, IDragHandler,
     private CanvasGroup canvasGroup;
     private GameObject dragVisual;
 
-    public Fish Fish { get; private set; }
-    public static Fish DraggedFish { get; private set; }
+    public TankFish Fish { get; private set; }
+    public static TankFish DraggedFish { get; private set; }
 
     private void Awake()
     {
@@ -25,14 +25,14 @@ public class FishInventorySlot : MonoBehaviour, IBeginDragHandler, IDragHandler,
             canvasGroup = gameObject.AddComponent<CanvasGroup>();
     }
 
-    public void SetFish(Fish fish)
+    public void SetFish(TankFish fish)
     {
         if (fish == null) return;
 
         Fish = fish;
-        fishIcon.sprite = fish.Species.Icon;
-        fishName.text = fish.Species.Name;
-        fishIcon.enabled = fish.Species.Icon != null;
+        fishIcon.sprite = fish.Fish.Species.Icon;
+        fishName.text = fish.Fish.Species.Name;
+        fishIcon.enabled = fish.Fish.Species.Icon != null;
     }
 
 
