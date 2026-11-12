@@ -13,7 +13,7 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] private float selectedPageScale = 1.2f;
     [SerializeField] private Color selectedPageColor = new Color32(255, 255, 255, 200);
     // [SerializeField] private Color unselectedPageColor = new Color32(150, 150, 150, 200);
-    [SerializeField] private Color unselectedPageColor = new Color32(120, 120, 120, 200);
+    [SerializeField] private Color unselectedPageColor = new Color32(120, 120, 120, 140);
 
 
     [SerializeField, Range(0f, 1f)]
