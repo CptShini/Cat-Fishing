@@ -34,7 +34,7 @@ namespace Assets.Scripts.Aquarium.FishTanks
         private void Start()
         {
             grabber.DropFish.AddListener(OnFishDropped);
-            feedButton.interactable = GoldManager.Instance.HasEnoughGold(feedingPrice);
+            GoldManager.Instance.GoldChanged.AddListener(() => feedButton.interactable = GoldManager.Instance.HasEnoughGold(feedingPrice));
         }
 
         public void Open(FishTank tank)
@@ -77,7 +77,6 @@ namespace Assets.Scripts.Aquarium.FishTanks
             
             _currentTank.Feed();
             feedParticles.Play();
-            feedButton.interactable = GoldManager.Instance.HasEnoughGold(feedingPrice);
             UpdateTankText();
         }
 
@@ -112,8 +111,10 @@ namespace Assets.Scripts.Aquarium.FishTanks
             int count = _currentTank.Tank.Fishes.Count;
             int capacity = _currentTank.Tank.Capacity;
             tankCapacityText.text = $"{count}/{capacity}";
-            tankCapacityText.color = 
-                count <= capacity 
+            tankCapacityText.color =
+                count == 1
+                ? Color.blue
+                : count <= capacity 
                     ? Color.black 
                     : Color.red;
 
