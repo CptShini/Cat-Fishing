@@ -49,7 +49,7 @@ public class NpcMovement : MonoBehaviour
         Vector2 direction = Random.insideUnitCircle * maxWalkDistance;
         direction = new Vector2(direction.x + transform.position.x, direction.y + transform.position.y);
 
-        Vector2 weightedDirection = Vector2.Lerp(direction, surface.center, centerWeight); 
+        Vector2 weightedDirection = Vector2.Lerp(direction, surface.center, centerWeight);
 
         NavMeshHit hit;
         NavMesh.SamplePosition(weightedDirection, out hit, maxWalkDistance, 1);
