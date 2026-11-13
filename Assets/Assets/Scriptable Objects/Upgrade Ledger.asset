@@ -52,11 +52,11 @@ MonoBehaviour:
   - Stat: 20
     Price: 0
   <OxygenCapacity>k__BackingField:
-  - Stat: 50
+  - Stat: 80
     Price: 10
-  - Stat: 75
-    Price: 30
   - Stat: 100
+    Price: 30
+  - Stat: 120
     Price: 65
   - Stat: 150
     Price: 250

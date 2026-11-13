@@ -2,10 +2,12 @@ using Assets.Scripts.Audio;
 using UnityEngine;
 using Assets.Scripts.Data.Domain;
 using Assets.Scripts.Data.Persistence;
+using UnityEngine.Events;
 
 public class GoldManager : MonoBehaviour, IDataPersistence
 {
     public static GoldManager Instance { get; private set; }
+    public readonly UnityEvent GoldChanged = new();
 
     private int _gold;
 
@@ -62,6 +64,7 @@ public class GoldManager : MonoBehaviour, IDataPersistence
 
     private void UpdateUI()
     {
+        GoldChanged.Invoke();
         GoldUI.Instance.UpdateGold(Gold);
     }
 

@@ -6547,7 +6547,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba2ab6cdba664e9693c77adc639f655a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.MainMenu.SaveSelectMenu
-  saveFileButtonPrefab: {fileID: 5730387638139546502, guid: 6a6cbbc078a5b6c47baafbbd6da6e5eb, type: 3}
+  saveFileButtonPrefab: {fileID: 8088014620543827820, guid: 6c0936ea2e0fbb945a365b2539ea69d5, type: 3}
   saveFileButtonContent: {fileID: 477734226}
   newSaveButton: {fileID: 1970287914}
 --- !u!114 &2091105200
