@@ -17,7 +17,7 @@ MonoBehaviour:
     BGM: {fileID: 11400000, guid: 569962a43218a9c43b234f7bdb797f5f, type: 2}
   aquarium:
     BuildIndex: 1
-    BGM: {fileID: 8300000, guid: b4cb5ed538ac247438f32cd57f45491a, type: 3}
+    BGM: {fileID: 11400000, guid: dd6980ef5341ce64ca9f876913f93e6f, type: 2}
   diving:
     BuildIndex: 2
-    BGM: {fileID: 8300000, guid: 8ddea10ea811f1e46a7c5eabbe491ad5, type: 3}
+    BGM: {fileID: 11400000, guid: c7a314fb36778604bac2ecbceb9bbe43, type: 2}

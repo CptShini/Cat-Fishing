@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 063bf8cffefb47ad91207c7eab65a834, type: 3}
   m_Name: Diving
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Audio.AudioBGM
-  <Track>k__BackingField: {fileID: 0}
+  <Track>k__BackingField: {fileID: 8300000, guid: 8ddea10ea811f1e46a7c5eabbe491ad5, type: 3}
   <Volume>k__BackingField: 0.1
