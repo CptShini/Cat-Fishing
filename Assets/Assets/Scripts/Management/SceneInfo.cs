@@ -1,5 +1,5 @@
 ﻿using System;
-using UnityEngine;
+using Assets.Scripts.Audio;
 
 namespace Assets.Scripts.Management
 {
@@ -7,6 +7,6 @@ namespace Assets.Scripts.Management
     public class SceneInfo
     {
         public int BuildIndex;
-        public AudioClip BGM;
+        public AudioBGM BGM;
     }
 }
