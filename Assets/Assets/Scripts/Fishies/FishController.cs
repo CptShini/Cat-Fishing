@@ -35,7 +35,7 @@ namespace Assets.Scripts.Fishies
         {
             Fish = new(species);
 
-            name = Fish.ToString();
+            name = $"{species.Name} ({Fish.Weight:F1} KG)";
             visuals.Init(species.Icon, Fish.RelativeWeight);
             
             _normalMovement.Init(species.Speed, species.Biome);

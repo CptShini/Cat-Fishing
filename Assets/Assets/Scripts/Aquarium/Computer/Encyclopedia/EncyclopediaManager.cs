@@ -90,13 +90,13 @@ namespace Assets.Scripts.Aquarium.Computer.Encyclopedia
 
         public void LoadData(GameData data)
         {
-            _discoveries = data.Discoveries.ToDictionary(speciesDb);
+            _discoveries = data.Discoveries.ToDictionary(dto => new Fish(dto, speciesDb));
             Init();
         }
 
         public void SaveData(ref GameData data)
         {
-            data.Discoveries = _discoveries.ToSerializableDictionary();
+            data.Discoveries = _discoveries.ToSerializableDictionary(f => new FishDTO(f));
         }
     }
 }

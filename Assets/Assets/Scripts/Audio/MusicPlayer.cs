@@ -6,58 +6,84 @@ namespace Assets.Scripts.Audio
     [RequireComponent(typeof(AudioSource))]
     public class MusicPlayer : MonoBehaviour
     {
-        private bool _playing;
         private AudioSource _player;
-    
+        private Coroutine _fadeCoroutine;
+
         private void Awake() => _player = GetComponent<AudioSource>();
 
-        public void PlayTrack(AudioClip track, float fadeTime)
+        public void PlayTrack(AudioBGM bgm, float fadeTime)
         {
-            if (_playing) return;
+            CancelFade();
             
-            _playing = true;
-            _player.clip = track;
-            StartCoroutine(_player.FadeIn(fadeTime));
+            if (_player.clip != bgm.Track || !_player.isPlaying)
+            {
+                _player.Stop();
+                _player.clip = bgm.Track;
+                _player.volume = 0f;
+                _player.Play();
+            }
+
+            FadeTo(bgm.Volume, fadeTime, false);
         }
 
         public void StopTrack(float fadeTime)
         {
-            if (!_playing) return;
-            
-            _playing = false;
-            StartCoroutine(_player.FadeOut(fadeTime));
+            if (!_player.isPlaying) return;
+
+            CancelFade();
+            FadeTo(0f, fadeTime, true);
         }
-    }
-    
-    public static class AudioFadeOut
-    {
-        public static IEnumerator FadeIn(this AudioSource audioSource, float fadeTime)
-        {
-            float endVolume = audioSource.volume;
-            audioSource.volume = 0;
-            audioSource.Play();
 
-            while (audioSource.volume < endVolume)
-            {
-                audioSource.volume += endVolume * Time.deltaTime / fadeTime;
-                
-                yield return null;
-            }
+        private void CancelFade()
+        {
+            if (_fadeCoroutine == null) return;
+
+            StopCoroutine(_fadeCoroutine);
+            _fadeCoroutine = null;
         }
-        
-        public static IEnumerator FadeOut(this AudioSource audioSource, float fadeTime)
+
+        private void FadeTo(float targetVolume, float fadeTime, bool stopWhenDone)
         {
-            float startVolume = audioSource.volume;
-
-            while (audioSource.volume > 0)
+            if (fadeTime <= 0f)
             {
-                audioSource.volume -= startVolume * Time.deltaTime / fadeTime;
+                _player.volume = targetVolume;
 
-                yield return null;
+                if (stopWhenDone)
+                    _player.Stop();
+
+                return;
             }
 
-            audioSource.Stop();
-            audioSource.volume = startVolume;
+            _fadeCoroutine = StartCoroutine(
+                FadeRoutine(targetVolume, fadeTime, stopWhenDone)
+            );
+        }
+
+        private IEnumerator FadeRoutine(
+            float targetVolume,
+            float fadeTime,
+            bool stopWhenDone)
+        {
+            float startVolume = _player.volume;
+            float elapsed = 0f;
+
+            while (elapsed < fadeTime)
+            {
+                elapsed += Time.unscaledDeltaTime;
+
+                float t = Mathf.Clamp01(elapsed / fadeTime);
+                _player.volume = Mathf.Lerp(startVolume, targetVolume, t);
+
+                if (t < 1f)
+                    yield return null;
+            }
+
+            _player.volume = targetVolume;
+
+            if (stopWhenDone)
+                _player.Stop();
+
+            _fadeCoroutine = null;
         }
     }
 }

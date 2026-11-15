@@ -1,85 +1,74 @@
-using Assets.Scripts.Audio;
 using Assets.Scripts.Helpers;
 using NavMeshPlus.Components;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.InputSystem;
-using UnityEngine.Tilemaps;
-using UnityEngine.UI;
 
 public class NpcMovement : MonoBehaviour
 {
-    private Rigidbody2D rb;
     private Animator animator;
     private Vector2 curVelocity;
     private NavMeshAgent navMeshAgent;
-
     private NavMeshSurface surface;
-    private CapsuleCollider2D playerCollider;
-    public Tilemap groundTilemap;
 
     [SerializeField] private float maxWalkDistance = 10f;
-
     [SerializeField] private float centerWeight = 0.3f;
-
-    [SerializeField] private Range destinationCooldownRange = new();
+    [SerializeField] private Range destinationCooldownRange;
 
     private float curDestinationCooldown;
     private float curCooldown = float.MaxValue;
 
-    void Start()
+    private void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        playerCollider = GetComponent<CapsuleCollider2D>();
-        navMeshAgent = GetComponent<NavMeshAgent>();
         surface = NavigationManager.Instance.surface;
+        navMeshAgent = GetComponent<NavMeshAgent>();
+        navMeshAgent.updateRotation = false;
+        navMeshAgent.updateUpAxis = false;
     }
 
-    private void SetDestionationCooldown()
+    private void SetNewTargetPosition()
     {
+        Vector2 direction = Random.insideUnitCircle * maxWalkDistance;
+        direction += (Vector2)transform.position;
+
+        Vector2 weightedDirection = Vector2.Lerp(direction, surface.center, centerWeight);
+        NavMeshQueryFilter filter = new()
+        {
+            agentTypeID = navMeshAgent.agentTypeID,
+            areaMask = navMeshAgent.areaMask
+        };
+
+        if (!NavMesh.SamplePosition(weightedDirection, out NavMeshHit hit, maxWalkDistance, filter))
+        {
+            Debug.LogWarning($"[{name}] Could not find a valid NavMesh position. Position: {transform.position}, Search position: {weightedDirection}");
+            return;
+        }
+
+        if (!navMeshAgent.isOnNavMesh)
+        {
+            Debug.LogWarning($"[{name}] Agent is not on a NavMesh!");
+            return;
+        }
+
+        if (!navMeshAgent.SetDestination(hit.position))
+        {
+            Debug.LogWarning($"[{name}] Failed to set destination: {hit.position}");
+            return;
+        }
+
+        curCooldown = 0;
         curDestinationCooldown = destinationCooldownRange.Random();
     }
 
-    
-
-    void SetNewTargetPosition()
+    private void FixedUpdate()
     {
-        Vector2 direction = Random.insideUnitCircle * maxWalkDistance;
-        direction = new Vector2(direction.x + transform.position.x, direction.y + transform.position.y);
-
-        Vector2 weightedDirection = Vector2.Lerp(direction, surface.center, centerWeight); 
-
-        NavMeshHit hit;
-        NavMesh.SamplePosition(weightedDirection, out hit, maxWalkDistance, 1);
-		
+        Move(navMeshAgent.velocity);
         
-        Vector3 destination = hit.position;
-
-        navMeshAgent.SetDestination(destination);
-        curCooldown = 0;
-        SetDestionationCooldown();
-    }
-
-    void FixedUpdate()
-    {
-        //navMeshAgent.destination = targetTransform.position;
-        if (curVelocity.x != navMeshAgent.velocity.x || curVelocity.y != navMeshAgent.velocity.y)
-        {
-            Move(navMeshAgent.velocity);
-        }
-
-        curVelocity = navMeshAgent.velocity;        
-
-        if(curCooldown > curDestinationCooldown)
-        {
+        curVelocity = navMeshAgent.velocity;
+        if (curCooldown > curDestinationCooldown)
             SetNewTargetPosition();
-        }
         else
-        {
             curCooldown += Time.deltaTime;
-        }
 
         bool isWalking = curVelocity != Vector2.zero;
         animator.SetBool("isWalking", isWalking);
@@ -89,11 +78,10 @@ public class NpcMovement : MonoBehaviour
             AudioManager.Instance.FadeOutLoop(AudioId.Walk);*/
     }
 
-    public void Move(Vector2 newDirection)
+    private void Move(Vector2 newDirection)
     {
         Vector2 curVelocityNorm = newDirection.normalized;
-        
-        if(curVelocity == Vector2.zero)
+        if (curVelocity == Vector2.zero)
         {
             animator.SetBool("isWalking", false);
             animator.SetFloat("LastInputX", curVelocityNorm.x);

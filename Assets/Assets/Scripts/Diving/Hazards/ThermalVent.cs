@@ -21,11 +21,12 @@ namespace Assets.Scripts.Diving.Hazards
         private void Start()
         {
             _collider = gameObject.GetComponent<Collider2D>();
-            curTimer = offset;
 
             animator.SetFloat("speed", 1 / cooldownDuration);
 
             SetActive(isActive);
+            
+            curTimer = offset;
         }
 
         private void OnTriggerEnter2D(Collider2D other)
