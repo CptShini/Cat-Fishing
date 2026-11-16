@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace Assets.Scripts.Audio
+namespace Assets.Scripts.Audio.Music
 {
     [RequireComponent(typeof(AudioSource))]
     public class MusicPlayer : MonoBehaviour

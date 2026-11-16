@@ -1,5 +1,6 @@
-﻿using Assets.Scripts.Audio;
-using Assets.Scripts.Data.Domain.Aquarium;
+﻿using Assets.Scripts.Aquarium.Domain;
+using Assets.Scripts.Audio;
+using Assets.Scripts.Audio.SFX;
 using Assets.Scripts.Fishies;
 using UnityEngine;
 using UnityEngine.Events;
@@ -61,7 +62,7 @@ namespace Assets.Scripts.Aquarium.FishTanks
 
             fish.Grab();
 
-            AudioManager.Instance.Play(AudioId.FishGrab);
+            SFXManager.Instance.Play(SFXId.FishGrab);
         }
 
         private void Drag()

@@ -3,6 +3,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
 using Assets.Scripts.Audio;
+using Assets.Scripts.Audio.SFX;
 using UnityEngine.Events;
 using NavMeshPlus.Components;
 
@@ -182,7 +183,7 @@ public class PlacementController : MonoBehaviour
         FurnitureSortingUtility.ApplySorting(ghostObject, selectedItem);
 
         SetGhostColor(validColor);
-        AudioManager.Instance.Play(AudioId.PickUpItem);
+        SFXManager.Instance.Play(SFXId.PickUpItem);
     }
 
     private void TryPickUpFurniture()
@@ -295,7 +296,7 @@ public class PlacementController : MonoBehaviour
         {
             if (Time.time >= nextWrongPlacementSoundTime)
             {
-                AudioManager.Instance.Play(AudioId.PlacementWrong);
+                SFXManager.Instance.Play(SFXId.PlacementWrong);
                 nextWrongPlacementSoundTime = Time.time + wrongPlacementCooldown;
             }
 
@@ -351,7 +352,7 @@ public class PlacementController : MonoBehaviour
 
         Debug.Log("Placed item: " + selectedItem.itemName);
         OnPlaced.Invoke();
-        AudioManager.Instance.Play(AudioId.PlacementSuccess);
+        SFXManager.Instance.Play(SFXId.PlacementSuccess);
 
         CancelPlacement();
     }

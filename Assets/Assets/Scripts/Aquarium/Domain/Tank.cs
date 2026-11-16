@@ -5,7 +5,7 @@ using Assets.Scripts.Fishies.Domain;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Assets.Scripts.Data.Domain.Aquarium
+namespace Assets.Scripts.Aquarium.Domain
 {
     public class Tank
     {

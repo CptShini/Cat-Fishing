@@ -1,5 +1,6 @@
 using System;
 using Assets.Scripts.Audio;
+using Assets.Scripts.Audio.SFX;
 using Assets.Scripts.Diving.Bars;
 using UnityEngine;
 using UnityEngine.Events;
@@ -51,7 +52,7 @@ namespace Assets.Scripts.Diving.Cat
 
             if (isStealthPlaying) return;
             
-            AudioManager.Instance.Play(AudioId.Stealth);
+            SFXManager.Instance.Play(SFXId.Stealth);
             isStealthPlaying = true;
         }
     
@@ -68,7 +69,7 @@ namespace Assets.Scripts.Diving.Cat
 
             curPounceStamina = 0;
 
-            AudioManager.Instance.Play(AudioId.Pounce);
+            SFXManager.Instance.Play(SFXId.Pounce);
             isStealthPlaying = false;
             GameObject effectInstance = Instantiate(effect);
 

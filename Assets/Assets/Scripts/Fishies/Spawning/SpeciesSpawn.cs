@@ -1,7 +1,7 @@
 ﻿using System;
 using Assets.Scripts.Fishies.Domain;
 
-namespace Assets.Scripts.Diving.FishSpawning
+namespace Assets.Scripts.Fishies.Spawning
 {
     [Serializable]
     public class SpeciesSpawn

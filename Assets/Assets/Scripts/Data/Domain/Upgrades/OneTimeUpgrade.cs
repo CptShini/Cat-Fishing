@@ -1,4 +1,4 @@
-﻿namespace Assets.Scripts.Upgrades
+﻿namespace Assets.Scripts.Data.Domain.Upgrades
 {
     public enum OneTimeUpgrade
     {

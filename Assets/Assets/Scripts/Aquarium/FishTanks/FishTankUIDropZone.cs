@@ -1,5 +1,5 @@
+using Assets.Scripts.Aquarium.Domain;
 using Assets.Scripts.Aquarium.FishTanks.FishInventory;
-using Assets.Scripts.Data.Domain.Aquarium;
 using UnityEngine;
 using UnityEngine.EventSystems;
 

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Assets.Scripts.Data.Domain.Aquarium;
+using Assets.Scripts.Aquarium.Domain;
 using Assets.Scripts.Fishies;
 using UnityEngine;
 using Range = Assets.Scripts.Helpers.Range;

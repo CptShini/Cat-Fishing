@@ -1,7 +1,7 @@
 ﻿using System;
 using Assets.Scripts.Fishies.Domain;
 
-namespace Assets.Scripts.Data.Domain.Aquarium
+namespace Assets.Scripts.Aquarium.Domain
 {
     [Serializable]
     public class TankFishDTO

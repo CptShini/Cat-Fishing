@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Assets.Scripts.Upgrades
+namespace Assets.Scripts.Data.Domain.Upgrades
 {
     [CreateAssetMenu(fileName = "New Upgrade Ledger", menuName = "ScriptableObjects/Shop/Upgrade Ledger")]
     public class UpgradeLedger : ScriptableObject

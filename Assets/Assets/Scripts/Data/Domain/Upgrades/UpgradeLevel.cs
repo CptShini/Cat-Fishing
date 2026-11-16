@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Assets.Scripts.Upgrades
+namespace Assets.Scripts.Data.Domain.Upgrades
 {
     [Serializable]
     public class UpgradeLevel

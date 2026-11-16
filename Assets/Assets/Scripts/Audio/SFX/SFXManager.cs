@@ -2,16 +2,16 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Assets.Scripts.Audio
+namespace Assets.Scripts.Audio.SFX
 {
-    public class AudioManager : MonoBehaviour
+    public class SFXManager : MonoBehaviour
     {
-        public static AudioManager Instance { get; private set; }
+        public static SFXManager Instance { get; private set; }
         
         [SerializeField] private GameObject audioSFXInstancePrefab;
         [SerializeField] private AudioSFX[] audioSFXs;
         
-        private readonly Dictionary<AudioId, AudioSFXInstance> _audioInstances = new();
+        private readonly Dictionary<SFXId, AudioSFXInstance> _audioInstances = new();
         
         private void Awake()
         {
@@ -24,7 +24,7 @@ namespace Assets.Scripts.Audio
             Instance = this;
         }
         
-        public bool Play(AudioId id)
+        public bool Play(SFXId id)
         {
             bool alreadyPlaying = _audioInstances.TryGetValue(id, out AudioSFXInstance audioSFXInstance);
             if (!alreadyPlaying)
@@ -49,7 +49,7 @@ namespace Assets.Scripts.Audio
             return audioSFXInstance;
         }
 
-        public void FadeOutLoop(AudioId id, float fadeDuration = 0.4f)
+        public void FadeOutLoop(SFXId id, float fadeDuration = 0.4f)
         {
             if (!_audioInstances.TryGetValue(id, out AudioSFXInstance loopingAudio))
                 return;

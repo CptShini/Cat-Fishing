@@ -1,7 +1,9 @@
 using System;
 using Assets.Scripts.Audio;
+using Assets.Scripts.Audio.SFX;
 using Assets.Scripts.Diving.Bars;
 using Assets.Scripts.Diving.DivingInventory;
+using Assets.Scripts.Fishies;
 using Assets.Scripts.Fishies.Domain;
 using Assets.Scripts.Fishies.Movement;
 using Assets.Scripts.PlayerState;
@@ -25,7 +27,7 @@ public class CatchingMinigame : MonoBehaviour
     float wiggleTime = 0;
     private bool flipped = false;
     private Fish _fish;
-    private FishCaughtMovement movement;
+    private FishCaughtMovement _movement;
 
     [SerializeField] private StatBar catchBar;
     [SerializeField] private GameObject minigameCanvas;
@@ -55,26 +57,26 @@ public class CatchingMinigame : MonoBehaviour
             Instance = this;
     }
 
-    public void Init(Fish fish, FishCaughtMovement movement)
+    public void Init(Fish fish, FishCaughtMovement caughtMovement)
     {
         _fish = fish;
-        this.movement = movement;
+        _movement = caughtMovement;
         
         fishImage.sprite = fish.Species.Icon;
         minigameCanvas.SetActive(true);
 
         catchBar.SetMaxValue(contestThreshold, contestThreshold / 2);
-        angleRad = ((Mathf.Atan2(movement.Direction.y, movement.Direction.x) * Mathf.Rad2Deg) + 360f) % 360f;
+        angleRad = ((Mathf.Atan2(_movement.Direction.y, _movement.Direction.x) * Mathf.Rad2Deg) + 360f) % 360f;
         wiggleTime = 0;
         wiggleRad = 0;
         
-        AudioManager.Instance.Play(AudioId.BattleBGM);
+        SFXManager.Instance.Play(SFXId.BattleBGM);
     }
 
     public void Grab(Vector2 velocityVector)
     {
         playerContest = velocityVector;
-        contestAngle = Vector2.Angle(playerContest, movement.Direction);
+        contestAngle = Vector2.Angle(playerContest, _movement.Direction);
         contestMod = Mathf.Pow(contestAngle / 180, inaccuracyPenalty);
         float power = DivingPlayerStats.Instance.strength * contestMod;
         contest = Math.Clamp((power - _fish.Strength) / _fish.Strength, -10, 5);
@@ -86,7 +88,7 @@ public class CatchingMinigame : MonoBehaviour
             FishCollectible fishCol = new(_fish);
             if (DivingInventory.Instance.Add(fishCol)) // Checks if putting in inventory is successful
             {
-                Destroy(movement.gameObject);
+                Destroy(_movement.gameObject);
                 DivingController.Instance.SetPlayerState(PlayerState.SWIM);
                 OnEnded.Invoke(true);
                 OnWin.Invoke(_fish);
@@ -94,26 +96,26 @@ public class CatchingMinigame : MonoBehaviour
             else // Cat cannot win, if their inventory is full
             {
                 DivingController.Instance.SetPlayerState(PlayerState.STUN);
-                movement.Lose(DivingController.Instance.gameObject.transform.position);
+                _movement.Lose(DivingController.Instance.gameObject.transform.position);
                 OnEnded.Invoke(false);
             }
             minigameCanvas.SetActive(false);
-            AudioManager.Instance.FadeOutLoop(AudioId.BattleBGM);
+            SFXManager.Instance.FadeOutLoop(SFXId.BattleBGM);
 
         } else if (catchBar.CurrentValue <= 0)
         {
             //LOSE FISH
             DivingController.Instance.SetPlayerState(PlayerState.STUN);
-            movement.Lose(DivingController.Instance.gameObject.transform.position);
+            _movement.Lose(DivingController.Instance.gameObject.transform.position);
             minigameCanvas.SetActive(false);
             OnEnded.Invoke(false);
-            AudioManager.Instance.FadeOutLoop(AudioId.BattleBGM);
+            SFXManager.Instance.FadeOutLoop(SFXId.BattleBGM);
         }
     }
     
     private void Rotate()
     {
-        float targetRotation = ((Mathf.Atan2(movement.Direction.y, movement.Direction.x) * Mathf.Rad2Deg) + 360f) % 360f;
+        float targetRotation = ((Mathf.Atan2(_movement.Direction.y, _movement.Direction.x) * Mathf.Rad2Deg) + 360f) % 360f;
 
         float newRotation = Mathf.MoveTowardsAngle(
             angleRad,
@@ -138,7 +140,7 @@ public class CatchingMinigame : MonoBehaviour
 
     private void Move()
     {
-        Vector2 targetPos = movement.Direction + (playerContest * 1.2f) * contestMod;
+        Vector2 targetPos = _movement.Direction + (playerContest * 1.2f) * contestMod;
         Vector2 newPos = Vector2.MoveTowards(
             catAndFish.anchoredPosition, 
             targetPos * 150, 

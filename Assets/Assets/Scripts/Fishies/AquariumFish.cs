@@ -1,4 +1,4 @@
-﻿using Assets.Scripts.Data.Domain.Aquarium;
+﻿using Assets.Scripts.Aquarium.Domain;
 using Assets.Scripts.Fishies.Movement;
 using Assets.Scripts.Fishies.Visuals;
 using TMPro;

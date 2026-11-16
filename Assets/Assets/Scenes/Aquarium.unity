@@ -554,7 +554,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ExitArea
   targetScene: 2
-  triggerAudio: 6
+  triggerSFX: 0
   onExit:
     m_PersistentCalls:
       m_Calls:
@@ -1215,7 +1215,7 @@ Transform:
   m_GameObject: {fileID: 214669052}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.55, z: 0}
+  m_LocalPosition: {x: 7, y: 7, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2843,7 +2843,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 460752344205513828, guid: ede142cfad1920d41a72307658fec3d8, type: 3}
       propertyPath: startPosRadius
-      value: 1
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 647029165844806224, guid: ede142cfad1920d41a72307658fec3d8, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2899,11 +2899,11 @@ PrefabInstance:
       objectReference: {fileID: 23800000, guid: 254f1ba3530f56a49a1d17399413c3ee, type: 2}
     - target: {fileID: 7288269695153590092, guid: ede142cfad1920d41a72307658fec3d8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.63
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7288269695153590092, guid: ede142cfad1920d41a72307658fec3d8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6.83
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3337,7 +3337,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ExitArea
   targetScene: 0
-  triggerAudio: 6
+  triggerSFX: 0
   onExit:
     m_PersistentCalls:
       m_Calls: []
@@ -3705,7 +3705,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.55, z: -10}
+  m_LocalPosition: {x: 7, y: 7, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10538,7 +10538,7 @@ Transform:
   m_GameObject: {fileID: 1185604716}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.55, z: -10}
+  m_LocalPosition: {x: 7, y: 7, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

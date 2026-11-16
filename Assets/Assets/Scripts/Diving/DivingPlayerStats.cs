@@ -1,8 +1,8 @@
 using UnityEngine;
 using Assets.Scripts.Data.Domain;
+using Assets.Scripts.Data.Domain.Upgrades;
 using Assets.Scripts.Data.Persistence;
-using Assets.Scripts.Upgrades;
- 
+
 public class DivingPlayerStats : MonoBehaviour, IDataPersistence
  {
      public static DivingPlayerStats Instance { get; private set; }

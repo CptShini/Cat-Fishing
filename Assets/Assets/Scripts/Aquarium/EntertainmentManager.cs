@@ -16,9 +16,10 @@ namespace Assets.Scripts.Aquarium
         
         private FishTank[] _fishTanks;
 
-        private int 
-            _currentCrowd,
-            _targetCrowd;
+        private int CurrentCrowd => Mathf.RoundToInt(_currentCrowdScore);
+        private float 
+            _currentCrowdScore,
+            _targetCrowdScore;
         
         private void Start()
         {
@@ -37,34 +38,31 @@ namespace Assets.Scripts.Aquarium
         private void TanksChanged()
         {
             float entertainmentSum = _fishTanks.Sum(ft => ft.Tank.Entertainment);
-            _targetCrowd = Mathf.RoundToInt(entertainmentSum * k);
+            _targetCrowdScore = entertainmentSum * k;
         }
 
         public void DayPassed()
         {
-            int crowdDelta = _targetCrowd - _currentCrowd;
-            int change = crowdDelta >= 0
-                ? Mathf.CeilToInt(crowdDelta * crowdGrowthRate)
-                : Mathf.FloorToInt(crowdDelta * crowdGrowthRate);
-            _currentCrowd += change;
+            float crowdScoreDelta = _targetCrowdScore - _currentCrowdScore;
+            _currentCrowdScore += crowdScoreDelta * crowdGrowthRate;
             
-            int profit = _currentCrowd * ticketPrice;
+            int profit = CurrentCrowd * ticketPrice;
             GoldManager.Instance.AddGold(profit);
             UpdateCrowd();
         }
 
         private void UpdateCrowd()
         {
-            crowdText.text = $"{_currentCrowd}";
-            CrowdPopulator.Instance.InitializeCrowd(_currentCrowd);
+            crowdText.text = $"{CurrentCrowd}";
+            CrowdPopulator.Instance.InitializeCrowd(CurrentCrowd);
         }
 
         public void LoadData(GameData data)
         {
-            _currentCrowd = data.CurrentCrowd;
+            _currentCrowdScore = data.CrowdScore;
             if (data.DayPassed) UpdateCrowd();
         }
 
-        public void SaveData(ref GameData data) => data.CurrentCrowd = _currentCrowd;
+        public void SaveData(ref GameData data) => data.CrowdScore = _currentCrowdScore;
     }
 }

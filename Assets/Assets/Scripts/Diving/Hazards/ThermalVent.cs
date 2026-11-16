@@ -1,4 +1,5 @@
 using Assets.Scripts.Audio;
+using Assets.Scripts.Audio.SFX;
 using UnityEngine;
 
 namespace Assets.Scripts.Diving.Hazards
@@ -34,7 +35,7 @@ namespace Assets.Scripts.Diving.Hazards
             if (!other.gameObject.TryGetComponent(out IDamageable damageable)) return;
             
             damageable.Damaged(damage, new Vector2(gameObject.transform.up.x, gameObject.transform.up.y) * power);
-            AudioManager.Instance.Play(AudioId.Hurt);
+            SFXManager.Instance.Play(SFXId.Hurt);
         }
 
         private void SetActive(bool isActive)
