@@ -12,7 +12,7 @@ namespace Assets.Scripts.Data.Domain
     public class GameData
     {
         public int Gold = 200;
-        public int CurrentCrowd;
+        public float CrowdScore;
         public bool DayPassed = true;
         
         public SerializableDictionary<string, TankFishDTO> Collection = new();
