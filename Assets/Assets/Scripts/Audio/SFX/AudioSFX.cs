@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts.Audio
+namespace Assets.Scripts.Audio.SFX
 {
     [CreateAssetMenu(fileName = "New Audio SFX", menuName = "ScriptableObjects/Audio SFX")]
     public class AudioSFX : ScriptableObject
     {
         [field: SerializeField]
-        public AudioId Id { get; private set; }
+        public SFXId Id { get; private set; }
         
         [field: SerializeField, Space]
         public AudioClip Clip { get; private set; }

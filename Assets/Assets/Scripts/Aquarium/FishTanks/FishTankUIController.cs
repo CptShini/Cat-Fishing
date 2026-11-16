@@ -1,4 +1,4 @@
-using Assets.Scripts.Data.Domain.Aquarium;
+using Assets.Scripts.Aquarium.Domain;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

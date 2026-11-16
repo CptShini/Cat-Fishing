@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace Assets.Scripts.Audio
+namespace Assets.Scripts.Audio.SFX
 {
     public class AudioSFXInstance : MonoBehaviour
     {

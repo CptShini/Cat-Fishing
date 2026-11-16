@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Audio;
+using Assets.Scripts.Audio.SFX;
 using Assets.Scripts.Data;
 using Assets.Scripts.Data.Persistence;
 using Assets.Scripts.Management;
@@ -37,7 +38,7 @@ namespace Assets.Scripts.MainMenu.SaveSelect
 
         public void NewSave()
         {
-            AudioManager.Instance.Play(AudioId.OpeningDoor);
+            SFXManager.Instance.Play(SFXId.OpeningDoor);
             SaveManager.Instance.StartNew(_newSaveName);
             GameManager.Instance.ChangeScene(Scenes.Aquarium, "Going to aquarium...");
         }

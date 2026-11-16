@@ -1,4 +1,5 @@
 using Assets.Scripts.Audio;
+using Assets.Scripts.Audio.SFX;
 using UnityEngine;
 
 public class Computer : MonoBehaviour, IInteractable
@@ -11,7 +12,7 @@ public class Computer : MonoBehaviour, IInteractable
     public void Interact()
     {
         ComputerUIController computerUI = FindFirstObjectByType<ComputerUIController>();
-        AudioManager.Instance.Play(AudioId.ButtonClick);
+        SFXManager.Instance.Play(SFXId.ButtonClick);
         computerUI.Open();
     }
 }

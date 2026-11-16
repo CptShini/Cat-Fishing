@@ -1,4 +1,5 @@
 using Assets.Scripts.Audio;
+using Assets.Scripts.Audio.SFX;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,6 +25,6 @@ public class TabController : MonoBehaviour
         }
         pages[tabIndex].SetActive(true);
         tabImages[tabIndex].sprite = activeTab;
-        AudioManager.Instance.Play(AudioId.ButtonClick);
+        SFXManager.Instance.Play(SFXId.ButtonClick);
     }
 }

@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Audio;
+using Assets.Scripts.Audio.SFX;
 
 public class ShopManager : MonoBehaviour
 {
@@ -53,7 +54,7 @@ public class ShopManager : MonoBehaviour
         if (itemSO.itemType == ItemType.Furniture && IsPurchased(itemSO))
         {
             Debug.Log("Already purchased: " + itemSO.itemName);
-            AudioManager.Instance.Play(AudioId.AlreadyPurchased);
+            SFXManager.Instance.Play(SFXId.AlreadyPurchased);
             return;
         }
 

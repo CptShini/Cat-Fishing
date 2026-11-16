@@ -1,6 +1,6 @@
-﻿namespace Assets.Scripts.Audio
+﻿namespace Assets.Scripts.Audio.SFX
 {
-    public enum AudioId
+    public enum SFXId
     {
         // Aquarium Cat
         Walk = 0,

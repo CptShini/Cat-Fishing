@@ -1,7 +1,7 @@
 using UnityEngine;
 using Assets.Scripts.Data.Domain;
+using Assets.Scripts.Data.Domain.Upgrades;
 using Assets.Scripts.Data.Persistence;
-using Assets.Scripts.Upgrades;
 
 public class MiniMapAccess : MonoBehaviour, IDataPersistence
 {

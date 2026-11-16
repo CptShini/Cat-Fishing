@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Assets.Scripts.Fishies;
 using Assets.Scripts.Fishies.Domain;
 using Assets.Scripts.Helpers;
 using UnityEngine;
 using RangeInt = Assets.Scripts.Helpers.RangeInt;
 
-namespace Assets.Scripts.Diving.FishSpawning
+namespace Assets.Scripts.Fishies.Spawning
 {
     public class FishSpawner : MonoBehaviour
     {

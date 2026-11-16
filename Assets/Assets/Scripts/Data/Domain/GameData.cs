@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
-using Assets.Scripts.Data.Domain.Aquarium;
+using Assets.Scripts.Aquarium.Domain;
+using Assets.Scripts.Data.Domain.Upgrades;
 using Assets.Scripts.Fishies.Domain;
-using Assets.Scripts.Upgrades;
-using static Assets.Scripts.Upgrades.LevelUpgrade;
-using static Assets.Scripts.Upgrades.OneTimeUpgrade;
+using static Assets.Scripts.Data.Domain.Upgrades.LevelUpgrade;
+using static Assets.Scripts.Data.Domain.Upgrades.OneTimeUpgrade;
 
 namespace Assets.Scripts.Data.Domain
 {

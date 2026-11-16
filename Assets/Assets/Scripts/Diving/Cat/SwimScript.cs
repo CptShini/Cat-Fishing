@@ -1,4 +1,5 @@
 using Assets.Scripts.Audio;
+using Assets.Scripts.Audio.SFX;
 using Assets.Scripts.PlayerState;
 using UnityEngine;
 using UnityEngine.Events;
@@ -83,7 +84,7 @@ public class SwimScript : MonoBehaviour
         // Play swimming audio only when actually moving
         if (!stealth && _rb.linearVelocity.magnitude > 0.1f)
         {
-            AudioManager.Instance.Play(AudioId.CatSwim);
+            SFXManager.Instance.Play(SFXId.CatSwim);
             bool isSwimming = true;
             float speed = 1f;
             animator.SetBool("swimming", isSwimming);
@@ -95,7 +96,7 @@ public class SwimScript : MonoBehaviour
             float speed = .4f;
             animator.SetBool("swimming", isSwimming);
             animator.SetFloat("speed", speed);
-            AudioManager.Instance.FadeOutLoop(AudioId.CatSwim);
+            SFXManager.Instance.FadeOutLoop(SFXId.CatSwim);
         }
     }
 

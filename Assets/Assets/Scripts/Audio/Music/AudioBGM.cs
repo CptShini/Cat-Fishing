@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts.Audio
+namespace Assets.Scripts.Audio.Music
 {
     [CreateAssetMenu(fileName = "New Audio BGM", menuName = "ScriptableObjects/Audio BGM")]
     public class AudioBGM : ScriptableObject

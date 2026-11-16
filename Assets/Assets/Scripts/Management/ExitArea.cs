@@ -1,4 +1,5 @@
 using Assets.Scripts.Audio;
+using Assets.Scripts.Audio.SFX;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -7,7 +8,7 @@ namespace Assets.Scripts.Management
     public class ExitArea : MonoBehaviour, IInteractable
     {
         [SerializeField] private Scenes targetScene;
-        [SerializeField] private AudioId triggerAudio;
+        [SerializeField] private SFXId triggerSFX;
         [SerializeField] private UnityEvent onExit;
         [SerializeField] private string exitingInfo = "...";
         public bool CanInteract() => true;
@@ -17,7 +18,7 @@ namespace Assets.Scripts.Management
             if (GameManager.Instance.Transitioning) return;
             
             onExit.Invoke();
-            AudioManager.Instance.Play(triggerAudio);
+            SFXManager.Instance.Play(triggerSFX);
             GameManager.Instance.ChangeScene(targetScene, exitingInfo);
         }
     }

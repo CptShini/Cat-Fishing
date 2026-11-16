@@ -1,7 +1,7 @@
 ﻿using Assets.Scripts.Fishies.Domain;
 using UnityEngine;
 
-namespace Assets.Scripts.Data.Domain.Aquarium
+namespace Assets.Scripts.Aquarium.Domain
 {
     public class TankFish
     {

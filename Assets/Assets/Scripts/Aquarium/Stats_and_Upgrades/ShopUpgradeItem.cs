@@ -1,4 +1,4 @@
-using Assets.Scripts.Upgrades;
+using Assets.Scripts.Data.Domain.Upgrades;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Assets.Scripts.Data.Domain.Aquarium
+namespace Assets.Scripts.Aquarium.Domain
 {
     [Serializable]
     public class TankDTO

@@ -1,4 +1,5 @@
 using Assets.Scripts.Audio;
+using Assets.Scripts.Audio.SFX;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
@@ -26,7 +27,7 @@ public class PlayerMovementAquarium : MonoBehaviour
         {
             rb.linearVelocity = Vector2.zero;
             animator.SetBool("isWalking", false);
-            AudioManager.Instance.FadeOutLoop(AudioId.Walk);
+            SFXManager.Instance.FadeOutLoop(SFXId.Walk);
             return;
         }
 
@@ -41,9 +42,9 @@ public class PlayerMovementAquarium : MonoBehaviour
         bool isWalking = moveInput != Vector2.zero;
         animator.SetBool("isWalking", isWalking);
         if (isWalking)
-            AudioManager.Instance.Play(AudioId.Walk);
+            SFXManager.Instance.Play(SFXId.Walk);
         else
-            AudioManager.Instance.FadeOutLoop(AudioId.Walk);
+            SFXManager.Instance.FadeOutLoop(SFXId.Walk);
     }
 
     bool CanMoveTo(Vector2 position)

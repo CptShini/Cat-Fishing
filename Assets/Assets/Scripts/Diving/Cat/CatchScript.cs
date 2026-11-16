@@ -1,45 +1,40 @@
-using Assets.Scripts.Audio;
+using Assets.Scripts.Audio.SFX;
 using Assets.Scripts.Diving.DivingInventory;
 using Assets.Scripts.Fishies;
 using Assets.Scripts.Fishies.Domain;
-using Assets.Scripts.Fishies.Movement;
 using Assets.Scripts.PlayerState;
 using UnityEngine;
 using static UnityEngine.InputSystem.InputAction;
 
-
 public class CatchScript : MonoBehaviour
 {
-    bool grabbing = false;
-    Vector2 velocityVector = new Vector2(0,0);
+    private bool _grabbing;
+    private Vector2 _velocityVector = new(0,0);
     private Rigidbody2D _rb;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+
+    
+    private void Start()
     {
         _rb = gameObject.GetComponent<Rigidbody2D>();
         CatchingMinigame.Instance.OnEnded.AddListener(SetGrabbing);
     }
-
-
+    
     private void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.layer != 7 || grabbing || DivingController.Instance.state == PlayerState.STUN) return;
+        if (col.gameObject.layer != 7 || _grabbing || DivingController.Instance.state == PlayerState.STUN) return;
         
-        Fish fish = col.gameObject.GetComponent<FishController>().Fish;
-        FishCaughtMovement movement = col.gameObject.GetComponent<FishCaughtMovement>();
-
-        FishCollectible fishCol = new(fish);
+        FishController fc = col.gameObject.GetComponent<FishController>();
+        FishCollectible fishCol = new(fc.Fish);
         if (!DivingInventory.Instance.CanAdd(fishCol))
         {
             DivingController.Instance.SetPlayerState(PlayerState.STUN);
             return;
         }
-        
 
-        col.gameObject.GetComponent<FishController>().Catch();
-        CatchingMinigame.Instance.Init(fish, movement);
+        fc.Catch();
+        CatchingMinigame.Instance.Init(fc.Fish, fc.CaughtMovement);
         DivingController.Instance.SetPlayerState(PlayerState.GRAB);
-        grabbing = true;
+        _grabbing = true;
 
         // Stop swimming
         // AudioManager.Instance.FadeOutLoop();
@@ -47,27 +42,25 @@ public class CatchScript : MonoBehaviour
 
     private void SetGrabbing(bool won)
     {
-        AudioManager.Instance.Play(AudioId.CatchFishSuccess);
-        grabbing = false;
+        SFXManager.Instance.Play(SFXId.CatchFishSuccess);
+        _grabbing = false;
     }
 
     public void OnGrabbing(CallbackContext input)
     {
-        velocityVector = input.ReadValue<Vector2>();
+        _velocityVector = input.ReadValue<Vector2>();
     }
 
     private void Grab()
     {
         _rb.linearVelocity = new Vector3(0, 0, 0);
-        CatchingMinigame.Instance.Grab(velocityVector);
+        CatchingMinigame.Instance.Grab(_velocityVector);
     }
-
-    // Update is called once per frame
-    void Update()
+    
+    private void Update()
     {
-        if (grabbing)
-        {
-            Grab();
-        }
+        if (!_grabbing) return;
+        
+        Grab();
     }
 }
