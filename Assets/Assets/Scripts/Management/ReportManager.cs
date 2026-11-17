@@ -9,6 +9,9 @@ using UnityEngine;
 public class ReportManager : MonoBehaviour, IDataPersistence
 {
     [SerializeField] private TextMeshProUGUI tankEntertainmentText;
+    [SerializeField] private TextMeshProUGUI sumEntertainmentText;
+
+
     [SerializeField] private TextMeshProUGUI currentGoldText;
     [SerializeField] private TextMeshProUGUI addedGoldText;
 
@@ -19,12 +22,13 @@ public class ReportManager : MonoBehaviour, IDataPersistence
     [SerializeField] private float k = 2f;
     [SerializeField] private float crowdGrowthRate = 0.2f;
 
-    private float _curCrowd;
-    private float _addedCrowd;
-    private int _curGold;
-    private int _addedGold;
+    private float _curCrowd = 0;
+    private float _addedCrowd = 0;
+    private int _curGold = 0;
+    private int _addedGold = 0;
 
     private Dictionary<EntertainmentContributor, float> _entertainmentValues;
+    private float _entertainmentSum = 0;
     private int CurrentCrowd => Mathf.RoundToInt(_curCrowd);
     private int SumCrowd => Mathf.RoundToInt(_curCrowd + _addedCrowd);
     private int AddedCrowd => SumCrowd - CurrentCrowd;
@@ -39,22 +43,30 @@ public class ReportManager : MonoBehaviour, IDataPersistence
 
     public void Calculate()
     {
-        float entertainmentSum = 0;
         
-        foreach (var entertainmentValue in _entertainmentValues.Values)
-        {
-            entertainmentSum += entertainmentValue;
-        }
+        SetEnterTainmentSum();
 
-        float _targetCrowdScore = entertainmentSum * k;
+        float _targetCrowdScore = _entertainmentSum * k;
         float crowdScoreDelta = _targetCrowdScore - _curCrowd;
         _addedCrowd = crowdScoreDelta * crowdGrowthRate;
         
         _addedGold = SumCrowd * ticketPrice;
 
-        SetAddedValues();
+        SetResults();
     }
-    public void SetAddedValues()
+
+    public void SetEnterTainmentSum()
+    {
+        
+        foreach (var entertainmentValue in _entertainmentValues.Values)
+        {
+            _entertainmentSum += entertainmentValue;
+        }
+
+        sumEntertainmentText.text = $"{_entertainmentSum}";
+    }
+
+    public void SetResults()
     {
         if(AddedCrowd > 0)
         {
