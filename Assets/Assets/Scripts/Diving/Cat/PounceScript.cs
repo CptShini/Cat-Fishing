@@ -70,8 +70,6 @@ namespace Assets.Scripts.Diving.Cat
             staminaBar.CurrentValue -= curPounceStamina;
             Debug.Log(curPounceStamina);
 
-            curPounceStamina = 0;
-            _curStaminaRegenCooldown = 0;
 
             SFXManager.Instance.Play(SFXId.Pounce);
             isStealthPlaying = false;
@@ -122,6 +120,8 @@ namespace Assets.Scripts.Diving.Cat
                         pounceDuration -= Time.deltaTime;
                     }
                     else{
+                        curPounceStamina = 0;
+                        _curStaminaRegenCooldown = 0;
                         curPounceCooldown = DivingPlayerStats.Instance.pounceCooldown;
                         DivingController.Instance.SetPlayerState(PlayerState.PlayerState.SWIM);
                     }

@@ -26,15 +26,15 @@ MonoBehaviour:
   - Stat: 10
     Price: 0
   <PounceSpeed>k__BackingField:
-  - Stat: 10
+  - Stat: 5
     Price: 10
-  - Stat: 12
+  - Stat: 6.5
     Price: 30
-  - Stat: 14
+  - Stat: 8
     Price: 65
-  - Stat: 16
+  - Stat: 10
     Price: 250
-  - Stat: 18
+  - Stat: 14
     Price: 400
   - Stat: 20
     Price: 0
