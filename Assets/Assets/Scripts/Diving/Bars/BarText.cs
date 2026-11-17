@@ -16,6 +16,6 @@ namespace Assets.Scripts.Diving.Bars
         }
 
         private void SetText(float value, float max) => 
-            _text.text = $"{value:N0}/{max} KG";
+            _text.text = $"{value:N1}/{max} KG";
     }
 }

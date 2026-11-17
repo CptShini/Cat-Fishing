@@ -21,7 +21,7 @@ public class CatchScript : MonoBehaviour
     
     private void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.layer != 7 || _grabbing || DivingController.Instance.state == PlayerState.STUN) return;
+        if (col.gameObject.layer != 7 || _grabbing || DivingController.Instance.state != PlayerState.POUNCE) return;
         
         FishController fc = col.gameObject.GetComponent<FishController>();
         FishCollectible fishCol = new(fc.Fish);

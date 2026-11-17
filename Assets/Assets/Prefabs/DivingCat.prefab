@@ -548,11 +548,11 @@ MonoBehaviour:
   upgradeLedger: {fileID: 11400000, guid: c6313984491971b42a2590352c7d001d, type: 2}
   acceleration: 25
   friction: 7.5
-  maxStamina: 25
-  maxPounceStamina: 10
-  minPounceStamina: 2.5
-  staminaRegen: 1.5
-  chargeUpSpeed: 5
+  maxStamina: 50
+  maxPounceStamina: 20
+  minPounceStamina: 5
+  staminaRegen: 5
+  chargeUpSpeed: 10
   pounceCooldown: 0.5
   defaultPresence: 2
   stealthPresence: 1
@@ -619,6 +619,7 @@ MonoBehaviour:
   effect: {fileID: 5865342791091411798, guid: bc381eb64a766f04dbf552fdeb14bca3, type: 3}
   curPounceStamina: 0
   curPounceCooldown: 0
+  _staminaRegenDuration: 1.5
 --- !u!114 &3491246828249289069
 MonoBehaviour:
   m_ObjectHideFlags: 0
