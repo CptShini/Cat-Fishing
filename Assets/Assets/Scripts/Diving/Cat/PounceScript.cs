@@ -27,6 +27,9 @@ namespace Assets.Scripts.Diving.Cat
 
         public float curPounceCooldown;
 
+        [SerializeField] private float _staminaRegenDuration = 1.5f;
+        private float _curStaminaRegenCooldown = 0;
+
         private bool isStealthPlaying;
 
         public readonly UnityEvent<Vector2> OnPouncing = new();
@@ -59,7 +62,7 @@ namespace Assets.Scripts.Diving.Cat
         public void StartPounce()
         {
             Vector2 mousePos = _mainCamera.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-            curPounceStamina = Math.Max(DivingPlayerStats.Instance.minPounceStamina, curPounceStamina);
+            curPounceStamina = Math.Max(0, curPounceStamina);
             pounceDirection = mousePos - (Vector2)transform.position;
             pounceDuration = curPounceStamina / 20; // 5 stamina = 1 second, for now
         
@@ -68,6 +71,7 @@ namespace Assets.Scripts.Diving.Cat
             Debug.Log(curPounceStamina);
 
             curPounceStamina = 0;
+            _curStaminaRegenCooldown = 0;
 
             SFXManager.Instance.Play(SFXId.Pounce);
             isStealthPlaying = false;
@@ -88,12 +92,10 @@ namespace Assets.Scripts.Diving.Cat
         public void Pounce()
         {
             Vector2 targetVelocity = pounceDirection.normalized * (DivingPlayerStats.Instance.pounceSpeed + curPounceStamina * 0.5f);
-
+            Debug.Log($"POUNCE: {targetVelocity.magnitude}, POUNCE SPEED {DivingPlayerStats.Instance.pounceSpeed}, NORMAL SPEED: {DivingPlayerStats.Instance.speed}");
             _rb.linearVelocity = new Vector3(targetVelocity.x, targetVelocity.y, 0); // instantaneous max speed
 
-            OnPouncing.Invoke(_rb.linearVelocity);
-
-           
+            OnPouncing.Invoke(_rb.linearVelocity);   
         }
 
         private void CancelPounce()
@@ -127,6 +129,11 @@ namespace Assets.Scripts.Diving.Cat
                 }
                 case PlayerState.PlayerState.SWIM:
                 {
+                    if(_curStaminaRegenCooldown < _staminaRegenDuration)
+                    {
+                        _curStaminaRegenCooldown += Time.deltaTime;
+                        return;
+                    }
                     float staminaRegen = DivingPlayerStats.Instance.staminaRegen * Time.deltaTime;
                     staminaBar.CurrentValue += staminaRegen;
                     break;
