@@ -7549,7 +7549,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ExitArea
   targetScene: 3
-  triggerSFX: 0
+  triggerSFX: 10
   onExit:
     m_PersistentCalls:
       m_Calls:
