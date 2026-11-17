@@ -19,15 +19,7 @@ namespace Assets.Scripts.Aquarium
         private FishTank[] _fishTanks;
 
         private int CurrentCrowd => Mathf.RoundToInt(_currentCrowdScore);
-        private float 
-            _currentCrowdScore,
-            _targetCrowdScore;
-
-        void Awake()
-        {
-
-            entertainmentValues.Add(EntertainmentContributor.Tank, 0);           
-        }
+        private float _currentCrowdScore;
 
 
         private void Start()
@@ -47,17 +39,11 @@ namespace Assets.Scripts.Aquarium
         private void TanksChanged()
         {
             float entertainmentSum = _fishTanks.Sum(ft => ft.Tank.Entertainment);
-            _targetCrowdScore = entertainmentSum * k;
             entertainmentValues[EntertainmentContributor.Tank] = entertainmentSum;
         }
 
         public void DayPassed()
         {
-            float crowdScoreDelta = _targetCrowdScore - _currentCrowdScore;
-            _currentCrowdScore += crowdScoreDelta * crowdGrowthRate;
-            
-            int profit = CurrentCrowd * ticketPrice;
-            GoldManager.Instance.AddGold(profit);
             UpdateCrowd();
         }
 
@@ -70,12 +56,12 @@ namespace Assets.Scripts.Aquarium
         public void LoadData(GameData data)
         {
             _currentCrowdScore = data.CrowdScore;
+            entertainmentValues = data.EntertainmentValues;
             if (data.DayPassed) UpdateCrowd();
         }
 
         public void SaveData(ref GameData data)
         {
-            data.CrowdScore = _currentCrowdScore;
             data.EntertainmentValues[EntertainmentContributor.Tank] = entertainmentValues[EntertainmentContributor.Tank];
         }
     }

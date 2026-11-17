@@ -12,9 +12,13 @@ namespace Assets.Scripts.Data.Domain
     public class GameData
     {
         public int Gold = 200;
-        public float CrowdScore;
+        public float CrowdScore = 0;
         public bool DayPassed = true;
-        public SerializableDictionary<EntertainmentContributor, float> EntertainmentValues = new();
+        public SerializableDictionary<EntertainmentContributor, float> EntertainmentValues = new()
+        {
+            { EntertainmentContributor.Tank, 0},
+            { EntertainmentContributor.Decor, 0}
+        };
         
         public SerializableDictionary<string, TankFishDTO> Collection = new();
         public SerializableDictionary<string, TankDTO> Tanks = new()
