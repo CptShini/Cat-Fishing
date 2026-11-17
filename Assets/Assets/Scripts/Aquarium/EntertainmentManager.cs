@@ -10,9 +10,6 @@ namespace Assets.Scripts.Aquarium
 {
     public class EntertainmentManager : MonoBehaviour, IDataPersistence, IDayAware
     {
-        [SerializeField] private int ticketPrice = 2;
-        [SerializeField] private float k = 2f;
-        [SerializeField] private float crowdGrowthRate = 0.2f;
         [SerializeField] private TextMeshProUGUI crowdText;
         
         private Dictionary<EntertainmentContributor, float> entertainmentValues;
