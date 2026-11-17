@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Assets.Scripts.Aquarium.FishTanks;
 using Assets.Scripts.Data.Domain;
 using Assets.Scripts.Data.Persistence;
@@ -14,13 +15,21 @@ namespace Assets.Scripts.Aquarium
         [SerializeField] private float crowdGrowthRate = 0.2f;
         [SerializeField] private TextMeshProUGUI crowdText;
         
+        private Dictionary<EntertainmentContributor, float> entertainmentValues;
         private FishTank[] _fishTanks;
 
         private int CurrentCrowd => Mathf.RoundToInt(_currentCrowdScore);
         private float 
             _currentCrowdScore,
             _targetCrowdScore;
-        
+
+        void Awake()
+        {
+
+            entertainmentValues.Add(EntertainmentContributor.Tank, 0);           
+        }
+
+
         private void Start()
         {
             _fishTanks = 
@@ -39,6 +48,7 @@ namespace Assets.Scripts.Aquarium
         {
             float entertainmentSum = _fishTanks.Sum(ft => ft.Tank.Entertainment);
             _targetCrowdScore = entertainmentSum * k;
+            entertainmentValues[EntertainmentContributor.Tank] = entertainmentSum;
         }
 
         public void DayPassed()
@@ -63,6 +73,10 @@ namespace Assets.Scripts.Aquarium
             if (data.DayPassed) UpdateCrowd();
         }
 
-        public void SaveData(ref GameData data) => data.CrowdScore = _currentCrowdScore;
+        public void SaveData(ref GameData data)
+        {
+            data.CrowdScore = _currentCrowdScore;
+            data.EntertainmentValues[EntertainmentContributor.Tank] = entertainmentValues[EntertainmentContributor.Tank];
+        }
     }
 }

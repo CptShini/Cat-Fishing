@@ -14,6 +14,7 @@ namespace Assets.Scripts.Data.Domain
         public int Gold = 200;
         public float CrowdScore;
         public bool DayPassed = true;
+        public SerializableDictionary<EntertainmentContributor, float> EntertainmentValues = new();
         
         public SerializableDictionary<string, TankFishDTO> Collection = new();
         public SerializableDictionary<string, TankDTO> Tanks = new()
