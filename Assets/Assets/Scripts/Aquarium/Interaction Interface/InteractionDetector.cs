@@ -23,14 +23,6 @@ public class InteractionDetector : MonoBehaviour
         interactableInRange?.Interact();
     }
 
-    public void OnEscape(InputAction.CallbackContext context)
-    {
-        if (!context.performed)
-            return;
-            
-        CloseCurrentUI();
-    }
-
     private bool CloseCurrentUI()
     {
         if (FishTankUIController.Instance != null && FishTankUIController.Instance.IsOpen)

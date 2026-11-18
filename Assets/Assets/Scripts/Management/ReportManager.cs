@@ -46,9 +46,6 @@ namespace Assets.Scripts.Management
         
         private void Start()
         {
-            tankEntertainmentText.text = _entertainmentValues[EntertainmentContributor.Tank]
-                .ToString(CultureInfo.CurrentCulture);
-            
             AddFishToGrid();
             Calculate();
             SetResults();
@@ -81,7 +78,8 @@ namespace Assets.Scripts.Management
 
         private void SetResults()
         {
-            sumEntertainmentText.text = _entertainmentSum.ToString(CultureInfo.CurrentCulture);
+            tankEntertainmentText.text = $"{_entertainmentValues[EntertainmentContributor.Tank]:F1}";
+            sumEntertainmentText.text = $"{_entertainmentSum:F1}";
             
             currentCrowdText.text = _currentCrowd.ToString();
             addedCrowdText.text = GetChangeText(_addedCrowd);
