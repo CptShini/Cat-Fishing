@@ -3,21 +3,14 @@ using System.Linq;
 using Assets.Scripts.Aquarium.FishTanks;
 using Assets.Scripts.Data.Domain;
 using Assets.Scripts.Data.Persistence;
-using TMPro;
 using UnityEngine;
 
 namespace Assets.Scripts.Aquarium
 {
-    public class EntertainmentManager : MonoBehaviour, IDataPersistence, IDayAware
+    public class EntertainmentManager : MonoBehaviour, IDataPersistence
     {
-        [SerializeField] private TextMeshProUGUI crowdText;
-        
-        private Dictionary<EntertainmentContributor, float> entertainmentValues;
+        private Dictionary<EntertainmentContributor, float> _entertainmentValues;
         private FishTank[] _fishTanks;
-
-        private int CurrentCrowd => Mathf.RoundToInt(_currentCrowdScore);
-        private float _currentCrowdScore;
-
 
         private void Start()
         {
@@ -36,30 +29,18 @@ namespace Assets.Scripts.Aquarium
         private void TanksChanged()
         {
             float entertainmentSum = _fishTanks.Sum(ft => ft.Tank.Entertainment);
-            entertainmentValues[EntertainmentContributor.Tank] = entertainmentSum;
-        }
-
-        public void DayPassed()
-        {
-            UpdateCrowd();
-        }
-
-        private void UpdateCrowd()
-        {
-            crowdText.text = $"{CurrentCrowd}";
-            CrowdPopulator.Instance.InitializeCrowd(CurrentCrowd);
+            _entertainmentValues[EntertainmentContributor.Tank] = entertainmentSum;
         }
 
         public void LoadData(GameData data)
         {
-            _currentCrowdScore = data.CrowdScore;
-            entertainmentValues = data.EntertainmentValues;
-            if (data.DayPassed) UpdateCrowd();
+            _entertainmentValues = data.EntertainmentValues;
+            CrowdPopulator.Instance.InitializeCrowd(data.CrowdHistory[0]);
         }
 
         public void SaveData(ref GameData data)
         {
-            data.EntertainmentValues[EntertainmentContributor.Tank] = entertainmentValues[EntertainmentContributor.Tank];
+            data.EntertainmentValues[EntertainmentContributor.Tank] = _entertainmentValues[EntertainmentContributor.Tank];
         }
     }
 }

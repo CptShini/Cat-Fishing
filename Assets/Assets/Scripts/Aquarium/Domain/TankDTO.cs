@@ -11,7 +11,6 @@ namespace Assets.Scripts.Aquarium.Domain
         public string Name;
         public int Capacity;
         public List<TankFishDTO> Fishes;
-        public float Entertainment;
 
         public TankDTO(Tank tank)
         {
@@ -19,7 +18,6 @@ namespace Assets.Scripts.Aquarium.Domain
             Name = tank.Name;
             Capacity = tank.Capacity;
             Fishes = tank.Fishes.Select(f => new TankFishDTO(f)).ToList();
-            Entertainment = tank.Entertainment;
         }
     }
 }
