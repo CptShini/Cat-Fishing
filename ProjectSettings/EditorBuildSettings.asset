@@ -14,6 +14,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Assets/Scenes/Diving.unity
     guid: 95583abe985d4f840ae21ba43214232f
+  - enabled: 1
+    path: Assets/Assets/Scenes/DailyReport.unity
+    guid: 34b8a2b31f336fe47a79fb8e1f7f3ef8
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
