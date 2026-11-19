@@ -17,6 +17,5 @@ namespace Assets.Scripts.Data.Domain.TankDecor
                 .TryGetValue(id, out TankDecorationType result) 
                 ? result 
                 : throw new KeyNotFoundException($"Unknown Tank decoration type ID: {id}");
-
     }
 }

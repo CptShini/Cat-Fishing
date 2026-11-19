@@ -11,7 +11,7 @@ namespace Assets.Scripts.Data.Domain.TankDecor
         public TankDecorationDTO(TankDecoration decoration)
         {
             Id = decoration.Id.ToString();
-            TypeId = decoration.type.Id;
+            TypeId = decoration.Type.Id;
         }
     }
 }

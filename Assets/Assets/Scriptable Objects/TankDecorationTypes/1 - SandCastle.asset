@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d1c169a328aed5439fc26bea07ac6fd, type: 3}
   m_Name: 1 - SandCastle
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Data.Domain.TankDecor.TankDecorationType
-  <Id>k__BackingField: 0
+  <Id>k__BackingField: 1
   Name: Sand Castle
   Icon: {fileID: 21300000, guid: 8ac886516847fa146ae63bdf425c3218, type: 3}
   EntertainmentValue: 3

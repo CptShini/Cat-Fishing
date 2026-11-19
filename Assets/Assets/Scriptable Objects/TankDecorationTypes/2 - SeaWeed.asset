@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d1c169a328aed5439fc26bea07ac6fd, type: 3}
   m_Name: 2 - SeaWeed
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Data.Domain.TankDecor.TankDecorationType
-  <Id>k__BackingField: 0
+  <Id>k__BackingField: 2
   Name: Sea Weed
   Icon: {fileID: 21300000, guid: e8599891b372b35488ce2c48efeaa972, type: 3}
   EntertainmentValue: 2
