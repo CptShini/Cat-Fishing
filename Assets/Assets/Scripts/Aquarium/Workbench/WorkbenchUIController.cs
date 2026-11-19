@@ -13,8 +13,6 @@ public class WorkbenchUIController : MonoBehaviour
 
     [SerializeField] private GameObject inventoryPanel;
 
-    private bool isInventoryVisible = true;
-
     public bool IsOpen { get; private set; }
     
     private void Awake()
@@ -28,21 +26,14 @@ public class WorkbenchUIController : MonoBehaviour
         IsOpen = false;
     }
 
-    private void Update()
+    public void HideInventory()
     {
-        if (!IsOpen)
-            return;
-
-        if (Keyboard.current != null && Keyboard.current.tabKey.wasPressedThisFrame)
-        {
-            ToggleInventory();
-        }
+        inventoryPanel.SetActive(false);
     }
 
-    public void ToggleInventory()
+    public void ShowInventory()
     {
-        isInventoryVisible = !isInventoryVisible;
-        inventoryPanel.SetActive(isInventoryVisible);
+        inventoryPanel.SetActive(true);
     }
 
     public void Open()

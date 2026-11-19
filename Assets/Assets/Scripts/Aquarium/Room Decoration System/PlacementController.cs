@@ -148,6 +148,7 @@ public class PlacementController : MonoBehaviour
             return;
 
         selectedItem = itemSO;
+        WorkbenchUIController.Instance.HideInventory();
 
         // FLOOR TILE
         if (itemSO.itemType == ItemType.FloorTile)
@@ -440,6 +441,11 @@ public class PlacementController : MonoBehaviour
         ghostObject = null;
         selectedItem = null;
         gridVisuals.HideFootprint();
+
+        if (isDecorationMode && WorkbenchUIController.Instance != null)
+        {
+            WorkbenchUIController.Instance.ShowInventory();
+        }
     }
 
     private void SetupFurnitureCollider(GameObject furniture, ItemSO item)
