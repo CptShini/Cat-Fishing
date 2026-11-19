@@ -66,7 +66,7 @@ namespace Assets.Scripts.Aquarium.FishTanks
         {
             if (!IsOpen) return;
             
-            _currentTank.AddFish(fish);
+            _currentTank.Tank.AddFish(fish);
             spawner.SpawnFish(fish);
             UpdateTankText();
         }
@@ -75,7 +75,7 @@ namespace Assets.Scripts.Aquarium.FishTanks
         {
             if (!IsOpen || !GoldManager.Instance.SpendGold(feedingPrice)) return;
             
-            _currentTank.Feed();
+            _currentTank.Tank.Feed();
             feedParticles.Play();
             UpdateTankText();
         }
@@ -100,7 +100,7 @@ namespace Assets.Scripts.Aquarium.FishTanks
         {
             if (!_currentTank || !spawner.OutsideBounds(dropPos)) return;
 
-            _currentTank.RemoveFish(fish);
+            _currentTank.Tank.RemoveFish(fish);
             spawner.RemoveFish(fish);
             FishCollectionManager.Instance.Add(fish);
             UpdateTankText();
