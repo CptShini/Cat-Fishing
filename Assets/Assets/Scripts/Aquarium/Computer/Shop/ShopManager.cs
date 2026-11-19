@@ -19,8 +19,8 @@ public class ShopManager : MonoBehaviour
 
     public bool IsPurchased(ItemSO itemSO)
     {
-        // you can buy floor tiles multiple times
-        if (itemSO == null || itemSO.itemType == ItemType.FloorTile)
+        // you can buy floor tiles and fish tanks multiple times
+        if (itemSO == null || itemSO.itemType != ItemType.Furniture)
             return false;
 
         return purchasedItems.Contains(itemSO);

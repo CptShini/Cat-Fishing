@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2778918079922773140}
   - component: {fileID: 4608179742623231347}
   - component: {fileID: 6247051277282296268}
+  - component: {fileID: 7377980690755095848}
   m_Layer: 0
   m_Name: ItemPrefab
   m_TagString: Untagged
@@ -105,3 +106,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   spriteRenderer: {fileID: 0}
+--- !u!114 &7377980690755095848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3758215890295927942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c61dba2d9e5cc54f8ead0912097308b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Aquarium.FishTanks.FishTank
+  fishSpeciesDatabase: {fileID: 11400000, guid: 69c0a0e81678bc0419aa277dd4158367, type: 2}

@@ -6,6 +6,7 @@ using Assets.Scripts.Audio;
 using Assets.Scripts.Audio.SFX;
 using UnityEngine.Events;
 using NavMeshPlus.Components;
+using Assets.Scripts.Data.Domain;
 
 public class PlacementController : MonoBehaviour
 {
@@ -250,6 +251,19 @@ public class PlacementController : MonoBehaviour
         OnPickedUp.Invoke();
     }
 
+    private void InitializePlacedFurnitureComponents(GameObject placedObject, PlacedFurniture furniture, GameData gameData)
+    {
+        MonoBehaviour[] components = placedObject.GetComponentsInChildren<MonoBehaviour>(true);
+
+        foreach (MonoBehaviour component in components)
+        {
+            if (component is IPlacedFurnitureInitializer initializer)
+            {
+                initializer.InitializePlacedFurniture(furniture, gameData);
+            }
+        }
+    }
+
     private void UpdateFixedFurniturePosition()
     {
         Vector2 mousePosition = Mouse.current.position.ReadValue();
@@ -350,6 +364,9 @@ public class PlacementController : MonoBehaviour
         }
 
         furniture.Initialize(selectedItem, currentCell, currentSize);
+
+        InitializePlacedFurnitureComponents(placedObject, furniture, null);
+
         gridVisuals.RegisterPlacedFurniture(furniture);
 
         FurnitureSortingUtility.ApplySorting(placedObject, selectedItem);
@@ -516,7 +533,7 @@ public class PlacementController : MonoBehaviour
 
 
     // FOR SAVE
-    public void GetPlacedFurnitureSaveData(System.Collections.Generic.List<PlacedFurnitureSaveData> saveData)
+    public void GetPlacedFurnitureSaveData(List<PlacedFurnitureSaveData> saveData)
     {
         saveData.Clear();
 
@@ -530,12 +547,13 @@ public class PlacementController : MonoBehaviour
             saveData.Add(new PlacedFurnitureSaveData
             {
                 itemID = furniture.itemSO.itemID,
+                instanceID = furniture.instanceID,
                 x = furniture.origin.x,
                 y = furniture.origin.y,
             });
         }
     }
-    public void LoadPlacedFurniture(System.Collections.Generic.List<PlacedFurnitureSaveData> saveData, ItemDatabase database)
+    public void LoadPlacedFurniture(List<PlacedFurnitureSaveData> saveData, ItemDatabase database, GameData gameData)
     {
         // delete previous
         foreach (Transform child in placedFurnitureRoot)
@@ -576,13 +594,14 @@ public class PlacementController : MonoBehaviour
 
             SetupFurnitureCollider(placedObject, item);
 
-            PlacedFurniture furniture =
-                placedObject.GetComponent<PlacedFurniture>();
+            PlacedFurniture furniture = placedObject.GetComponent<PlacedFurniture>();
 
             if (furniture == null)
                 furniture = placedObject.AddComponent<PlacedFurniture>();
 
-            furniture.Initialize(item, origin, item.size);
+            furniture.Initialize(item, origin, item.size, saved.instanceID);
+
+            InitializePlacedFurnitureComponents(placedObject, furniture, gameData);
 
             if (item.blocksPlacement)
                 roomGrid.RegisterObject(origin, item.size);
