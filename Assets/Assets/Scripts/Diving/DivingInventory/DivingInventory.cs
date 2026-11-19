@@ -110,8 +110,11 @@ namespace Assets.Scripts.Diving.DivingInventory
             }
             foreach (var tc in _collectibles.OfType<TankDecorCollecible>())
             {
+                TankDecorationDTO dtoDaily = new(tc.tankDecoration);
+                Debug.Log(dtoDaily.Id);
+                data.DailyTankDecorations.Add(dtoDaily.Id, dtoDaily);
+
                 TankDecorationDTO dto = new(tc.tankDecoration);
-                data.DailyTankDecorations.Add(dto.Id, dto);
                 data.TankDecorations.Add(dto.Id, dto);
             }
         }

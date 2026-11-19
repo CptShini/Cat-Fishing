@@ -131,6 +131,7 @@ namespace Assets.Scripts.Management
             
             data.CrowdScore = _currentCrowdScore;
             data.CrowdHistory = _crowdHistory.ToArray();
+
             data.DailyTankDecorations.Clear();
         }
     }
