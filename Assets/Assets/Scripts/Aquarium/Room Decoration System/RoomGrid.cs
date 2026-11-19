@@ -123,6 +123,29 @@ public class RoomGrid : MonoBehaviour
         return false;
     }
 
+    private bool IsCellBehindDoor(Vector3Int cell)
+    {
+        RoomFixedFurniture[] fixedFurniture = FindObjectsByType<RoomFixedFurniture>(FindObjectsSortMode.None);
+
+        foreach (RoomFixedFurniture furniture in fixedFurniture)
+        {
+            if (!furniture.isDoor)
+                continue;
+
+            Vector3Int doorOrigin = furniture.GetOrigin(grid);
+
+            for (int x = 0; x < furniture.size.x; x++)
+            {
+                Vector3Int cellAboveDoor = doorOrigin + new Vector3Int(x, furniture.size.y, 0);
+
+                if (cell == cellAboveDoor)
+                    return true;
+            }
+        }
+
+        return false;
+    }
+
     private bool IsOutsideFloor(Vector3Int cell)
     {
         if (!placeableArea.HasTile(cell))
@@ -176,6 +199,11 @@ public class RoomGrid : MonoBehaviour
             for (int y = 0; y < size.y; y++)
             {
                 Vector3Int cell = origin + new Vector3Int(x, y, 0);
+                
+                if (IsCellBehindDoor(cell))
+                {
+                    return false;
+                }
                 
                 if (placeableArea.HasTile(cell))
                 {

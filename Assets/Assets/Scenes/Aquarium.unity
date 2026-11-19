@@ -540,6 +540,7 @@ MonoBehaviour:
   furnitureID: Exit Door
   size: {x: 2, y: 1}
   blocksPlacement: 1
+  isDoor: 1
   currentOrigin: {x: 0, y: 0, z: 0}
 --- !u!114 &123923642
 MonoBehaviour:
@@ -2302,6 +2303,7 @@ MonoBehaviour:
   furnitureID: Computer
   size: {x: 2, y: 3}
   blocksPlacement: 1
+  isDoor: 0
   currentOrigin: {x: 0, y: 0, z: 0}
 --- !u!114 &348595194
 MonoBehaviour:
@@ -9653,6 +9655,7 @@ MonoBehaviour:
   furnitureID: Fish Tank 1
   size: {x: 3, y: 3}
   blocksPlacement: 1
+  isDoor: 0
   currentOrigin: {x: 0, y: 0, z: 0}
 --- !u!114 &1070022292
 MonoBehaviour:
@@ -11469,6 +11472,7 @@ MonoBehaviour:
   furnitureID: Fish Tank 2
   size: {x: 3, y: 3}
   blocksPlacement: 1
+  isDoor: 0
   currentOrigin: {x: 0, y: 0, z: 0}
 --- !u!114 &1221535219
 MonoBehaviour:
@@ -13882,6 +13886,7 @@ MonoBehaviour:
   furnitureID: Workbench
   size: {x: 3, y: 3}
   blocksPlacement: 1
+  isDoor: 0
   currentOrigin: {x: 0, y: 0, z: 0}
 --- !u!114 &1767101832
 MonoBehaviour:
