@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class WorkbenchUIController : MonoBehaviour
 {
@@ -9,6 +10,10 @@ public class WorkbenchUIController : MonoBehaviour
     
     [SerializeField] private DecorationGridVisuals gridVisuals;
     [SerializeField] private PlacementController placementController;
+
+    [SerializeField] private GameObject inventoryPanel;
+
+    private bool isInventoryVisible = true;
 
     public bool IsOpen { get; private set; }
     
@@ -21,6 +26,23 @@ public class WorkbenchUIController : MonoBehaviour
     {
         panel.SetActive(false);
         IsOpen = false;
+    }
+
+    private void Update()
+    {
+        if (!IsOpen)
+            return;
+
+        if (Keyboard.current != null && Keyboard.current.tabKey.wasPressedThisFrame)
+        {
+            ToggleInventory();
+        }
+    }
+
+    public void ToggleInventory()
+    {
+        isInventoryVisible = !isInventoryVisible;
+        inventoryPanel.SetActive(isInventoryVisible);
     }
 
     public void Open()
