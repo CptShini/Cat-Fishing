@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Assets.Scripts.Aquarium.Domain;
+using Assets.Scripts.Data.Domain.TankDecor;
 using Assets.Scripts.Data.Domain.Upgrades;
 using Assets.Scripts.Fishies.Domain;
 using static Assets.Scripts.Data.Domain.Upgrades.LevelUpgrade;
@@ -25,6 +26,8 @@ namespace Assets.Scripts.Data.Domain
         };
         
         public SerializableDictionary<string, TankFishDTO> Collection = new();
+        public SerializableDictionary<string, TankDecorationDTO> TankDecorations = new();
+        public SerializableDictionary<string, TankDecorationDTO> DailyTankDecorations = new();
         public SerializableDictionary<string, TankDTO> Tanks = new()
         {
             { "07679c15-0847-4c65-abb5-aa04b8adc8ac", new(new("Fish Tank 1", 4)) },

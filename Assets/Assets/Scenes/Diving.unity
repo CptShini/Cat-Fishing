@@ -9489,9 +9489,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab8b34d5c6266e94c87d4c056489f6f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.Spawning.TankDecorationSpawner
-  tankDecorPrefab: {fileID: 0}
+  tankDecorPrefab: {fileID: 1838663978287374512, guid: 5e2514464e01e1840b8b703dc1d89a32, type: 3}
   spawnCount:
-    Min: 1
+    Min: 2
     Max: 2
   spawnList:
   - DecorType: {fileID: 11400000, guid: 15d9ea4a8d48c0841b13ff288e901197, type: 2}

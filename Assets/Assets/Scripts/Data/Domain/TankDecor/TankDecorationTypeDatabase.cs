@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 namespace Assets.Scripts.Data.Domain.TankDecor
 {
-    [CreateAssetMenu(fileName = "New Tankdecoration Type Database", menuName = "ScriptableObjects/Decor/FishTank")]
+    [CreateAssetMenu(fileName = "New Tankdecoration Type Database", menuName = "ScriptableObjects/Decor/FishTankDatabase")]
     public class TankDecorationTypeDatabase: ScriptableObject
     {
         [SerializeField] private List<TankDecorationType> decorTypes;

@@ -4,6 +4,7 @@ using Assets.Scripts.Aquarium.Domain;
 using Assets.Scripts.Audio;
 using Assets.Scripts.Audio.SFX;
 using Assets.Scripts.Data.Domain;
+using Assets.Scripts.Data.Domain.TankDecor;
 using Assets.Scripts.Data.Persistence;
 using Assets.Scripts.Diving.Bars;
 using UnityEngine;
@@ -106,6 +107,12 @@ namespace Assets.Scripts.Diving.DivingInventory
                 TankFish tankFish = new(fc.fish);
                 TankFishDTO tankFishDTO = new(tankFish);
                 data.Collection.Add(tankFishDTO.Fish.Id, tankFishDTO);
+            }
+            foreach (var tc in _collectibles.OfType<TankDecorCollecible>())
+            {
+                TankDecorationDTO dto = new(tc.tankDecoration);
+                data.DailyTankDecorations.Add(dto.Id, dto);
+                data.TankDecorations.Add(dto.Id, dto);
             }
         }
     }
