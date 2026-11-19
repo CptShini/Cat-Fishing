@@ -39,6 +39,21 @@ namespace Assets.Scripts.Aquarium.FishTanks
             CollectionChanged.Invoke();
         }
 
+        public bool AddRange(IEnumerable<TankFish> fishes)
+        {
+            List<TankFish> fishList = new(fishes);
+
+            foreach (TankFish fish in fishList)
+            {
+                _collectedFish.Add(fish.Fish.Id, fish);
+            }
+
+            if (fishList.Count > 0)
+                CollectionChanged.Invoke();
+
+            return true;
+        }
+
         public bool Remove(TankFish fish)
         {
             bool collectedFish = _collectedFish.ContainsKey(fish.Fish.Id);

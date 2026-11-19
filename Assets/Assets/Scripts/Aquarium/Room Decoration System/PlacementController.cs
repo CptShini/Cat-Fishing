@@ -7,6 +7,7 @@ using Assets.Scripts.Audio.SFX;
 using UnityEngine.Events;
 using NavMeshPlus.Components;
 using Assets.Scripts.Data.Domain;
+using Assets.Scripts.Aquarium.FishTanks;
 
 public class PlacementController : MonoBehaviour
 {
@@ -236,9 +237,22 @@ public class PlacementController : MonoBehaviour
 
     private void PickUpPlacedFurniture(PlacedFurniture furniture)
     {
+        // check if picked up furniture is fish tank
+        FishTank fishTank = furniture.GetComponentInChildren<FishTank>(true);
+
+        FishCollectionManager fishCollection = FishCollectionManager.Instance;
+
+        // add furniture to inventory
         if (!inventory.AddItem(furniture.itemSO))
             return;
 
+        // if it is tank then fish need to be transfered to collection
+        if (fishTank != null)
+        {
+            bool transferred = fishCollection.AddRange(fishTank.Tank.Fishes);
+        }
+
+        // delete furniture from grid
         if (furniture.itemSO.blocksPlacement)
         {
             roomGrid.UnregisterObject(furniture.origin, furniture.currentSize);
