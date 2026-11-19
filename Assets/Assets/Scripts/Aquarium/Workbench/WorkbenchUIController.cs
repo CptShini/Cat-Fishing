@@ -39,7 +39,7 @@ public class WorkbenchUIController : MonoBehaviour
     {
         if (placementController != null && placementController.IsPlacingItem)
         {
-            return;
+            placementController.CancelPlacement();
         }
 
         placementController.ExitDecorationMode();
