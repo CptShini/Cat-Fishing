@@ -1,7 +1,9 @@
 using Assets.Scripts.Data.Domain.TankDecor;
+using Assets.Scripts.Diving.DivingInventory;
 using UnityEngine;
 
-namespace Assets.Scripts.Diving.Spawning
+
+namespace Assets.Scripts.Diving.TankDecor
 {
     public class TankDecorPickUp : MonoBehaviour, IInteractable
     {
@@ -17,7 +19,13 @@ namespace Assets.Scripts.Diving.Spawning
 
         public void Interact()
         {
-            throw new System.NotImplementedException();
+            TankDecorCollecible col = new(tankDecoration);
+            if (!DivingInventory.DivingInventory.Instance.CanAdd(col)) // Checks if putting in inventory is successful
+            {
+                return;
+            }
+            DivingInventory.DivingInventory.Instance.Add(col);
+            Destroy(gameObject);
         }
 
     }
