@@ -2085,7 +2085,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: -25}
-  m_SizeDelta: {x: 200, y: 50}
+  m_SizeDelta: {x: 350, y: 50}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1129177309
 MonoBehaviour:
@@ -2107,7 +2107,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Fish Caught
+  m_text: Stuff Collected
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ae848ffab1798df49bfe48b634c91191, type: 2}
   m_sharedMaterial: {fileID: 114722294151544170, guid: ae848ffab1798df49bfe48b634c91191, type: 2}
@@ -3603,6 +3603,7 @@ MonoBehaviour:
   k: 2
   crowdGrowthRate: 0.2
   fishSpeciesDatabase: {fileID: 11400000, guid: 69c0a0e81678bc0419aa277dd4158367, type: 2}
+  tankDecorationTypeDatabase: {fileID: 11400000, guid: 929023803bb3b1b49ae179cc9ff1db34, type: 2}
   slotPrefab: {fileID: 5193188131233696262, guid: 360af47379e0a40448ac59296ee35d4b, type: 3}
   grid: {fileID: 1027290050}
 --- !u!1 &1939411932
