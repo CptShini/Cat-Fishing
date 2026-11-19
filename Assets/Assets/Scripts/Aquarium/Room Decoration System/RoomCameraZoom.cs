@@ -22,6 +22,14 @@ public class RoomCameraZoom : MonoBehaviour
 
     public void EnterDecorationMode()
     {
+        UpdateZoom();
+
+        playerCamera.Priority = 0;
+        decorationCamera.Priority = 10;
+    }
+
+    public void UpdateZoom()
+    {
         roomTilemap.CompressBounds();
 
         // get the bounds of the room tilemap
@@ -44,9 +52,6 @@ public class RoomCameraZoom : MonoBehaviour
 
         // center deco camera on the room
         decorationCamera.transform.position = new Vector3(center.x, center.y, playerCamera.transform.position.z);
-
-        playerCamera.Priority = 0;
-        decorationCamera.Priority = 10;
     }
 
     public void ExitDecorationMode()

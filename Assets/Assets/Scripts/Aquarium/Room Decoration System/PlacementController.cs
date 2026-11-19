@@ -17,6 +17,7 @@ public class PlacementController : MonoBehaviour
     [SerializeField] private Transform placedFurnitureRoot;
     [SerializeField] private Camera mainCamera;
     [SerializeField] private DecorationGridVisuals gridVisuals;
+    [SerializeField] private RoomCameraZoom roomCameraZoom;
 
     [Header("Fixed Furniture")]
     private RoomFixedFurniture selectedFixedFurniture;
@@ -318,6 +319,8 @@ public class PlacementController : MonoBehaviour
             Debug.Log(currentSize.ToString());
             if (!placed)
                 return;
+
+            roomCameraZoom.UpdateZoom();
 
             inventory.RemoveItem(selectedItem);
             OnPlaced.Invoke();
