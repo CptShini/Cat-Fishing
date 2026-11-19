@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Aquarium.Domain
 {
-    [CreateAssetMenu(fileName = "NewFishTankDefinition", menuName = "ScriptableObjects/Aquarium/Fish Tank Definition")]
+    [CreateAssetMenu(fileName = "New Fish Tank Definition", menuName = "ScriptableObjects/Aquarium/Fish Tank Definition")]
     public class FishTankDefinitionSO : ScriptableObject
     {
         public string definitionID;

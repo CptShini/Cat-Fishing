@@ -240,8 +240,6 @@ public class PlacementController : MonoBehaviour
         // check if picked up furniture is fish tank
         FishTank fishTank = furniture.GetComponentInChildren<FishTank>(true);
 
-        FishCollectionManager fishCollection = FishCollectionManager.Instance;
-
         // add furniture to inventory
         if (!inventory.AddItem(furniture.itemSO))
             return;
@@ -249,7 +247,7 @@ public class PlacementController : MonoBehaviour
         // if it is tank then fish need to be transfered to collection
         if (fishTank != null)
         {
-            bool transferred = fishCollection.AddRange(fishTank.Tank.Fishes);
+            FishCollectionManager.Instance.AddRange(fishTank.Tank.Fishes);
         }
 
         // delete furniture from grid
@@ -271,10 +269,9 @@ public class PlacementController : MonoBehaviour
 
         foreach (MonoBehaviour component in components)
         {
-            if (component is IPlacedFurnitureInitializer initializer)
-            {
-                initializer.InitializePlacedFurniture(furniture, gameData);
-            }
+            if (component is not IPlacedFurnitureInitializer initializer) continue;
+            
+            initializer.InitializePlacedFurniture(furniture, gameData);
         }
     }
 

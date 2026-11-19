@@ -8,18 +8,15 @@ namespace Assets.Scripts.Aquarium.FishTanks
 {
     public class FishTank : MonoBehaviour, IInteractable, IDayAware, IPlacedFurnitureInitializer
     {
-        //[SerializeField] private string tankId; 
         [SerializeField] private FishSpeciesDatabase fishSpeciesDatabase;
 
         public readonly UnityEvent TankChanged = new();
         
         public Tank Tank { get; private set; }
 
-
-
         public void InitializePlacedFurniture(PlacedFurniture furniture, GameData gameData)
         {
-            if (furniture.itemSO.fishTankDefinition == null)
+            if (!furniture.itemSO.fishTankDefinition)
             {
                 Debug.LogError($"FishTank '{name}' has no FishTankDefinition assigned.", this);
                 return;
@@ -31,23 +28,17 @@ namespace Assets.Scripts.Aquarium.FishTanks
                 return;
             }
 
-            if (gameData != null && gameData.Tanks != null && gameData.Tanks.TryGetValue(furniture.instanceID, out TankDTO savedTank))
+            if (gameData is { Tanks: not null } && gameData.Tanks.TryGetValue(furniture.instanceID, out TankDTO savedTank))
             {
-                Tank = new Tank(savedTank, fishSpeciesDatabase);
+                Tank = new(savedTank, fishSpeciesDatabase);
             }
             else
             {
                 var definition = furniture.itemSO.fishTankDefinition;
-                Tank = new Tank(tankId, definition.tankName, definition.capacity);
+                Tank = new(tankId, definition.tankName, definition.capacity);
             }
         }
-
-
-
-
-        //private void Start() => Tank.TankChanged.AddListener(TankChanged.Invoke);
-        //private void OnDestroy() => Tank.TankChanged.RemoveListener(TankChanged.Invoke);
-
+        
         private void Start()
         {
             if (GetComponentInParent<PlacedFurniture>() == null)
@@ -64,18 +55,12 @@ namespace Assets.Scripts.Aquarium.FishTanks
 
         private void OnDestroy()
         {
-            if (Tank != null)
-                Tank.TankChanged.RemoveListener(TankChanged.Invoke);
+            Tank?.TankChanged.RemoveListener(TankChanged.Invoke);
         }
         
         public bool CanInteract() => true;
 
         public void Interact() => FishTankUIController.Instance.Open(this);
-
-        public void AddFish(TankFish fish) => Tank.AddFish(fish);
-        public void RemoveFish(TankFish fish) => Tank.RemoveFish(fish);
-
-        public void Feed() => Tank.Feed();
 
         public void DayPassed() => Tank.DayPassed();
     }

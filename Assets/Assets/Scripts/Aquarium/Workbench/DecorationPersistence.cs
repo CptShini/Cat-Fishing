@@ -15,11 +15,8 @@ public class DecorationPersistence : MonoBehaviour, IDataPersistence
 
     public void LoadData(GameData data)
     {
-        if (data.Decoration == null)
-            data.Decoration = new DecorationSaveData();
-
-        if (data.Tanks == null)
-            data.Tanks = new();
+        data.Decoration ??= new();
+        data.Tanks ??= new();
 
         placementController.LoadPlacedFurniture(data.Decoration.placedFurniture, itemDatabase, data);
         placementController.LoadFixedFurniture(data.Decoration.fixedFurniture);
@@ -33,11 +30,8 @@ public class DecorationPersistence : MonoBehaviour, IDataPersistence
 
     public void SaveData(ref GameData data)
     {
-        if (data.Decoration == null)
-            data.Decoration = new DecorationSaveData();
-
-        if (data.Tanks == null)
-            data.Tanks = new();
+        data.Decoration ??= new();
+        data.Tanks ??= new();
 
         placementController.GetPlacedFurnitureSaveData(data.Decoration.placedFurniture);
         placementController.GetFixedFurnitureSaveData(data.Decoration.fixedFurniture);
@@ -51,15 +45,13 @@ public class DecorationPersistence : MonoBehaviour, IDataPersistence
         data.Tanks.Clear();
 
         FishTank[] fishTanks = FindObjectsByType<FishTank>(FindObjectsSortMode.None);
-
         foreach (FishTank fishTank in fishTanks)
         {
             if (fishTank.Tank == null)
                 continue;
 
             string tankId = fishTank.Tank.Id.ToString();
-
-            data.Tanks[tankId] = new TankDTO(fishTank.Tank);
+            data.Tanks[tankId] = new(fishTank.Tank);
         }
     }
 }
