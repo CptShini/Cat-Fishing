@@ -261,7 +261,14 @@ public class PlacementController : MonoBehaviour
 
         selectedFixedFurniture.transform.position = placementPosition;
 
-        canPlace = roomGrid.CanPlace(currentCell, currentSize, selectedFixedFurniture.blocksPlacement);
+        if (selectedFixedFurniture.isDoor)
+        {
+            canPlace = roomGrid.CanPlaceDoor(currentCell, currentSize, selectedFixedFurniture.blocksPlacement);
+        }
+        else
+        {
+            canPlace = roomGrid.CanPlace(currentCell, currentSize, selectedFixedFurniture.blocksPlacement);
+        }
 
         gridVisuals.ShowFootprint(currentCell, currentSize, canPlace);
     }
@@ -364,7 +371,7 @@ public class PlacementController : MonoBehaviour
 
         RoomFixedFurniture furniture = selectedFixedFurniture;
 
-        if (furniture.blocksPlacement)
+        if (furniture.blocksPlacement || furniture.isDoor)
         {
             roomGrid.RegisterObject(currentCell, currentSize);
         }
@@ -412,7 +419,7 @@ public class PlacementController : MonoBehaviour
         {
             selectedFixedFurniture.transform.position = fixedFurnitureOriginalPosition;
 
-            if (selectedFixedFurniture.blocksPlacement)
+            if (selectedFixedFurniture.blocksPlacement || selectedFixedFurniture.isDoor)
             {
                 roomGrid.RegisterObject(fixedFurnitureOriginalOrigin, selectedFixedFurniture.size);
             }
@@ -478,7 +485,7 @@ public class PlacementController : MonoBehaviour
         currentSize = furniture.size;
 
         // unregister the furniture from the grid
-        if (furniture.blocksPlacement)
+        if (furniture.blocksPlacement || furniture.isDoor)
         {
             roomGrid.UnregisterObject(fixedFurnitureOriginalOrigin, currentSize);
         }
@@ -616,7 +623,7 @@ public class PlacementController : MonoBehaviour
 
                 Vector3Int oldOrigin = furniture.GetOrigin(roomGrid.Grid);
 
-                if (furniture.blocksPlacement)
+                if (furniture.blocksPlacement || furniture.isDoor)
                     roomGrid.UnregisterObject(oldOrigin, furniture.size);
 
                 gridVisuals.UnregisterFixedFurniture(furniture);
@@ -630,7 +637,7 @@ public class PlacementController : MonoBehaviour
 
                 furniture.currentOrigin = newOrigin;
 
-                if (furniture.blocksPlacement)
+                if (furniture.blocksPlacement || furniture.isDoor)
                     roomGrid.RegisterObject(newOrigin, furniture.size);
 
                 gridVisuals.RegisterFixedFurniture(furniture, newOrigin);
@@ -675,7 +682,7 @@ public class PlacementController : MonoBehaviour
             Vector3Int origin = furniture.GetOrigin(roomGrid.Grid);
             furniture.currentOrigin = origin;
 
-            if (furniture.blocksPlacement)
+            if (furniture.blocksPlacement || furniture.isDoor)
                 roomGrid.RegisterObject(origin, furniture.size);
 
             gridVisuals.RegisterFixedFurniture(furniture, origin);

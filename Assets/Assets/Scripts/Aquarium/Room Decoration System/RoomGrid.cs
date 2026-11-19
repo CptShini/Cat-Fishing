@@ -84,6 +84,53 @@ public class RoomGrid : MonoBehaviour
         return true;
     }
 
+    public bool CanPlaceDoor(Vector3Int origin, Vector2Int size, bool blocksPlacement)
+    {
+        // door must pass normal placement checks first
+        if (!CanPlace(origin, size, blocksPlacement))
+            return false;
+
+        // door footprint must be entirely on actual floor
+        for (int x = 0; x < size.x; x++)
+        {
+            for (int y = 0; y < size.y; y++)
+            {
+                Vector3Int cell = origin + new Vector3Int(x, y, 0);
+
+                if (!placeableArea.HasTile(cell))
+                    return false;
+
+                if (placeableArea.GetTile(cell) == voidTile)
+                    return false;
+            }
+        }
+
+        // door must be next to the edge
+        return IsRoomEdge(origin, size);
+    }
+
+    private bool IsRoomEdge(Vector3Int origin, Vector2Int size)
+    {
+        // only top edge
+        for (int x = 0; x < size.x; x++)
+        {
+            Vector3Int top = origin + new Vector3Int(x, size.y, 0);
+
+            if (IsOutsideFloor(top))
+                return true;
+        }
+
+        return false;
+    }
+
+    private bool IsOutsideFloor(Vector3Int cell)
+    {
+        if (!placeableArea.HasTile(cell))
+            return true;
+
+        return placeableArea.GetTile(cell) == voidTile;
+    }
+
     private bool IsCellBlocked(Vector3Int cell)
     {
         Vector3 center = grid.GetCellCenterWorld(cell);
