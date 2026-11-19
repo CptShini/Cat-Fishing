@@ -19,12 +19,11 @@ public class DecorInventoryManager : MonoBehaviour
             {
                 DecorInventorySlot slot = child.GetComponent<DecorInventorySlot>();
 
-                if (slot.ItemSO == itemSO)
-                {
-                    slot.count++;
-                    slot.UpdateUI();
-                    return true;
-                }
+                if (slot.ItemSO != itemSO) continue;
+                
+                slot.count++;
+                slot.UpdateUI();
+                return true;
             }
         }
 

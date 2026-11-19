@@ -540,6 +540,7 @@ MonoBehaviour:
   furnitureID: Exit Door
   size: {x: 2, y: 1}
   blocksPlacement: 1
+  isDoor: 1
   currentOrigin: {x: 0, y: 0, z: 0}
 --- !u!114 &123923642
 MonoBehaviour:
@@ -2302,6 +2303,7 @@ MonoBehaviour:
   furnitureID: Computer
   size: {x: 2, y: 3}
   blocksPlacement: 1
+  isDoor: 0
   currentOrigin: {x: 0, y: 0, z: 0}
 --- !u!114 &348595194
 MonoBehaviour:
@@ -2512,6 +2514,7 @@ MonoBehaviour:
   placedFurnitureRoot: {fileID: 905242649}
   mainCamera: {fileID: 519420031}
   gridVisuals: {fileID: 388818884}
+  roomCameraZoom: {fileID: 388818886}
   validColor: {r: 0.3, g: 1, b: 0.3, a: 0.5}
   invalidColor: {r: 1, g: 0.3, b: 0.3, a: 0.5}
   wrongPlacementCooldown: 0.5
@@ -2567,6 +2570,7 @@ MonoBehaviour:
   decorationCamera: {fileID: 308733758}
   roomTilemap: {fileID: 977189777}
   padding: 1.2
+  smoothTime: 0.35
 --- !u!114 &388818887
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5777,6 +5781,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 12a25f8cfedf91942a6913932258cdfb, type: 2}
   - {fileID: 11400000, guid: 0d8bf9a4d241a804ba06b95134eb2544, type: 2}
   - {fileID: 11400000, guid: dcdb6ce2536275747a73b71381a6c771, type: 2}
+  - {fileID: 11400000, guid: 67ff7d0da0bc64e4b8fe61b0a0a8e46c, type: 2}
+  - {fileID: 11400000, guid: 50224f22ddfbb3146a6e044837094b3f, type: 2}
 --- !u!1 &863272609
 GameObject:
   m_ObjectHideFlags: 0
@@ -9421,6 +9427,7 @@ MonoBehaviour:
   roomCameraZoom: {fileID: 388818886}
   gridVisuals: {fileID: 388818884}
   placementController: {fileID: 388818883}
+  inventoryPanel: {fileID: 55923733}
 --- !u!114 &1058299131
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9622,7 +9629,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1070022290
 Transform:
   m_ObjectHideFlags: 0
@@ -9653,6 +9660,7 @@ MonoBehaviour:
   furnitureID: Fish Tank 1
   size: {x: 3, y: 3}
   blocksPlacement: 1
+  isDoor: 0
   currentOrigin: {x: 0, y: 0, z: 0}
 --- !u!114 &1070022292
 MonoBehaviour:
@@ -9666,7 +9674,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c61dba2d9e5cc54f8ead0912097308b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  tankId: 07679c15-0847-4c65-abb5-aa04b8adc8ac
   fishSpeciesDatabase: {fileID: 11400000, guid: 69c0a0e81678bc0419aa277dd4158367, type: 2}
 --- !u!61 &1070022293
 BoxCollider2D:
@@ -11438,7 +11445,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1221535217
 Transform:
   m_ObjectHideFlags: 0
@@ -11469,6 +11476,7 @@ MonoBehaviour:
   furnitureID: Fish Tank 2
   size: {x: 3, y: 3}
   blocksPlacement: 1
+  isDoor: 0
   currentOrigin: {x: 0, y: 0, z: 0}
 --- !u!114 &1221535219
 MonoBehaviour:
@@ -11482,7 +11490,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c61dba2d9e5cc54f8ead0912097308b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  tankId: 0b5546b1-f057-4199-8716-cf68abdcebdf
   fishSpeciesDatabase: {fileID: 11400000, guid: 69c0a0e81678bc0419aa277dd4158367, type: 2}
 --- !u!61 &1221535220
 BoxCollider2D:
@@ -13882,6 +13889,7 @@ MonoBehaviour:
   furnitureID: Workbench
   size: {x: 3, y: 3}
   blocksPlacement: 1
+  isDoor: 0
   currentOrigin: {x: 0, y: 0, z: 0}
 --- !u!114 &1767101832
 MonoBehaviour:
@@ -14365,7 +14373,11 @@ MonoBehaviour:
     price: 7
   - itemSO: {fileID: 11400000, guid: 12a25f8cfedf91942a6913932258cdfb, type: 2}
     price: 1
-  shopUpgradeItems: []
+  shopUpgradeItems:
+  - itemSO: {fileID: 11400000, guid: 67ff7d0da0bc64e4b8fe61b0a0a8e46c, type: 2}
+    price: 5
+  - itemSO: {fileID: 11400000, guid: 50224f22ddfbb3146a6e044837094b3f, type: 2}
+    price: 10
 --- !u!114 &1808507265
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,6 +1,8 @@
 using UnityEngine;
 using Assets.Scripts.Data.Domain;
 using Assets.Scripts.Data.Persistence;
+using Assets.Scripts.Aquarium.FishTanks;
+using Assets.Scripts.Aquarium.Domain;
 
 public class DecorationPersistence : MonoBehaviour, IDataPersistence
 {
@@ -13,10 +15,10 @@ public class DecorationPersistence : MonoBehaviour, IDataPersistence
 
     public void LoadData(GameData data)
     {
-        if (data.Decoration == null)
-            data.Decoration = new DecorationSaveData();
+        data.Decoration ??= new();
+        data.Tanks ??= new();
 
-        placementController.LoadPlacedFurniture(data.Decoration.placedFurniture, itemDatabase);
+        placementController.LoadPlacedFurniture(data.Decoration.placedFurniture, itemDatabase, data);
         placementController.LoadFixedFurniture(data.Decoration.fixedFurniture);
 
         inventoryManager.LoadInventory(data.Decoration.inventory, itemDatabase);
@@ -28,8 +30,8 @@ public class DecorationPersistence : MonoBehaviour, IDataPersistence
 
     public void SaveData(ref GameData data)
     {
-        if (data.Decoration == null)
-            data.Decoration = new DecorationSaveData();
+        data.Decoration ??= new();
+        data.Tanks ??= new();
 
         placementController.GetPlacedFurnitureSaveData(data.Decoration.placedFurniture);
         placementController.GetFixedFurnitureSaveData(data.Decoration.fixedFurniture);
@@ -39,5 +41,17 @@ public class DecorationPersistence : MonoBehaviour, IDataPersistence
         shopManager.GetPurchasedItemsSaveData(data.Decoration.purchasedItemIDs);
 
         roomGrid.GetFloorSaveData(data.Decoration.baseFloor, data.Decoration.additionalFloor, itemDatabase);
+
+        data.Tanks.Clear();
+
+        FishTank[] fishTanks = FindObjectsByType<FishTank>(FindObjectsSortMode.None);
+        foreach (FishTank fishTank in fishTanks)
+        {
+            if (fishTank.Tank == null)
+                continue;
+
+            string tankId = fishTank.Tank.Id.ToString();
+            data.Tanks[tankId] = new(fishTank.Tank);
+        }
     }
 }
