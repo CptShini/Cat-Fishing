@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using Unity.Cinemachine;
+using System.Collections;
 
 public class RoomCameraZoom : MonoBehaviour
 {
@@ -13,6 +14,11 @@ public class RoomCameraZoom : MonoBehaviour
 
     [Header("Zoom")]
     [SerializeField] private float padding = 1.2f;
+    [SerializeField] private float smoothTime = 0.35f;
+
+    private Coroutine zoomCoroutine;
+    private float zoomVelocity;
+    private Vector3 positionVelocity;
 
     private void Awake()
     {
@@ -48,10 +54,53 @@ public class RoomCameraZoom : MonoBehaviour
 
         float targetSize = Mathf.Max(verticalSize, horizontalSize) * padding;
 
-        decorationCamera.Lens.OrthographicSize = targetSize;
+        Vector3 targetPosition = new Vector3(center.x, center.y, playerCamera.transform.position.z);
 
-        // center deco camera on the room
-        decorationCamera.transform.position = new Vector3(center.x, center.y, playerCamera.transform.position.z);
+        if (zoomCoroutine != null)
+            StopCoroutine(zoomCoroutine);
+
+        zoomVelocity = 0f;
+        positionVelocity = Vector3.zero;
+
+        zoomCoroutine = StartCoroutine(SmoothZoom(targetSize, targetPosition));
+    }
+
+    private IEnumerator SmoothZoom(float targetSize, Vector3 targetPosition)
+    {
+        while (true)
+        {
+            decorationCamera.Lens.OrthographicSize = Mathf.SmoothDamp(
+                decorationCamera.Lens.OrthographicSize,
+                targetSize,
+                ref zoomVelocity,
+                smoothTime
+            );
+
+            decorationCamera.transform.position = Vector3.SmoothDamp(
+                decorationCamera.transform.position,
+                targetPosition,
+                ref positionVelocity,
+                smoothTime
+            );
+
+            float sizeDifference = Mathf.Abs(
+                decorationCamera.Lens.OrthographicSize - targetSize
+            );
+
+            float positionDifference = Vector3.Distance(
+                decorationCamera.transform.position,
+                targetPosition
+            );
+
+            if (sizeDifference < 0.01f && positionDifference < 0.01f)
+            {
+                decorationCamera.Lens.OrthographicSize = targetSize;
+                decorationCamera.transform.position = targetPosition;
+                yield break;
+            }
+
+            yield return null;
+        }
     }
 
     public void ExitDecorationMode()
