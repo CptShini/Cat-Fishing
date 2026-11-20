@@ -15,6 +15,8 @@ namespace Assets.Scripts.Management
     {
         [Header("TextFields")]
         [SerializeField] private TextMeshProUGUI tankEntertainmentText;
+        [SerializeField] private TextMeshProUGUI decorEntertainmentText;
+
         [SerializeField] private TextMeshProUGUI sumEntertainmentText;
 
 
@@ -89,6 +91,7 @@ namespace Assets.Scripts.Management
         private void SetResults()
         {
             tankEntertainmentText.text = $"{_entertainmentValues[EntertainmentContributor.Tank]:F1}";
+            decorEntertainmentText.text = $"{_entertainmentValues[EntertainmentContributor.Decor]:F1}";
             sumEntertainmentText.text = $"{_entertainmentSum:F1}";
             
             currentCrowdText.text = _currentCrowd.ToString();

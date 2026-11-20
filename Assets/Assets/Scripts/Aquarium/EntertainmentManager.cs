@@ -32,6 +32,7 @@ namespace Assets.Scripts.Aquarium
         {
             float entertainmentSum = _fishTanks.Sum(ft => ft.Tank.Entertainment);
             _entertainmentValues[EntertainmentContributor.Tank] = entertainmentSum;
+            Debug.Log(entertainmentSum);
         }
 
         private void HandlePlacedFurniture(ItemSO item)
