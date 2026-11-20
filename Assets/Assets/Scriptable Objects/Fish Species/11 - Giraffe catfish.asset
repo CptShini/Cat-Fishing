@@ -15,7 +15,9 @@ MonoBehaviour:
   <Id>k__BackingField: 11
   <Name>k__BackingField: giraffe catfish
   <LatinName>k__BackingField: Auchenoglanis occidentalis
-  <Biome>k__BackingField: Biome 1
+  <Description>k__BackingField: I thought the neck would be longer...
+  <Rarity>k__BackingField: 7
+  <Biome>k__BackingField: 320
   <Icon>k__BackingField: {fileID: 0}
   <CatchPattern>k__BackingField: {fileID: 11400000, guid: 17e7158255461eb45aa02070b9aa64dd, type: 2}
   <Weight>k__BackingField:

@@ -15,8 +15,10 @@ MonoBehaviour:
   <Id>k__BackingField: 3
   <Name>k__BackingField: Oil catfish
   <LatinName>k__BackingField: Duringlanis perugiae
-  <Biome>k__BackingField: Biome 1
-  <Icon>k__BackingField: {fileID: 0}
+  <Description>k__BackingField: So is this where the medication come from?
+  <Rarity>k__BackingField: 3
+  <Biome>k__BackingField: 48
+  <Icon>k__BackingField: {fileID: -932955607499960440, guid: 734cf2ae92083c54daf6009c8a14db41, type: 3}
   <CatchPattern>k__BackingField: {fileID: 11400000, guid: 9f617953a16fc7f40a50368a3a60f750, type: 2}
   <Weight>k__BackingField:
     Min: 0.2

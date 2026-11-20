@@ -15,7 +15,10 @@ MonoBehaviour:
   <Id>k__BackingField: 12
   <Name>k__BackingField: Electric catfish
   <LatinName>k__BackingField: Malapterurus electricus
-  <Biome>k__BackingField: Biome 1
+  <Description>k__BackingField: This is highly electic if provoced. and if it have
+    had enough development time.
+  <Rarity>k__BackingField: 6
+  <Biome>k__BackingField: 256
   <Icon>k__BackingField: {fileID: 0}
   <CatchPattern>k__BackingField: {fileID: 11400000, guid: b4367048005f42c49a5dcae6c225d168, type: 2}
   <Weight>k__BackingField:

@@ -15,7 +15,10 @@ MonoBehaviour:
   <Id>k__BackingField: 9
   <Name>k__BackingField: European catfish
   <LatinName>k__BackingField: Silurus glanis
-  <Biome>k__BackingField: Biome 1
+  <Description>k__BackingField: Wildly territorial and procective of its home, while
+    also wanting it dispanded
+  <Rarity>k__BackingField: 8
+  <Biome>k__BackingField: 136
   <Icon>k__BackingField: {fileID: 0}
   <CatchPattern>k__BackingField: {fileID: 11400000, guid: ca4f727070efc2a4aa21cc0198d45d25, type: 2}
   <Weight>k__BackingField:

@@ -15,7 +15,10 @@ MonoBehaviour:
   <Id>k__BackingField: 6
   <Name>k__BackingField: Giant mekong catfish
   <LatinName>k__BackingField: Pangasianodon gigas
-  <Biome>k__BackingField: Biome 1
+  <Description>k__BackingField: The biggest their is. Legends says that this fish
+    ate all others and left only catfish in the sea.
+  <Rarity>k__BackingField: 10
+  <Biome>k__BackingField: 320
   <Icon>k__BackingField: {fileID: 0}
   <CatchPattern>k__BackingField: {fileID: 11400000, guid: a4dc4bdbfe8502d4184b719d8bf60e26, type: 2}
   <Weight>k__BackingField:
