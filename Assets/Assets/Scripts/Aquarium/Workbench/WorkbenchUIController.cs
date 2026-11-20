@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class WorkbenchUIController : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class WorkbenchUIController : MonoBehaviour
     
     [SerializeField] private DecorationGridVisuals gridVisuals;
     [SerializeField] private PlacementController placementController;
+
+    [SerializeField] private GameObject inventoryPanel;
 
     public bool IsOpen { get; private set; }
     
@@ -21,6 +24,16 @@ public class WorkbenchUIController : MonoBehaviour
     {
         panel.SetActive(false);
         IsOpen = false;
+    }
+
+    public void HideInventory()
+    {
+        inventoryPanel.SetActive(false);
+    }
+
+    public void ShowInventory()
+    {
+        inventoryPanel.SetActive(true);
     }
 
     public void Open()
@@ -39,7 +52,7 @@ public class WorkbenchUIController : MonoBehaviour
     {
         if (placementController != null && placementController.IsPlacingItem)
         {
-            return;
+            placementController.CancelPlacement();
         }
 
         placementController.ExitDecorationMode();

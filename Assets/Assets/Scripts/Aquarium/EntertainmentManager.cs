@@ -24,12 +24,27 @@ namespace Assets.Scripts.Aquarium
                 fishTank.TankChanged.AddListener(TanksChanged);
             }
             TanksChanged();
+            PlacementController.Instance.OnPlaced.AddListener(HandlePlacedFurniture);
+            PlacementController.Instance.OnPickedUp.AddListener(HandlePickedUpFurniture);
         }
 
         private void TanksChanged()
         {
             float entertainmentSum = _fishTanks.Sum(ft => ft.Tank.Entertainment);
             _entertainmentValues[EntertainmentContributor.Tank] = entertainmentSum;
+            Debug.Log(entertainmentSum);
+        }
+
+        private void HandlePlacedFurniture(ItemSO item)
+        {
+            _entertainmentValues[EntertainmentContributor.Decor] += item.EntertainmentValue;
+            Debug.Log(_entertainmentValues[EntertainmentContributor.Decor]);
+        }
+
+        private void HandlePickedUpFurniture(ItemSO item)
+        {
+            _entertainmentValues[EntertainmentContributor.Decor] -= item.EntertainmentValue;
+            Debug.Log(_entertainmentValues[EntertainmentContributor.Decor]);
         }
 
         public void LoadData(GameData data)
@@ -41,6 +56,7 @@ namespace Assets.Scripts.Aquarium
         public void SaveData(ref GameData data)
         {
             data.EntertainmentValues[EntertainmentContributor.Tank] = _entertainmentValues[EntertainmentContributor.Tank];
+            data.EntertainmentValues[EntertainmentContributor.Decor] = _entertainmentValues[EntertainmentContributor.Decor];
         }
     }
 }

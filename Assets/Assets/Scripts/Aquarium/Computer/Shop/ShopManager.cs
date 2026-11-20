@@ -17,14 +17,8 @@ public class ShopManager : MonoBehaviour
 
     private readonly List<ShopSlot> spawnedSlots = new();
 
-    public bool IsPurchased(ItemSO itemSO)
-    {
-        // you can buy floor tiles multiple times
-        if (itemSO == null || itemSO.itemType == ItemType.FloorTile)
-            return false;
-
-        return purchasedItems.Contains(itemSO);
-    }
+    public bool IsPurchased(ItemSO itemSO) => 
+        itemSO != null && purchasedItems.Contains(itemSO);
 
     public void PopulateShopItems(List<ShopItems> shopItems)
     {
@@ -51,20 +45,20 @@ public class ShopManager : MonoBehaviour
 
     public void TryBuyItem(ItemSO itemSO, int price)
     {
-        if (itemSO.itemType == ItemType.Furniture && IsPurchased(itemSO))
+        /*if (itemSO.itemType == ItemType.Furniture && IsPurchased(itemSO))
         {
             Debug.Log("Already purchased: " + itemSO.itemName);
             SFXManager.Instance.Play(SFXId.AlreadyPurchased);
             return;
-        }
+        }*/
 
         if (!GoldManager.Instance.SpendGold(price))
             return;
 
         inventoryManager.AddItem(itemSO);
         
-        if (itemSO.itemType == ItemType.Furniture)
-            purchasedItems.Add(itemSO);
+        /*if (itemSO.itemType == ItemType.Furniture)
+            purchasedItems.Add(itemSO);*/
         
         RefreshShopSlots();
     }
@@ -84,7 +78,7 @@ public class ShopManager : MonoBehaviour
 
         foreach (ItemSO item in purchasedItems)
         {
-            if (item != null && item.itemType != ItemType.FloorTile)
+            if (item && item.itemType != ItemType.FloorTile)
                 saveData.Add(item.itemID);
         }
     }

@@ -10,6 +10,7 @@ public class RoomFixedFurniture : MonoBehaviour
 
     [Header("Placement")]
     public bool blocksPlacement = true;
+    public bool isDoor = false;
 
     [HideInInspector] public Vector3Int currentOrigin;
 

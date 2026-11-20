@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using Assets.Scripts.Data.Domain;
+using Assets.Scripts.Data.Domain.TankDecor;
 using Assets.Scripts.Data.Persistence;
 using Assets.Scripts.Fishies.Domain;
 using Assets.Scripts.Helpers;
@@ -14,6 +15,8 @@ namespace Assets.Scripts.Management
     {
         [Header("TextFields")]
         [SerializeField] private TextMeshProUGUI tankEntertainmentText;
+        [SerializeField] private TextMeshProUGUI decorEntertainmentText;
+
         [SerializeField] private TextMeshProUGUI sumEntertainmentText;
 
 
@@ -30,7 +33,9 @@ namespace Assets.Scripts.Management
 
         [Header("Other")]
         [SerializeField] private FishSpeciesDatabase fishSpeciesDatabase;
-        [SerializeField] private FishReportSlot slotPrefab;
+        [SerializeField] private TankDecorationTypeDatabase tankDecorationTypeDatabase;
+
+        [SerializeField] private CollectibleReportSlot slotPrefab;
         [SerializeField] private GameObject grid;
 
         private float _entertainmentSum;
@@ -43,20 +48,27 @@ namespace Assets.Scripts.Management
 
         private Dictionary<EntertainmentContributor, float> _entertainmentValues;
         private IEnumerable<Fish> _collectedFish;
+        private IEnumerable<TankDecoration> _collectedTankDecorations;
         
         private void Start()
         {
-            AddFishToGrid();
+            AddCollectibleToGrid();
             Calculate();
             SetResults();
         }
 
-        private void AddFishToGrid()
+        private void AddCollectibleToGrid()
         {
             foreach (var fish in _collectedFish)
             {
-                FishReportSlot slot = Instantiate(slotPrefab, grid.transform, false);
-                slot.Setup(fish);
+                CollectibleReportSlot slot = Instantiate(slotPrefab, grid.transform, false);
+                slot.Setup(fish.Species.Name, fish.Species.Icon);
+            }
+
+            foreach (var tankDecor in _collectedTankDecorations)
+            {
+                CollectibleReportSlot slot = Instantiate(slotPrefab, grid.transform, false);
+                slot.Setup(tankDecor.Type.Name, tankDecor.Type.Icon);
             }
         }
 
@@ -79,6 +91,7 @@ namespace Assets.Scripts.Management
         private void SetResults()
         {
             tankEntertainmentText.text = $"{_entertainmentValues[EntertainmentContributor.Tank]:F1}";
+            decorEntertainmentText.text = $"{_entertainmentValues[EntertainmentContributor.Decor]:F1}";
             sumEntertainmentText.text = $"{_entertainmentSum:F1}";
             
             currentCrowdText.text = _currentCrowd.ToString();
@@ -112,6 +125,7 @@ namespace Assets.Scripts.Management
             
             _entertainmentValues = data.EntertainmentValues;
             _collectedFish = data.Collection.Select(kvp => new Fish(kvp.Value.Fish, fishSpeciesDatabase));
+            _collectedTankDecorations = data.DailyTankDecorations.Select(kvp => new TankDecoration(kvp.Value, tankDecorationTypeDatabase));
         }
 
         public void SaveData(ref GameData data)
@@ -120,6 +134,8 @@ namespace Assets.Scripts.Management
             
             data.CrowdScore = _currentCrowdScore;
             data.CrowdHistory = _crowdHistory.ToArray();
+
+            data.DailyTankDecorations.Clear();
         }
     }
 }

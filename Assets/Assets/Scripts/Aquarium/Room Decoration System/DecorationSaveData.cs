@@ -46,6 +46,7 @@ public class AdditionalFloorSaveData
 public class PlacedFurnitureSaveData
 {
     public string itemID;
+    public string instanceID;
 
     public int x;
     public int y;

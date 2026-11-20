@@ -6,6 +6,8 @@ using Assets.Scripts.Audio;
 using Assets.Scripts.Audio.SFX;
 using UnityEngine.Events;
 using NavMeshPlus.Components;
+using Assets.Scripts.Data.Domain;
+using Assets.Scripts.Aquarium.FishTanks;
 
 public class PlacementController : MonoBehaviour
 {
@@ -17,6 +19,7 @@ public class PlacementController : MonoBehaviour
     [SerializeField] private Transform placedFurnitureRoot;
     [SerializeField] private Camera mainCamera;
     [SerializeField] private DecorationGridVisuals gridVisuals;
+    [SerializeField] private RoomCameraZoom roomCameraZoom;
 
     [Header("Fixed Furniture")]
     private RoomFixedFurniture selectedFixedFurniture;
@@ -42,8 +45,8 @@ public class PlacementController : MonoBehaviour
 
     private bool canPlace;
 
-    public readonly UnityEvent OnPlaced = new();
-    public readonly UnityEvent OnPickedUp = new();
+    public readonly UnityEvent<ItemSO> OnPlaced = new();
+    public readonly UnityEvent<ItemSO> OnPickedUp = new();
     public bool IsPlacingItem => selectedItem != null || selectedFixedFurniture != null;
 
     private bool isDecorationMode = false;
@@ -147,6 +150,7 @@ public class PlacementController : MonoBehaviour
             return;
 
         selectedItem = itemSO;
+        WorkbenchUIController.Instance.HideInventory();
 
         // FLOOR TILE
         if (itemSO.itemType == ItemType.FloorTile)
@@ -233,19 +237,43 @@ public class PlacementController : MonoBehaviour
 
     private void PickUpPlacedFurniture(PlacedFurniture furniture)
     {
+        // check if picked up furniture is fish tank
+        FishTank fishTank = furniture.GetComponentInChildren<FishTank>(true);
+
+        // add furniture to inventory
         if (!inventory.AddItem(furniture.itemSO))
             return;
 
+        // if it is tank then fish need to be transfered to collection
+        if (fishTank != null)
+        {
+            FishCollectionManager.Instance.AddRange(fishTank.Tank.Fishes);
+        }
+
+        // delete furniture from grid
         if (furniture.itemSO.blocksPlacement)
         {
             roomGrid.UnregisterObject(furniture.origin, furniture.currentSize);
         }
 
         gridVisuals.UnregisterPlacedFurniture(furniture);
-
+        OnPickedUp.Invoke(furniture.itemSO);
+        
         Destroy(furniture.gameObject);
 
-        OnPickedUp.Invoke();
+        
+    }
+
+    private void InitializePlacedFurnitureComponents(GameObject placedObject, PlacedFurniture furniture, GameData gameData)
+    {
+        MonoBehaviour[] components = placedObject.GetComponentsInChildren<MonoBehaviour>(true);
+
+        foreach (MonoBehaviour component in components)
+        {
+            if (component is not IPlacedFurnitureInitializer initializer) continue;
+            
+            initializer.InitializePlacedFurniture(furniture, gameData);
+        }
     }
 
     private void UpdateFixedFurniturePosition()
@@ -261,7 +289,14 @@ public class PlacementController : MonoBehaviour
 
         selectedFixedFurniture.transform.position = placementPosition;
 
-        canPlace = roomGrid.CanPlace(currentCell, currentSize, selectedFixedFurniture.blocksPlacement);
+        if (selectedFixedFurniture.isDoor)
+        {
+            canPlace = roomGrid.CanPlaceDoor(currentCell, currentSize, selectedFixedFurniture.blocksPlacement);
+        }
+        else
+        {
+            canPlace = roomGrid.CanPlace(currentCell, currentSize, selectedFixedFurniture.blocksPlacement);
+        }
 
         gridVisuals.ShowFootprint(currentCell, currentSize, canPlace);
     }
@@ -312,8 +347,10 @@ public class PlacementController : MonoBehaviour
             if (!placed)
                 return;
 
+            roomCameraZoom.UpdateZoom();
+
             inventory.RemoveItem(selectedItem);
-            OnPlaced.Invoke();
+            OnPlaced.Invoke(selectedItem);
             // you can place floor tiles until you run out of them
             if (!inventory.HasItem(selectedItem))
             {
@@ -339,6 +376,9 @@ public class PlacementController : MonoBehaviour
         }
 
         furniture.Initialize(selectedItem, currentCell, currentSize);
+
+        InitializePlacedFurnitureComponents(placedObject, furniture, null);
+
         gridVisuals.RegisterPlacedFurniture(furniture);
 
         FurnitureSortingUtility.ApplySorting(placedObject, selectedItem);
@@ -351,7 +391,7 @@ public class PlacementController : MonoBehaviour
         inventory.RemoveItem(selectedItem);
 
         Debug.Log("Placed item: " + selectedItem.itemName);
-        OnPlaced.Invoke();
+        OnPlaced.Invoke(selectedItem);
         SFXManager.Instance.Play(SFXId.PlacementSuccess);
 
         CancelPlacement();
@@ -364,7 +404,7 @@ public class PlacementController : MonoBehaviour
 
         RoomFixedFurniture furniture = selectedFixedFurniture;
 
-        if (furniture.blocksPlacement)
+        if (furniture.blocksPlacement || furniture.isDoor)
         {
             roomGrid.RegisterObject(currentCell, currentSize);
         }
@@ -412,7 +452,7 @@ public class PlacementController : MonoBehaviour
         {
             selectedFixedFurniture.transform.position = fixedFurnitureOriginalPosition;
 
-            if (selectedFixedFurniture.blocksPlacement)
+            if (selectedFixedFurniture.blocksPlacement || selectedFixedFurniture.isDoor)
             {
                 roomGrid.RegisterObject(fixedFurnitureOriginalOrigin, selectedFixedFurniture.size);
             }
@@ -430,6 +470,11 @@ public class PlacementController : MonoBehaviour
         ghostObject = null;
         selectedItem = null;
         gridVisuals.HideFootprint();
+
+        if (isDecorationMode && WorkbenchUIController.Instance != null)
+        {
+            WorkbenchUIController.Instance.ShowInventory();
+        }
     }
 
     private void SetupFurnitureCollider(GameObject furniture, ItemSO item)
@@ -478,7 +523,7 @@ public class PlacementController : MonoBehaviour
         currentSize = furniture.size;
 
         // unregister the furniture from the grid
-        if (furniture.blocksPlacement)
+        if (furniture.blocksPlacement || furniture.isDoor)
         {
             roomGrid.UnregisterObject(fixedFurnitureOriginalOrigin, currentSize);
         }
@@ -500,7 +545,7 @@ public class PlacementController : MonoBehaviour
 
 
     // FOR SAVE
-    public void GetPlacedFurnitureSaveData(System.Collections.Generic.List<PlacedFurnitureSaveData> saveData)
+    public void GetPlacedFurnitureSaveData(List<PlacedFurnitureSaveData> saveData)
     {
         saveData.Clear();
 
@@ -514,12 +559,13 @@ public class PlacementController : MonoBehaviour
             saveData.Add(new PlacedFurnitureSaveData
             {
                 itemID = furniture.itemSO.itemID,
+                instanceID = furniture.instanceID,
                 x = furniture.origin.x,
                 y = furniture.origin.y,
             });
         }
     }
-    public void LoadPlacedFurniture(System.Collections.Generic.List<PlacedFurnitureSaveData> saveData, ItemDatabase database)
+    public void LoadPlacedFurniture(List<PlacedFurnitureSaveData> saveData, ItemDatabase database, GameData gameData)
     {
         // delete previous
         foreach (Transform child in placedFurnitureRoot)
@@ -560,13 +606,14 @@ public class PlacementController : MonoBehaviour
 
             SetupFurnitureCollider(placedObject, item);
 
-            PlacedFurniture furniture =
-                placedObject.GetComponent<PlacedFurniture>();
+            PlacedFurniture furniture = placedObject.GetComponent<PlacedFurniture>();
 
             if (furniture == null)
                 furniture = placedObject.AddComponent<PlacedFurniture>();
 
-            furniture.Initialize(item, origin, item.size);
+            furniture.Initialize(item, origin, item.size, saved.instanceID);
+
+            InitializePlacedFurnitureComponents(placedObject, furniture, gameData);
 
             if (item.blocksPlacement)
                 roomGrid.RegisterObject(origin, item.size);
@@ -616,7 +663,7 @@ public class PlacementController : MonoBehaviour
 
                 Vector3Int oldOrigin = furniture.GetOrigin(roomGrid.Grid);
 
-                if (furniture.blocksPlacement)
+                if (furniture.blocksPlacement || furniture.isDoor)
                     roomGrid.UnregisterObject(oldOrigin, furniture.size);
 
                 gridVisuals.UnregisterFixedFurniture(furniture);
@@ -630,7 +677,7 @@ public class PlacementController : MonoBehaviour
 
                 furniture.currentOrigin = newOrigin;
 
-                if (furniture.blocksPlacement)
+                if (furniture.blocksPlacement || furniture.isDoor)
                     roomGrid.RegisterObject(newOrigin, furniture.size);
 
                 gridVisuals.RegisterFixedFurniture(furniture, newOrigin);
@@ -675,7 +722,7 @@ public class PlacementController : MonoBehaviour
             Vector3Int origin = furniture.GetOrigin(roomGrid.Grid);
             furniture.currentOrigin = origin;
 
-            if (furniture.blocksPlacement)
+            if (furniture.blocksPlacement || furniture.isDoor)
                 roomGrid.RegisterObject(origin, furniture.size);
 
             gridVisuals.RegisterFixedFurniture(furniture, origin);

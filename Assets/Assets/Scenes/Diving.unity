@@ -9433,6 +9433,7 @@ GameObject:
   m_Component:
   - component: {fileID: 751409321}
   - component: {fileID: 751409322}
+  - component: {fileID: 751409323}
   m_Layer: 0
   m_Name: Biome 1
   m_TagString: Untagged
@@ -9456,6 +9457,7 @@ Transform:
   - {fileID: 960904383}
   - {fileID: 700313424}
   - {fileID: 1460074594}
+  - {fileID: 792497594}
   m_Father: {fileID: 1073803191}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &751409322
@@ -9489,6 +9491,28 @@ MonoBehaviour:
   - {fileID: 987462254}
   - {fileID: 1579087981}
   - {fileID: 1573483700}
+--- !u!114 &751409323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 751409320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab8b34d5c6266e94c87d4c056489f6f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.Spawning.TankDecorationSpawner
+  tankDecorPrefab: {fileID: 1838663978287374512, guid: 5e2514464e01e1840b8b703dc1d89a32, type: 3}
+  spawnCount:
+    Min: 2
+    Max: 2
+  spawnList:
+  - DecorType: {fileID: 11400000, guid: 15d9ea4a8d48c0841b13ff288e901197, type: 2}
+  - DecorType: {fileID: 11400000, guid: 7f5678b18e8ca7f4899c1fd3ff11fe63, type: 2}
+  spawnPoints:
+  - {fileID: 1419347716}
+  - {fileID: 2122421507}
 --- !u!1 &756814154
 GameObject:
   m_ObjectHideFlags: 0
@@ -10332,6 +10356,39 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1348146673}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &792497593
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 792497594}
+  m_Layer: 0
+  m_Name: Decor Spawn Points
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &792497594
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 792497593}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1419347716}
+  - {fileID: 2122421507}
+  m_Father: {fileID: 751409321}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &811714363
 GameObject:
@@ -22489,7 +22546,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 234ce3336e2b4536b7efdc05462514e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Helpers.DebugDrawer
-  EnableDebug: 1
+  EnableDebug: 0
   Fish_Perception: 0
   Fish_Perception_DrawCircle: 1
   Fish_Perception_DrawReactionTime: 1
@@ -25896,6 +25953,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8487722080828036614, guid: 822614b282bb6534fa6d413c6eec5abd, type: 3}
   m_PrefabInstance: {fileID: 2016825500}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1419347715
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1419347716}
+  m_Layer: 0
+  m_Name: 1 - Decor - SP (0)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1419347716
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1419347715}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.04, y: -3.51, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 792497594}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1428424536
 GameObject:
   m_ObjectHideFlags: 0
@@ -37291,6 +37379,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8487722080828036614, guid: 822614b282bb6534fa6d413c6eec5abd, type: 3}
   m_PrefabInstance: {fileID: 2079947535}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2122421506
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2122421507}
+  m_Layer: 0
+  m_Name: 1 - Decor - SP (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2122421507
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2122421506}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 8.92, y: 5.54, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 792497594}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2131515435
 GameObject:
   m_ObjectHideFlags: 0

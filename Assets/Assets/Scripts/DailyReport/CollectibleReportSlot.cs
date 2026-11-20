@@ -3,21 +3,20 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class FishReportSlot : MonoBehaviour
+public class CollectibleReportSlot : MonoBehaviour
 {
-    private Fish fish;
-
+    private string _name;
     [SerializeField] private Image image;
     [SerializeField] private TextMeshProUGUI text;
 
     private void Start()
     {
-        text.text = $"{fish.Species.Name}";
+        text.text = $"{_name}";
     }
 
-    public void Setup(Fish fish)
+    public void Setup(string name, Sprite icon)
     {
-        this.fish = fish;
-        image.sprite = fish.Species.Icon;
+        this._name = name;
+        image.sprite = icon;
     }
 }

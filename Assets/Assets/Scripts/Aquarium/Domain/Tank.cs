@@ -21,9 +21,9 @@ namespace Assets.Scripts.Aquarium.Domain
 
         public readonly UnityEvent TankChanged = new();
 
-        public Tank(string name, int capacity)
+        public Tank(Guid id, string name, int capacity)
         {
-            Id = Guid.NewGuid();
+            Id = id; // so tank gets the same id as it is in PlacedFurniture
             Name = name;
             Capacity = capacity;
             Entertainment = 0f;
