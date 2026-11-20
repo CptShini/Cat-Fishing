@@ -23,7 +23,8 @@ public class CatchingMinigame : MonoBehaviour
 
     [SerializeField] private float wiggleRange = 25;
     [SerializeField] private float wiggleSpeed = 500;
-    [SerializeField] private float movingBackgroundSpeed = 0.5f;
+    [SerializeField] private float movingBubblesSpeed = 0.5f;
+    [SerializeField] private float movingBackgroundSpeed = 0.1f;
 
     float wiggleTime = 0;
     private bool flipped = false;
@@ -34,6 +35,7 @@ public class CatchingMinigame : MonoBehaviour
     [SerializeField] private GameObject minigameCanvas;
     [SerializeField] private RectTransform catAndFish;
     [SerializeField] private Image fishImage;
+    [SerializeField] private RawImage MovingBubbles;
     [SerializeField] private RawImage MovingBackground;
 
     private float contestThreshold = 5; // The value that contest must be to catch a fish succesfully
@@ -128,7 +130,11 @@ public class CatchingMinigame : MonoBehaviour
         );
 
         angleRad += Mathf.DeltaAngle(angleRad, newRotation);
+
+        angleRad = (angleRad + 360f) % 360f;
         
+        Debug.Log(angleRad);
+
         if(!flipped && 90f < (angleRad + 360) % 360 && (angleRad + 360) % 360 <= 268f)
         {
             flipped = true;
@@ -151,7 +157,7 @@ public class CatchingMinigame : MonoBehaviour
             Time.unscaledDeltaTime * 500);
             
         catAndFish.anchoredPosition = newPos;
-        //Debug.Log((newPos.normalized).ToString());
+        MovingBubbles.uvRect = new Rect(MovingBubbles.uvRect.position + targetPos * Time.unscaledDeltaTime * movingBubblesSpeed, MovingBubbles.uvRect.size);
         MovingBackground.uvRect = new Rect(MovingBackground.uvRect.position + targetPos * Time.unscaledDeltaTime * movingBackgroundSpeed, MovingBackground.uvRect.size);
     }
 

@@ -11285,6 +11285,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1797071284}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &828453176 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7162212648454799568, guid: c7fc9bcbb8773d74c9d7602515a8fab6, type: 3}
+  m_PrefabInstance: {fileID: 1611291960}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.RawImage
 --- !u!224 &829558232 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1686952069388820168, guid: a1f5dd710e0e41c4ea3fbad66bc9efee, type: 3}
@@ -30754,17 +30765,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1060727200789183359, guid: c7fc9bcbb8773d74c9d7602515a8fab6, type: 3}
   m_PrefabInstance: {fileID: 1611291960}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1611291962 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5245154769590202030, guid: c7fc9bcbb8773d74c9d7602515a8fab6, type: 3}
-  m_PrefabInstance: {fileID: 1611291960}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cca9e2d644debcf4ba81c0b314dcfd80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.StatBar
 --- !u!224 &1611291963 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3436959235962267018, guid: c7fc9bcbb8773d74c9d7602515a8fab6, type: 3}
@@ -32952,6 +32952,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1599726869}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1737724669 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7296056615623843322, guid: c7fc9bcbb8773d74c9d7602515a8fab6, type: 3}
+  m_PrefabInstance: {fileID: 1611291960}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e94868c06dda9ea4f829339a11ffb984, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.Bars.ColorChangeBar
 --- !u!1 &1771048139
 GameObject:
   m_ObjectHideFlags: 0
@@ -36536,12 +36547,14 @@ MonoBehaviour:
   inaccuracyPenalty: 5
   wiggleRange: 10
   wiggleSpeed: 20
-  movingBackgroundSpeed: 0.5
-  catchBar: {fileID: 1611291962}
+  movingBubblesSpeed: 0.5
+  movingBackgroundSpeed: 0.007
+  catchBar: {fileID: 1737724669}
   minigameCanvas: {fileID: 1611291966}
   catAndFish: {fileID: 1611291963}
   fishImage: {fileID: 1611291964}
-  MovingBackground: {fileID: 1611291965}
+  MovingBubbles: {fileID: 1611291965}
+  MovingBackground: {fileID: 828453176}
 --- !u!114 &2035162236
 MonoBehaviour:
   m_ObjectHideFlags: 0

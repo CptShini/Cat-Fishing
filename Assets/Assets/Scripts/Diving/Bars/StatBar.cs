@@ -6,7 +6,10 @@ namespace Assets.Scripts.Diving.Bars
 {
     public class StatBar : MonoBehaviour
     {
-        [SerializeField] private Image foreground;
+        [SerializeField] protected Image foreground;
+        [SerializeField] protected bool filledImage = true;
+        [SerializeField] protected bool vertical = true;
+        protected RectTransform rt;
         
         public float CurrentValue
         {
@@ -21,9 +24,20 @@ namespace Assets.Scripts.Diving.Bars
         public readonly UnityEvent<float, float> ValueChanged = new();
         public readonly UnityEvent BarEmpty = new();
         
-        private float _currentValue;
-        private float _minValue;
+        protected float _currentValue;
+        protected float _minValue;
         protected float MaxVal { get; private set; }
+
+        protected float maxLength;
+        protected float curLength;
+
+        void Awake()
+        {
+            rt = foreground.gameObject.GetComponent<RectTransform>();
+            maxLength = vertical ? rt.sizeDelta.y : rt.sizeDelta.x;
+            Debug.Log("AAHHH");
+            curLength = maxLength;
+        }
 
         public void SetMaxValue(float maxVal, float newVal = -1f)
         {
@@ -39,12 +53,25 @@ namespace Assets.Scripts.Diving.Bars
             if (_currentValue <= _minValue) BarEmpty.Invoke();
             
             _currentValue = Mathf.Clamp(_currentValue, _minValue, MaxVal);
-            UpdateFill();
+
+            if (filledImage)
+            {
+                UpdateFill();
+            }
+            else
+            {
+                UpdateSliced();
+            }           
             
             ValueChanged.Invoke(_currentValue, MaxVal);
         }
         
-        private void UpdateFill() =>
+        protected virtual void UpdateFill() =>
             foreground.fillAmount = _currentValue / MaxVal;
+        protected virtual void UpdateSliced()
+        {
+            curLength = maxLength * (CurrentValue / MaxVal);
+            rt.sizeDelta = new Vector2(rt.sizeDelta.x, curLength);
+        }
     }
 }
