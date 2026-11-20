@@ -1574,8 +1574,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.FishSpawning.FishSpawner
   fishPrefab: {fileID: 5206029193779855580, guid: 161b5c02739f62b4fb82a7e106416081, type: 3}
   spawnCount:
-    Min: 0
-    Max: 0
+    Min: 8
+    Max: 10
   spawnList:
   - Species: {fileID: 11400000, guid: a1c2bda1def9ae64c96c1a14e30539ea, type: 2}
     Weight: 1
@@ -17153,8 +17153,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.FishSpawning.FishSpawner
   fishPrefab: {fileID: 5206029193779855580, guid: 161b5c02739f62b4fb82a7e106416081, type: 3}
   spawnCount:
-    Min: 0
-    Max: 0
+    Min: 3
+    Max: 7
   spawnList:
   - Species: {fileID: 11400000, guid: a1c2bda1def9ae64c96c1a14e30539ea, type: 2}
     Weight: 2
@@ -18491,8 +18491,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.FishSpawning.FishSpawner
   fishPrefab: {fileID: 5206029193779855580, guid: 161b5c02739f62b4fb82a7e106416081, type: 3}
   spawnCount:
-    Min: 0
-    Max: 0
+    Min: 3
+    Max: 7
   spawnList:
   - Species: {fileID: 11400000, guid: e5ee08445d645884093d25dd2a282203, type: 2}
     Weight: 1
@@ -22550,8 +22550,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.FishSpawning.FishSpawner
   fishPrefab: {fileID: 5206029193779855580, guid: 161b5c02739f62b4fb82a7e106416081, type: 3}
   spawnCount:
-    Min: 0
-    Max: 0
+    Min: 5
+    Max: 8
   spawnList:
   - Species: {fileID: 11400000, guid: e5ee08445d645884093d25dd2a282203, type: 2}
     Weight: 2
