@@ -6,7 +6,6 @@ namespace Assets.Scripts.Aquarium.FishTanks.Interaction
     public class AquariumCursorMapper : MonoBehaviour
     {
         [SerializeField] private Camera renderCamera;
-        [SerializeField] private Camera uiCamera;
         [SerializeField] private RawImage rawImage;
 
         [field: SerializeField] public float InteractionPlaneZ { get; private set; }
@@ -17,9 +16,9 @@ namespace Assets.Scripts.Aquarium.FishTanks.Interaction
             
             RectTransform rectTransform = rawImage.rectTransform;
             if (!RectTransformUtility.RectangleContainsScreenPoint(
-                    rectTransform, screenPosition, uiCamera) ||
+                    rectTransform, screenPosition) ||
                 !RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                    rectTransform, screenPosition, uiCamera, out Vector2 localPoint))
+                    rectTransform, screenPosition, null, out Vector2 localPoint))
                 return false;
 
             Rect rect = rectTransform.rect;

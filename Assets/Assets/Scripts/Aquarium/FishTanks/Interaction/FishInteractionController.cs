@@ -1,4 +1,4 @@
-﻿using Assets.Scripts.Aquarium.Domain;
+﻿﻿using Assets.Scripts.Aquarium.Domain;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -17,14 +17,14 @@ namespace Assets.Scripts.Aquarium.FishTanks.Interaction
         public readonly UnityEvent<TankFish, Vector2> FeedFish = new();
         public readonly UnityEvent<Vector2> CleanAtPosition = new();
         
-        private AquariumCursorMapper _cursorMapper;
+        public AquariumCursorMapper CursorMapper { get; private set; }
         private FishDragHandler _dragHandler;
         private FishFeedingHandler _feedingHandler;
         private TankCleaningHandler _cleaningHandler;
 
         private void Awake()
         {
-            _cursorMapper = GetComponent<AquariumCursorMapper>();
+            CursorMapper = GetComponent<AquariumCursorMapper>();
             
             _dragHandler = GetComponent<FishDragHandler>();
             _dragHandler.OnDrop.AddListener(DropFish.Invoke);
@@ -66,6 +66,8 @@ namespace Assets.Scripts.Aquarium.FishTanks.Interaction
             }
         }
 
+        public void SetFeedMode() =>
+            SetMode(FishInteractionMode.FeedFish);
         public void SetMode(FishInteractionMode newMode)
         {
             if (Mode == newMode)
@@ -78,13 +80,14 @@ namespace Assets.Scripts.Aquarium.FishTanks.Interaction
 
         private void OnEnable()
         {
-            _cursorMapper.SetRenderCameraActive(true);
+            CursorMapper.SetRenderCameraActive(true);
         }
 
         private void OnDisable()
         {
-            _cursorMapper.SetRenderCameraActive(false);
+            CursorMapper.SetRenderCameraActive(false);
             _dragHandler.Drop();
+            Mode = FishInteractionMode.MoveFish;
         }
     }
 }

@@ -3367,6 +3367,30 @@ PrefabInstance:
       propertyPath: uiCamera
       value: 
       objectReference: {fileID: 519420031}
+    - target: {fileID: 6439897776731542268, guid: 1be1e419626099d4eb5d43e864fc6d0e, type: 3}
+      propertyPath: ShapeModule.type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6439897776731542268, guid: 1be1e419626099d4eb5d43e864fc6d0e, type: 3}
+      propertyPath: moveWithTransform
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6439897776731542268, guid: 1be1e419626099d4eb5d43e864fc6d0e, type: 3}
+      propertyPath: ShapeModule.radius.value
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6439897776731542268, guid: 1be1e419626099d4eb5d43e864fc6d0e, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6439897776731542268, guid: 1be1e419626099d4eb5d43e864fc6d0e, type: 3}
+      propertyPath: InitialModule.startSpeed.minScalar
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7809204709735406881, guid: 1be1e419626099d4eb5d43e864fc6d0e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8169978185349357716, guid: 1be1e419626099d4eb5d43e864fc6d0e, type: 3}
       propertyPath: m_Name
       value: Fish Tank View
@@ -5431,7 +5455,7 @@ RectTransform:
   m_Father: {fileID: 819506375}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 0.9915457}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -9572,7 +9596,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: -501.33032}
+  m_SizeDelta: {x: 0, y: -500}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1062363665
 MonoBehaviour:
@@ -9957,7 +9981,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 847128901}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.9915457
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -15015,10 +15039,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1058299127}
-        m_TargetAssemblyTypeName: Assets.Scripts.Aquarium.FishTank.FishTankUIController,
+      - m_Target: {fileID: 509394457}
+        m_TargetAssemblyTypeName: Assets.Scripts.Aquarium.FishTanks.Interaction.FishInteractionController,
           Assembly-CSharp
-        m_MethodName: Feed
+        m_MethodName: SetFeedMode
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

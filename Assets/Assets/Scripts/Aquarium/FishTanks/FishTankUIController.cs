@@ -35,7 +35,7 @@ namespace Assets.Scripts.Aquarium.FishTanks
         private void Start()
         {
             interactionController.DropFish.AddListener(OnFishDropped);
-            interactionController.FeedFish.AddListener(Feed);
+            interactionController.FeedFish.AddListener(OnFishFed);
             GoldManager.Instance.GoldChanged.AddListener(() => feedButton.interactable = GoldManager.Instance.HasEnoughGold(feedingPrice));
         }
 
@@ -64,24 +64,13 @@ namespace Assets.Scripts.Aquarium.FishTanks
             }
         }
 
-        public void AddFish(TankFish fish)
+        public void AddFish(TankFish fish, Vector2 mouseScreenPos)
         {
             if (!IsOpen) return;
             
             _currentTank.Tank.AddFish(fish);
-            spawner.SpawnFish(fish);
-            UpdateTankText();
-        }
-
-        public void Feed(TankFish fish, Vector2 cursorWorldPos)
-        {
-            if (!IsOpen || !GoldManager.Instance.SpendGold(feedingPrice)) return;
-            
-            feedParticles.transform.position = cursorWorldPos;
-            feedParticles.Play();
-            if (fish == null) return;
-            
-            fish.Feed();
+            interactionController.CursorMapper.TryGetWorldPosition(mouseScreenPos, out Vector2 mouseWorldPos);
+            spawner.SpawnFish(fish, mouseWorldPos);
             UpdateTankText();
         }
 
@@ -108,6 +97,18 @@ namespace Assets.Scripts.Aquarium.FishTanks
             _currentTank.Tank.RemoveFish(fish);
             spawner.RemoveFish(fish);
             FishCollectionManager.Instance.Add(fish);
+            UpdateTankText();
+        }
+        
+        private void OnFishFed(TankFish fish, Vector2 cursorWorldPos)
+        {
+            if (!IsOpen || !GoldManager.Instance.SpendGold(feedingPrice)) return;
+            
+            feedParticles.transform.position = cursorWorldPos;
+            feedParticles.Play();
+            if (fish == null) return;
+            
+            fish.Feed();
             UpdateTankText();
         }
 
