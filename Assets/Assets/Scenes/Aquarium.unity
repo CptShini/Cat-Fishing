@@ -3359,10 +3359,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1719816314491806682, guid: 1be1e419626099d4eb5d43e864fc6d0e, type: 3}
+    - target: {fileID: 297038355003459570, guid: 1be1e419626099d4eb5d43e864fc6d0e, type: 3}
       propertyPath: rawImage
       value: 
       objectReference: {fileID: 1154083801}
+    - target: {fileID: 297038355003459570, guid: 1be1e419626099d4eb5d43e864fc6d0e, type: 3}
+      propertyPath: uiCamera
+      value: 
+      objectReference: {fileID: 519420031}
     - target: {fileID: 8169978185349357716, guid: 1be1e419626099d4eb5d43e864fc6d0e, type: 3}
       propertyPath: m_Name
       value: Fish Tank View
@@ -3414,15 +3418,15 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: 1be1e419626099d4eb5d43e864fc6d0e, type: 3}
 --- !u!114 &509394457 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1719816314491806682, guid: 1be1e419626099d4eb5d43e864fc6d0e, type: 3}
+  m_CorrespondingSourceObject: {fileID: 4163567427321361667, guid: 1be1e419626099d4eb5d43e864fc6d0e, type: 3}
   m_PrefabInstance: {fileID: 509394456}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34318550ec674b41bd57b386841f32b5, type: 3}
+  m_Script: {fileID: 11500000, guid: 1c713d1d6b2f4771b09ed76137ab9cf8, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Aquarium.FishTank.FishGrabber
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Aquarium.FishTanks.Interaction.FishInteractionController
 --- !u!114 &509394458 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7988591388606497797, guid: 1be1e419626099d4eb5d43e864fc6d0e, type: 3}
@@ -9382,7 +9386,7 @@ MonoBehaviour:
   feedButton: {fileID: 1849684549}
   feedParticles: {fileID: 509394459}
   spawner: {fileID: 509394458}
-  grabber: {fileID: 509394457}
+  interactionController: {fileID: 509394457}
 --- !u!114 &1058299128
 MonoBehaviour:
   m_ObjectHideFlags: 0

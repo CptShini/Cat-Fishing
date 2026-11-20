@@ -1,4 +1,5 @@
 using Assets.Scripts.Aquarium.Domain;
+using Assets.Scripts.Aquarium.FishTanks.Interaction;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -23,7 +24,7 @@ namespace Assets.Scripts.Aquarium.FishTanks
         [Space]
         
         [SerializeField] private FishTankSpawner spawner;
-        [SerializeField] private FishGrabber grabber;
+        [SerializeField] private FishInteractionController interactionController;
 
         private FishTank _currentTank, _prevTank;
 
@@ -33,7 +34,8 @@ namespace Assets.Scripts.Aquarium.FishTanks
 
         private void Start()
         {
-            grabber.DropFish.AddListener(OnFishDropped);
+            interactionController.DropFish.AddListener(OnFishDropped);
+            interactionController.FeedFish.AddListener(Feed);
             GoldManager.Instance.GoldChanged.AddListener(() => feedButton.interactable = GoldManager.Instance.HasEnoughGold(feedingPrice));
         }
 
@@ -45,7 +47,7 @@ namespace Assets.Scripts.Aquarium.FishTanks
             
             panel.SetActive(true);
             IsOpen = true;
-            grabber.enabled = true;
+            interactionController.enabled = true;
 
             PauseController.IsGamePaused = true;
 
@@ -71,12 +73,15 @@ namespace Assets.Scripts.Aquarium.FishTanks
             UpdateTankText();
         }
 
-        public void Feed()
+        public void Feed(TankFish fish, Vector2 cursorWorldPos)
         {
             if (!IsOpen || !GoldManager.Instance.SpendGold(feedingPrice)) return;
             
-            _currentTank.Tank.Feed();
+            feedParticles.transform.position = cursorWorldPos;
             feedParticles.Play();
+            if (fish == null) return;
+            
+            fish.Feed();
             UpdateTankText();
         }
 
@@ -89,7 +94,7 @@ namespace Assets.Scripts.Aquarium.FishTanks
             
             panel.SetActive(false);
             IsOpen = false;
-            grabber.enabled = false;
+            interactionController.enabled = false;
             feedParticles.Stop();
             feedParticles.Clear();
 

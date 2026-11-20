@@ -45,12 +45,6 @@ namespace Assets.Scripts.Aquarium.Domain
             RecalculateEntertainment();
         }
 
-        public void Feed()
-        {
-            _fishes.ForEach(f => f.Feed());
-            RecalculateEntertainment();
-        }
-
         public void AddFish(TankFish tankFish)
         {
             _fishes.Add(tankFish);

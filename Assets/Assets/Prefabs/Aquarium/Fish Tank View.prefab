@@ -5779,7 +5779,11 @@ GameObject:
   m_Component:
   - component: {fileID: 8890437678621761349}
   - component: {fileID: 7988591388606497797}
-  - component: {fileID: 1719816314491806682}
+  - component: {fileID: 4163567427321361667}
+  - component: {fileID: 4383048486910114175}
+  - component: {fileID: 6476932593493639602}
+  - component: {fileID: 684578857743665617}
+  - component: {fileID: 297038355003459570}
   m_Layer: 0
   m_Name: Fish Tank View
   m_TagString: Untagged
@@ -5824,23 +5828,74 @@ MonoBehaviour:
   spawnPosRangeY:
     Min: -4
     Max: 4
---- !u!114 &1719816314491806682
+--- !u!114 &4163567427321361667
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8169978185349357716}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34318550ec674b41bd57b386841f32b5, type: 3}
+  m_Script: {fileID: 11500000, guid: 1c713d1d6b2f4771b09ed76137ab9cf8, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Aquarium.FishTank.FishGrabber
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Aquarium.FishTanks.Interaction.FishInteractionController
+--- !u!114 &4383048486910114175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8169978185349357716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04099de5768f424982eeff13a27d1da8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Aquarium.FishTanks.Interaction.FishDragHandler
   draggableLayer:
     serializedVersion: 2
     m_Bits: 131072
+--- !u!114 &6476932593493639602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8169978185349357716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9def0df812ff4f04b70a91fd1a82f635, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Aquarium.FishTanks.Interaction.FishFeedingHandler
+  feedingDistanceThreshold: 2
+--- !u!114 &684578857743665617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8169978185349357716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4875880f1ba449e295efbc802ef2474e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Aquarium.FishTanks.Interaction.TankCleaningHandler
+--- !u!114 &297038355003459570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8169978185349357716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4365148cf05942589ed34e1b6bdce6eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Aquarium.FishTanks.Interaction.AquariumCursorMapper
   renderCamera: {fileID: 6363290368962777674}
+  uiCamera: {fileID: 0}
   rawImage: {fileID: 0}
+  <InteractionPlaneZ>k__BackingField: 0
 --- !u!1 &9188011929987268978
 GameObject:
   m_ObjectHideFlags: 0
