@@ -11,15 +11,13 @@ namespace Assets.Scripts.Diving.Bars
 
         protected override void UpdateFill()
         {
-            foreground.fillAmount = _currentValue / MaxVal;
-            //foreground.color = Color.Lerp(minColor, maxColor, foreground.fillAmount);
-
+            base.UpdateFill();
+            foreground.color = Color.Lerp(minColor, maxColor, foreground.fillAmount);
         }
         protected override void UpdateSliced()
         {
+            base.UpdateSliced();
             float ratio = CurrentValue / MaxVal;
-            curLength = maxLength * ratio;
-            rt.sizeDelta = new Vector2(rt.sizeDelta.x, curLength);
             foreground.color = Color.Lerp(minColor, maxColor, ratio);
         }
     }

@@ -71,7 +71,7 @@ namespace Assets.Scripts.Diving.Bars
         protected virtual void UpdateSliced()
         {
             curLength = maxLength * (CurrentValue / MaxVal);
-            rt.sizeDelta = new Vector2(rt.sizeDelta.x, curLength);
+            rt.sizeDelta = vertical ? new Vector2(rt.sizeDelta.x, curLength) : new Vector2(curLength, rt.sizeDelta.y);
         }
     }
 }
