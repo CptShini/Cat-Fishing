@@ -15,7 +15,8 @@ MonoBehaviour:
   <Id>k__BackingField: 1
   <Name>k__BackingField: Violet cory
   <LatinName>k__BackingField: Hoplisoma simile
-  <Description>k__BackingField: 
+  <Description>k__BackingField: Despite the latin name, this fish is not metaphorically
+    a catfish, it's just a catfish.
   <Rarity>k__BackingField: 1
   <Biome>k__BackingField: 8
   <Icon>k__BackingField: {fileID: 1241098924550268165, guid: faa3d29b1d5727843a744c346c41bfaf, type: 3}

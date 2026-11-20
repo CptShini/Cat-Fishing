@@ -15,7 +15,10 @@ MonoBehaviour:
   <Id>k__BackingField: 8
   <Name>k__BackingField: Frog mouth catfish
   <LatinName>k__BackingField: Chaca chaca
-  <Biome>k__BackingField: Biome 1
+  <Description>k__BackingField: Its really more festive than it looks, as it chachas
+    and shakes it all about
+  <Rarity>k__BackingField: 3
+  <Biome>k__BackingField: 464
   <Icon>k__BackingField: {fileID: 0}
   <CatchPattern>k__BackingField: {fileID: 11400000, guid: 61738cef8cb9bd041b426e85f82f8fb5, type: 2}
   <Weight>k__BackingField:

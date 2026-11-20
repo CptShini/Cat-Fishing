@@ -15,15 +15,16 @@ MonoBehaviour:
   <Id>k__BackingField: 0
   <Name>k__BackingField: Flat Head Catfish
   <LatinName>k__BackingField: Pylodictis Olivaris
-  <Description>k__BackingField: 
-  <Rarity>k__BackingField: 1
-  <Biome>k__BackingField: 24
+  <Description>k__BackingField: Often confused with the star head catfish. Much to
+    the dismay of any screwed flat head catfish.
+  <Rarity>k__BackingField: 4
+  <Biome>k__BackingField: 160
   <Icon>k__BackingField: {fileID: 1541518512366775969, guid: 1e2484882d96f24489bf4c0eca395924, type: 3}
   <CatchPattern>k__BackingField: {fileID: 11400000, guid: fcb0eb18b19f283419f33ce26eb00aa8, type: 2}
   <Weight>k__BackingField:
     Min: 20
     Max: 60
-  <Strength>k__BackingField: 2
+  <Strength>k__BackingField: 4
   <Speed>k__BackingField: 10
   <Reaction>k__BackingField: 10
   <Perception>k__BackingField: 1

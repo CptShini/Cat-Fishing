@@ -14364,15 +14364,15 @@ MonoBehaviour:
   shopManager: {fileID: 1808507265}
   shopDecorItems:
   - itemSO: {fileID: 11400000, guid: 86a39cfba3bc4ed48a202cd8fc706f51, type: 2}
-    price: 20
+    price: 75
   - itemSO: {fileID: 11400000, guid: 0d8bf9a4d241a804ba06b95134eb2544, type: 2}
-    price: 15
+    price: 8
   - itemSO: {fileID: 11400000, guid: e1cde35ae38881142b48faed1e70840f, type: 2}
-    price: 5
+    price: 10
   - itemSO: {fileID: 11400000, guid: dcdb6ce2536275747a73b71381a6c771, type: 2}
-    price: 7
+    price: 5
   - itemSO: {fileID: 11400000, guid: 12a25f8cfedf91942a6913932258cdfb, type: 2}
-    price: 1
+    price: 20
   shopUpgradeItems:
   - itemSO: {fileID: 11400000, guid: 67ff7d0da0bc64e4b8fe61b0a0a8e46c, type: 2}
     price: 5

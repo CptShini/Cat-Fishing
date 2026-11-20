@@ -14,7 +14,7 @@ namespace Assets.Scripts.Data.Domain
     {
         public bool DayPassed = true;
         
-        public int Gold = 200;
+        public int Gold = 10;
         
         public float CrowdScore;
         public int[] CrowdHistory = new int[5];

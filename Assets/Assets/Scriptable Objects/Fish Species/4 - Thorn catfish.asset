@@ -15,7 +15,10 @@ MonoBehaviour:
   <Id>k__BackingField: 4
   <Name>k__BackingField: Thorn catfish
   <LatinName>k__BackingField: Pterodoras granulosus
-  <Biome>k__BackingField: Biome 1
+  <Description>k__BackingField: Once you really get to know it, you might get to
+    see the rose catfish.
+  <Rarity>k__BackingField: 4
+  <Biome>k__BackingField: 160
   <Icon>k__BackingField: {fileID: 0}
   <CatchPattern>k__BackingField: {fileID: 11400000, guid: 4943ad694b9884a4c9d19294a3b08876, type: 2}
   <Weight>k__BackingField:
