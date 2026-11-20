@@ -18,6 +18,7 @@ namespace Assets.Scripts.Aquarium.FishTanks
             tankCapacityText,
             tankEntertainmentText;
 
+        [SerializeField] private SpriteRenderer tankDirtyImage;
         [SerializeField] private Button feedButton;
         [SerializeField] private ParticleSystem feedParticles;
         
@@ -56,6 +57,11 @@ namespace Assets.Scripts.Aquarium.FishTanks
                 tankNameText.text = tank.Tank.Name;
                 UpdateTankText();
                 spawner.Clear();
+                feedParticles.Stop();
+                feedParticles.Clear();
+
+                float a = tank.Tank.Dirtiness / 10f * 0.9f;
+                tankDirtyImage.color = new(0, 1, 0, a);
             }
             
             foreach (TankFish fish in tank.Tank.Fishes)
@@ -84,8 +90,6 @@ namespace Assets.Scripts.Aquarium.FishTanks
             panel.SetActive(false);
             IsOpen = false;
             interactionController.enabled = false;
-            feedParticles.Stop();
-            feedParticles.Clear();
 
             PauseController.IsGamePaused = false;
         }

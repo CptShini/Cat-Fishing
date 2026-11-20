@@ -21,18 +21,23 @@ namespace Assets.Scripts.Aquarium.FishTanks.Interaction
 
         private void Awake() => _cursorMapper = GetComponent<AquariumCursorMapper>();
 
+        public void UpdateHover(Vector2 mousePosition)
+        {
+            if (!_cursorMapper.TryGetMouseRay(mousePosition, out var ray))
+                return;
+
+            AquariumFish hoveredFish = GetFishUnderMouse(ray);
+            hoveredFish?.Hovering();
+        }
+        
         public void Tick(Vector2 mousePosition, bool pressed, bool held, bool released)
         {
-            bool hasRay = _cursorMapper.TryGetMouseRay(mousePosition, out Ray ray);
-
-            AquariumFish hoveredFish = hasRay
-                ? GetFishUnderMouse(ray)
-                : null;
-
-            hoveredFish?.Hovering();
-
-            if (pressed && hoveredFish)
-                StartGrab(hoveredFish, mousePosition);
+            if (pressed && _cursorMapper.TryGetMouseRay(mousePosition, out var ray))
+            {
+                var hoveredFish = GetFishUnderMouse(ray);
+                if (hoveredFish)
+                    StartGrab(hoveredFish, mousePosition);
+            }
 
             if (held)
                 Drag(mousePosition);

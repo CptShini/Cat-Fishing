@@ -14,39 +14,39 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Fishies.CatchMinigame.FishCatchPattern
   UpMoves:
   - move: 2
-    duration: 0.7
+    duration: 1
     weight: 3
   - move: 1
-    duration: 0.7
+    duration: 1
     weight: 1
   UpRightMoves:
   - move: 3
-    duration: 0.7
+    duration: 1
     weight: 3
   - move: 2
-    duration: 0.7
+    duration: 1
     weight: 1
   RightMoves:
   - move: 4
-    duration: 0.7
+    duration: 1
     weight: 1
   DownRightMoves:
   - move: 5
-    duration: 0.7
+    duration: 1
     weight: 1
   DownMoves:
   - move: 6
-    duration: 0.7
+    duration: 1
     weight: 1
   DownLeftMoves:
   - move: 7
-    duration: 0.7
+    duration: 1
     weight: 1
   LeftMoves:
   - move: 0
-    duration: 0.7
+    duration: 1
     weight: 1
   UpLeftMoves:
   - move: 1
-    duration: 0.7
+    duration: 1
     weight: 1

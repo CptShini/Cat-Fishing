@@ -43,6 +43,9 @@ namespace Assets.Scripts.Aquarium.FishTanks.Interaction
                 return;
 
             Vector2 mousePosition = mouse.position.ReadValue();
+            
+            _dragHandler.UpdateHover(mousePosition);
+            
             switch (Mode)
             {
                 case FishInteractionMode.MoveFish:

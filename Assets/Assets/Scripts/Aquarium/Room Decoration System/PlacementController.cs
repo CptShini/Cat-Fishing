@@ -45,8 +45,8 @@ public class PlacementController : MonoBehaviour
 
     private bool canPlace;
 
-    public readonly UnityEvent OnPlaced = new();
-    public readonly UnityEvent OnPickedUp = new();
+    public readonly UnityEvent<ItemSO> OnPlaced = new();
+    public readonly UnityEvent<ItemSO> OnPickedUp = new();
     public bool IsPlacingItem => selectedItem != null || selectedFixedFurniture != null;
 
     private bool isDecorationMode = false;
@@ -257,10 +257,11 @@ public class PlacementController : MonoBehaviour
         }
 
         gridVisuals.UnregisterPlacedFurniture(furniture);
-
+        OnPickedUp.Invoke(furniture.itemSO);
+        
         Destroy(furniture.gameObject);
 
-        OnPickedUp.Invoke();
+        
     }
 
     private void InitializePlacedFurnitureComponents(GameObject placedObject, PlacedFurniture furniture, GameData gameData)
@@ -349,7 +350,7 @@ public class PlacementController : MonoBehaviour
             roomCameraZoom.UpdateZoom();
 
             inventory.RemoveItem(selectedItem);
-            OnPlaced.Invoke();
+            OnPlaced.Invoke(selectedItem);
             // you can place floor tiles until you run out of them
             if (!inventory.HasItem(selectedItem))
             {
@@ -390,7 +391,7 @@ public class PlacementController : MonoBehaviour
         inventory.RemoveItem(selectedItem);
 
         Debug.Log("Placed item: " + selectedItem.itemName);
-        OnPlaced.Invoke();
+        OnPlaced.Invoke(selectedItem);
         SFXManager.Instance.Play(SFXId.PlacementSuccess);
 
         CancelPlacement();

@@ -6,7 +6,14 @@ public class DecorationSaveData
 {
     public List<PlacedFurnitureSaveData> placedFurniture = new();
     public List<FixedFurnitureSaveData> fixedFurniture = new();
-    public List<InventoryItemSaveData> inventory = new();
+    public List<InventoryItemSaveData> inventory = new()
+    {
+        new()
+        {
+            itemID = "small_fish_tank",
+            count = 1
+        }
+    };
 
     public BaseFloorSaveData baseFloor = new();
     public AdditionalFloorSaveData additionalFloor = new();

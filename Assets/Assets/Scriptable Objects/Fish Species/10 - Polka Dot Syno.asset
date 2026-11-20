@@ -10,13 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a2fc9073c9404fd41b3d4eb14df2c97f, type: 3}
-  m_Name: 10 - Polka dot syno
+  m_Name: 10 - Polka Dot Syno
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Fishies.Domain.FishSpecies
   <Id>k__BackingField: 10
-  <Name>k__BackingField: Polka dot syno
-  <LatinName>k__BackingField: Synodontis angelicus
-  <Biome>k__BackingField: Biome 1
-  <Icon>k__BackingField: {fileID: 0}
+  <Name>k__BackingField: Polka Dot Syno
+  <LatinName>k__BackingField: Synodontis Angelicus
+  <Description>k__BackingField: It might have the dots, but it can't do the dance,
+    because it has no legs...
+  <Lifetime>k__BackingField: 0
+  <Rarity>k__BackingField: 6
+  <Biome>k__BackingField: 192
+  <Icon>k__BackingField: {fileID: -3301563699319517402, guid: 3eea6ed99406c8d4987e84b0ae2463a0, type: 3}
   <CatchPattern>k__BackingField: {fileID: 11400000, guid: 1da629f80cf86ca498603dd50c27cdda, type: 2}
   <Weight>k__BackingField:
     Min: 0.7
