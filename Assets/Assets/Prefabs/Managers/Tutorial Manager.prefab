@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7330718761848685614}
   - component: {fileID: 8828141644457766159}
   m_Layer: 0
-  m_Name: Options Manager
+  m_Name: Tutorial Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aeece12b57cdd06489b0b697cb56e377, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  tutorial: {fileID: 0}
+  tutorial: {fileID: 4669508222529709439, guid: 60024d32d2f312b43926a999655ae9c9, type: 3}
   tutorialImages:
   - {fileID: 0}
   - {fileID: 0}
@@ -57,7 +57,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  backgroundImage: {fileID: 0}
   pageNumberText: {fileID: 0}
   selectedPageScale: 1.2
   selectedPageColor: {r: 0.9019608, g: 0.9019608, b: 0.9019608, a: 0.78431374}

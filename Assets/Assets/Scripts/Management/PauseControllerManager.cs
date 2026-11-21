@@ -84,6 +84,7 @@ public class PauseControllerManager : MonoBehaviour
     public void ShowPauseMenu()
     {
         HideAllMenus();
+        Debug.Log("Showing Pause Menu");
         pausePanel.SetActive(true);
     }
 
