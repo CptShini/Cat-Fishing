@@ -19,7 +19,7 @@ MonoBehaviour:
     and shakes it all about.
   <Lifetime>k__BackingField: 0
   <Rarity>k__BackingField: 3
-  <Biome>k__BackingField: 464
+  <Biome>k__BackingField: 208
   <Icon>k__BackingField: {fileID: 0}
   <CatchPattern>k__BackingField: {fileID: 11400000, guid: 61738cef8cb9bd041b426e85f82f8fb5, type: 2}
   <Weight>k__BackingField:
