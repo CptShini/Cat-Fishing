@@ -17,12 +17,11 @@ namespace Assets.Scripts.Aquarium.FishTanks
             tankNameText,
             tankCapacityText,
             tankEntertainmentText,
-            upgradePriceText;
+            upgradePriceText,
+            feedingPriceText;
 
         [SerializeField] private SpriteRenderer tankDirtyImage;
-        [SerializeField] private Button
-            feedButton,
-            upgradeButton;
+        [SerializeField] private Button upgradeButton;
 
         [SerializeField] private ParticleSystem feedParticles;
 
@@ -58,11 +57,12 @@ namespace Assets.Scripts.Aquarium.FishTanks
 
             GoldManager.Instance.GoldChanged.AddListener(() =>
             {
-                feedButton.interactable = GoldManager.Instance.HasEnoughGold(feedingPrice);
                 UpdateUpgradeUI();
             });
 
             upgradeButton.onClick.AddListener(UpgradeCurrentTank);
+
+            UpdateFeedingPriceUI();
         }
 
         public void Open(FishTank tank)
@@ -151,6 +151,11 @@ namespace Assets.Scripts.Aquarium.FishTanks
             
             fish.Feed();
             UpdateTankText();
+        }
+
+        private void UpdateFeedingPriceUI()
+        {
+            feedingPriceText.text = $"{feedingPrice}";
         }
 
         private void UpdateTankText()
