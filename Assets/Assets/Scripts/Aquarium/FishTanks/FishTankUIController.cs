@@ -44,8 +44,6 @@ namespace Assets.Scripts.Aquarium.FishTanks
         private float _fadeTimer;
         private float _fadeStartDirtiness;
 
-
-
         private FishTank _currentTank, _prevTank;
 
         public bool IsOpen { get; private set; }
@@ -257,13 +255,14 @@ namespace Assets.Scripts.Aquarium.FishTanks
 
         private void UpdateDirtinessVisual()
         {
-            if (_currentTank == null)
-                return;
+            if (_currentTank == null) return;
 
-            float alpha = Mathf.Clamp01(
-                _currentTank.Tank.Dirtiness / 10f) * 0.9f;
+            float dirtiness = _currentTank.Tank.Dirtiness;
 
+            float alpha = Mathf.Clamp01(dirtiness / 10f) * 0.9f;
             tankDirtyImage.color = new Color(0f, 1f, 0f, alpha);
+
+            _currentTank.UpdateDirtinessWarning();
         }
 
         private void Update()
