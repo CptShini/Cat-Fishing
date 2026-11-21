@@ -31,6 +31,21 @@ namespace Assets.Scripts.Aquarium.FishTanks
         [SerializeField] private FishTankSpawner spawner;
         [SerializeField] private FishInteractionController interactionController;
 
+        [Space]
+
+        [SerializeField] private SpriteEraser spriteEraser;
+        [SerializeField, Min(0f)] private float dirtinessReductionPerSecond = 0.5f;
+        [SerializeField, Range(0f, 100f)] private float requiredCleanPercentage = 90f;
+
+        [Space]
+
+        [SerializeField, Min(0.1f)]private float fullCleanFadeDuration = 1.5f;
+        private bool _isFadingOut;
+        private float _fadeTimer;
+        private float _fadeStartDirtiness;
+
+
+
         private FishTank _currentTank, _prevTank;
 
         public bool IsOpen { get; private set; }
@@ -41,6 +56,7 @@ namespace Assets.Scripts.Aquarium.FishTanks
         {
             interactionController.DropFish.AddListener(OnFishDropped);
             interactionController.FeedFish.AddListener(OnFishFed);
+            interactionController.CleanAtPosition.AddListener(OnCleanAtPosition);
 
             GoldManager.Instance.GoldChanged.AddListener(() =>
             {
@@ -53,33 +69,40 @@ namespace Assets.Scripts.Aquarium.FishTanks
 
         public void Open(FishTank tank)
         {
-            if (IsOpen) return;
-            
+            if (IsOpen || tank == null)
+                return;
+
             _currentTank = tank;
-            UpdateUpgradeUI();
-            
+
             panel.SetActive(true);
+
             IsOpen = true;
             interactionController.enabled = true;
 
-            PauseController.IsGamePaused = true;
+            byte[] savedAlpha = tank.Tank.GetDirtTextureAlpha();
+
+            if (savedAlpha == null)
+                spriteEraser.ResetTexture();
+            else
+                spriteEraser.LoadAlphaData(savedAlpha);
+
+            UpdateUpgradeUI();
+            UpdateDirtinessVisual();
 
             if (!_prevTank || tank.Tank.Id != _prevTank.Tank.Id)
             {
                 tankNameText.text = tank.Tank.Name;
                 UpdateTankText();
+
                 spawner.Clear();
                 feedParticles.Stop();
                 feedParticles.Clear();
+            }
 
-                float a = tank.Tank.Dirtiness / 10f * 0.9f;
-                tankDirtyImage.color = new(0, 1, 0, a);
-            }
-            
             foreach (TankFish fish in tank.Tank.Fishes)
-            {
                 spawner.SpawnFish(fish);
-            }
+
+            PauseController.IsGamePaused = true;
         }
 
         public void AddFish(TankFish fish, Vector2 mouseScreenPos)
@@ -94,11 +117,15 @@ namespace Assets.Scripts.Aquarium.FishTanks
 
         public void Close()
         {
-            if (!IsOpen) return;
-            
+            if (!IsOpen)
+                return;
+
+            _isFadingOut = false;
+            _currentTank.Tank.SetDirtTextureAlpha(spriteEraser.GetAlphaData());
+
             _prevTank = _currentTank;
             _currentTank = null;
-            
+
             panel.SetActive(false);
             IsOpen = false;
             interactionController.enabled = false;
@@ -194,6 +221,76 @@ namespace Assets.Scripts.Aquarium.FishTanks
 
             UpdateTankText();
             UpdateUpgradeUI();
+        }
+
+        private void OnCleanAtPosition(Vector2 worldPosition)
+        {
+            if (_currentTank == null || spriteEraser == null || _isFadingOut)
+                return;
+
+            bool erased = spriteEraser.EraseAt(worldPosition);
+
+            if (!erased)
+                return;
+
+            float cleanPercentage = spriteEraser.GetErasedPercentage();
+
+            if (cleanPercentage >= requiredCleanPercentage)
+            {
+                _isFadingOut = true;
+                _fadeTimer = 0f;
+                _fadeStartDirtiness = _currentTank.Tank.Dirtiness;
+
+                Debug.Log($"{_currentTank.Tank.Name} is fully cleaned!");
+
+                _currentTank.Tank.SetDirtTextureAlpha(spriteEraser.GetAlphaData());
+
+                return;
+            }
+
+            _currentTank.Tank.Clean(dirtinessReductionPerSecond * Time.deltaTime);
+
+            _currentTank.Tank.SetDirtTextureAlpha(spriteEraser.GetAlphaData());
+
+            UpdateDirtinessVisual();
+        }
+
+        private void UpdateDirtinessVisual()
+        {
+            if (_currentTank == null)
+                return;
+
+            float alpha = Mathf.Clamp01(
+                _currentTank.Tank.Dirtiness / 10f) * 0.9f;
+
+            tankDirtyImage.color = new Color(0f, 1f, 0f, alpha);
+        }
+
+        private void Update()
+        {
+            if (!_isFadingOut || _currentTank == null)
+                return;
+
+            _fadeTimer += Time.deltaTime;
+
+            float progress = Mathf.Clamp01(_fadeTimer / fullCleanFadeDuration);
+
+            float newDirtiness = Mathf.Lerp(_fadeStartDirtiness, 0f, progress);
+
+            float reduction = _currentTank.Tank.Dirtiness - newDirtiness;
+
+            _currentTank.Tank.Clean(reduction);
+
+            UpdateDirtinessVisual();
+
+            if (progress >= 1f)
+            {
+                _currentTank.Tank.CleanTank();
+                _currentTank.Tank.SetDirtTextureAlpha(spriteEraser.GetAlphaData());
+
+                _isFadingOut = false;
+                UpdateDirtinessVisual();
+            }
         }
     }
 }

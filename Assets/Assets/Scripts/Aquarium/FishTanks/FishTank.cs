@@ -11,6 +11,7 @@ namespace Assets.Scripts.Aquarium.FishTanks
         
         public Tank Tank { get; private set; }
         public FishTankDefinitionSO Definition { get; private set; }
+        public SpriteEraser SpriteEraser { get; private set; }
 
         public void InitializePlacedFurniture(PlacedFurniture furniture, GameData gameData)
         {

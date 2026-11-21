@@ -11,7 +11,8 @@ namespace Assets.Scripts.Aquarium.Domain
         public string Name;
         public int Capacity;
         public int UpgradeLevel;
-        public int Dirtiness;
+        public float Dirtiness;
+        public byte[] DirtTextureAlpha;
         public List<TankFishDTO> Fishes;
         public int[] FishDeathCount;
 
@@ -22,6 +23,7 @@ namespace Assets.Scripts.Aquarium.Domain
             Capacity = tank.Capacity;
             UpgradeLevel = tank.UpgradeLevel;
             Dirtiness = tank.Dirtiness;
+            DirtTextureAlpha = tank.GetDirtTextureAlpha();
             Fishes = tank.Fishes.Select(f => new TankFishDTO(f)).ToList();
             FishDeathCount = tank.FishDeathCount.ToArray();
         }

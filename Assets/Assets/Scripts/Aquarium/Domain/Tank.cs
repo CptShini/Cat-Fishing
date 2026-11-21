@@ -14,7 +14,8 @@ namespace Assets.Scripts.Aquarium.Domain
         public int Capacity { get; private set; }
         public int UpgradeLevel { get; private set; } = 1;
         
-        public int Dirtiness { get; private set; }
+        public float Dirtiness { get; private set; }
+        private byte[] _dirtTextureAlpha;
         
         public float Entertainment { get; private set; }
         
@@ -45,6 +46,9 @@ namespace Assets.Scripts.Aquarium.Domain
             Capacity = tankDTO.Capacity;
             UpgradeLevel = tankDTO.UpgradeLevel <= 0 ? 1 : tankDTO.UpgradeLevel;
             Dirtiness = tankDTO.Dirtiness;
+            _dirtTextureAlpha = tankDTO.DirtTextureAlpha == null
+                ? null
+                : (byte[])tankDTO.DirtTextureAlpha.Clone();
             
             _fishes = tankDTO.Fishes.Select(dto => new TankFish(dto, db)).ToList();
             _fishes.ForEach(RegisterFish);
@@ -55,6 +59,8 @@ namespace Assets.Scripts.Aquarium.Domain
         
         public void DayStarted()
         {
+            ResetDirtTexture();
+            
             _fishes.ForEach(f => f.DayStarted());
             RecalculateEntertainment();
             
@@ -147,5 +153,29 @@ namespace Assets.Scripts.Aquarium.Domain
         
         public void CleanTank() =>
             Dirtiness = 0;
+
+        public void Clean(float amount)
+        {
+            Dirtiness = Mathf.Max(0f, Dirtiness - amount);
+        }
+
+        public byte[] GetDirtTextureAlpha()
+        {
+            return _dirtTextureAlpha == null
+                ? null
+                : (byte[])_dirtTextureAlpha.Clone();
+        }
+
+        public void SetDirtTextureAlpha(byte[] alpha)
+        {
+            _dirtTextureAlpha = alpha == null
+                ? null
+                : (byte[])alpha.Clone();
+        }
+
+        public void ResetDirtTexture()
+        {
+            _dirtTextureAlpha = null;
+        }
     }
 }
