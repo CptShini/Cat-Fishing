@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Aquarium.Domain.FishTankDefinitionSO
   definitionID: large_tank
   tankName: Large Tank
-  capacity: 10
+  capacities: 0a0000000f00000014000000
+  upgradePrices: c8000000f4010000

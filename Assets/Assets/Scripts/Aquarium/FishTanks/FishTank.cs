@@ -10,6 +10,7 @@ namespace Assets.Scripts.Aquarium.FishTanks
         [SerializeField] private FishSpeciesDatabase fishSpeciesDatabase;
         
         public Tank Tank { get; private set; }
+        public FishTankDefinitionSO Definition { get; private set; }
 
         public void InitializePlacedFurniture(PlacedFurniture furniture, GameData gameData)
         {
@@ -18,6 +19,8 @@ namespace Assets.Scripts.Aquarium.FishTanks
                 Debug.LogError($"FishTank '{name}' has no FishTankDefinition assigned.", this);
                 return;
             }
+
+            Definition = furniture.itemSO.fishTankDefinition;
 
             if (!System.Guid.TryParse(furniture.instanceID, out System.Guid tankId))
             {
@@ -31,8 +34,7 @@ namespace Assets.Scripts.Aquarium.FishTanks
             }
             else
             {
-                var definition = furniture.itemSO.fishTankDefinition;
-                Tank = new(tankId, definition.tankName, definition.capacity);
+                Tank = new(tankId, Definition.tankName, Definition.GetCapacity(1));
             }
         }
         

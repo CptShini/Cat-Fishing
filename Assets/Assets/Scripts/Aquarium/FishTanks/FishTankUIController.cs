@@ -16,12 +16,16 @@ namespace Assets.Scripts.Aquarium.FishTanks
         [SerializeField] private TextMeshProUGUI 
             tankNameText,
             tankCapacityText,
-            tankEntertainmentText;
+            tankEntertainmentText,
+            upgradePriceText;
 
         [SerializeField] private SpriteRenderer tankDirtyImage;
-        [SerializeField] private Button feedButton;
+        [SerializeField] private Button
+            feedButton,
+            upgradeButton;
+
         [SerializeField] private ParticleSystem feedParticles;
-        
+
         [Space]
         
         [SerializeField] private FishTankSpawner spawner;
@@ -37,7 +41,14 @@ namespace Assets.Scripts.Aquarium.FishTanks
         {
             interactionController.DropFish.AddListener(OnFishDropped);
             interactionController.FeedFish.AddListener(OnFishFed);
-            GoldManager.Instance.GoldChanged.AddListener(() => feedButton.interactable = GoldManager.Instance.HasEnoughGold(feedingPrice));
+
+            GoldManager.Instance.GoldChanged.AddListener(() =>
+            {
+                feedButton.interactable = GoldManager.Instance.HasEnoughGold(feedingPrice);
+                UpdateUpgradeUI();
+            });
+
+            upgradeButton.onClick.AddListener(UpgradeCurrentTank);
         }
 
         public void Open(FishTank tank)
@@ -45,6 +56,7 @@ namespace Assets.Scripts.Aquarium.FishTanks
             if (IsOpen) return;
             
             _currentTank = tank;
+            UpdateUpgradeUI();
             
             panel.SetActive(true);
             IsOpen = true;
@@ -129,6 +141,59 @@ namespace Assets.Scripts.Aquarium.FishTanks
                     : Color.red;
 
             tankEntertainmentText.text = $"Entertainment: {_currentTank.Tank.Entertainment:F2}";
+        }
+
+        private void UpdateUpgradeUI()
+        {
+            if (_currentTank == null)
+            {
+                upgradePriceText.text = "";
+                upgradeButton.interactable = false;
+                return;
+            }
+
+            var tank = _currentTank.Tank;
+            var definition = _currentTank.Definition;
+
+            int price = definition.GetUpgradePrice(tank.UpgradeLevel);
+
+            // max level
+            if (price < 0)
+            {
+                upgradeButton.gameObject.SetActive(false);
+                return;
+            }
+
+            upgradeButton.gameObject.SetActive(true);
+
+            upgradePriceText.text = $"{price}";
+
+            upgradeButton.interactable = GoldManager.Instance.HasEnoughGold(price);
+        }
+
+        private void UpgradeCurrentTank()
+        {
+            if (!_currentTank)
+                return;
+
+            Tank tank = _currentTank.Tank;
+            FishTankDefinitionSO definition = _currentTank.Definition;
+
+            int price = definition.GetUpgradePrice(tank.UpgradeLevel);
+
+            if (price < 0)
+                return;
+
+            if (!GoldManager.Instance.SpendGold(price))
+                return;
+
+            int newCapacity = definition.GetCapacity(tank.UpgradeLevel + 1);
+
+            if (!tank.Upgrade(newCapacity))
+                return;
+
+            UpdateTankText();
+            UpdateUpgradeUI();
         }
     }
 }

@@ -12,6 +12,7 @@ namespace Assets.Scripts.Aquarium.Domain
         public string Name;
         
         public int Capacity { get; private set; }
+        public int UpgradeLevel { get; private set; } = 1;
         
         public int Dirtiness { get; private set; }
         
@@ -30,6 +31,7 @@ namespace Assets.Scripts.Aquarium.Domain
             Id = id;
             Name = name;
             Capacity = capacity;
+            UpgradeLevel = 1;
             Dirtiness = 0;
             Entertainment = 0f;
             _fishes = new();
@@ -41,6 +43,7 @@ namespace Assets.Scripts.Aquarium.Domain
             Id = Guid.Parse(tankDTO.Id);
             Name = tankDTO.Name;
             Capacity = tankDTO.Capacity;
+            UpgradeLevel = tankDTO.UpgradeLevel <= 0 ? 1 : tankDTO.UpgradeLevel;
             Dirtiness = tankDTO.Dirtiness;
             
             _fishes = tankDTO.Fishes.Select(dto => new TankFish(dto, db)).ToList();
@@ -128,6 +131,18 @@ namespace Assets.Scripts.Aquarium.Domain
             }
             
             Entertainment = entertainmentValue;
+        }
+
+        public bool Upgrade(int newCapacity)
+        {
+            if (newCapacity <= Capacity)
+                return false;
+
+            Capacity = newCapacity;
+            UpgradeLevel++;
+
+            OnFishChanged();
+            return true;
         }
         
         public void CleanTank() =>
