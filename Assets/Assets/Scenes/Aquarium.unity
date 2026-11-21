@@ -572,18 +572,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 556440120}
-        m_TargetAssemblyTypeName: Assets.Scripts.Aquarium.DayManager, Assembly-CSharp
-        m_MethodName: DayOver
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
   exitingInfo: Going fishing for catfish...
 --- !u!61 &123923643
 BoxCollider2D:
@@ -3359,7 +3347,7 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1719816314491806682, guid: 1be1e419626099d4eb5d43e864fc6d0e, type: 3}
+    - target: {fileID: 297038355003459570, guid: 1be1e419626099d4eb5d43e864fc6d0e, type: 3}
       propertyPath: rawImage
       value: 
       objectReference: {fileID: 1154083801}
@@ -3414,15 +3402,15 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: 1be1e419626099d4eb5d43e864fc6d0e, type: 3}
 --- !u!114 &509394457 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1719816314491806682, guid: 1be1e419626099d4eb5d43e864fc6d0e, type: 3}
+  m_CorrespondingSourceObject: {fileID: 4163567427321361667, guid: 1be1e419626099d4eb5d43e864fc6d0e, type: 3}
   m_PrefabInstance: {fileID: 509394456}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34318550ec674b41bd57b386841f32b5, type: 3}
+  m_Script: {fileID: 11500000, guid: 1c713d1d6b2f4771b09ed76137ab9cf8, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Aquarium.FishTank.FishGrabber
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Aquarium.FishTanks.Interaction.FishInteractionController
 --- !u!114 &509394458 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7988591388606497797, guid: 1be1e419626099d4eb5d43e864fc6d0e, type: 3}
@@ -5394,6 +5382,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 827236150}
   m_CullTransparentMesh: 1
+--- !u!212 &828501657 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 5512312749804887487, guid: 1be1e419626099d4eb5d43e864fc6d0e, type: 3}
+  m_PrefabInstance: {fileID: 509394456}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &847128900
 GameObject:
   m_ObjectHideFlags: 0
@@ -5427,7 +5420,7 @@ RectTransform:
   m_Father: {fileID: 819506375}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 0.9915457}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -9379,10 +9372,11 @@ MonoBehaviour:
   tankNameText: {fileID: 1645511638}
   tankCapacityText: {fileID: 1374727137}
   tankEntertainmentText: {fileID: 1776419541}
+  tankDirtyImage: {fileID: 828501657}
   feedButton: {fileID: 1849684549}
   feedParticles: {fileID: 509394459}
   spawner: {fileID: 509394458}
-  grabber: {fileID: 509394457}
+  interactionController: {fileID: 509394457}
 --- !u!114 &1058299128
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9568,7 +9562,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: -501.33032}
+  m_SizeDelta: {x: 0, y: -500}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1062363665
 MonoBehaviour:
@@ -9953,7 +9947,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 847128901}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.9915457
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -15011,10 +15005,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1058299127}
-        m_TargetAssemblyTypeName: Assets.Scripts.Aquarium.FishTank.FishTankUIController,
+      - m_Target: {fileID: 509394457}
+        m_TargetAssemblyTypeName: Assets.Scripts.Aquarium.FishTanks.Interaction.FishInteractionController,
           Assembly-CSharp
-        m_MethodName: Feed
+        m_MethodName: SetFeedMode
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

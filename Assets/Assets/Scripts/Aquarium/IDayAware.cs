@@ -2,6 +2,6 @@
 {
     public interface IDayAware
     {
-        void DayPassed();
+        void DayStarted();
     }
 }
