@@ -4,8 +4,9 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer))]
 public class SpriteEraser : MonoBehaviour
 {
-    [SerializeField, Min(1f)]
-    private float brushRadius = 0.25f;
+    [SerializeField, Min(1f)] private float brushRadius = 0.25f;
+    [SerializeField, Range(0f, 1f)] private float brushStrength = 1f;
+    [SerializeField, Range(0.1f, 1f)] private float brushSoftness = 0.65f;
 
     private SpriteRenderer _renderer;
     private Sprite _originalSprite;
@@ -83,14 +84,15 @@ public class SpriteEraser : MonoBehaviour
         {
             for (int x = -radius; x <= radius; x++)
             {
-                if (x * x + y * y > radius * radius)
+                float distance = Mathf.Sqrt(x * x + y * y);
+
+                if (distance > radius)
                     continue;
 
                 int px = centerX + x;
                 int py = centerY + y;
 
-                if (px < 0 || px >= _textureWidth ||
-                    py < 0 || py >= _textureHeight)
+                if (px < 0 || px >= _textureWidth || py < 0 || py >= _textureHeight)
                     continue;
 
                 int index = py * _textureWidth + px;
@@ -98,7 +100,20 @@ public class SpriteEraser : MonoBehaviour
                 if (_pixels[index].a == 0)
                     continue;
 
-                _pixels[index].a = 0;
+                float normalizedDistance = distance / radius;
+
+                float softStart = 1f - brushSoftness;
+
+                float falloff = Mathf.SmoothStep(0f, 1f, Mathf.Clamp01((1f - normalizedDistance) / brushSoftness));
+
+                float eraseAmount = falloff * brushStrength;
+
+                byte newAlpha = (byte)Mathf.RoundToInt(_pixels[index].a * (1f - eraseAmount));
+
+                if (newAlpha == _pixels[index].a)
+                    continue;
+
+                _pixels[index].a = newAlpha;
                 changed = true;
             }
         }
