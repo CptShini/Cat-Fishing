@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class AudioSettings : MonoBehaviour
 {
-    // Persistent values while the game is running.
     private static float masterVolume = 1f;
     private static float musicVolume = 1f;
     private static float sfxVolume = 1f;
