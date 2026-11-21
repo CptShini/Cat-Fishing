@@ -13,7 +13,8 @@ namespace Assets.Scripts.Aquarium.Domain
         
         public int Capacity { get; private set; }
         public int UpgradeLevel { get; private set; } = 1;
-        
+
+        public const float MaxDirtiness = 6f;
         public float Dirtiness { get; private set; }
         private byte[] _dirtTextureAlpha;
         
@@ -64,7 +65,7 @@ namespace Assets.Scripts.Aquarium.Domain
             _fishes.ForEach(f => f.DayStarted());
             RecalculateEntertainment();
             
-            if (_fishes.Count > 0 && Dirtiness < 10) Dirtiness++;
+            if (_fishes.Count > 0 && Dirtiness < MaxDirtiness) Dirtiness++;
             
             _fishDeathCount = new int[3];
             _deadFish.Clear();
@@ -72,7 +73,7 @@ namespace Assets.Scripts.Aquarium.Domain
 
         public void DayEnded()
         {
-            if (Dirtiness == 10)
+            if (Dirtiness >= MaxDirtiness)
                 _fishes.ForEach(f => f.TankTooDirty());
             else
                 _fishes.ForEach(f => f.DayEnded());

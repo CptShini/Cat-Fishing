@@ -264,7 +264,7 @@ namespace Assets.Scripts.Aquarium.FishTanks
 
             float dirtiness = _currentTank.Tank.Dirtiness;
 
-            float alpha = Mathf.Clamp01(dirtiness / 10f) * 0.9f;
+            float alpha = Mathf.Clamp01(dirtiness / 6f) * 0.9f;
             tankDirtyImage.color = new Color(0f, 1f, 0f, alpha);
 
             _currentTank.UpdateDirtinessWarning();
