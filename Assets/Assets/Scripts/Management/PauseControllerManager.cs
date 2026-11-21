@@ -13,8 +13,7 @@ public class PauseControllerManager : MonoBehaviour
     [SerializeField] private GameObject soundOptionsMenu;
     [SerializeField] private GameObject controlsMenu;
     [SerializeField] private GameObject tutorialMenu;
-
-    private bool isPaused;
+    public bool isPaused { get; private set; }
 
     private void Awake()
     {
@@ -40,6 +39,20 @@ public class PauseControllerManager : MonoBehaviour
                 ResumeGame();
             else
                 PauseGame();
+        }
+    }
+
+    // Temp fix - disable SFX when game is paused
+    private void LateUpdate()
+    {
+        if (isPaused)
+        {
+            var sfxObjects = FindObjectsByType<AudioSource>(FindObjectsSortMode.None);
+            foreach (var sfx in sfxObjects)
+            {
+                if (sfx.name.Contains("(SFX)") || sfx.name.Contains("(Loop)"))
+                    sfx.Pause();
+            }
         }
     }
 
