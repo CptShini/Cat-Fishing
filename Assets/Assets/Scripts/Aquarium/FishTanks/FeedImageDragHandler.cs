@@ -1,7 +1,8 @@
+using Assets.Scripts.Aquarium.FishTanks.Interaction;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Assets.Scripts.Aquarium.FishTanks.Interaction
+namespace Assets.Scripts.Aquarium.FishTanks
 {
     public class FeedImageDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
     {
@@ -22,19 +23,18 @@ namespace Assets.Scripts.Aquarium.FishTanks.Interaction
             _rectTransform = GetComponent<RectTransform>();
 
             _canvas = GetComponentInParent<Canvas>();
-
-            if (_canvas != null)
+            if (_canvas)
                 _canvas = _canvas.rootCanvas;
 
-            if (_canvas != null)
+            if (_canvas)
                 _canvasRect = _canvas.transform as RectTransform;
         }
 
         public void OnBeginDrag(PointerEventData eventData)
         {
-            if (interactionController == null ||
+            if (!interactionController ||
                 !interactionController.isActiveAndEnabled ||
-                _canvasRect == null)
+                !_canvasRect)
                 return;
 
             _originalParent = _rectTransform.parent;
@@ -87,12 +87,11 @@ namespace Assets.Scripts.Aquarium.FishTanks.Interaction
                 interactionController.SetMode(FishInteractionMode.MoveFish);
             }
 
-            if (_originalParent != null)
-            {
-                _rectTransform.SetParent(_originalParent, false);
-                _rectTransform.SetSiblingIndex(_originalSiblingIndex);
-                _rectTransform.anchoredPosition = _originalPosition;
-            }
+            if (!_originalParent) return;
+            
+            _rectTransform.SetParent(_originalParent, false);
+            _rectTransform.SetSiblingIndex(_originalSiblingIndex);
+            _rectTransform.anchoredPosition = _originalPosition;
         }
     }
 }

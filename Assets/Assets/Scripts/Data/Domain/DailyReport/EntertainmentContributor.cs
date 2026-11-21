@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public enum EntertainmentContributor
 {
     Tank = 0,

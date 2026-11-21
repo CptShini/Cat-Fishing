@@ -23,7 +23,7 @@ namespace Assets.Scripts.Aquarium.Domain
             Capacity = tank.Capacity;
             UpgradeLevel = tank.UpgradeLevel;
             Dirtiness = tank.Dirtiness;
-            DirtTextureAlpha = tank.GetDirtTextureAlpha();
+            DirtTextureAlpha = tank.DirtTextureAlpha;
             Fishes = tank.Fishes.Select(f => new TankFishDTO(f)).ToList();
             FishDeathCount = tank.FishDeathCount.ToArray();
         }

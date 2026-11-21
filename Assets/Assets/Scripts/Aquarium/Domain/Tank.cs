@@ -16,7 +16,13 @@ namespace Assets.Scripts.Aquarium.Domain
 
         public const float MaxDirtiness = 6f;
         public float Dirtiness { get; private set; }
+        
         private byte[] _dirtTextureAlpha;
+        public byte[] DirtTextureAlpha
+        {
+            get => (byte[])_dirtTextureAlpha?.Clone();
+            set => _dirtTextureAlpha = (byte[])value.Clone();
+        }
         
         public float Entertainment { get; private set; }
         
@@ -47,9 +53,7 @@ namespace Assets.Scripts.Aquarium.Domain
             Capacity = tankDTO.Capacity;
             UpgradeLevel = tankDTO.UpgradeLevel <= 0 ? 1 : tankDTO.UpgradeLevel;
             Dirtiness = tankDTO.Dirtiness;
-            _dirtTextureAlpha = tankDTO.DirtTextureAlpha == null
-                ? null
-                : (byte[])tankDTO.DirtTextureAlpha.Clone();
+            _dirtTextureAlpha = (byte[])tankDTO.DirtTextureAlpha?.Clone();
             
             _fishes = tankDTO.Fishes.Select(dto => new TankFish(dto, db)).ToList();
             _fishes.ForEach(RegisterFish);
@@ -60,7 +64,7 @@ namespace Assets.Scripts.Aquarium.Domain
         
         public void DayStarted()
         {
-            ResetDirtTexture();
+            _dirtTextureAlpha = null;
             
             _fishes.ForEach(f => f.DayStarted());
             RecalculateEntertainment();
@@ -155,28 +159,7 @@ namespace Assets.Scripts.Aquarium.Domain
         public void CleanTank() =>
             Dirtiness = 0;
 
-        public void Clean(float amount)
-        {
+        public void Clean(float amount) => 
             Dirtiness = Mathf.Max(0f, Dirtiness - amount);
-        }
-
-        public byte[] GetDirtTextureAlpha()
-        {
-            return _dirtTextureAlpha == null
-                ? null
-                : (byte[])_dirtTextureAlpha.Clone();
-        }
-
-        public void SetDirtTextureAlpha(byte[] alpha)
-        {
-            _dirtTextureAlpha = alpha == null
-                ? null
-                : (byte[])alpha.Clone();
-        }
-
-        public void ResetDirtTexture()
-        {
-            _dirtTextureAlpha = null;
-        }
     }
 }

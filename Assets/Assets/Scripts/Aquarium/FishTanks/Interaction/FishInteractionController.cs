@@ -56,10 +56,6 @@ namespace Assets.Scripts.Aquarium.FishTanks.Interaction
                         mouse.leftButton.wasReleasedThisFrame
                     );
                     break;
-                case FishInteractionMode.FeedFish:
-                    //if (mouse.leftButton.wasPressedThisFrame)
-                    //    _feedingHandler.TryFeed(mousePosition);
-                    break;
                 case FishInteractionMode.CleanTank:
                     _cleaningHandler.Tick(
                         mousePosition,
@@ -68,9 +64,7 @@ namespace Assets.Scripts.Aquarium.FishTanks.Interaction
                     break;
             }
         }
-
-        public void SetFeedMode() =>
-            SetMode(FishInteractionMode.FeedFish);
+        
         public void SetMode(FishInteractionMode newMode)
         {
             if (Mode == newMode)
@@ -94,10 +88,8 @@ namespace Assets.Scripts.Aquarium.FishTanks.Interaction
         }
 
 
-        public void BeginFeedDrag()
-        {
+        public void BeginFeedDrag() => 
             SetMode(FishInteractionMode.FeedFish);
-        }
 
         public void EndFeedDrag(Vector2 screenPosition)
         {

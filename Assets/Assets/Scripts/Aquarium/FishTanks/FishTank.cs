@@ -11,7 +11,6 @@ namespace Assets.Scripts.Aquarium.FishTanks
         
         public Tank Tank { get; private set; }
         public FishTankDefinitionSO Definition { get; private set; }
-        public SpriteEraser SpriteEraser { get; private set; }
 
         [SerializeField] private GameObject exclamationImage;
         [SerializeField, Min(0f)] private float dirtinessWarningThreshold = 3f;
@@ -46,8 +45,7 @@ namespace Assets.Scripts.Aquarium.FishTanks
 
         public void RestoreTank(TankDTO tankDTO)
         {
-            Tank = new Tank(tankDTO, fishSpeciesDatabase);
-
+            Tank = new(tankDTO, fishSpeciesDatabase);
             UpdateDirtinessWarning();
         }
         
@@ -61,9 +59,7 @@ namespace Assets.Scripts.Aquarium.FishTanks
             UpdateDirtinessWarning();
         }
 
-        public void UpdateDirtinessWarning()
-        {
+        public void UpdateDirtinessWarning() => 
             exclamationImage.SetActive(Tank.Dirtiness >= dirtinessWarningThreshold);
-        }
     }
 }

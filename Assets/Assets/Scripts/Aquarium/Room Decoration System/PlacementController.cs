@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
-using Assets.Scripts.Audio;
 using Assets.Scripts.Audio.SFX;
 using UnityEngine.Events;
 using NavMeshPlus.Components;

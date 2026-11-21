@@ -1,5 +1,4 @@
 using System;
-using Assets.Scripts.Audio;
 using Assets.Scripts.Audio.SFX;
 using Assets.Scripts.Diving.Bars;
 using UnityEngine;

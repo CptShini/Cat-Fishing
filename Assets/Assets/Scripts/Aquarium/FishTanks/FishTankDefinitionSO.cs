@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Assets.Scripts.Aquarium.Domain
+namespace Assets.Scripts.Aquarium.FishTanks
 {
     [CreateAssetMenu(fileName = "New Fish Tank Definition", menuName = "ScriptableObjects/Aquarium/Fish Tank Definition")]
     public class FishTankDefinitionSO : ScriptableObject
@@ -14,8 +14,7 @@ namespace Assets.Scripts.Aquarium.Domain
 
         [Tooltip("Price to upgrade from Level 1 to 2, then Level 2 to 3.")]
         [Min(0)] public int[] upgradePrices = { 100, 250 };
-
-
+        
         public int MaxLevel => capacities.Length;
 
         public int GetCapacity(int level)
