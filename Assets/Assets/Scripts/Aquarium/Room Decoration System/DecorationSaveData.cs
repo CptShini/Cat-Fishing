@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Assets.Scripts.Aquarium.Domain;
 
 [Serializable]
 public class DecorationSaveData
@@ -66,4 +67,6 @@ public class InventoryItemSaveData
 {
     public string itemID;
     public int count;
+    public string instanceID;
+    public TankDTO tankData;
 }

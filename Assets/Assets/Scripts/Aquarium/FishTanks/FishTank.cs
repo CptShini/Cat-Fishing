@@ -37,6 +37,11 @@ namespace Assets.Scripts.Aquarium.FishTanks
                 Tank = new(tankId, Definition.tankName, Definition.GetCapacity(1));
             }
         }
+
+        public void RestoreTank(TankDTO tankDTO)
+        {
+            Tank = new Tank(tankDTO, fishSpeciesDatabase);
+        }
         
         public bool CanInteract() => true;
 

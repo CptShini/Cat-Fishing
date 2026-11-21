@@ -8,6 +8,7 @@ using UnityEngine.Events;
 using NavMeshPlus.Components;
 using Assets.Scripts.Data.Domain;
 using Assets.Scripts.Aquarium.FishTanks;
+using Assets.Scripts.Aquarium.Domain;
 
 public class PlacementController : MonoBehaviour
 {
@@ -52,6 +53,9 @@ public class PlacementController : MonoBehaviour
     private bool isDecorationMode = false;
 
     private Dictionary<RoomFixedFurniture, Vector3> initialFixedFurniturePositions = new();
+
+    private string selectedInstanceID;
+    private TankDTO selectedTankData;
     
     void Awake()
     {
@@ -142,10 +146,8 @@ public class PlacementController : MonoBehaviour
         }
     }
 
-    public void SelectItem(ItemSO itemSO)
+    public void SelectItemInternal(ItemSO itemSO)
     {
-        CancelPlacement();
-
         if (itemSO == null)
             return;
 
@@ -188,6 +190,22 @@ public class PlacementController : MonoBehaviour
 
         SetGhostColor(validColor);
         SFXManager.Instance.Play(SFXId.PickUpItem);
+    }
+
+    public void SelectItem(DecorInventorySlot slot)
+    {
+        selectedInstanceID = null;
+        selectedTankData = null;
+        
+        CancelPlacement();
+
+        if (slot == null || slot.ItemSO == null)
+            return;
+
+        selectedInstanceID = slot.InstanceID;
+        selectedTankData = slot.SavedTankData;
+
+        SelectItemInternal(slot.ItemSO);
     }
 
     private void TryPickUpFurniture()
@@ -241,13 +259,15 @@ public class PlacementController : MonoBehaviour
         FishTank fishTank = furniture.GetComponentInChildren<FishTank>(true);
 
         // add furniture to inventory
-        if (!inventory.AddItem(furniture.itemSO))
-            return;
-
-        // if it is tank then fish need to be transfered to collection
         if (fishTank != null)
         {
-            FishCollectionManager.Instance.AddRange(fishTank.Tank.Fishes);
+            if (!inventory.AddTank(furniture.itemSO, fishTank.Tank))
+                return;
+        }
+        else
+        {
+            if (!inventory.AddItem(furniture.itemSO))
+                return;
         }
 
         // delete furniture from grid
@@ -375,9 +395,18 @@ public class PlacementController : MonoBehaviour
             furniture = placedObject.AddComponent<PlacedFurniture>();
         }
 
-        furniture.Initialize(selectedItem, currentCell, currentSize);
+        furniture.Initialize(selectedItem, currentCell, currentSize, selectedInstanceID);
 
         InitializePlacedFurnitureComponents(placedObject, furniture, null);
+
+        // eestore tank state
+        if (selectedTankData != null)
+        {
+            FishTank fishTank = placedObject.GetComponentInChildren<FishTank>(true);
+
+            if (fishTank != null)
+                fishTank.RestoreTank(selectedTankData);
+        }
 
         gridVisuals.RegisterPlacedFurniture(furniture);
 
@@ -475,6 +504,9 @@ public class PlacementController : MonoBehaviour
         {
             WorkbenchUIController.Instance.ShowInventory();
         }
+
+        selectedInstanceID = null;
+        selectedTankData = null;
     }
 
     private void SetupFurnitureCollider(GameObject furniture, ItemSO item)

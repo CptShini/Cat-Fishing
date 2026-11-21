@@ -15,4 +15,4 @@ MonoBehaviour:
   definitionID: small_tank
   tankName: Small Tank
   capacities: 04000000070000000a000000
-  upgradePrices: 0100000001000000
+  upgradePrices: 64000000fa000000
