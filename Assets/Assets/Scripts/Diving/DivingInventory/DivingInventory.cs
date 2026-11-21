@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Aquarium.Domain;
-using Assets.Scripts.Audio;
 using Assets.Scripts.Audio.SFX;
 using Assets.Scripts.Data.Domain;
 using Assets.Scripts.Data.Domain.TankDecor;

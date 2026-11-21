@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Assets.Scripts.Aquarium.Domain;
 
 public class DecorInventorySlot : MonoBehaviour
 {
@@ -13,6 +14,9 @@ public class DecorInventorySlot : MonoBehaviour
 
     public int count = 1;
 
+    public string InstanceID { get; private set; }
+    public TankDTO SavedTankData { get; private set; }
+
     public void Setup(ItemSO itemSO, PlacementController controller)
     {
         ItemSO = itemSO;
@@ -22,12 +26,30 @@ public class DecorInventorySlot : MonoBehaviour
         UpdateUI();
     }
 
+    public void SetupTank(ItemSO itemSO, PlacementController controller, Tank tank)
+    {
+        ItemSO = itemSO;
+        placementController = controller;
+        count = 1;
+
+        InstanceID = tank.Id.ToString();
+        SavedTankData = new TankDTO(tank);
+
+        UpdateUI();
+    }
+
+    public void LoadTankData(string instanceID, TankDTO tankData)
+    {
+        InstanceID = instanceID;
+        SavedTankData = tankData;
+    }
+
     public void OnSlotClicked()
     {
         if (ItemSO == null)
             return;
 
-        placementController.SelectItem(ItemSO);
+        placementController.SelectItem(this);
     }
     
     public void UpdateUI()

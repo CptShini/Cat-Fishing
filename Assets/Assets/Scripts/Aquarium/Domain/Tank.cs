@@ -12,8 +12,17 @@ namespace Assets.Scripts.Aquarium.Domain
         public string Name;
         
         public int Capacity { get; private set; }
+        public int UpgradeLevel { get; private set; } = 1;
+
+        public const float MaxDirtiness = 6f;
+        public float Dirtiness { get; private set; }
         
-        public int Dirtiness { get; private set; }
+        private byte[] _dirtTextureAlpha;
+        public byte[] DirtTextureAlpha
+        {
+            get => (byte[])_dirtTextureAlpha?.Clone();
+            set => _dirtTextureAlpha = (byte[])value.Clone();
+        }
         
         public float Entertainment { get; private set; }
         
@@ -30,6 +39,7 @@ namespace Assets.Scripts.Aquarium.Domain
             Id = id;
             Name = name;
             Capacity = capacity;
+            UpgradeLevel = 1;
             Dirtiness = 0;
             Entertainment = 0f;
             _fishes = new();
@@ -41,7 +51,9 @@ namespace Assets.Scripts.Aquarium.Domain
             Id = Guid.Parse(tankDTO.Id);
             Name = tankDTO.Name;
             Capacity = tankDTO.Capacity;
+            UpgradeLevel = tankDTO.UpgradeLevel <= 0 ? 1 : tankDTO.UpgradeLevel;
             Dirtiness = tankDTO.Dirtiness;
+            _dirtTextureAlpha = (byte[])tankDTO.DirtTextureAlpha?.Clone();
             
             _fishes = tankDTO.Fishes.Select(dto => new TankFish(dto, db)).ToList();
             _fishes.ForEach(RegisterFish);
@@ -52,10 +64,12 @@ namespace Assets.Scripts.Aquarium.Domain
         
         public void DayStarted()
         {
+            _dirtTextureAlpha = null;
+            
             _fishes.ForEach(f => f.DayStarted());
             RecalculateEntertainment();
             
-            if (_fishes.Count > 0 && Dirtiness < 10) Dirtiness++;
+            if (_fishes.Count > 0 && Dirtiness < MaxDirtiness) Dirtiness++;
             
             _fishDeathCount = new int[3];
             _deadFish.Clear();
@@ -63,7 +77,7 @@ namespace Assets.Scripts.Aquarium.Domain
 
         public void DayEnded()
         {
-            if (Dirtiness == 10)
+            if (Dirtiness >= MaxDirtiness)
                 _fishes.ForEach(f => f.TankTooDirty());
             else
                 _fishes.ForEach(f => f.DayEnded());
@@ -129,8 +143,23 @@ namespace Assets.Scripts.Aquarium.Domain
             
             Entertainment = entertainmentValue;
         }
+
+        public bool Upgrade(int newCapacity)
+        {
+            if (newCapacity <= Capacity)
+                return false;
+
+            Capacity = newCapacity;
+            UpgradeLevel++;
+
+            OnFishChanged();
+            return true;
+        }
         
         public void CleanTank() =>
             Dirtiness = 0;
+
+        public void Clean(float amount) => 
+            Dirtiness = Mathf.Max(0f, Dirtiness - amount);
     }
 }

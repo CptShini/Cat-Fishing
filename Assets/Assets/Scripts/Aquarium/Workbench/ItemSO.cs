@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using Assets.Scripts.Aquarium.Domain;
+using Assets.Scripts.Aquarium.FishTanks;
 
 [CreateAssetMenu(fileName = "NewItem", menuName = "ScriptableObjects/ItemSO")]
 public class ItemSO : ScriptableObject

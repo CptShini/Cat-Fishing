@@ -10,6 +10,10 @@ namespace Assets.Scripts.Aquarium.FishTanks
         [SerializeField] private FishSpeciesDatabase fishSpeciesDatabase;
         
         public Tank Tank { get; private set; }
+        public FishTankDefinitionSO Definition { get; private set; }
+
+        [SerializeField] private GameObject exclamationImage;
+        [SerializeField, Min(0f)] private float dirtinessWarningThreshold = 3f;
 
         public void InitializePlacedFurniture(PlacedFurniture furniture, GameData gameData)
         {
@@ -18,6 +22,8 @@ namespace Assets.Scripts.Aquarium.FishTanks
                 Debug.LogError($"FishTank '{name}' has no FishTankDefinition assigned.", this);
                 return;
             }
+
+            Definition = furniture.itemSO.fishTankDefinition;
 
             if (!System.Guid.TryParse(furniture.instanceID, out System.Guid tankId))
             {
@@ -31,15 +37,29 @@ namespace Assets.Scripts.Aquarium.FishTanks
             }
             else
             {
-                var definition = furniture.itemSO.fishTankDefinition;
-                Tank = new(tankId, definition.tankName, definition.capacity);
+                Tank = new(tankId, Definition.tankName, Definition.GetCapacity(1));
             }
+
+            UpdateDirtinessWarning();
+        }
+
+        public void RestoreTank(TankDTO tankDTO)
+        {
+            Tank = new(tankDTO, fishSpeciesDatabase);
+            UpdateDirtinessWarning();
         }
         
         public bool CanInteract() => true;
 
         public void Interact() => FishTankUIController.Instance.Open(this);
 
-        public void DayStarted() => Tank.DayStarted();
+        public void DayStarted()
+        {
+            Tank.DayStarted();
+            UpdateDirtinessWarning();
+        }
+
+        public void UpdateDirtinessWarning() => 
+            exclamationImage.SetActive(Tank.Dirtiness >= dirtinessWarningThreshold);
     }
 }

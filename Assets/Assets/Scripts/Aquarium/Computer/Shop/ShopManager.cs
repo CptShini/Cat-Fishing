@@ -1,8 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
-using Assets.Scripts.Audio;
-using Assets.Scripts.Audio.SFX;
 
 public class ShopManager : MonoBehaviour
 {
