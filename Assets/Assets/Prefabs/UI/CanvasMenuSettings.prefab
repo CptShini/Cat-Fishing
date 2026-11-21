@@ -1198,7 +1198,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6560107243184117304}
         m_TargetAssemblyTypeName: PauseControllerManager, Assembly-CSharp
-        m_MethodName: ShowPauseMenu
+        m_MethodName: PauseGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
