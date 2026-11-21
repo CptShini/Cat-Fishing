@@ -12666,7 +12666,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 700382457}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 857578531}
+        m_TargetAssemblyTypeName: PauseControllerManager, Assembly-CSharp
+        m_MethodName: ShowControls
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &700382457
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21469,8 +21481,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2070199967}
-  - {fileID: 1620273108}
   - {fileID: 2140547825}
+  - {fileID: 1620273108}
   m_Father: {fileID: 1443348825}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -25156,7 +25168,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1099354472}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 857578531}
+        m_TargetAssemblyTypeName: PauseControllerManager, Assembly-CSharp
+        m_MethodName: ShowSoundOptions
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1099354472
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25582,7 +25606,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1120260472}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 857578531}
+        m_TargetAssemblyTypeName: PauseControllerManager, Assembly-CSharp
+        m_MethodName: ShowOptions
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1120260472
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27987,7 +28023,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1261508576}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 857578531}
+        m_TargetAssemblyTypeName: PauseControllerManager, Assembly-CSharp
+        m_MethodName: ShowTutorial
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1261508576
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30242,7 +30290,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1345542271}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 857578531}
+        m_TargetAssemblyTypeName: PauseControllerManager, Assembly-CSharp
+        m_MethodName: PauseGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1345542271
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32732,7 +32792,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1378524297}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 857578531}
+        m_TargetAssemblyTypeName: PauseControllerManager, Assembly-CSharp
+        m_MethodName: ShowOptions
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1378524297
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34676,7 +34748,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1515558208}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 857578531}
+        m_TargetAssemblyTypeName: PauseControllerManager, Assembly-CSharp
+        m_MethodName: ShowOptions
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1515558208
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39500,7 +39584,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1620273110}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 857578531}
+        m_TargetAssemblyTypeName: PauseControllerManager, Assembly-CSharp
+        m_MethodName: ShowOptions
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1620273110
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44928,8 +45024,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1890187735}
-  - {fileID: 1120260470}
   - {fileID: 770881663}
+  - {fileID: 1120260470}
   m_Father: {fileID: 1443348825}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -47131,7 +47227,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2053158261}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 857578531}
+        m_TargetAssemblyTypeName: PauseControllerManager, Assembly-CSharp
+        m_MethodName: ResumeGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2053158261
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47252,7 +47360,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2065207662}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 857578531}
+        m_TargetAssemblyTypeName: PauseControllerManager, Assembly-CSharp
+        m_MethodName: ShowPauseMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2065207662
 MonoBehaviour:
   m_ObjectHideFlags: 0
