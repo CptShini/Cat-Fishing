@@ -1,6 +1,7 @@
 
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PauseControllerManager : MonoBehaviour
 {
@@ -27,20 +28,26 @@ public class PauseControllerManager : MonoBehaviour
         }
     }
 
+
     private void Update()
     {
-        if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
+        if (Keyboard.current == null || !Keyboard.current.escapeKey.wasPressedThisFrame)
+            return;
+
+        if (!isPaused)
         {
-            // if (CatchingMinigame.Instance != null)
-            //     return;
-
-
-            if (isPaused)
-                ResumeGame();
-            else
-                PauseGame();
+            PauseGame();
+            return;
         }
+
+        if (soundOptionsMenu.activeSelf || controlsMenu.activeSelf || tutorialMenu.activeSelf)
+            ShowOptions();
+        else if (optionsMenu.activeSelf)
+            ShowPauseMenu();
+        else if (pausePanel.activeSelf)
+            ResumeGame();
     }
+
 
     // Temp fix - disable SFX when game is paused
     private void LateUpdate()
@@ -111,5 +118,10 @@ public class PauseControllerManager : MonoBehaviour
         soundOptionsMenu.SetActive(false);
         controlsMenu.SetActive(false);
         tutorialMenu.SetActive(false);
+    }
+    public void BackToMenu()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(0);
     }
 }
