@@ -15660,6 +15660,7 @@ GameObject:
   m_Component:
   - component: {fileID: 857578530}
   - component: {fileID: 857578531}
+  - component: {fileID: 857578532}
   m_Layer: 0
   m_Name: PauseControllerManager
   m_TagString: Untagged
@@ -15700,6 +15701,22 @@ MonoBehaviour:
   soundOptionsMenu: {fileID: 882224584}
   controlsMenu: {fileID: 1943441025}
   tutorialMenu: {fileID: 896260776}
+--- !u!114 &857578532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 857578529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5817e19b816b5e04b9ae50d6eb871cdc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioSettingsManager
+  audioMixer: {fileID: 24100000, guid: 601b9c2dde6f2224d9a7904f175b7bab, type: 2}
+  masterVolumeSlider: {fileID: 279779966}
+  musicVolumeSlider: {fileID: 453114865}
+  sfxVolumeSlider: {fileID: 426960445}
 --- !u!1 &860124651
 GameObject:
   m_ObjectHideFlags: 0
@@ -48135,6 +48152,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5665265525519134861, guid: e74e4427df1273a40b40b650782f5436, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 4992668816403378534, guid: 601b9c2dde6f2224d9a7904f175b7bab, type: 2}
     - target: {fileID: 9157978287733485072, guid: e74e4427df1273a40b40b650782f5436, type: 3}
       propertyPath: m_Name
       value: Game Manager
