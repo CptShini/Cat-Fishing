@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Assets.Scripts.Aquarium.FishTanks;
+﻿using Assets.Scripts.Aquarium.FishTanks;
 using Assets.Scripts.Data.Domain;
 using Assets.Scripts.Data.Persistence;
 using UnityEngine;
@@ -9,54 +7,30 @@ namespace Assets.Scripts.Aquarium
 {
     public class EntertainmentManager : MonoBehaviour, IDataPersistence
     {
-        private Dictionary<EntertainmentContributor, float> _entertainmentValues;
+        private float _decorationEntertainment;
         private FishTank[] _fishTanks;
 
         private void Start()
         {
-            _fishTanks = 
-                FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None)
-                .OfType<FishTank>()
-                .ToArray();
-
-            foreach (FishTank fishTank in _fishTanks)
-            {
-                fishTank.TankChanged.AddListener(TanksChanged);
-            }
-            TanksChanged();
             PlacementController.Instance.OnPlaced.AddListener(HandlePlacedFurniture);
             PlacementController.Instance.OnPickedUp.AddListener(HandlePickedUpFurniture);
         }
 
-        private void TanksChanged()
-        {
-            float entertainmentSum = _fishTanks.Sum(ft => ft.Tank.Entertainment);
-            _entertainmentValues[EntertainmentContributor.Tank] = entertainmentSum;
-            Debug.Log(entertainmentSum);
-        }
+        private void HandlePlacedFurniture(ItemSO item) => 
+            _decorationEntertainment += item.EntertainmentValue;
 
-        private void HandlePlacedFurniture(ItemSO item)
-        {
-            _entertainmentValues[EntertainmentContributor.Decor] += item.EntertainmentValue;
-            Debug.Log(_entertainmentValues[EntertainmentContributor.Decor]);
-        }
-
-        private void HandlePickedUpFurniture(ItemSO item)
-        {
-            _entertainmentValues[EntertainmentContributor.Decor] -= item.EntertainmentValue;
-            Debug.Log(_entertainmentValues[EntertainmentContributor.Decor]);
-        }
+        private void HandlePickedUpFurniture(ItemSO item) => 
+            _decorationEntertainment -= item.EntertainmentValue;
 
         public void LoadData(GameData data)
         {
-            _entertainmentValues = data.EntertainmentValues;
+            _decorationEntertainment = data.DecorationEntertainment;
             CrowdPopulator.Instance.InitializeCrowd(data.CrowdHistory[0]);
         }
 
         public void SaveData(ref GameData data)
         {
-            data.EntertainmentValues[EntertainmentContributor.Tank] = _entertainmentValues[EntertainmentContributor.Tank];
-            data.EntertainmentValues[EntertainmentContributor.Decor] = _entertainmentValues[EntertainmentContributor.Decor];
+            data.DecorationEntertainment = _decorationEntertainment;
         }
     }
 }

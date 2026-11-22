@@ -1,4 +1,3 @@
-using Assets.Scripts.Fishies.Domain;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

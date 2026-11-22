@@ -30,7 +30,7 @@ namespace Assets.Scripts.Diving.Managers
 
         private void NoOxygen()
         {
-            if (_noOxygen) return;
+            if (_noOxygen || GameManager.Instance.Transitioning) return;
         
             _noOxygen = true;
             GameManager.Instance.ChangeScene(Scenes.DailyReport, "You ran out of oxygen. You have to go back without your fish...");

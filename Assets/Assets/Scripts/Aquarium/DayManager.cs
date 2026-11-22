@@ -9,13 +9,13 @@ namespace Assets.Scripts.Aquarium
     [DefaultExecutionOrder(100)]
     public class DayManager : MonoBehaviour, IDataPersistence
     {
-        private bool _dayPassed;
+        private bool _dayStarted;
         
-        private void Start() => DayPassed();
+        private void Start() => DayStarted();
 
-        private void DayPassed()
+        private void DayStarted()
         {
-            if (_dayPassed) return;
+            if (_dayStarted) return;
             
             IEnumerable<IDayAware> dayAwares =
                 FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None)
@@ -23,15 +23,13 @@ namespace Assets.Scripts.Aquarium
 
             foreach (IDayAware dayAware in dayAwares)
             {
-                dayAware.DayPassed();
+                dayAware.DayStarted();
             }
 
-            _dayPassed = true;
+            _dayStarted = true;
         }
 
-        public void DayOver() => _dayPassed = false;
-
-        public void LoadData(GameData data) => _dayPassed = data.DayPassed;
-        public void SaveData(ref GameData data) => data.DayPassed = _dayPassed;
+        public void LoadData(GameData data) => _dayStarted = data.DayStarted;
+        public void SaveData(ref GameData data) => data.DayStarted = _dayStarted;
     }
 }

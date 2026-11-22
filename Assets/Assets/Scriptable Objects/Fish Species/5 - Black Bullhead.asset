@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a2fc9073c9404fd41b3d4eb14df2c97f, type: 3}
-  m_Name: 5 - Black bullhead
+  m_Name: 5 - Black Bullhead
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Fishies.Domain.FishSpecies
   <Id>k__BackingField: 5
-  <Name>k__BackingField: Black bullhead
-  <LatinName>k__BackingField: Ameiurus melas
-  <Description>k__BackingField: It gets its name, because the fist cats to see it
-    were stupid and thought it had horns
+  <Name>k__BackingField: Black Bullhead
+  <LatinName>k__BackingField: Ameiurus Melas
+  <Description>k__BackingField: It gets its name, because the first cats to see it
+    were stupid and thought it had horns.
+  <Lifetime>k__BackingField: 7
   <Rarity>k__BackingField: 1
   <Biome>k__BackingField: 24
   <Icon>k__BackingField: {fileID: 3050367558452241231, guid: 1112fe90907f3a44e9745f2813a8a657, type: 3}

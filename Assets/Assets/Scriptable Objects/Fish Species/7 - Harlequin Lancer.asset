@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a2fc9073c9404fd41b3d4eb14df2c97f, type: 3}
-  m_Name: 7 - Harlequin lancer
+  m_Name: 7 - Harlequin Lancer
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Fishies.Domain.FishSpecies
   <Id>k__BackingField: 7
   <Name>k__BackingField: Harlequin Lancer
-  <LatinName>k__BackingField: Bagroides melapterus
+  <LatinName>k__BackingField: Bagroides Melapterus
   <Description>k__BackingField: A very funny fish, alongside its other cousins from
-    comedie dell'arte
+    comedie dell'arte.
+  <Lifetime>k__BackingField: 0
   <Rarity>k__BackingField: 5
   <Biome>k__BackingField: 96
   <Icon>k__BackingField: {fileID: -1562096778675612243, guid: c1da8e38d58f1c245ad124c6444a6237, type: 3}

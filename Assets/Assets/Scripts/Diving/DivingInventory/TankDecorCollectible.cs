@@ -1,5 +1,4 @@
 using Assets.Scripts.Data.Domain.TankDecor;
-using Assets.Scripts.Fishies.Domain;
 
 namespace Assets.Scripts.Diving.DivingInventory
 {

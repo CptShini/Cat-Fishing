@@ -2,7 +2,6 @@ using UnityEngine;
 using Assets.Scripts.Data.Domain;
 using Assets.Scripts.Data.Persistence;
 using Assets.Scripts.Aquarium.FishTanks;
-using Assets.Scripts.Aquarium.Domain;
 
 public class DecorationPersistence : MonoBehaviour, IDataPersistence
 {
