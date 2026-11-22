@@ -67,7 +67,7 @@ namespace Assets.Scripts.Diving.Hazards
         {
 
             if(TimeManager.Instance.catchingTimeScale == 0 && !_ps.isPaused) {_ps.Pause(); animator.speed = 0;}
-            else if(TimeManager.Instance.catchingTimeScale == 1 && _ps.isPaused) {_ps.Play(); animator.speed = 1;}
+            else if(TimeManager.Instance.catchingTimeScale != 0 && _ps.isPaused) {_ps.Play(); animator.speed = TimeManager.Instance.catchingTimeScale;}
         
             if (isActive)
             {
