@@ -129,34 +129,31 @@ public class CatchingMinigame : MonoBehaviour
 
         angleRad += Mathf.DeltaAngle(angleRad, newRotation);
 
-        angleRad = (angleRad + 360f) % 360f;
-        
-        Debug.Log(angleRad);
-
-        if(!flipped && 90f < (angleRad + 360) % 360 && (angleRad + 360) % 360 <= 268f)
+        float wrappedRotation = (angleRad + 360f) % 360f;
+        switch (flipped)
         {
-            flipped = true;
-            catAndFish.transform.localScale = new Vector3 (1f, -1f, 1);
-            return;
-        }
-        else if(flipped && (!(90f < (angleRad + 360) % 360) || !((angleRad + 360) % 360 <= 272f)))
-        {
-            flipped = false;
-            catAndFish.transform.localScale = new Vector3 (1f, 1f, 1);
+            case false when wrappedRotation is > 90f and <= 268f:
+                flipped = true;
+                catAndFish.transform.localScale = new(1f, -1f, 1);
+                return;
+            case true when wrappedRotation is <= 90f or > 272f:
+                flipped = false;
+                catAndFish.transform.localScale = new(1f, 1f, 1);
+                break;
         }
     }
 
     private void Move()
     {
-        Vector2 targetPos = _movement.Direction + (playerContest * 1.2f) * contestMod;
+        Vector2 targetPos = _movement.Direction + playerContest * (1.2f * contestMod);
         Vector2 newPos = Vector2.MoveTowards(
             catAndFish.anchoredPosition, 
             targetPos * 150, 
             Time.deltaTime * 500);
             
         catAndFish.anchoredPosition = newPos;
-        MovingBubbles.uvRect = new Rect(MovingBubbles.uvRect.position + targetPos * Time.deltaTime * movingBubblesSpeed, MovingBubbles.uvRect.size);
-        MovingBackground.uvRect = new Rect(MovingBackground.uvRect.position + targetPos * Time.deltaTime * movingBackgroundSpeed, MovingBackground.uvRect.size);
+        MovingBubbles.uvRect = new(MovingBubbles.uvRect.position + targetPos * (Time.deltaTime * movingBubblesSpeed), MovingBubbles.uvRect.size);
+        MovingBackground.uvRect = new(MovingBackground.uvRect.position + targetPos * (Time.deltaTime * movingBackgroundSpeed), MovingBackground.uvRect.size);
     }
 
     private void Wiggle()
@@ -167,13 +164,14 @@ public class CatchingMinigame : MonoBehaviour
 
     private void SetAngle(float angle)
     {
-        catAndFish.transform.eulerAngles = new Vector3(0,0, angle);
+        catAndFish.transform.eulerAngles = new(0,0, angle);
     }
 
     private void Update()
     {
         if (DivingController.Instance.state != PlayerState.GRAB)
             return;
+        
         Rotate();
         Wiggle();
         SetAngle(wiggleRad + angleRad);

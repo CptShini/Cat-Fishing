@@ -35,7 +35,6 @@ namespace Assets.Scripts.Diving.Bars
         {
             rt = foreground.gameObject.GetComponent<RectTransform>();
             maxLength = vertical ? rt.sizeDelta.y : rt.sizeDelta.x;
-            Debug.Log("AAHHH");
             curLength = maxLength;
         }
 

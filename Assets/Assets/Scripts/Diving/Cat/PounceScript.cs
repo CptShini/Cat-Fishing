@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Assets.Scripts.Audio;
+using System.Linq;
 using Assets.Scripts.Audio.SFX;
 using Assets.Scripts.Diving.Bars;
 using Assets.Scripts.Diving.Hazards;
@@ -23,7 +23,7 @@ namespace Assets.Scripts.Diving.Cat
     
         private float pounceDuration; // Tracker for when to stop pounceing. Can change based on 
         private Vector2 pounceDirection; // For saving the pounce direction during multiple updates
-        private List<EnvironmentalMovementAffector> affectors = new();
+        private readonly List<EnvironmentalMovementAffector> affectors = new();
         private Vector2 curEnvVelociy = new();
         private float acceleration;
         private float friction;
@@ -158,7 +158,6 @@ namespace Assets.Scripts.Diving.Cat
 
         public void AddAffector(EnvironmentalMovementAffector affector)
         {
-            Debug.Log("ADD AFFECTOR");
             affectors.Add(affector);
         }
 
@@ -170,11 +169,7 @@ namespace Assets.Scripts.Diving.Cat
         public Vector2 CalculateVelocityChange()
         {
             Vector2 velocity = new();
-            foreach (var affector in affectors)
-            {
-                velocity += affector.Velocity;
-            }
-            return velocity;
+            return affectors.Aggregate(velocity, (current, affector) => current + affector.Velocity);
         }
 
     }
