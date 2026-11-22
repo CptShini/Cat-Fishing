@@ -15,6 +15,7 @@ public class PauseControllerManager : MonoBehaviour
     [SerializeField] private GameObject controlsMenu;
     [SerializeField] private GameObject tutorialMenu;
     public bool isPaused { get; private set; }
+    private int sceneIndex;
 
     private void Awake()
     {
@@ -28,25 +29,45 @@ public class PauseControllerManager : MonoBehaviour
         }
     }
 
-
-    private void Update()
+    private void Start()
     {
-        if (Keyboard.current == null || !Keyboard.current.escapeKey.wasPressedThisFrame)
-            return;
-
-        if (!isPaused)
-        {
-            PauseGame();
-            return;
-        }
-
-        if (soundOptionsMenu.activeSelf || controlsMenu.activeSelf || tutorialMenu.activeSelf)
-            ShowOptions();
-        else if (optionsMenu.activeSelf)
-            ShowPauseMenu();
-        else if (pausePanel.activeSelf)
-            ResumeGame();
+        sceneIndex = SceneManager.GetActiveScene().buildIndex;
     }
+
+
+private void Update()
+{
+    if (Keyboard.current == null || !Keyboard.current.escapeKey.wasPressedThisFrame)
+        return;
+
+    // Submenus: return to Options.
+    if (soundOptionsMenu.activeSelf || controlsMenu.activeSelf || tutorialMenu.activeSelf)
+    {
+        ShowOptions();
+        return;
+    }
+
+    // Main Menu
+    if (sceneIndex == 0)
+    {
+        if (optionsMenu.activeSelf)
+            ResumeGame();
+
+        return;
+    }
+
+    // Gameplay scenes
+    if (!isPaused)
+    {
+        PauseGame();
+        return;
+    }
+
+    if (optionsMenu.activeSelf)
+        ShowPauseMenu();
+    else if (pausePanel.activeSelf)
+        ResumeGame();
+}
 
 
     // Temp fix - disable SFX when game is paused
@@ -69,7 +90,11 @@ public class PauseControllerManager : MonoBehaviour
         Time.timeScale = 0f;
 
         pauseMenu.SetActive(true);
-        ShowPauseMenu();
+
+        if (sceneIndex == 0)
+            ShowOptions();
+        else
+            ShowPauseMenu();
     }
 
     public void ResumeGame()
