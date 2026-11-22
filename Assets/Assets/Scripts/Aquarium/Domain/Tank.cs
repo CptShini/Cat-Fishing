@@ -12,20 +12,39 @@ namespace Assets.Scripts.Aquarium.Domain
         public string Name;
         
         public int Capacity { get; private set; }
-        public int UpgradeLevel { get; private set; } = 1;
+        public int UpgradeLevel { get; private set; }
 
         public const float MaxDirtiness = 6f;
-        public float Dirtiness { get; private set; }
-        
+        private float _dirtiness, _dirtinessFactor;
+        public float Dirtiness
+        {
+            get => _dirtiness;
+            set
+            {
+                _dirtiness = Mathf.Clamp(value, 0f, MaxDirtiness);
+                
+                const float threshold = 1f;
+                if (Dirtiness <= threshold)
+                {
+                    _dirtinessFactor = 1f;
+                    return;
+                }
+                
+                float x = (Dirtiness - threshold) / (MaxDirtiness - threshold);
+                _dirtinessFactor = 1f - x*x;
+            }
+        }
+
         private byte[] _dirtTextureAlpha;
         public byte[] DirtTextureAlpha
         {
             get => (byte[])_dirtTextureAlpha?.Clone();
             set => _dirtTextureAlpha = (byte[])value.Clone();
         }
-        
-        public float Entertainment { get; private set; }
-        
+
+        private float _entertainmentValue;
+        public float Entertainment => _entertainmentValue * _dirtinessFactor;
+
         public IReadOnlyList<TankFish> Fishes => _fishes;
         private readonly List<TankFish> _fishes;
 
@@ -41,7 +60,7 @@ namespace Assets.Scripts.Aquarium.Domain
             Capacity = capacity;
             UpgradeLevel = 1;
             Dirtiness = 0;
-            Entertainment = 0f;
+            _entertainmentValue = 0f;
             _fishes = new();
             _fishDeathCount = new int[3];
         }
@@ -130,7 +149,7 @@ namespace Assets.Scripts.Aquarium.Domain
         {
             Dictionary<int, int> speciesCount = new();
             
-            float entertainmentValue = 0f;
+            _entertainmentValue = 0f;
             foreach (var fish in _fishes.OrderByDescending(f => f.Entertainment))
             {
                 int speciesId = fish.Fish.Species.Id;
@@ -138,10 +157,8 @@ namespace Assets.Scripts.Aquarium.Domain
                 speciesCount[speciesId]++;
 
                 float noveltyFactor = Mathf.Pow(2f, 1 - speciesCount[speciesId]);
-                entertainmentValue += fish.Entertainment * noveltyFactor;
+                _entertainmentValue += fish.Entertainment * noveltyFactor;
             }
-            
-            Entertainment = entertainmentValue;
         }
 
         public bool Upgrade(int newCapacity)
@@ -155,11 +172,5 @@ namespace Assets.Scripts.Aquarium.Domain
             OnFishChanged();
             return true;
         }
-        
-        public void CleanTank() =>
-            Dirtiness = 0;
-
-        public void Clean(float amount) => 
-            Dirtiness = Mathf.Max(0f, Dirtiness - amount);
     }
 }

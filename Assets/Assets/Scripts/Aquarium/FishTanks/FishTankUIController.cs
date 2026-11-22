@@ -235,7 +235,7 @@ namespace Assets.Scripts.Aquarium.FishTanks
                 return;
             }
 
-            _currentTank.Tank.Clean(dirtinessReductionPerSecond * Time.deltaTime);
+            _currentTank.Tank.Dirtiness -= dirtinessReductionPerSecond * Time.deltaTime;
             _currentTank.Tank.DirtTextureAlpha = spriteEraser.GetAlphaData();
 
             UpdateDirtinessVisual();
@@ -263,13 +263,13 @@ namespace Assets.Scripts.Aquarium.FishTanks
             float newDirtiness = Mathf.Lerp(_fadeStartDirtiness, 0f, progress);
             float reduction = _currentTank.Tank.Dirtiness - newDirtiness;
 
-            _currentTank.Tank.Clean(reduction);
+            _currentTank.Tank.Dirtiness -= reduction;
 
             UpdateDirtinessVisual();
 
             if (progress < 1f) return;
             
-            _currentTank.Tank.CleanTank();
+            _currentTank.Tank.Dirtiness = 0f;
             _currentTank.Tank.DirtTextureAlpha = spriteEraser.GetAlphaData();
 
             _isFadingOut = false;
