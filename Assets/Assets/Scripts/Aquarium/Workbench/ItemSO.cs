@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using Assets.Scripts.Aquarium.FishTanks;
 
 [CreateAssetMenu(fileName = "NewItem", menuName = "ScriptableObjects/ItemSO")]
 public class ItemSO : ScriptableObject
@@ -10,6 +11,7 @@ public class ItemSO : ScriptableObject
     [Header("Basic Info")]
     public string itemName;
     public Sprite itemIcon;
+    public float EntertainmentValue;
 
     [Header("Item Type")]
     public ItemType itemType = ItemType.Furniture;
@@ -31,12 +33,16 @@ public class ItemSO : ScriptableObject
     [Header("Floor Placement")]
     public TileBase floorTile;
     public Vector2Int floorSize = new Vector2Int(3, 3);
+
+    [Header("Fish Tank")]
+    public FishTankDefinitionSO fishTankDefinition;
 }
 
 public enum ItemType
 {
     Furniture,
-    FloorTile
+    FloorTile,
+    FishTank
 }
 
 public enum FurnitureSortingLayer

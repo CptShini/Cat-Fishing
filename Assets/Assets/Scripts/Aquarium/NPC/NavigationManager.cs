@@ -21,8 +21,8 @@ public class NavigationManager : MonoBehaviour
 
     void Start()
     {
-        PlacementController.Instance.OnPlaced.AddListener(ReadyBuild);
-        PlacementController.Instance.OnPickedUp.AddListener(ReadyBuild);
+        PlacementController.Instance.OnPlaced.AddListener(_ => ReadyBuild());
+        PlacementController.Instance.OnPickedUp.AddListener(_ => ReadyBuild());
         Invoke(nameof(RebuildNavigation), 0.1f);
     }
 

@@ -15,6 +15,7 @@ MonoBehaviour:
   itemID: carpet
   itemName: Carpet
   itemIcon: {fileID: 21300000, guid: 0e541ddf15ebec24cadd0f4b68d7f939, type: 3}
+  EntertainmentValue: 0.2
   itemType: 0
   prefab: {fileID: 3758215890295927942, guid: a5a94c7a89e9dbc46ab244137aea4e8d, type: 3}
   size: {x: 2, y: 3}
@@ -25,3 +26,4 @@ MonoBehaviour:
   splitHeight: 0.5
   floorTile: {fileID: 0}
   floorSize: {x: 3, y: 3}
+  fishTankDefinition: {fileID: 0}

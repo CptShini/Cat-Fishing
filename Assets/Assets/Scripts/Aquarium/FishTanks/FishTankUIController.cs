@@ -1,4 +1,6 @@
 using Assets.Scripts.Aquarium.Domain;
+using Assets.Scripts.Aquarium.FishTanks.CleaningMiniGame;
+using Assets.Scripts.Aquarium.FishTanks.Interaction;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,15 +17,33 @@ namespace Assets.Scripts.Aquarium.FishTanks
         [SerializeField] private TextMeshProUGUI 
             tankNameText,
             tankCapacityText,
-            tankEntertainmentText;
+            tankEntertainmentText,
+            upgradePriceText,
+            feedingPriceText;
 
-        [SerializeField] private Button feedButton;
+        [SerializeField] private SpriteRenderer tankDirtyImage;
+        [SerializeField] private Button upgradeButton;
+
         [SerializeField] private ParticleSystem feedParticles;
-        
+
         [Space]
         
         [SerializeField] private FishTankSpawner spawner;
-        [SerializeField] private FishGrabber grabber;
+        [SerializeField] private FishInteractionController interactionController;
+
+        [Space]
+
+        [SerializeField] private SpriteEraser spriteEraser;
+        [SerializeField, Min(0f)] private float dirtinessReductionPerSecond = 0.5f;
+        [SerializeField, Range(0f, 100f)] private float requiredCleanPercentage = 90f;
+
+        [Space]
+
+        [SerializeField, Min(0.1f)]private float fullCleanFadeDuration = 1.5f;
+        
+        private bool _isFadingOut;
+        private float _fadeTimer;
+        private float _fadeStartDirtiness;
 
         private FishTank _currentTank, _prevTank;
 
@@ -33,65 +53,77 @@ namespace Assets.Scripts.Aquarium.FishTanks
 
         private void Start()
         {
-            grabber.DropFish.AddListener(OnFishDropped);
-            GoldManager.Instance.GoldChanged.AddListener(() => feedButton.interactable = GoldManager.Instance.HasEnoughGold(feedingPrice));
+            interactionController.DropFish.AddListener(OnFishDropped);
+            interactionController.FeedFish.AddListener(OnFishFed);
+            interactionController.CleanAtPosition.AddListener(OnCleanAtPosition);
+
+            GoldManager.Instance.GoldChanged.AddListener(UpdateUpgradeUI);
+
+            upgradeButton.onClick.AddListener(UpgradeCurrentTank);
+
+            UpdateFeedingPriceUI();
         }
 
         public void Open(FishTank tank)
         {
-            if (IsOpen) return;
-            
-            _currentTank = tank;
-            
-            panel.SetActive(true);
-            IsOpen = true;
-            grabber.enabled = true;
+            if (IsOpen)
+                return;
 
-            PauseController.IsGamePaused = true;
+            _currentTank = tank;
+            panel.SetActive(true);
+
+            IsOpen = true;
+            interactionController.enabled = true;
+
+            byte[] savedAlpha = tank.Tank.DirtTextureAlpha;
+            if (savedAlpha == null)
+                spriteEraser.ResetTexture();
+            else
+                spriteEraser.LoadAlphaData(savedAlpha);
+
+            UpdateUpgradeUI();
+            UpdateDirtinessVisual();
 
             if (!_prevTank || tank.Tank.Id != _prevTank.Tank.Id)
             {
                 tankNameText.text = tank.Tank.Name;
                 UpdateTankText();
+
                 spawner.Clear();
+                feedParticles.Stop();
+                feedParticles.Clear();
             }
-            
+
             foreach (TankFish fish in tank.Tank.Fishes)
-            {
                 spawner.SpawnFish(fish);
-            }
+
+            PauseController.IsGamePaused = true;
         }
 
-        public void AddFish(TankFish fish)
+        public void AddFish(TankFish fish, Vector2 mouseScreenPos)
         {
             if (!IsOpen) return;
             
-            _currentTank.AddFish(fish);
-            spawner.SpawnFish(fish);
-            UpdateTankText();
-        }
-
-        public void Feed()
-        {
-            if (!IsOpen || !GoldManager.Instance.SpendGold(feedingPrice)) return;
-            
-            _currentTank.Feed();
-            feedParticles.Play();
+            _currentTank.Tank.AddFish(fish);
+            interactionController.CursorMapper.TryGetWorldPosition(mouseScreenPos, out Vector2 mouseWorldPos);
+            spawner.SpawnFish(fish, mouseWorldPos);
             UpdateTankText();
         }
 
         public void Close()
         {
-            if (!IsOpen) return;
-            
+            if (!IsOpen)
+                return;
+
+            _isFadingOut = false;
+            _currentTank.Tank.DirtTextureAlpha = spriteEraser.GetAlphaData();
+
             _prevTank = _currentTank;
             _currentTank = null;
-            
+
             panel.SetActive(false);
             IsOpen = false;
-            grabber.enabled = false;
-            feedParticles.Stop();
-            feedParticles.Clear();
+            interactionController.enabled = false;
 
             PauseController.IsGamePaused = false;
         }
@@ -100,11 +132,26 @@ namespace Assets.Scripts.Aquarium.FishTanks
         {
             if (!_currentTank || !spawner.OutsideBounds(dropPos)) return;
 
-            _currentTank.RemoveFish(fish);
+            _currentTank.Tank.RemoveFish(fish);
             spawner.RemoveFish(fish);
             FishCollectionManager.Instance.Add(fish);
             UpdateTankText();
         }
+        
+        private void OnFishFed(TankFish fish, Vector2 cursorWorldPos)
+        {
+            if (!IsOpen || !GoldManager.Instance.SpendGold(feedingPrice)) return;
+            
+            feedParticles.transform.position = cursorWorldPos;
+            feedParticles.Play();
+            if (fish == null) return;
+            
+            fish.Feed();
+            UpdateTankText();
+        }
+
+        private void UpdateFeedingPriceUI() => 
+            feedingPriceText.text = feedingPrice.ToString();
 
         private void UpdateTankText()
         {
@@ -118,7 +165,119 @@ namespace Assets.Scripts.Aquarium.FishTanks
                     ? Color.black 
                     : Color.red;
 
+            UpdateEntertainmentText();
+        }
+        
+        private void UpdateEntertainmentText() =>
             tankEntertainmentText.text = $"Entertainment: {_currentTank.Tank.Entertainment:F2}";
+        
+        private void UpdateUpgradeUI()
+        {
+            if (_currentTank == null)
+            {
+                upgradePriceText.text = "";
+                upgradeButton.interactable = false;
+                return;
+            }
+
+            var tank = _currentTank.Tank;
+            var definition = _currentTank.Definition;
+
+            int price = definition.GetUpgradePrice(tank.UpgradeLevel);
+            if (price < 0)
+            {
+                upgradeButton.gameObject.SetActive(false);
+                return;
+            }
+
+            upgradeButton.gameObject.SetActive(true);
+
+            upgradePriceText.text = price.ToString();
+            upgradeButton.interactable = GoldManager.Instance.HasEnoughGold(price);
+        }
+
+        private void UpgradeCurrentTank()
+        {
+            if (!_currentTank)
+                return;
+
+            Tank tank = _currentTank.Tank;
+            FishTankDefinitionSO definition = _currentTank.Definition;
+
+            int price = definition.GetUpgradePrice(tank.UpgradeLevel);
+            if (price < 0 || !GoldManager.Instance.SpendGold(price))
+                return;
+
+            int newCapacity = definition.GetCapacity(tank.UpgradeLevel + 1);
+            if (!tank.Upgrade(newCapacity))
+                return;
+
+            UpdateTankText();
+            UpdateUpgradeUI();
+        }
+
+        private void OnCleanAtPosition(Vector2 worldPosition)
+        {
+            if (!_currentTank || !spriteEraser || _isFadingOut)
+                return;
+
+            bool erased = spriteEraser.EraseAt(worldPosition);
+            if (!erased) return;
+
+            float cleanPercentage = spriteEraser.GetErasedPercentage();
+            if (cleanPercentage >= requiredCleanPercentage)
+            {
+                _isFadingOut = true;
+                _fadeTimer = 0f;
+                _fadeStartDirtiness = _currentTank.Tank.Dirtiness;
+
+                Debug.Log($"{_currentTank.Tank.Name} is fully cleaned!");
+
+                _currentTank.Tank.DirtTextureAlpha = spriteEraser.GetAlphaData();
+
+                return;
+            }
+
+            _currentTank.Tank.Dirtiness -= dirtinessReductionPerSecond * Time.deltaTime;
+            _currentTank.Tank.DirtTextureAlpha = spriteEraser.GetAlphaData();
+
+            UpdateDirtinessVisual();
+        }
+
+        private void UpdateDirtinessVisual()
+        {
+            if (!_currentTank) return;
+            
+            float dirtinessFactor = _currentTank.Tank.DirtinessFactor;
+            float alpha = dirtinessFactor > 0f ? dirtinessFactor * 0.9f : 0f;
+            tankDirtyImage.color = new(0f, 1f, 0f, alpha);
+
+            _currentTank.UpdateDirtinessWarning();
+            UpdateEntertainmentText();
+        }
+
+        private void Update()
+        {
+            if (!_isFadingOut || !_currentTank)
+                return;
+
+            _fadeTimer += Time.deltaTime;
+
+            float progress = Mathf.Clamp01(_fadeTimer / fullCleanFadeDuration);
+            float newDirtiness = Mathf.Lerp(_fadeStartDirtiness, 0f, progress);
+            float reduction = _currentTank.Tank.Dirtiness - newDirtiness;
+
+            _currentTank.Tank.Dirtiness -= reduction;
+
+            UpdateDirtinessVisual();
+
+            if (progress < 1f) return;
+            
+            _currentTank.Tank.Dirtiness = 0f;
+            _currentTank.Tank.DirtTextureAlpha = spriteEraser.GetAlphaData();
+
+            _isFadingOut = false;
+            UpdateDirtinessVisual();
         }
     }
 }

@@ -32,6 +32,7 @@ namespace Assets.Scripts.Fishies
             _movement.Init(fish.Fish.Species.Speed);
             
             _movement.Wander();
+            Fish.Fed.AddListener(UpdateHappinessText);
         }
 
         private void LateUpdate()
@@ -39,11 +40,14 @@ namespace Assets.Scripts.Fishies
             if (happinessText.gameObject.activeSelf != _hovering)
             {
                 happinessText.gameObject.SetActive(_hovering);
-                happinessText.text = $"{Fish.Happiness}/10";
+                UpdateHappinessText();
             }
 
             _hovering = false;
         }
+        
+        private void UpdateHappinessText() =>
+            happinessText.text = $"{Fish.Happiness}/10";
 
         public void Hovering() => _hovering = true;
 

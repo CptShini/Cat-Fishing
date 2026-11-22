@@ -1,4 +1,6 @@
 using UnityEngine;
+using Assets.Scripts.Aquarium.Domain;
+using System.Collections.Generic;
 
 public class DecorInventoryManager : MonoBehaviour
 {
@@ -19,18 +21,26 @@ public class DecorInventoryManager : MonoBehaviour
             {
                 DecorInventorySlot slot = child.GetComponent<DecorInventorySlot>();
 
-                if (slot.ItemSO == itemSO)
-                {
-                    slot.count++;
-                    slot.UpdateUI();
-                    return true;
-                }
+                if (slot.ItemSO != itemSO) continue;
+                
+                slot.count++;
+                slot.UpdateUI();
+                return true;
             }
         }
 
         DecorInventorySlot newSlot = Instantiate(slotPrefab, inventoryContent);
 
         newSlot.Setup(itemSO, placementController);
+
+        return true;
+    }
+
+    public bool AddTank(ItemSO itemSO, Tank tank)
+    {
+        DecorInventorySlot newSlot = Instantiate(slotPrefab, inventoryContent);
+
+        newSlot.SetupTank(itemSO, placementController, tank);
 
         return true;
     }
@@ -61,11 +71,11 @@ public class DecorInventoryManager : MonoBehaviour
         }
     }
 
-    public void OnSlotClicked(ItemSO ItemSO)
+    public void OnSlotClicked(DecorInventorySlot slot)
     {
-        placementController.SelectItem(ItemSO);
+        placementController.SelectItem(slot);
     }
-
+    
     // check if the inventory has a specific item
     public bool HasItem(ItemSO itemSO)
     {
@@ -80,7 +90,7 @@ public class DecorInventoryManager : MonoBehaviour
     }
 
 
-    public void GetInventorySaveData(System.Collections.Generic.List<InventoryItemSaveData> saveData)
+    public void GetInventorySaveData(List<InventoryItemSaveData> saveData)
     {
         saveData.Clear();
 
@@ -94,12 +104,14 @@ public class DecorInventoryManager : MonoBehaviour
             saveData.Add(new InventoryItemSaveData
             {
                 itemID = slot.ItemSO.itemID,
-                count = slot.count
+                count = slot.count,
+                instanceID = slot.InstanceID,
+                tankData = slot.SavedTankData
             });
         }
     }
 
-    public void LoadInventory(System.Collections.Generic.List<InventoryItemSaveData> saveData, ItemDatabase database)
+    public void LoadInventory(List<InventoryItemSaveData> saveData, ItemDatabase database)
     {
         foreach (Transform child in inventoryContent)
             Destroy(child.gameObject);
@@ -115,6 +127,12 @@ public class DecorInventoryManager : MonoBehaviour
 
             newSlot.Setup(item, placementController);
             newSlot.count = savedItem.count;
+
+            if (savedItem.tankData != null)
+            {
+                newSlot.LoadTankData(savedItem.instanceID, savedItem.tankData);
+            }
+
             newSlot.UpdateUI();
         }
     }
