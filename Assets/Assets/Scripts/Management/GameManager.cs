@@ -70,6 +70,7 @@ namespace Assets.Scripts.Management
             Transitioning = true;
             
             _dpm.SaveGameToData();
+            SaveManager.Instance.Save();
             
             sceneTransition.FadeOut(text);
             musicPlayer.StopTrack(sceneTransitionTime);

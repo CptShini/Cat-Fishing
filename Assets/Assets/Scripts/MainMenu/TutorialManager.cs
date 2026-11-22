@@ -9,7 +9,7 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] private GameObject tutorial;
     [SerializeField] private GameObject[] tutorialImages;
     [SerializeField] private GameObject[] pagesImages;
-    [SerializeField] private Image backgroundImage;
+    // [SerializeField] private Image backgroundImage;
 
     [SerializeField] private TMP_Text pageNumberText;
 
@@ -27,7 +27,7 @@ public class TutorialManager : MonoBehaviour
 
     private void Awake()
     {
-        originalColor = backgroundImage.color;
+        // originalColor = backgroundImage.color;
     }
 
     private void Start()
@@ -37,7 +37,7 @@ public class TutorialManager : MonoBehaviour
 
     private void Update()
     {
-        UpdateBackground();
+        // UpdateBackground();
 
         if (!tutorial.activeSelf || Keyboard.current == null)
             return;
@@ -49,12 +49,12 @@ public class TutorialManager : MonoBehaviour
             NextImage();
     }
 
-    private void UpdateBackground()
-    {
-        Color color = originalColor;
-        color.a = tutorial.activeSelf ? transparency : originalColor.a;
-        backgroundImage.color = color;
-    }
+    // private void UpdateBackground()
+    // {
+    //     Color color = originalColor;
+    //     color.a = tutorial.activeSelf ? transparency : originalColor.a;
+    //     backgroundImage.color = color;
+    // }
 
     public void SelectPage(int index)
     {
