@@ -96,7 +96,7 @@ namespace Assets.Scripts.DailyReport
         {
             _entertainmentSum = _tankEntertainment + _decorationEntertainment;
 
-            float targetCrowdScore = _entertainmentSum * k;
+            float targetCrowdScore = Mathf.Sqrt(_entertainmentSum) * k;
             float crowdScoreTargetDelta = targetCrowdScore - _currentCrowdScore;
             float crowdScoreChange = crowdScoreTargetDelta * crowdGrowthRate;
 

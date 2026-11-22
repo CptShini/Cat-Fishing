@@ -12,20 +12,33 @@ namespace Assets.Scripts.Aquarium.Domain
         public string Name;
         
         public int Capacity { get; private set; }
-        public int UpgradeLevel { get; private set; } = 1;
+        public int UpgradeLevel { get; private set; }
 
-        public const float MaxDirtiness = 6f;
-        public float Dirtiness { get; private set; }
-        
+        private const float MaxDirtiness = 6f, DirtinessThreshold = 1f;
+        private float _dirtiness;
+        public float DirtinessFactor { get; private set; }
+        public float Dirtiness
+        {
+            get => _dirtiness;
+            set
+            {
+                _dirtiness = Mathf.Clamp(value, 0f, MaxDirtiness);
+                DirtinessFactor = Dirtiness <= DirtinessThreshold
+                    ? 0f
+                    : (Dirtiness - DirtinessThreshold) / (MaxDirtiness - DirtinessThreshold);
+            }
+        }
+
         private byte[] _dirtTextureAlpha;
         public byte[] DirtTextureAlpha
         {
             get => (byte[])_dirtTextureAlpha?.Clone();
             set => _dirtTextureAlpha = (byte[])value.Clone();
         }
-        
-        public float Entertainment { get; private set; }
-        
+
+        private float _entertainmentValue;
+        public float Entertainment => _entertainmentValue * (1f - DirtinessFactor*DirtinessFactor);
+
         public IReadOnlyList<TankFish> Fishes => _fishes;
         private readonly List<TankFish> _fishes;
 
@@ -41,7 +54,7 @@ namespace Assets.Scripts.Aquarium.Domain
             Capacity = capacity;
             UpgradeLevel = 1;
             Dirtiness = 0;
-            Entertainment = 0f;
+            _entertainmentValue = 0f;
             _fishes = new();
             _fishDeathCount = new int[3];
         }
@@ -53,7 +66,6 @@ namespace Assets.Scripts.Aquarium.Domain
             Capacity = tankDTO.Capacity;
             UpgradeLevel = tankDTO.UpgradeLevel <= 0 ? 1 : tankDTO.UpgradeLevel;
             Dirtiness = tankDTO.Dirtiness;
-            _dirtTextureAlpha = (byte[])tankDTO.DirtTextureAlpha?.Clone();
             
             _fishes = tankDTO.Fishes.Select(dto => new TankFish(dto, db)).ToList();
             _fishes.ForEach(RegisterFish);
@@ -130,7 +142,7 @@ namespace Assets.Scripts.Aquarium.Domain
         {
             Dictionary<int, int> speciesCount = new();
             
-            float entertainmentValue = 0f;
+            _entertainmentValue = 0f;
             foreach (var fish in _fishes.OrderByDescending(f => f.Entertainment))
             {
                 int speciesId = fish.Fish.Species.Id;
@@ -138,10 +150,8 @@ namespace Assets.Scripts.Aquarium.Domain
                 speciesCount[speciesId]++;
 
                 float noveltyFactor = Mathf.Pow(2f, 1 - speciesCount[speciesId]);
-                entertainmentValue += fish.Entertainment * noveltyFactor;
+                _entertainmentValue += fish.Entertainment * noveltyFactor;
             }
-            
-            Entertainment = entertainmentValue;
         }
 
         public bool Upgrade(int newCapacity)
@@ -155,11 +165,5 @@ namespace Assets.Scripts.Aquarium.Domain
             OnFishChanged();
             return true;
         }
-        
-        public void CleanTank() =>
-            Dirtiness = 0;
-
-        public void Clean(float amount) => 
-            Dirtiness = Mathf.Max(0f, Dirtiness - amount);
     }
 }

@@ -165,9 +165,12 @@ namespace Assets.Scripts.Aquarium.FishTanks
                     ? Color.black 
                     : Color.red;
 
-            tankEntertainmentText.text = $"Entertainment: {_currentTank.Tank.Entertainment:F2}";
+            UpdateEntertainmentText();
         }
-
+        
+        private void UpdateEntertainmentText() =>
+            tankEntertainmentText.text = $"Entertainment: {_currentTank.Tank.Entertainment:F2}";
+        
         private void UpdateUpgradeUI()
         {
             if (_currentTank == null)
@@ -235,7 +238,7 @@ namespace Assets.Scripts.Aquarium.FishTanks
                 return;
             }
 
-            _currentTank.Tank.Clean(dirtinessReductionPerSecond * Time.deltaTime);
+            _currentTank.Tank.Dirtiness -= dirtinessReductionPerSecond * Time.deltaTime;
             _currentTank.Tank.DirtTextureAlpha = spriteEraser.GetAlphaData();
 
             UpdateDirtinessVisual();
@@ -244,12 +247,13 @@ namespace Assets.Scripts.Aquarium.FishTanks
         private void UpdateDirtinessVisual()
         {
             if (!_currentTank) return;
-
-            float dirtiness = _currentTank.Tank.Dirtiness;
-            float alpha = Mathf.Clamp01(dirtiness / Tank.MaxDirtiness) * 0.9f;
+            
+            float dirtinessFactor = _currentTank.Tank.DirtinessFactor;
+            float alpha = dirtinessFactor > 0f ? dirtinessFactor * 0.9f : 0f;
             tankDirtyImage.color = new(0f, 1f, 0f, alpha);
 
             _currentTank.UpdateDirtinessWarning();
+            UpdateEntertainmentText();
         }
 
         private void Update()
@@ -263,13 +267,13 @@ namespace Assets.Scripts.Aquarium.FishTanks
             float newDirtiness = Mathf.Lerp(_fadeStartDirtiness, 0f, progress);
             float reduction = _currentTank.Tank.Dirtiness - newDirtiness;
 
-            _currentTank.Tank.Clean(reduction);
+            _currentTank.Tank.Dirtiness -= reduction;
 
             UpdateDirtinessVisual();
 
             if (progress < 1f) return;
             
-            _currentTank.Tank.CleanTank();
+            _currentTank.Tank.Dirtiness = 0f;
             _currentTank.Tank.DirtTextureAlpha = spriteEraser.GetAlphaData();
 
             _isFadingOut = false;
