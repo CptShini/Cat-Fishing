@@ -1,4 +1,5 @@
 
+using Assets.Scripts.Management;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -73,14 +74,13 @@ private void Update()
     // Temp fix - disable SFX when game is paused
     private void LateUpdate()
     {
-        if (isPaused)
+        if (!isPaused) return;
+        
+        var sfxObjects = FindObjectsByType<AudioSource>(FindObjectsSortMode.None);
+        foreach (var sfx in sfxObjects)
         {
-            var sfxObjects = FindObjectsByType<AudioSource>(FindObjectsSortMode.None);
-            foreach (var sfx in sfxObjects)
-            {
-                if (sfx.name.Contains("(SFX)") || sfx.name.Contains("(Loop)"))
-                    sfx.Pause();
-            }
+            if (sfx.name.Contains("(SFX)") || sfx.name.Contains("(Loop)"))
+                sfx.Pause();
         }
     }
 
@@ -109,7 +109,6 @@ private void Update()
     public void ShowPauseMenu()
     {
         HideAllMenus();
-        Debug.Log("Showing Pause Menu");
         pausePanel.SetActive(true);
     }
 
@@ -148,6 +147,6 @@ private void Update()
     public void BackToMenu()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene(0);
+        GameManager.Instance.ChangeScene(Scenes.MainMenu, "Returning to main menu...");
     }
 }
