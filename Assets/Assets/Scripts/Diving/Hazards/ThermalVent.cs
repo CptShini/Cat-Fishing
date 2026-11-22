@@ -1,5 +1,6 @@
 using Assets.Scripts.Audio;
 using Assets.Scripts.Audio.SFX;
+using Assets.Scripts.Diving.Managers;
 using UnityEngine;
 
 namespace Assets.Scripts.Diving.Hazards
@@ -18,6 +19,7 @@ namespace Assets.Scripts.Diving.Hazards
         [SerializeField] private float offset = 0;
         [SerializeField] private bool isActive = false;
         private float curTimer;
+        
 
         private void Start()
         {
@@ -63,9 +65,13 @@ namespace Assets.Scripts.Diving.Hazards
 
         private void Update()
         {
+
+            if(TimeManager.Instance.catchingTimeScale == 0 && !_ps.isPaused) {_ps.Pause(); animator.speed = 0;}
+            else if(TimeManager.Instance.catchingTimeScale == 1 && _ps.isPaused) {_ps.Play(); animator.speed = 1;}
+        
             if (isActive)
             {
-                curTimer += Time.deltaTime;
+                curTimer += Time.deltaTime * TimeManager.Instance.catchingTimeScale;
                 if(curTimer < activeDuration)
                 {
                     return;
@@ -74,7 +80,7 @@ namespace Assets.Scripts.Diving.Hazards
             }
             else
             {
-                curTimer += Time.deltaTime;
+                curTimer += Time.deltaTime * TimeManager.Instance.catchingTimeScale;
                 if(curTimer < cooldownDuration)
                 {
                     return;
