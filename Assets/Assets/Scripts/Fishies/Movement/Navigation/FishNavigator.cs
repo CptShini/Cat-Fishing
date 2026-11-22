@@ -32,16 +32,28 @@ namespace Assets.Scripts.Fishies.Navigation
         private int _areaMask;
         
         private FishEyes _eyes;
-
         [SerializeField] private Transform eyePoint;
+        
         private float _arrivalDistanceTolerance;
         private Range _fleeDist;
         private Range _wanderDist;
+        
         [SerializeField] private Range reNavTime;
+        
+        private Transform _transform;
+        private Vector2 _position;
+
+        [SerializeField] private Range navigateIntervalHz;
+
+        private float _navigateTimer;
+        private Coroutine _recalculateCoroutine;
 
         private void Awake()
         {
             _eyes = GetComponent<FishEyes>();
+            _transform = transform;
+            _position = _transform.position;
+            
             CurrentDirection = Random.onUnitCircle;
         }
 
@@ -57,8 +69,16 @@ namespace Assets.Scripts.Fishies.Navigation
 
         private void Update()
         {
-            Navigate();
-            
+            _position = _transform.position;
+                
+            _navigateTimer -= Time.deltaTime;
+
+            if (_navigateTimer <= 0f)
+            {
+                _navigateTimer = 1f / navigateIntervalHz.Random();
+                Navigate();
+            }
+
             if (!_hasDestination) return;
 
             NearDistance = !_eyes.Spotted 
@@ -76,39 +96,50 @@ namespace Assets.Scripts.Fishies.Navigation
         private void Navigate()
         {
             if (!_hasDestination) return;
-            
-            if (!_hasWaypoint)
+
+            if (!_hasWaypoint && !SelectNextWaypoint())
             {
-                _waypoint = _path.Peek();
-                _hasWaypoint = true;
+                FinishDestination();
+                return;
             }
-            
-            _distanceToWaypoint = Vector2.Distance(transform.position, _waypoint);
-            bool arrivedAtWaypoint = _distanceToWaypoint <= _arrivalDistanceTolerance;
-            if (!arrivedAtWaypoint)
+
+            _distanceToWaypoint = Vector2.Distance(_position, _waypoint);
+            if (_distanceToWaypoint > _arrivalDistanceTolerance)
             {
-                _desiredDirection = (_waypoint - (Vector2)transform.position).normalized;
+                _desiredDirection = (_waypoint - _position).normalized;
                 return;
             }
             
             _path.Dequeue();
             _hasWaypoint = false;
 
-            bool arrivedAtDestination = _path.Count == 0;
-            if (!arrivedAtDestination) return;
+            if (!SelectNextWaypoint())
+                FinishDestination();
+
+            return;
             
-            _hasDestination = false;
-            _desiredDirection = Vector2.zero;
-            _isFleeing = false;
-            _distanceToWaypoint = 99999f;
-            DestinationReached.Invoke();
+            void FinishDestination()
+            {
+                _hasDestination = false;
+                _desiredDirection = Vector2.zero;
+                _isFleeing = false;
+                _distanceToWaypoint = 99999f;
+
+                if (_recalculateCoroutine != null)
+                {
+                    StopCoroutine(_recalculateCoroutine);
+                    _recalculateCoroutine = null;
+                }
+
+                DestinationReached.Invoke();
+            }
         }
 
         public void Wander()
         {
             if (_isFleeing) return;
             
-            Vector2[] path = Pathfind(0.5f, urgency =>
+            var path = Pathfind(0.5f, urgency =>
             {
                 Vector2 newDirection = MixWithRandom(CurrentDirection, urgency);
                 float wanderDistance = _wanderDist.Random();
@@ -116,7 +147,7 @@ namespace Assets.Scripts.Fishies.Navigation
                 var hit = Physics2D.Raycast(eyePoint.position, newDirection, wanderDistance);
                 Vector2 wanderTarget = hit.collider 
                     ? hit.point 
-                    : (Vector2)transform.position + newDirection * wanderDistance;
+                    : _position + newDirection * wanderDistance;
                 
                 return wanderTarget;
             });
@@ -128,17 +159,19 @@ namespace Assets.Scripts.Fishies.Navigation
         {
             if (_isFleeing) return;
             
-            Vector2[] path = Pathfind(_fleeDist.Max, urgency =>
+            var path = Pathfind(_fleeDist.Max, urgency =>
             {
-                Vector2 awayDir = ((Vector2)transform.position - fleePoint).normalized;
+                Vector2 awayDir = (_position - fleePoint).normalized;
                 Vector2 fleeDir = MixWithRandom(awayDir, urgency);
             
                 float fleeDistance = _fleeDist.Random();
-                Vector2 fleeTarget = (Vector2)transform.position + fleeDir * fleeDistance;
+                Vector2 fleeTarget = _position + fleeDir * fleeDistance;
                 return fleeTarget;
             });
             
             FilterFurthestPath();
+            if (path.Length == 0) return;
+            
             SetPath(path);
             _isFleeing = true;
             
@@ -163,8 +196,8 @@ namespace Assets.Scripts.Fishies.Navigation
             
                 float SqrDist(Vector2 p)
                 {
-                    float a = transform.position.x - p.x;
-                    float b = transform.position.y - p.y;
+                    float a = _position.x - p.x;
+                    float b = _position.y - p.y;
                     return a * a + b * b;
                 }
             }
@@ -177,24 +210,60 @@ namespace Assets.Scripts.Fishies.Navigation
             _hasDestination = true;
             _destination = path[^1];
             
-            _hasWaypoint = false;
-            
+            ApplyPath(path);
+
+            _recalculateCoroutine ??= StartCoroutine(RecalculatePath());
+        }
+        
+        private void ApplyPath(Vector2[] path)
+        {
             _path.Clear();
             foreach (Vector2 p in path)
                 _path.Enqueue(p);
-            
-            StartCoroutine(RecalculatePath());
+
+            SelectNextWaypoint();
+        }
+        
+        private bool SelectNextWaypoint()
+        {
+            while (_path.Count > 0)
+            {
+                _waypoint = _path.Peek();
+                
+                _distanceToWaypoint = Vector2.Distance(_position, _waypoint);
+                if (_distanceToWaypoint <= _arrivalDistanceTolerance)
+                {
+                    _path.Dequeue();
+                    continue;
+                }
+
+                _hasWaypoint = true;
+                _desiredDirection = (_waypoint - _position).normalized;
+                return true;
+            }
+
+            _hasWaypoint = false;
+            _distanceToWaypoint = 99999f;
+            _desiredDirection = Vector2.zero;
+
+            return false;
         }
         
         private IEnumerator RecalculatePath()
         {
-            float waitTime = reNavTime.Random();
-            yield return new WaitForSeconds(waitTime);
-            
-            if (!_hasDestination) yield break;
-            
-            TryPathfind(_destination, 0.5f, out Vector2[] path);
-            SetPath(path);
+            while (_hasDestination)
+            {
+                yield return new WaitForSeconds(reNavTime.Random());
+
+                if (!_hasDestination) break;
+
+                if (TryPathfind(_destination, 0.5f, out var path) && path is { Length: > 0 })
+                {
+                    ApplyPath(path);
+                }
+            }
+
+            _recalculateCoroutine = null;
         }
 
         private Vector2[] Pathfind(float tolerance, Func<float, Vector2> randomDestinationFunc)
@@ -206,7 +275,7 @@ namespace Assets.Scripts.Fishies.Navigation
                 bool validPath = TryPathfind(
                     randomDestinationFunc(urgency),
                     tolerance + urgency * urgency * urgency * maxIterations,
-                    out Vector2[] path
+                    out var path
                 );
                 if (validPath) return path;
             }
@@ -216,7 +285,7 @@ namespace Assets.Scripts.Fishies.Navigation
         }
         
         private bool TryPathfind(Vector2 destination, float tolerance, out Vector2[] path) =>
-            NavQuery.TryGetPath(transform.position, destination, out path, _areaMask, tolerance);
+            NavQuery.TryGetPath(_position, destination, out path, _areaMask, tolerance);
 
         private static Vector2 MixWithRandom(Vector2 vec, float urgency = 0f)
         {
@@ -247,10 +316,10 @@ namespace Assets.Scripts.Fishies.Navigation
             void DrawDirections()
             {
                 Gizmos.color = Color.green;
-                Gizmos.DrawRay(transform.position, _desiredDirection);
+                Gizmos.DrawRay(_position, _desiredDirection);
                 
                 Gizmos.color = Color.blue;
-                Gizmos.DrawRay(transform.position, CurrentDirection);
+                Gizmos.DrawRay(_position, CurrentDirection);
             }
             
             void DrawPath()
@@ -260,7 +329,7 @@ namespace Assets.Scripts.Fishies.Navigation
             
                 Gizmos.color = Color.white;
                 
-                Vector2 prev = transform.position;
+                Vector2 prev = _position;
                 foreach (Vector2 p in _path)
                 {
                     Gizmos.DrawLine(prev, p);

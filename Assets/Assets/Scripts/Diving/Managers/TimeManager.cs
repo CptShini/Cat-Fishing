@@ -8,7 +8,7 @@ namespace Assets.Scripts.Diving.Managers
 
         public static TimeManager Instance {get; private set;}
 
-        public float timeScale = 1.0f;
+        public float catchingTimeScale = 1; // 0 when catching is happening
 
         void Awake()
         {
@@ -17,20 +17,16 @@ namespace Assets.Scripts.Diving.Managers
             else
                 Instance = this;
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="pause">true if game scaled time should be paused, false otherwise</param>
-        public void SetPausedScaledTime(bool pause)
+        
+        public void SetCatchingScaledTime(bool pause)
         {
             if (pause)
             {
-                Time.timeScale = 0;
+                catchingTimeScale = 0;
             }
             else
             {
-                Time.timeScale = 1;
+                catchingTimeScale = 1;
             }
         }
     }

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Assets.Scripts.Helpers;
+﻿using Assets.Scripts.Helpers;
 using UnityEngine;
 
 namespace Assets.Scripts.Fishies.Navigation
@@ -22,70 +20,97 @@ namespace Assets.Scripts.Fishies.Navigation
         [SerializeField] private float fov = 120f;
         [SerializeField] private int eyeCount = 4;
 
-        private void Update() => See();
+        [Space]
+
+        [SerializeField] private Range scanIntervalHz;
+
+        private Transform _transform;
+        private Transform _eyesTransform;
+
+        private float _scanTimer;
+
+        private void Awake()
+        {
+            _transform = transform;
+            _eyesTransform = eyes;
+        }
+
+        private void Update()
+        {
+            _scanTimer -= Time.deltaTime;
+            if (_scanTimer > 0f) return;
+
+            _scanTimer = 1f / scanIntervalHz.Random();
+
+            See();
+        }
 
         private void See()
         {
-            if (eyeCount <= 0 || fov / eyeCount <= 0) return;
-            
-            List<RaycastHit2D> hits = new();
-            for (float i = -fov / 2f; i <= fov / 2f; i += fov / eyeCount)
+            if (eyeCount <= 0 || fov <= 0f || viewDistance <= 0f)
             {
-                RaycastHit2D hit = Raycast(i);
-                hits.Add(hit);
+                ClearDetection();
+                return;
             }
-        
-            Spotted = hits.Any(hit => hit.collider);
-            if (!Spotted) return;
-        
-            Vector2 closestPoint = GetClosestHit(hits);
-            Vector2 awayDir = (Vector2)eyes.position - closestPoint;
-
-            NearDistance = awayDir.magnitude;
-            Weight = (viewDistance - awayDir.magnitude) / viewDistance;
-            AwayDirection = awayDir.normalized;
-
-            if (!DebugDrawer.Instance 
-                || !DebugDrawer.Instance.Fish_Eyes
-                || !DebugDrawer.Instance.Fish_Eyes_DrawDirections
-            ) return;
             
-            Debug.DrawRay(eyes.position, AwayDirection * (Weight * 3), Color.red);
-        }
-    
-        private RaycastHit2D Raycast(float angleOffset)
-        {
-            Vector2 source = eyes.position;
-            Vector2 dir = Quaternion.Euler(0, 0, angleOffset) * transform.right;
-            
-            if (DebugDrawer.Instance 
-                && DebugDrawer.Instance.Fish_Eyes 
-                && DebugDrawer.Instance.Fish_Eyes_DrawRaycasts
-            ) Debug.DrawRay(source, dir * viewDistance, Color.red);
-                
-            return Physics2D.Raycast(source, dir, viewDistance, layerMask);
-        }
+            Vector2 source = _eyesTransform.position;
+            Vector2 forward = _transform.right;
 
-        private Vector2 GetClosestHit(IEnumerable<RaycastHit2D> hits)
-        {
-            Vector2 closest = Vector2.zero;
+            float halfFov = fov * 0.5f;
+            float angleStep = fov / eyeCount;
             
-            float min = float.MaxValue;
-            foreach (RaycastHit2D hit in hits.Where(hit => hit.collider))
+            DebugDrawer debugDrawer = DebugDrawer.Instance;
+            bool debugEyes = debugDrawer && debugDrawer.EnableDebug && debugDrawer.Fish_Eyes;
+            bool drawRaycasts = debugEyes && debugDrawer.Fish_Eyes_DrawRaycasts;
+            bool drawDirections = debugEyes && debugDrawer.Fish_Eyes_DrawDirections;
+
+            bool spotted = false;
+
+            float closestDistance = float.MaxValue;
+            Vector2 closestPoint = Vector2.zero;
+            for (int i = 0; i <= eyeCount; i++)
             {
-                if (DebugDrawer.Instance
-                    && DebugDrawer.Instance.Fish_Eyes
-                    && DebugDrawer.Instance.Fish_Eyes_DrawRaycasts
-                ) Debug.DrawLine(eyes.position, hit.point, Color.white);
+                float angle = -halfFov + angleStep * i;
 
-                float dist = hit.distance;
-                if (dist >= min) continue;
-                
-                min = dist;
-                closest = hit.point;
+                Vector2 direction = Quaternion.Euler(0f, 0f, angle) * forward;
+                if (drawRaycasts) Debug.DrawRay(source, direction * viewDistance, Color.red);
+
+                RaycastHit2D hit = Physics2D.Raycast(source, direction, viewDistance, layerMask);
+                if (!hit.collider) continue;
+
+                spotted = true;
+                if (drawRaycasts) Debug.DrawLine(source, hit.point, Color.white);
+
+                if (hit.distance >= closestDistance) 
+                    continue;
+
+                closestDistance = hit.distance;
+                closestPoint = hit.point;
             }
-        
-            return closest;
+
+            Spotted = spotted;
+
+            if (!spotted)
+            {
+                ClearDetection();
+                return;
+            }
+
+            Vector2 awayDirection = source - closestPoint;
+
+            NearDistance = awayDirection.magnitude;
+            Weight = Mathf.Clamp01((viewDistance - NearDistance) / viewDistance);
+            AwayDirection = awayDirection.normalized;
+
+            if (drawDirections) Debug.DrawRay(source, AwayDirection * (Weight * 3f), Color.red);
+        }
+
+        private void ClearDetection()
+        {
+            Spotted = false;
+            Weight = 0f;
+            NearDistance = 0f;
+            AwayDirection = Vector2.zero;
         }
     }
 }

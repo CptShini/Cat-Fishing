@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Assets.Scripts.Fishies.Visuals
@@ -7,24 +8,32 @@ namespace Assets.Scripts.Fishies.Visuals
     {
         private bool _regularRotation;
 
+        private Transform _transform, _parentTransform;
+
+        private void Awake()
+        {
+            _transform = transform;
+            _parentTransform = transform.parent;
+        }
+
         private void Start() => 
-            _regularRotation = transform.parent.right.x < 0;
+            _regularRotation = _parentTransform.right.x < 0;
 
         private void Update()
         {
-            Vector3 localScale = transform.localScale;
+            Vector3 localScale = _transform.localScale;
             switch (_regularRotation)
             {
-                case false when transform.parent.right.x >= 0:
+                case false when _parentTransform.right.x >= 0:
                     localScale.y = Mathf.Abs(localScale.y);
                     _regularRotation = true;
                     break;
-                case true when transform.parent.right.x < 0:
+                case true when _parentTransform.right.x < 0:
                     localScale.y = -Mathf.Abs(localScale.y);
                     _regularRotation = false;
                     break;
             }
-            transform.localScale = localScale;
+            _transform.localScale = localScale;
         }
     }
 }

@@ -1,7 +1,7 @@
+using Assets.Scripts.Helpers;
 using Assets.Scripts.PlayerState;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.InputSystem;
 
 public class AimScript : MonoBehaviour
 {
@@ -35,12 +35,12 @@ public class AimScript : MonoBehaviour
     
     private void Update()
     {
-        Vector2 mousePosScreen = Mouse.current.position.ReadValue();
-        Vector2 mousePos = _mainCamera.ScreenToWorldPoint(mousePosScreen);
-        Vector2 pounceDirection = mousePos - (Vector2)transform.position;
+        if (!transform.TryGetMouseWorldPosition(_mainCamera, out Vector3 mouseWorldPos))
+            return;
         
+        Vector2 pounceDirection = (Vector2)mouseWorldPos - (Vector2)transform.position;
         float angle = Mathf.Atan2(pounceDirection.y, pounceDirection.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(new(0, 0, angle));
+        transform.rotation = Quaternion.Euler(0f, 0f, angle);
         OnAiming.Invoke(pounceDirection, 1000);
     }
 }

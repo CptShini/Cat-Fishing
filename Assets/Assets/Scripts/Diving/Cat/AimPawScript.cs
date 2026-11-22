@@ -6,13 +6,15 @@ public class AimPawScript : MonoBehaviour
 {
     [SerializeField] private List<GameObject> paws;
     
-    private Animator animator;
+    private Animator pawAnimator;
+    [SerializeField] private Animator vignetteAnimator;
+
     
     public int activePaws;
     
     private void Awake()
     {
-        animator = GetComponent<Animator>();
+        pawAnimator = GetComponent<Animator>();
     }
 
     public void AimPawEnabler(bool enable)
@@ -24,13 +26,17 @@ public class AimPawScript : MonoBehaviour
                 paw.SetActive(false);
                 activePaws = 0;
             }
-            animator.Play("Paw");
-            animator.SetFloat("speed", DivingPlayerStats.Instance.chargeUpSpeed / DivingPlayerStats.Instance.maxPounceStamina);
-            animator.SetBool("exit", false);
+            pawAnimator.Play("Paw");
+            pawAnimator.SetFloat("speed", DivingPlayerStats.Instance.chargeUpSpeed / DivingPlayerStats.Instance.maxPounceStamina);
+            pawAnimator.SetBool("exit", false);
+            
+            vignetteAnimator.Play("FadeIn");
+            vignetteAnimator.SetBool("exit", false);
         }
         else
         {
-            animator.SetBool("exit", true);
+            pawAnimator.SetBool("exit", true);
+            vignetteAnimator.SetBool("exit", true);
         } 
     }
     void Update()

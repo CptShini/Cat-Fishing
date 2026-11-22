@@ -1,15 +1,17 @@
-using System;
 using Assets.Scripts.Audio.SFX;
+using System.Collections.Generic;
+using System.Linq;
 using Assets.Scripts.Diving.Bars;
+using Assets.Scripts.Helpers;
+using Assets.Scripts.Diving.Hazards;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.InputSystem;
 
 namespace Assets.Scripts.Diving.Cat
 {
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(DamagedScript))]
-    public class PounceScript : MonoBehaviour
+    public class PounceScript : MonoBehaviour, IEnvironmentAffectedMovement
     {
         [SerializeField] private StatBar staminaBar;
         [SerializeField] private SpriteRenderer _body;
@@ -20,7 +22,10 @@ namespace Assets.Scripts.Diving.Cat
     
         private float pounceDuration; // Tracker for when to stop pounceing. Can change based on 
         private Vector2 pounceDirection; // For saving the pounce direction during multiple updates
-    
+        private readonly List<EnvironmentalMovementAffector> affectors = new();
+        private Vector2 curEnvVelocity;
+        private float acceleration;
+        private float friction;
         private Camera _mainCamera;
         private Rigidbody2D _rb;
 
@@ -39,7 +44,8 @@ namespace Assets.Scripts.Diving.Cat
             _mainCamera = Camera.main;
             staminaBar.SetMaxValue(DivingPlayerStats.Instance.maxStamina);
             staminaBar.SetMinValue(0);
-            
+            acceleration = DivingPlayerStats.Instance.acceleration;
+            friction = DivingPlayerStats.Instance.friction;
             DamagedScript damaged = GetComponent<DamagedScript>();
             damaged.OnDamaged.AddListener(CancelPounce);
         }
@@ -60,35 +66,51 @@ namespace Assets.Scripts.Diving.Cat
     
         public void StartPounce()
         {
-            Vector2 mousePos = _mainCamera.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-            curPounceStamina = Math.Max(0, curPounceStamina);
-            pounceDirection = mousePos - (Vector2)transform.position;
-            pounceDuration = curPounceStamina / 20; // 5 stamina = 1 second, for now
-        
+            if (!transform.TryGetMouseWorldPosition(_mainCamera, out Vector3 mouseWorldPosition))
+                return;
+            
+            curEnvVelocity = Vector2.zero;
+            curPounceStamina = Mathf.Max(0, curPounceStamina);
+            pounceDirection = mouseWorldPosition - transform.position;
+            pounceDuration = curPounceStamina / 20f;
+         
             DivingController.Instance.SetPlayerState(PlayerState.PlayerState.POUNCE);
             staminaBar.CurrentValue -= curPounceStamina;
-
 
             SFXManager.Instance.Play(SFXId.Pounce);
             isStealthPlaying = false;
             GameObject effectInstance = Instantiate(effect);
 
-            if(_body.flipY)
+            Vector3 bodyPosition = _body.transform.position;
+            Vector3 effectPosition = bodyPosition + effectOffset;
+            if (_body.flipY)
             {
-                effectInstance.transform.position = new Vector3(_body.transform.position.x + effectOffset.x, _body.transform.position.y - effectOffset.y, _body.transform.position.z);
+                effectPosition = new(
+                    bodyPosition.x + effectOffset.x,
+                    bodyPosition.y - effectOffset.y,
+                    bodyPosition.z
+                );
             }
-            else
-            {
-                effectInstance.transform.position = _body.transform.position + effectOffset;
-            }
-            effectInstance.transform.rotation = Quaternion.Euler(0,0,90); 
-            effectInstance.transform.RotateAround(_body.transform.position, new Vector3(0,0,1), _body.transform.rotation.eulerAngles.z); 
+
+            effectInstance.transform.position = effectPosition;
+            effectInstance.transform.rotation = Quaternion.Euler(0f, 0f, 90f);
+            effectInstance.transform.RotateAround(bodyPosition, Vector3.forward, _body.transform.rotation.eulerAngles.z);
         }
 
         public void Pounce()
         {
             Vector2 targetVelocity = pounceDirection.normalized * (DivingPlayerStats.Instance.pounceSpeed + curPounceStamina * 0.5f);
-            _rb.linearVelocity = new Vector3(targetVelocity.x, targetVelocity.y, 0); // instantaneous max speed
+            
+            Vector2 environmentVelocity = CalculateVelocityChange();
+            float curAcceleration = environmentVelocity == Vector2.zero ? friction : acceleration;
+
+            curEnvVelocity = Vector2.MoveTowards(
+                curEnvVelocity,
+                environmentVelocity,
+                curAcceleration * Time.deltaTime
+            ); 
+
+            _rb.linearVelocity = targetVelocity + curEnvVelocity; // instantaneous max speed
 
             OnPouncing.Invoke(_rb.linearVelocity);   
         }
@@ -137,5 +159,22 @@ namespace Assets.Scripts.Diving.Cat
                 }
             }
         }
+
+        public void AddAffector(EnvironmentalMovementAffector affector)
+        {
+            affectors.Add(affector);
+        }
+
+        public void RemoveAffector(EnvironmentalMovementAffector affector)
+        {
+            affectors.Remove(affector);
+        }
+
+        public Vector2 CalculateVelocityChange()
+        {
+            Vector2 velocity = new();
+            return affectors.Aggregate(velocity, (current, affector) => current + affector.Velocity);
+        }
+
     }
 }
