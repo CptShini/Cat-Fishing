@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Generic;
 using Assets.Scripts.Audio;
 using Assets.Scripts.Audio.SFX;
 using Assets.Scripts.Diving.Bars;
+using Assets.Scripts.Diving.Hazards;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -10,7 +12,7 @@ namespace Assets.Scripts.Diving.Cat
 {
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(DamagedScript))]
-    public class PounceScript : MonoBehaviour
+    public class PounceScript : MonoBehaviour, IEnvironmentAffectedMovement
     {
         [SerializeField] private StatBar staminaBar;
         [SerializeField] private SpriteRenderer _body;
@@ -21,7 +23,10 @@ namespace Assets.Scripts.Diving.Cat
     
         private float pounceDuration; // Tracker for when to stop pounceing. Can change based on 
         private Vector2 pounceDirection; // For saving the pounce direction during multiple updates
-    
+        private List<EnvironmentalMovementAffector> affectors = new();
+        private Vector2 curEnvVelociy = new();
+        private float acceleration;
+        private float friction;
         private Camera _mainCamera;
         private Rigidbody2D _rb;
 
@@ -40,7 +45,8 @@ namespace Assets.Scripts.Diving.Cat
             _mainCamera = Camera.main;
             staminaBar.SetMaxValue(DivingPlayerStats.Instance.maxStamina);
             staminaBar.SetMinValue(0);
-            
+            acceleration = DivingPlayerStats.Instance.acceleration;
+            friction = DivingPlayerStats.Instance.friction;
             DamagedScript damaged = GetComponent<DamagedScript>();
             damaged.OnDamaged.AddListener(CancelPounce);
         }
@@ -62,13 +68,13 @@ namespace Assets.Scripts.Diving.Cat
         public void StartPounce()
         {
             Vector2 mousePos = _mainCamera.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+            curEnvVelociy = Vector2.zero;
             curPounceStamina = Math.Max(0, curPounceStamina);
             pounceDirection = mousePos - (Vector2)transform.position;
             pounceDuration = curPounceStamina / 20; // 5 stamina = 1 second, for now
         
             DivingController.Instance.SetPlayerState(PlayerState.PlayerState.POUNCE);
             staminaBar.CurrentValue -= curPounceStamina;
-            Debug.Log(curPounceStamina);
 
 
             SFXManager.Instance.Play(SFXId.Pounce);
@@ -90,8 +96,17 @@ namespace Assets.Scripts.Diving.Cat
         public void Pounce()
         {
             Vector2 targetVelocity = pounceDirection.normalized * (DivingPlayerStats.Instance.pounceSpeed + curPounceStamina * 0.5f);
-            Debug.Log($"POUNCE: {targetVelocity.magnitude}, POUNCE SPEED {DivingPlayerStats.Instance.pounceSpeed}, NORMAL SPEED: {DivingPlayerStats.Instance.speed}");
-            _rb.linearVelocity = new Vector3(targetVelocity.x, targetVelocity.y, 0); // instantaneous max speed
+            
+            Vector2 environmentVelocity = CalculateVelocityChange();
+            float curAcceleration = environmentVelocity == Vector2.zero ? friction : acceleration;
+
+            curEnvVelociy = Vector2.MoveTowards(
+                curEnvVelociy,
+                environmentVelocity,
+                curAcceleration * Time.deltaTime
+            ); 
+
+            _rb.linearVelocity = targetVelocity + curEnvVelociy; // instantaneous max speed
 
             OnPouncing.Invoke(_rb.linearVelocity);   
         }
@@ -140,5 +155,27 @@ namespace Assets.Scripts.Diving.Cat
                 }
             }
         }
+
+        public void AddAffector(EnvironmentalMovementAffector affector)
+        {
+            Debug.Log("ADD AFFECTOR");
+            affectors.Add(affector);
+        }
+
+        public void RemoveAffector(EnvironmentalMovementAffector affector)
+        {
+            affectors.Remove(affector);
+        }
+
+        public Vector2 CalculateVelocityChange()
+        {
+            Vector2 velocity = new();
+            foreach (var affector in affectors)
+            {
+                velocity += affector.Velocity;
+            }
+            return velocity;
+        }
+
     }
 }
