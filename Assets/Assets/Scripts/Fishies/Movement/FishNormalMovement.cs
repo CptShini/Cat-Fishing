@@ -49,7 +49,6 @@ namespace Assets.Scripts.Fishies.Movement
         public void Wander()
         {
             _wandering = true;
-            _wanderSpeedClock = 0f;
             _navigator.Wander();
         }
         
