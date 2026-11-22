@@ -1,6 +1,5 @@
 using System;
-using Assets.Scripts.Aquarium.Domain;
-using UnityEngine;
+
 namespace Assets.Scripts.Data.Domain.TankDecor
 {
     

@@ -10,12 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a2fc9073c9404fd41b3d4eb14df2c97f, type: 3}
-  m_Name: 12 - Electric catfish
+  m_Name: 12 - Electric Catfish
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Fishies.Domain.FishSpecies
   <Id>k__BackingField: 12
-  <Name>k__BackingField: Electric catfish
-  <LatinName>k__BackingField: Malapterurus electricus
-  <Biome>k__BackingField: Biome 1
+  <Name>k__BackingField: Electric Catfish
+  <LatinName>k__BackingField: Malapterurus Electricus
+  <Description>k__BackingField: This is highly electic if provoked, and if it had
+    enough development time.
+  <Lifetime>k__BackingField: 0
+  <Rarity>k__BackingField: 6
+  <Biome>k__BackingField: 256
   <Icon>k__BackingField: {fileID: 0}
   <CatchPattern>k__BackingField: {fileID: 11400000, guid: b4367048005f42c49a5dcae6c225d168, type: 2}
   <Weight>k__BackingField:

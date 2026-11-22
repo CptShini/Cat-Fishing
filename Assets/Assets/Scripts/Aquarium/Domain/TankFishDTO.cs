@@ -7,11 +7,13 @@ namespace Assets.Scripts.Aquarium.Domain
     public class TankFishDTO
     {
         public FishDTO Fish;
+        public int Age;
         public int Hunger;
 
         public TankFishDTO(TankFish tankFish)
         {
             Fish = new(tankFish.Fish);
+            Age = tankFish.Age;
             Hunger = tankFish.Hunger;
         }
     }

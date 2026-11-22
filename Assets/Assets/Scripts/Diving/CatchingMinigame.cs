@@ -1,10 +1,8 @@
 using System;
-using Assets.Scripts.Audio;
 using Assets.Scripts.Audio.SFX;
 using Assets.Scripts.Diving.Bars;
 using Assets.Scripts.Diving.DivingInventory;
 using Assets.Scripts.Diving.Managers;
-using Assets.Scripts.Fishies;
 using Assets.Scripts.Fishies.Domain;
 using Assets.Scripts.Fishies.Movement;
 using Assets.Scripts.PlayerState;

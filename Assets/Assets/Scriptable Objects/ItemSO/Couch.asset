@@ -15,6 +15,7 @@ MonoBehaviour:
   itemID: couch
   itemName: Couch
   itemIcon: {fileID: 21300000, guid: 8ac886516847fa146ae63bdf425c3218, type: 3}
+  EntertainmentValue: 0.5
   itemType: 0
   prefab: {fileID: 3758215890295927942, guid: a5a94c7a89e9dbc46ab244137aea4e8d, type: 3}
   size: {x: 2, y: 2}
@@ -25,3 +26,4 @@ MonoBehaviour:
   splitHeight: 0.7
   floorTile: {fileID: 0}
   floorSize: {x: 3, y: 3}
+  fishTankDefinition: {fileID: 0}

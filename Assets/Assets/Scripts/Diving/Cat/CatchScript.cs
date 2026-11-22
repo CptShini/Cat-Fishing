@@ -1,7 +1,6 @@
 using Assets.Scripts.Audio.SFX;
 using Assets.Scripts.Diving.DivingInventory;
 using Assets.Scripts.Fishies;
-using Assets.Scripts.Fishies.Domain;
 using Assets.Scripts.PlayerState;
 using UnityEngine;
 using static UnityEngine.InputSystem.InputAction;

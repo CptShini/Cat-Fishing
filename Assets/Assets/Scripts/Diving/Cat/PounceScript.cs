@@ -1,5 +1,4 @@
 using System;
-using Assets.Scripts.Audio;
 using Assets.Scripts.Audio.SFX;
 using Assets.Scripts.Diving.Bars;
 using UnityEngine;
@@ -68,7 +67,6 @@ namespace Assets.Scripts.Diving.Cat
         
             DivingController.Instance.SetPlayerState(PlayerState.PlayerState.POUNCE);
             staminaBar.CurrentValue -= curPounceStamina;
-            Debug.Log(curPounceStamina);
 
 
             SFXManager.Instance.Play(SFXId.Pounce);
@@ -90,7 +88,6 @@ namespace Assets.Scripts.Diving.Cat
         public void Pounce()
         {
             Vector2 targetVelocity = pounceDirection.normalized * (DivingPlayerStats.Instance.pounceSpeed + curPounceStamina * 0.5f);
-            Debug.Log($"POUNCE: {targetVelocity.magnitude}, POUNCE SPEED {DivingPlayerStats.Instance.pounceSpeed}, NORMAL SPEED: {DivingPlayerStats.Instance.speed}");
             _rb.linearVelocity = new Vector3(targetVelocity.x, targetVelocity.y, 0); // instantaneous max speed
 
             OnPouncing.Invoke(_rb.linearVelocity);   

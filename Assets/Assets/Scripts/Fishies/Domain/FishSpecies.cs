@@ -18,8 +18,11 @@ namespace Assets.Scripts.Fishies.Domain
         [field: SerializeField]
         public string LatinName { get; private set; } = "Fishus Maximus";
         
-        [field: SerializeField, Multiline]
+        [field: SerializeField, TextArea(3, 5)]
         public string Description { get; private set; }
+        
+        [field: SerializeField, Min(0), Space]
+        public int Lifetime { get; private set; }
         
         [field: SerializeField, Range(1, 10)]
         public int Rarity { get; private set; }
