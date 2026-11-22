@@ -4757,8 +4757,8 @@ MonoBehaviour:
   hungerDeathText: {fileID: 104354236}
   oldAgeDeathText: {fileID: 143102795}
   dirtinessDeathText: {fileID: 509589036}
-  ticketPrice: 2
-  k: 2
+  ticketPrice: 10
+  k: 0.5
   crowdGrowthRate: 0.2
   fishSpeciesDatabase: {fileID: 11400000, guid: 69c0a0e81678bc0419aa277dd4158367, type: 2}
   tankDecorationTypeDatabase: {fileID: 11400000, guid: 929023803bb3b1b49ae179cc9ff1db34, type: 2}
