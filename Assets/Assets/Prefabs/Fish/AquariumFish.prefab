@@ -604,6 +604,9 @@ MonoBehaviour:
   reNavTime:
     Min: 5
     Max: 10
+  navigateIntervalHz:
+    Min: 16
+    Max: 24
 --- !u!114 &7207838198360369881
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -623,6 +626,9 @@ MonoBehaviour:
     m_Bits: 1
   fov: 120
   eyeCount: 4
+  scanIntervalHz:
+    Min: 8
+    Max: 12
 --- !u!1 &6653272373207468053
 GameObject:
   m_ObjectHideFlags: 0

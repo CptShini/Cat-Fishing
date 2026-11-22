@@ -1,12 +1,11 @@
-using System;
+using Assets.Scripts.Audio.SFX;
 using System.Collections.Generic;
 using System.Linq;
-using Assets.Scripts.Audio.SFX;
 using Assets.Scripts.Diving.Bars;
+using Assets.Scripts.Helpers;
 using Assets.Scripts.Diving.Hazards;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.InputSystem;
 
 namespace Assets.Scripts.Diving.Cat
 {
@@ -24,7 +23,7 @@ namespace Assets.Scripts.Diving.Cat
         private float pounceDuration; // Tracker for when to stop pounceing. Can change based on 
         private Vector2 pounceDirection; // For saving the pounce direction during multiple updates
         private readonly List<EnvironmentalMovementAffector> affectors = new();
-        private Vector2 curEnvVelociy = new();
+        private Vector2 curEnvVelocity;
         private float acceleration;
         private float friction;
         private Camera _mainCamera;
@@ -67,30 +66,35 @@ namespace Assets.Scripts.Diving.Cat
     
         public void StartPounce()
         {
-            Vector2 mousePos = _mainCamera.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-            curEnvVelociy = Vector2.zero;
-            curPounceStamina = Math.Max(0, curPounceStamina);
-            pounceDirection = mousePos - (Vector2)transform.position;
-            pounceDuration = curPounceStamina / 20; // 5 stamina = 1 second, for now
-        
+            if (!transform.TryGetMouseWorldPosition(_mainCamera, out Vector3 mouseWorldPosition))
+                return;
+            
+            curEnvVelocity = Vector2.zero;
+            curPounceStamina = Mathf.Max(0, curPounceStamina);
+            pounceDirection = mouseWorldPosition - transform.position;
+            pounceDuration = curPounceStamina / 20f;
+         
             DivingController.Instance.SetPlayerState(PlayerState.PlayerState.POUNCE);
             staminaBar.CurrentValue -= curPounceStamina;
-
 
             SFXManager.Instance.Play(SFXId.Pounce);
             isStealthPlaying = false;
             GameObject effectInstance = Instantiate(effect);
 
-            if(_body.flipY)
+            Vector3 bodyPosition = _body.transform.position;
+            Vector3 effectPosition = bodyPosition + effectOffset;
+            if (_body.flipY)
             {
-                effectInstance.transform.position = new Vector3(_body.transform.position.x + effectOffset.x, _body.transform.position.y - effectOffset.y, _body.transform.position.z);
+                effectPosition = new(
+                    bodyPosition.x + effectOffset.x,
+                    bodyPosition.y - effectOffset.y,
+                    bodyPosition.z
+                );
             }
-            else
-            {
-                effectInstance.transform.position = _body.transform.position + effectOffset;
-            }
-            effectInstance.transform.rotation = Quaternion.Euler(0,0,90); 
-            effectInstance.transform.RotateAround(_body.transform.position, new Vector3(0,0,1), _body.transform.rotation.eulerAngles.z); 
+
+            effectInstance.transform.position = effectPosition;
+            effectInstance.transform.rotation = Quaternion.Euler(0f, 0f, 90f);
+            effectInstance.transform.RotateAround(bodyPosition, Vector3.forward, _body.transform.rotation.eulerAngles.z);
         }
 
         public void Pounce()
@@ -100,13 +104,13 @@ namespace Assets.Scripts.Diving.Cat
             Vector2 environmentVelocity = CalculateVelocityChange();
             float curAcceleration = environmentVelocity == Vector2.zero ? friction : acceleration;
 
-            curEnvVelociy = Vector2.MoveTowards(
-                curEnvVelociy,
+            curEnvVelocity = Vector2.MoveTowards(
+                curEnvVelocity,
                 environmentVelocity,
                 curAcceleration * Time.deltaTime
             ); 
 
-            _rb.linearVelocity = targetVelocity + curEnvVelociy; // instantaneous max speed
+            _rb.linearVelocity = targetVelocity + curEnvVelocity; // instantaneous max speed
 
             OnPouncing.Invoke(_rb.linearVelocity);   
         }
