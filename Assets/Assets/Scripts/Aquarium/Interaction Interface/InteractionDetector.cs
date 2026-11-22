@@ -1,16 +1,14 @@
+using System.Collections.Generic;
+using System.Linq;
 using Assets.Scripts.Aquarium.FishTanks;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class InteractionDetector : MonoBehaviour
 {
-    private IInteractable interactableInRange = null;
-    public GameObject interactionIcon;
-
-    void Start()
-    {
-        interactionIcon.SetActive(false);
-    }
+    [SerializeField] private GameObject interactionIcon;
+    
+    private readonly Dictionary<IInteractable, Transform> _interactableList = new();
 
     public void OnInteract(InputAction.CallbackContext context)
     {
@@ -20,47 +18,54 @@ public class InteractionDetector : MonoBehaviour
         if (CloseCurrentUI())
             return;
 
-        interactableInRange?.Interact();
+        _interactableList
+            .OrderBy(kvp => Vector2.Distance(transform.position, kvp.Value.position))
+            .FirstOrDefault()
+            .Key?
+            .Interact();
     }
 
-    private bool CloseCurrentUI()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (FishTankUIController.Instance != null && FishTankUIController.Instance.IsOpen)
+        if (
+            !collision.TryGetComponent(out IInteractable interactable) || 
+            !interactable.CanInteract() ||
+            !_interactableList.TryAdd(interactable, collision.transform)
+        ) return;
+        
+        if (_interactableList.Count == 1) interactionIcon.SetActive(true);
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (
+            !collision.TryGetComponent(out IInteractable interactable) ||
+            !_interactableList.Remove(interactable)
+        ) return;
+
+        if (_interactableList.Count == 0) interactionIcon.SetActive(false);
+    }
+    
+    private static bool CloseCurrentUI()
+    {
+        if (FishTankUIController.Instance && FishTankUIController.Instance.IsOpen)
         {
             FishTankUIController.Instance.Close();
             return true;
         }
 
-        if (WorkbenchUIController.Instance != null && WorkbenchUIController.Instance.IsOpen)
+        if (WorkbenchUIController.Instance && WorkbenchUIController.Instance.IsOpen)
         {
             WorkbenchUIController.Instance.Close();
             return true;
         }
 
-        if (ComputerUIController.Instance != null && ComputerUIController.Instance.IsOpen)
+        if (ComputerUIController.Instance && ComputerUIController.Instance.IsOpen)
         {
             ComputerUIController.Instance.Close();
             return true;
         }
 
         return false;
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.TryGetComponent(out IInteractable interactable) && interactable.CanInteract())
-        {
-            interactableInRange = interactable;
-            interactionIcon.SetActive(true);
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.TryGetComponent(out IInteractable interactable) && interactable == interactableInRange)
-        {
-            interactableInRange = null;
-            interactionIcon.SetActive(false);
-        }
     }
 }
