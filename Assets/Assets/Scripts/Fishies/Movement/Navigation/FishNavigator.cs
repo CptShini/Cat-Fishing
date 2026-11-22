@@ -46,6 +46,7 @@ namespace Assets.Scripts.Fishies.Navigation
         [SerializeField] private Range navigateIntervalHz;
 
         private float _navigateTimer;
+        private Coroutine _recalculateCoroutine;
 
         private void Awake()
         {
@@ -95,16 +96,15 @@ namespace Assets.Scripts.Fishies.Navigation
         private void Navigate()
         {
             if (!_hasDestination) return;
-            
-            if (!_hasWaypoint)
+
+            if (!_hasWaypoint && !SelectNextWaypoint())
             {
-                _waypoint = _path.Peek();
-                _hasWaypoint = true;
+                FinishDestination();
+                return;
             }
-            
+
             _distanceToWaypoint = Vector2.Distance(_position, _waypoint);
-            bool arrivedAtWaypoint = _distanceToWaypoint <= _arrivalDistanceTolerance;
-            if (!arrivedAtWaypoint)
+            if (_distanceToWaypoint > _arrivalDistanceTolerance)
             {
                 _desiredDirection = (_waypoint - _position).normalized;
                 return;
@@ -113,14 +113,26 @@ namespace Assets.Scripts.Fishies.Navigation
             _path.Dequeue();
             _hasWaypoint = false;
 
-            bool arrivedAtDestination = _path.Count == 0;
-            if (!arrivedAtDestination) return;
+            if (!SelectNextWaypoint())
+                FinishDestination();
+
+            return;
             
-            _hasDestination = false;
-            _desiredDirection = Vector2.zero;
-            _isFleeing = false;
-            _distanceToWaypoint = 99999f;
-            DestinationReached.Invoke();
+            void FinishDestination()
+            {
+                _hasDestination = false;
+                _desiredDirection = Vector2.zero;
+                _isFleeing = false;
+                _distanceToWaypoint = 99999f;
+
+                if (_recalculateCoroutine != null)
+                {
+                    StopCoroutine(_recalculateCoroutine);
+                    _recalculateCoroutine = null;
+                }
+
+                DestinationReached.Invoke();
+            }
         }
 
         public void Wander()
@@ -158,6 +170,8 @@ namespace Assets.Scripts.Fishies.Navigation
             });
             
             FilterFurthestPath();
+            if (path.Length == 0) return;
+            
             SetPath(path);
             _isFleeing = true;
             
@@ -196,24 +210,60 @@ namespace Assets.Scripts.Fishies.Navigation
             _hasDestination = true;
             _destination = path[^1];
             
-            _hasWaypoint = false;
-            
+            ApplyPath(path);
+
+            _recalculateCoroutine ??= StartCoroutine(RecalculatePath());
+        }
+        
+        private void ApplyPath(Vector2[] path)
+        {
             _path.Clear();
             foreach (Vector2 p in path)
                 _path.Enqueue(p);
-            
-            StartCoroutine(RecalculatePath());
+
+            SelectNextWaypoint();
+        }
+        
+        private bool SelectNextWaypoint()
+        {
+            while (_path.Count > 0)
+            {
+                _waypoint = _path.Peek();
+                
+                _distanceToWaypoint = Vector2.Distance(_position, _waypoint);
+                if (_distanceToWaypoint <= _arrivalDistanceTolerance)
+                {
+                    _path.Dequeue();
+                    continue;
+                }
+
+                _hasWaypoint = true;
+                _desiredDirection = (_waypoint - _position).normalized;
+                return true;
+            }
+
+            _hasWaypoint = false;
+            _distanceToWaypoint = 99999f;
+            _desiredDirection = Vector2.zero;
+
+            return false;
         }
         
         private IEnumerator RecalculatePath()
         {
-            float waitTime = reNavTime.Random();
-            yield return new WaitForSeconds(waitTime);
-            
-            if (!_hasDestination) yield break;
-            
-            TryPathfind(_destination, 0.5f, out Vector2[] path);
-            SetPath(path);
+            while (_hasDestination)
+            {
+                yield return new WaitForSeconds(reNavTime.Random());
+
+                if (!_hasDestination) break;
+
+                if (TryPathfind(_destination, 0.5f, out var path) && path is { Length: > 0 })
+                {
+                    ApplyPath(path);
+                }
+            }
+
+            _recalculateCoroutine = null;
         }
 
         private Vector2[] Pathfind(float tolerance, Func<float, Vector2> randomDestinationFunc)
