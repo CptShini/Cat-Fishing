@@ -60,7 +60,7 @@ public class BodyScript : MonoBehaviour
         {
             clampAngle += 360;
         }
-        Mathf.DeltaAngle(curAngle, clampAngle);
+        //Mathf.DeltaAngle(curAngle, clampAngle);
         if(curAngle < 0f)
         {
             curAngle += 360;

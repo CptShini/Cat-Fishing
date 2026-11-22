@@ -24,7 +24,7 @@ namespace Assets.Scripts.Diving.Managers
         {
             if (PlayerState != Scripts.PlayerState.PlayerState.GRAB)
             {
-                oxygenBar.CurrentValue -= Time.deltaTime;
+                oxygenBar.CurrentValue -= TimeManager.Instance.catchingTimeScale * Time.deltaTime;
             }
         }
 

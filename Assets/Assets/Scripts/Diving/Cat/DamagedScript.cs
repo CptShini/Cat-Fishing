@@ -1,4 +1,5 @@
 using Assets.Scripts.Diving.Bars;
+using Assets.Scripts.Diving.Managers;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -33,6 +34,6 @@ public class DamagedScript : MonoBehaviour, IDamageable
 
     private void Update()
     {
-        curInvincibleDuration += Time.deltaTime;
+        curInvincibleDuration += Time.deltaTime * TimeManager.Instance.catchingTimeScale;
     }
 }

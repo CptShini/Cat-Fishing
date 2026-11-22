@@ -1,0 +1,1079 @@
+fileFormatVersion: 2
+guid: b435077b4ea5c754e8d73eaababad08e
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 2182972306660908852
+    second: Catching_Bubbles_BG_0
+  - first:
+      213: -5648014306094311195
+    second: Catching_Bubbles_BG_1
+  - first:
+      213: -8846315396073319012
+    second: Catching_Bubbles_BG_2
+  - first:
+      213: -6473853058691556373
+    second: Catching_Bubbles_BG_3
+  - first:
+      213: 4194697821713603084
+    second: Catching_Bubbles_BG_4
+  - first:
+      213: -5991949158072594339
+    second: Catching_Bubbles_BG_5
+  - first:
+      213: 2670855952330038807
+    second: Catching_Bubbles_BG_6
+  - first:
+      213: -2073769620664363414
+    second: Catching_Bubbles_BG_7
+  - first:
+      213: -3587923227145795334
+    second: Catching_Bubbles_BG_8
+  - first:
+      213: -65237943745632852
+    second: Catching_Bubbles_BG_9
+  - first:
+      213: -6834110881609009591
+    second: Catching_Bubbles_BG_10
+  - first:
+      213: 1336010876232022526
+    second: Catching_Bubbles_BG_11
+  - first:
+      213: 6090701663685425244
+    second: Catching_Bubbles_BG_12
+  - first:
+      213: -2942564774191146932
+    second: Catching_Bubbles_BG_13
+  - first:
+      213: -5195488674825905166
+    second: Catching_Bubbles_BG_14
+  - first:
+      213: -4731583083309416221
+    second: Catching_Bubbles_BG_15
+  - first:
+      213: 566167432676144352
+    second: Catching_Bubbles_BG_16
+  - first:
+      213: 7803787884446745302
+    second: Catching_Bubbles_BG_17
+  - first:
+      213: -8740597558388111833
+    second: Catching_Bubbles_BG_18
+  - first:
+      213: 1063464359956127626
+    second: Catching_Bubbles_BG_19
+  - first:
+      213: 6198147751195148222
+    second: Catching_Bubbles_BG_20
+  - first:
+      213: -1460293431795622767
+    second: Catching_Bubbles_BG_21
+  - first:
+      213: -9211473824707315283
+    second: Catching_Bubbles_BG_22
+  - first:
+      213: -6786597412839759570
+    second: Catching_Bubbles_BG_23
+  - first:
+      213: -4224259683584005326
+    second: Catching_Bubbles_BG_24
+  - first:
+      213: 4046109993784686569
+    second: Catching_Bubbles_BG_25
+  - first:
+      213: -2690185897724341515
+    second: Catching_Bubbles_BG_26
+  - first:
+      213: 4430292675734366546
+    second: Catching_Bubbles_BG_27
+  - first:
+      213: -9074908864306757654
+    second: Catching_Bubbles_BG_28
+  - first:
+      213: 8771614512716755286
+    second: Catching_Bubbles_BG_29
+  - first:
+      213: 2852314106718097291
+    second: Catching_Bubbles_BG_30
+  - first:
+      213: -3294708928798951183
+    second: Catching_Bubbles_BG_31
+  - first:
+      213: -2090649343631856164
+    second: Catching_Bubbles_BG_32
+  - first:
+      213: 6014058081275719434
+    second: Catching_Bubbles_BG_33
+  - first:
+      213: 7194215436761653284
+    second: Catching_Bubbles_BG_34
+  - first:
+      213: -1238583100377286329
+    second: Catching_Bubbles_BG_35
+  - first:
+      213: 1227840516232087870
+    second: Catching_Bubbles_BG_36
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 0
+    wrapV: 0
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Catching_Bubbles_BG_0
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 927
+        width: 107
+        height: 113
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 43fd90d3fb97b4e10800000000000000
+      internalID: 2182972306660908852
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Catching_Bubbles_BG_1
+      rect:
+        serializedVersion: 2
+        x: 606
+        y: 906
+        width: 113
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5e89ceeb9e83e91b0800000000000000
+      internalID: -5648014306094311195
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Catching_Bubbles_BG_2
+      rect:
+        serializedVersion: 2
+        x: 893
+        y: 1005
+        width: 71
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c951bfd54039b3580800000000000000
+      internalID: -8846315396073319012
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Catching_Bubbles_BG_3
+      rect:
+        serializedVersion: 2
+        x: 233
+        y: 913
+        width: 72
+        height: 73
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: beb1d9c61f04826a0800000000000000
+      internalID: -6473853058691556373
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Catching_Bubbles_BG_4
+      rect:
+        serializedVersion: 2
+        x: 410
+        y: 844
+        width: 128
+        height: 133
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c0a1853c17f863a30800000000000000
+      internalID: 4194697821713603084
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Catching_Bubbles_BG_5
+      rect:
+        serializedVersion: 2
+        x: 822
+        y: 927
+        width: 49
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d50d1e8ccf158dca0800000000000000
+      internalID: -5991949158072594339
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Catching_Bubbles_BG_6
+      rect:
+        serializedVersion: 2
+        x: 997
+        y: 916
+        width: 53
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 71e9edc7659c01520800000000000000
+      internalID: 2670855952330038807
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Catching_Bubbles_BG_7
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 850
+        width: 61
+        height: 63
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a66dd4e648d7833e0800000000000000
+      internalID: -2073769620664363414
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Catching_Bubbles_BG_8
+      rect:
+        serializedVersion: 2
+        x: 864
+        y: 779
+        width: 88
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: af80a94a5d2253ec0800000000000000
+      internalID: -3587923227145795334
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Catching_Bubbles_BG_9
+      rect:
+        serializedVersion: 2
+        x: 184
+        y: 784
+        width: 40
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ca52a219f6a381ff0800000000000000
+      internalID: -65237943745632852
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Catching_Bubbles_BG_10
+      rect:
+        serializedVersion: 2
+        x: 563
+        y: 707
+        width: 83
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9463012ac5c5821a0800000000000000
+      internalID: -6834110881609009591
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Catching_Bubbles_BG_11
+      rect:
+        serializedVersion: 2
+        x: 731
+        y: 766
+        width: 52
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ef93edd30d67a8210800000000000000
+      internalID: 1336010876232022526
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Catching_Bubbles_BG_12
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 651
+        width: 71
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c58b9d8a4e4868450800000000000000
+      internalID: 6090701663685425244
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Catching_Bubbles_BG_13
+      rect:
+        serializedVersion: 2
+        x: 323
+        y: 689
+        width: 81
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c4852c1ade8e927d0800000000000000
+      internalID: -2942564774191146932
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Catching_Bubbles_BG_14
+      rect:
+        serializedVersion: 2
+        x: 854
+        y: 544
+        width: 182
+        height: 182
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2fbdf6eb39ae5e7b0800000000000000
+      internalID: -5195488674825905166
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Catching_Bubbles_BG_15
+      rect:
+        serializedVersion: 2
+        x: 174
+        y: 557
+        width: 58
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3e04816314a065eb0800000000000000
+      internalID: -4731583083309416221
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Catching_Bubbles_BG_16
+      rect:
+        serializedVersion: 2
+        x: 676
+        y: 609
+        width: 55
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0e47e04c74e6bd700800000000000000
+      internalID: 566167432676144352
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Catching_Bubbles_BG_17
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 355
+        width: 122
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6d202f21cbf9c4c60800000000000000
+      internalID: 7803787884446745302
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Catching_Bubbles_BG_18
+      rect:
+        serializedVersion: 2
+        x: 263
+        y: 421
+        width: 41
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 72641af84d823b680800000000000000
+      internalID: -8740597558388111833
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Catching_Bubbles_BG_19
+      rect:
+        serializedVersion: 2
+        x: 373
+        y: 445
+        width: 159
+        height: 157
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a8f197e633f22ce00800000000000000
+      internalID: 1063464359956127626
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Catching_Bubbles_BG_20
+      rect:
+        serializedVersion: 2
+        x: 643
+        y: 418
+        width: 120
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ebf7f5f5a8e340650800000000000000
+      internalID: 6198147751195148222
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Catching_Bubbles_BG_21
+      rect:
+        serializedVersion: 2
+        x: 925
+        y: 425
+        width: 47
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 19c5cf95cdefbbbe0800000000000000
+      internalID: -1460293431795622767
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Catching_Bubbles_BG_22
+      rect:
+        serializedVersion: 2
+        x: 219
+        y: 306
+        width: 73
+        height: 71
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: da9f2846c554a2080800000000000000
+      internalID: -9211473824707315283
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Catching_Bubbles_BG_23
+      rect:
+        serializedVersion: 2
+        x: 536
+        y: 291
+        width: 64
+        height: 63
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e21e9162c9921d1a0800000000000000
+      internalID: -6786597412839759570
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Catching_Bubbles_BG_24
+      rect:
+        serializedVersion: 2
+        x: 691
+        y: 349
+        width: 36
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 23ba8f8e23a6065c0800000000000000
+      internalID: -4224259683584005326
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Catching_Bubbles_BG_25
+      rect:
+        serializedVersion: 2
+        x: 964
+        y: 305
+        width: 48
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e7b1b52a9ba62830800000000000000
+      internalID: 4046109993784686569
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Catching_Bubbles_BG_26
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 254
+        width: 35
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5f21062ed2a8aaad0800000000000000
+      internalID: -2690185897724341515
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Catching_Bubbles_BG_27
+      rect:
+        serializedVersion: 2
+        x: 277
+        y: 141
+        width: 179
+        height: 175
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 259692447bf8b7d30800000000000000
+      internalID: 4430292675734366546
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Catching_Bubbles_BG_28
+      rect:
+        serializedVersion: 2
+        x: 742
+        y: 261
+        width: 35
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aefb3f508727f0280800000000000000
+      internalID: -9074908864306757654
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Catching_Bubbles_BG_29
+      rect:
+        serializedVersion: 2
+        x: 824
+        y: 243
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 651b421ece80bb970800000000000000
+      internalID: 8771614512716755286
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Catching_Bubbles_BG_30
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 172
+        width: 41
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b8f84ce5194759720800000000000000
+      internalID: 2852314106718097291
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Catching_Bubbles_BG_31
+      rect:
+        serializedVersion: 2
+        x: 622
+        y: 154
+        width: 72
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f871a47fa7d642d0800000000000000
+      internalID: -3294708928798951183
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Catching_Bubbles_BG_32
+      rect:
+        serializedVersion: 2
+        x: 845
+        y: 92
+        width: 123
+        height: 118
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cdd6beaaf758cf2e0800000000000000
+      internalID: -2090649343631856164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Catching_Bubbles_BG_33
+      rect:
+        serializedVersion: 2
+        x: 183
+        y: 32
+        width: 68
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a0fa10906f9367350800000000000000
+      internalID: 6014058081275719434
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Catching_Bubbles_BG_34
+      rect:
+        serializedVersion: 2
+        x: 433
+        y: 9
+        width: 70
+        height: 71
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4206fc9b2dcf6d360800000000000000
+      internalID: 7194215436761653284
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Catching_Bubbles_BG_35
+      rect:
+        serializedVersion: 2
+        x: 540
+        y: 77
+        width: 46
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 749b5358b3bafcee0800000000000000
+      internalID: -1238583100377286329
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Catching_Bubbles_BG_36
+      rect:
+        serializedVersion: 2
+        x: 741
+        y: 34
+        width: 67
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e3988d2b17a2a0110800000000000000
+      internalID: 1227840516232087870
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Catching_Bubbles_BG_0: 2182972306660908852
+      Catching_Bubbles_BG_1: -5648014306094311195
+      Catching_Bubbles_BG_10: -6834110881609009591
+      Catching_Bubbles_BG_11: 1336010876232022526
+      Catching_Bubbles_BG_12: 6090701663685425244
+      Catching_Bubbles_BG_13: -2942564774191146932
+      Catching_Bubbles_BG_14: -5195488674825905166
+      Catching_Bubbles_BG_15: -4731583083309416221
+      Catching_Bubbles_BG_16: 566167432676144352
+      Catching_Bubbles_BG_17: 7803787884446745302
+      Catching_Bubbles_BG_18: -8740597558388111833
+      Catching_Bubbles_BG_19: 1063464359956127626
+      Catching_Bubbles_BG_2: -8846315396073319012
+      Catching_Bubbles_BG_20: 6198147751195148222
+      Catching_Bubbles_BG_21: -1460293431795622767
+      Catching_Bubbles_BG_22: -9211473824707315283
+      Catching_Bubbles_BG_23: -6786597412839759570
+      Catching_Bubbles_BG_24: -4224259683584005326
+      Catching_Bubbles_BG_25: 4046109993784686569
+      Catching_Bubbles_BG_26: -2690185897724341515
+      Catching_Bubbles_BG_27: 4430292675734366546
+      Catching_Bubbles_BG_28: -9074908864306757654
+      Catching_Bubbles_BG_29: 8771614512716755286
+      Catching_Bubbles_BG_3: -6473853058691556373
+      Catching_Bubbles_BG_30: 2852314106718097291
+      Catching_Bubbles_BG_31: -3294708928798951183
+      Catching_Bubbles_BG_32: -2090649343631856164
+      Catching_Bubbles_BG_33: 6014058081275719434
+      Catching_Bubbles_BG_34: 7194215436761653284
+      Catching_Bubbles_BG_35: -1238583100377286329
+      Catching_Bubbles_BG_36: 1227840516232087870
+      Catching_Bubbles_BG_4: 4194697821713603084
+      Catching_Bubbles_BG_5: -5991949158072594339
+      Catching_Bubbles_BG_6: 2670855952330038807
+      Catching_Bubbles_BG_7: -2073769620664363414
+      Catching_Bubbles_BG_8: -3587923227145795334
+      Catching_Bubbles_BG_9: -65237943745632852
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
