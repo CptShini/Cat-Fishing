@@ -19,7 +19,7 @@ MonoBehaviour:
     BuildIndex: 1
     BGM: {fileID: 11400000, guid: dd6980ef5341ce64ca9f876913f93e6f, type: 2}
   diving:
-    BuildIndex: 4
+    BuildIndex: 2
     BGM: {fileID: 11400000, guid: c7a314fb36778604bac2ecbceb9bbe43, type: 2}
   dailyReport:
     BuildIndex: 3
