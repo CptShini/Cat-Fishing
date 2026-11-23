@@ -1,7 +1,7 @@
 ﻿using Assets.Scripts.Helpers;
 using UnityEngine;
 
-namespace Assets.Scripts.Fishies.Navigation
+namespace Assets.Scripts.Fishies.Movement.Navigation
 {
     public class FishEyes : MonoBehaviour
     {
@@ -33,6 +33,11 @@ namespace Assets.Scripts.Fishies.Navigation
         {
             _transform = transform;
             _eyesTransform = eyes;
+        }
+
+        public void Init(float size)
+        {
+            viewDistance *= size;
         }
 
         private void Update()

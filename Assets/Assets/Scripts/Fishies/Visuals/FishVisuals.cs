@@ -6,10 +6,10 @@ namespace Assets.Scripts.Fishies.Visuals
     {
         [SerializeField] private SpriteRenderer spriteRenderer;
     
-        public void Init(Sprite sprite, float relativeWeight)
+        public void Init(Sprite sprite, float size)
         {
             spriteRenderer.sprite = sprite;
-            transform.localScale *= Mathf.Sqrt(relativeWeight); // Cube-root is realistic, but whatevs
+            transform.localScale *= size;
         }
     }
 }

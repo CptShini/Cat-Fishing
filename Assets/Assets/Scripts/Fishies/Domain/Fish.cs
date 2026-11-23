@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 namespace Assets.Scripts.Fishies.Domain
 {
@@ -10,6 +11,7 @@ namespace Assets.Scripts.Fishies.Domain
         public readonly float Weight;
         public readonly float RelativeWeight;
         public readonly float Strength;
+        public readonly float Size;
 
         public Fish(FishSpecies species)
         {
@@ -19,6 +21,7 @@ namespace Assets.Scripts.Fishies.Domain
             Weight = species.Weight.Random();
             RelativeWeight = Weight / species.Weight.Average;
             Strength = species.Strength * RelativeWeight;
+            Size = species.Scale * Mathf.Sqrt(RelativeWeight);
         }
 
         public Fish(FishDTO fishDTO, FishSpeciesDatabase db)
@@ -29,6 +32,7 @@ namespace Assets.Scripts.Fishies.Domain
             Weight = fishDTO.Weight;
             RelativeWeight = Weight / Species.Weight.Average;
             Strength = Species.Strength * RelativeWeight;
+            Size = Species.Scale * Mathf.Sqrt(RelativeWeight);
         }
     }
 }
