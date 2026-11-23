@@ -36,7 +36,7 @@ namespace Assets.Scripts.Fishies
             Fish = new(species);
 
             name = $"{species.Name} ({Fish.Weight:F1} KG)";
-            visuals.Init(species.Icon, Fish.RelativeWeight);
+            visuals.Init(species.Icon, species.Scale, Fish.RelativeWeight);
             
             _normalMovement.Init(species.Speed, species.Biome);
             CaughtMovement.Init(species.CatchPattern, 1f);
