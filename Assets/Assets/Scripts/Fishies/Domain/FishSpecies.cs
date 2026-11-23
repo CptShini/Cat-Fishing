@@ -21,7 +21,7 @@ namespace Assets.Scripts.Fishies.Domain
         [field: SerializeField, TextArea(3, 5)]
         public string Description { get; private set; }
         
-        [field: SerializeField, Range(0.5f, 3f)]
+        [field: SerializeField, Range(0.1f, 3f), Space]
         public float Scale { get; private set; } = 1.0f;
         
         [field: SerializeField, Min(0)]

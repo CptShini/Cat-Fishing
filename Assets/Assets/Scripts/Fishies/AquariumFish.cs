@@ -28,9 +28,9 @@ namespace Assets.Scripts.Fishies
             Fish = fish;
             
             name = $"{fish.Fish.Species.Name} ({fish.Fish.Weight:F1} KG)";
-            visuals.Init(fish.Fish.Species.Icon, fish.Fish.Species.Scale, Fish.Fish.RelativeWeight);
+            visuals.Init(fish.Fish.Species.Icon, fish.Fish.Size);
             
-            _movement.Init(fish.Fish.Species.Speed);
+            _movement.Init(fish.Fish.Species.Speed, fish.Fish.Size);
             
             _movement.Wander();
             Fish.Fed.AddListener(UpdateHappinessText);
