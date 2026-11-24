@@ -37,7 +37,7 @@ namespace Assets.Scripts.MainMenu.SaveSelect
 
         public void NewSave()
         {
-            SFXManager.Instance.Play(SFXId.OpeningDoor); //different sound? paper?
+            SFXManager.Instance.Play(SFXId.InventoryFull); //different sound? paper?
             SaveManager.Instance.StartNew(_newSaveName);
             GameManager.Instance.ChangeScene(Scenes.Letter, "...");
         }

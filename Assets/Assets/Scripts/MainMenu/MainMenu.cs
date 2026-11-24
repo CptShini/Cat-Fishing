@@ -40,7 +40,7 @@ namespace Assets.Scripts.MainMenu
             if (SaveManager.Instance.CurrentSave == null)
             {
                 SaveManager.Instance.StartNew("Default");
-                SFXManager.Instance.Play(SFXId.OpeningDoor); //different sound
+                SFXManager.Instance.Play(SFXId.InventoryFull); //different sound
                 GameManager.Instance.ChangeScene(Scenes.Letter, "...");
                 return;
 
