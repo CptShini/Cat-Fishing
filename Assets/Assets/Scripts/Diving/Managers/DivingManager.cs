@@ -33,7 +33,6 @@ namespace Assets.Scripts.Diving.Managers
                 oxygenBar.CurrentValue -= TimeManager.Instance.catchingTimeScale * Time.deltaTime;
                 if(!danger && oxygenBar.CurrentValue / oxygenBar.MaxVal < dangerThreshold)
                 {
-                    Debug.Log("HELLO?");
                     SetDanger(true);
                 }
                 else if(danger && oxygenBar.CurrentValue / oxygenBar.MaxVal > dangerThreshold)
