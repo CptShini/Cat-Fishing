@@ -10263,6 +10263,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1795563576}
     m_Modifications:
+    - target: {fileID: 692187421863111743, guid: a1f5dd710e0e41c4ea3fbad66bc9efee, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1213193691314539756, guid: a1f5dd710e0e41c4ea3fbad66bc9efee, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -11958,6 +11962,11 @@ Transform:
 Transform:
   m_CorrespondingSourceObject: {fileID: 8487722080828036614, guid: 822614b282bb6534fa6d413c6eec5abd, type: 3}
   m_PrefabInstance: {fileID: 1018916848}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &983696681 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1598120113909672410, guid: a1f5dd710e0e41c4ea3fbad66bc9efee, type: 3}
+  m_PrefabInstance: {fileID: 880628907}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &987462253
 GameObject:
@@ -38482,6 +38491,9 @@ MonoBehaviour:
   fishImage: {fileID: 1611291964}
   MovingBubbles: {fileID: 1611291965}
   MovingBackground: {fileID: 828453176}
+  toggledUI:
+  - {fileID: 983696681}
+  - {fileID: 1397849896}
 --- !u!114 &2035162236
 MonoBehaviour:
   m_ObjectHideFlags: 0
