@@ -10363,6 +10363,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2365761184008796080, guid: a1f5dd710e0e41c4ea3fbad66bc9efee, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3244102322806336925, guid: a1f5dd710e0e41c4ea3fbad66bc9efee, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -38495,6 +38499,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.Managers.DivingManager
   oxygenBar: {fileID: 880628908}
+  dangerColor: {r: 0.8627451, g: 0.27450982, b: 0.49803922, a: 1}
+  defaultColor: {r: 0.5529412, g: 0.8705883, b: 1, a: 1}
+  dangerThreshold: 0.3
 --- !u!1 &2039195308
 GameObject:
   m_ObjectHideFlags: 0
