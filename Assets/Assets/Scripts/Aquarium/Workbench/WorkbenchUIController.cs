@@ -45,6 +45,8 @@ public class WorkbenchUIController : MonoBehaviour
         placementController.EnterDecorationMode();
 
         PauseController.IsGamePaused = true;
+
+        TutorialUIController.Instance.ShowTutorial("Workbench");
     }
 
     public void Close()

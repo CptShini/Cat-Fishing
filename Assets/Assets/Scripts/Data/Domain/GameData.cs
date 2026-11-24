@@ -44,5 +44,12 @@ namespace Assets.Scripts.Data.Domain
         public List<int> ExploredFogs = new();
         
         public DecorationSaveData Decoration = new();
+
+        public SerializableDictionary<string, bool> Tutorials = new()
+        {
+            { "Workbench", false },
+            { "Computer", false },
+            { "Fish Tank", false }
+        };
     }
 }
