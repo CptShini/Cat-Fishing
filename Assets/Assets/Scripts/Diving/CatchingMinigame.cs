@@ -49,6 +49,9 @@ public class CatchingMinigame : MonoBehaviour
     public readonly UnityEvent<bool> OnEnded = new();
 
     public readonly UnityEvent<Fish> OnWin = new();
+
+    private bool _waitingForTutorial;
+    private TutorialDivingUIController TutorialDivingUIControllerReference;
     
     void Awake()
     {
@@ -71,12 +74,29 @@ public class CatchingMinigame : MonoBehaviour
         wiggleTime = 0;
         wiggleRad = 0;
         
+
+        TutorialDivingUIControllerReference = FindFirstObjectByType<TutorialDivingUIController>();
+        _waitingForTutorial = TutorialDivingUIControllerReference.ShowCatchingTutorial();
+
+        if (_waitingForTutorial)
+            return;
+
+        StartMinigameAfterTutorial();
+    }
+
+    public void StartMinigameAfterTutorial()
+    {
+        _waitingForTutorial = false;
+
         SFXManager.Instance.Play(SFXId.BattleBGM);
         TimeManager.Instance.SetCatchingScaledTime(true);
     }
 
     public void Grab(Vector2 velocityVector)
     {
+        if (_waitingForTutorial)
+            return;
+
         playerContest = velocityVector;
         contestAngle = Vector2.Angle(playerContest, _movement.Direction);
         contestMod = Mathf.Pow(contestAngle / 180, inaccuracyPenalty);
@@ -169,6 +189,9 @@ public class CatchingMinigame : MonoBehaviour
 
     private void Update()
     {
+        if (_waitingForTutorial)
+            return;
+            
         if (DivingController.Instance.state != PlayerState.GRAB)
             return;
         

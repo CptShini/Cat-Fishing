@@ -4978,8 +4978,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 1804356914}
     m_Modifications:
     - target: {fileID: 972345859399590241, guid: c3a45e317a2f55e42be5474bc2f4c45d, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 1494.3779
+      objectReference: {fileID: 0}
+    - target: {fileID: 972345859399590241, guid: c3a45e317a2f55e42be5474bc2f4c45d, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 495.0948
+      objectReference: {fileID: 0}
+    - target: {fileID: 972345859399590241, guid: c3a45e317a2f55e42be5474bc2f4c45d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 2.3628
+      objectReference: {fileID: 0}
+    - target: {fileID: 972345859399590241, guid: c3a45e317a2f55e42be5474bc2f4c45d, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 113
+      value: 8.8526
       objectReference: {fileID: 0}
     - target: {fileID: 3389087061578773899, guid: c3a45e317a2f55e42be5474bc2f4c45d, type: 3}
       propertyPath: m_text
@@ -5011,7 +5023,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3812598883306201399, guid: c3a45e317a2f55e42be5474bc2f4c45d, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 850
+      value: 1571.0208
       objectReference: {fileID: 0}
     - target: {fileID: 3812598883306201399, guid: c3a45e317a2f55e42be5474bc2f4c45d, type: 3}
       propertyPath: m_SizeDelta.y
@@ -5047,7 +5059,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3812598883306201399, guid: c3a45e317a2f55e42be5474bc2f4c45d, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: -48.0681
       objectReference: {fileID: 0}
     - target: {fileID: 3812598883306201399, guid: c3a45e317a2f55e42be5474bc2f4c45d, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -5109,25 +5121,32 @@ PrefabInstance:
       propertyPath: m_text
       value: 'Explore the depths through diving to discover and collect new fish!
 
-        Add
-        your fish to the aquarium, feed them regularly and keep their tank clean
-        to ensure they stay happy and healthy. Remember not to overcrowd your tank,
-        as too many fish will make them unhappy.
+        From
+        the fish inventory add your fish to the fish tank. Simply drag a fish in
+        or out. If you leave fish in the fish inventory before starting a new dive,
+        it will release the fish back to the ocean. So make sure to put the fish
+        you want to keep in a tank!
 
-        Take good care of your
-        aquatic friends!'
+
+        Feed your fish regularly and keep their
+        tank clean to ensure they stay happy and healthy. Remember not to overcrowd
+        your tank, as too many fish will make them unhappy.
+
+
+        Take good care
+        of your aquatic friends!'
       objectReference: {fileID: 0}
     - target: {fileID: 7160033322287130620, guid: c3a45e317a2f55e42be5474bc2f4c45d, type: 3}
       propertyPath: m_margin.w
-      value: -213.80704
+      value: -5.5121765
       objectReference: {fileID: 0}
     - target: {fileID: 7160033322287130620, guid: c3a45e317a2f55e42be5474bc2f4c45d, type: 3}
       propertyPath: m_margin.x
-      value: -55.03943
+      value: 1.039978
       objectReference: {fileID: 0}
     - target: {fileID: 7160033322287130620, guid: c3a45e317a2f55e42be5474bc2f4c45d, type: 3}
       propertyPath: m_margin.z
-      value: -63.506958
+      value: 0.58374023
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
