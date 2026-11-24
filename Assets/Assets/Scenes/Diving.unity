@@ -10453,6 +10453,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2813818251532300797, guid: a1f5dd710e0e41c4ea3fbad66bc9efee, type: 3}
+      propertyPath: m_fontSize
+      value: 22.05
+      objectReference: {fileID: 0}
     - target: {fileID: 3244102322806336925, guid: a1f5dd710e0e41c4ea3fbad66bc9efee, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -10552,10 +10556,6 @@ PrefabInstance:
     - target: {fileID: 7343742692320945272, guid: a1f5dd710e0e41c4ea3fbad66bc9efee, type: 3}
       propertyPath: m_Color.r
       value: 0.38714838
-      objectReference: {fileID: 0}
-    - target: {fileID: 9201820762172762776, guid: a1f5dd710e0e41c4ea3fbad66bc9efee, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 380
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3979294889407323493, guid: a1f5dd710e0e41c4ea3fbad66bc9efee, type: 3}
