@@ -48,7 +48,9 @@ namespace Assets.Scripts.Data.Domain
         public SerializableDictionary<string, bool> Tutorials = new()
         {
             { "Workbench", false },
-            { "Computer", false },
+            { "ComputerShop", false },
+            { "ComputerUpgrade", false },
+            { "ComputerEncyclopedia", false },
             { "Fish Tank", false }
         };
     }

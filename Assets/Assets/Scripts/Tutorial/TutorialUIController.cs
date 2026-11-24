@@ -12,9 +12,11 @@ public class TutorialUIController : MonoBehaviour, IDataPersistence
     [SerializeField] private GameObject tutorialCanvas;
 
     [Header("Tutorial Popups")]
-    [SerializeField] private GameObject workbenchTutorialPopup;
-    //[SerializeField] private GameObject computerTutorialPopup;
-    //[SerializeField] private GameObject aquariumTutorialPopup;
+    [SerializeField] private GameObject
+    workbenchTutorialPopup,
+    computerShopTutorialPopup,
+    computerUpgradeTutorialPopup,
+    computerEncyclopediaTutorialPopup;
 
     private Dictionary<string, GameObject> tutorialPopups;
 
@@ -36,8 +38,9 @@ public class TutorialUIController : MonoBehaviour, IDataPersistence
         tutorialPopups = new Dictionary<string, GameObject>
         {
             { "Workbench", workbenchTutorialPopup },
-            //{ "Computer", computerTutorialPopup },
-            //{ "Aquarium", aquariumTutorialPopup }
+            { "ComputerShop", computerShopTutorialPopup },
+            { "ComputerUpgrade", computerUpgradeTutorialPopup },
+            { "ComputerEncyclopedia", computerEncyclopediaTutorialPopup }
         };
 
         tutorialCanvas.SetActive(false);
