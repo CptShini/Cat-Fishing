@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Aquarium.FishTanks;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class InteractionDetector : MonoBehaviour
@@ -9,6 +10,10 @@ public class InteractionDetector : MonoBehaviour
     [SerializeField] private GameObject interactionIcon;
     
     private readonly Dictionary<IInteractable, Transform> _interactableList = new();
+
+    public readonly UnityEvent OnInteractibleEntered = new();
+    public readonly UnityEvent OnInteractibleExited = new();
+
 
     public void OnInteract(InputAction.CallbackContext context)
     {
@@ -33,7 +38,11 @@ public class InteractionDetector : MonoBehaviour
             !_interactableList.TryAdd(interactable, collision.transform)
         ) return;
         
-        if (_interactableList.Count == 1) interactionIcon.SetActive(true);
+        if (_interactableList.Count == 1) 
+        {
+            OnInteractibleEntered.Invoke();
+            interactionIcon.SetActive(true);
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -43,7 +52,11 @@ public class InteractionDetector : MonoBehaviour
             !_interactableList.Remove(interactable)
         ) return;
 
-        if (_interactableList.Count == 0) interactionIcon.SetActive(false);
+        if (_interactableList.Count == 0) 
+        {
+            OnInteractibleExited.Invoke();
+            interactionIcon.SetActive(false);
+        }
     }
     
     private static bool CloseCurrentUI()
