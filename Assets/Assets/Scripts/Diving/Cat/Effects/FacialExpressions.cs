@@ -44,9 +44,8 @@ public class FacialExpressions : MonoBehaviour
         queuedEmotion = Emotion.DEFAULT;
         curEmotion = Emotion.DEFAULT;
        
-        OnExpressible.AddListener(MakeExpressible);
         _interactionDetector.OnInteractibleEntered.AddListener(() => SetExpression(Emotion.CURIOUS, 5));
-        _interactionDetector.OnInteractibleExited.AddListener(() => MakeExpressible());
+        _interactionDetector.OnInteractibleExited.AddListener(() => ResetPriorityUsingState());
     }
 
     public void SetExpression(PlayerState state)
@@ -59,26 +58,34 @@ public class FacialExpressions : MonoBehaviour
             case PlayerState.POUNCE:
                 SetExpression(Emotion.CURIOUS);
                 break;
+            case PlayerState.STUN:
+                SetExpressionWithDuration(Emotion.HURT, DivingPlayerStats.Instance.stunDuration, 10);
+                break;
             default:
                 SetExpression(Emotion.DEFAULT);
                 break;
         }
     }
 
-    public void MakeExpressible()
+    public void ResetPriority()
     {
         curPriority = -10;
-        SetExpression(queuedEmotion);
+        SetExpression(queuedEmotion, 0);
+    }
+    public void ResetPriorityUsingState()
+    {
+        curPriority = -10;
+        SetExpression(DivingController.Instance.state);
     }
 
-    public bool SetExpression(Emotion emotion, int priority = 0) 
+    public bool SetExpression(Emotion emotion, int priority = 0, bool setQueued = true) 
     {
         if (priority < curPriority)
         {
             queuedEmotion = emotion;
             return false;
         }
-        queuedEmotion = curEmotion;
+        queuedEmotion = setQueued ? curEmotion : queuedEmotion;
         curPriority = priority;
         curEmotion = emotion;
         _face.sprite = _expressions[emotion];
@@ -98,7 +105,7 @@ public class FacialExpressions : MonoBehaviour
     {
         if(curDuration > duration && !finished)
         {
-            MakeExpressible();
+            ResetPriority();
             finished = true;
         }
         if(curDuration > duration)
