@@ -73,7 +73,6 @@ public class FacialExpressions : MonoBehaviour
 
     public bool SetExpression(Emotion emotion, int priority = 0) 
     {
-        Debug.Log(emotion);
         if (priority < curPriority)
         {
             queuedEmotion = emotion;
