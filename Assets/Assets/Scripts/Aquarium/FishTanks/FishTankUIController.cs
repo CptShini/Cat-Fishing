@@ -98,6 +98,8 @@ namespace Assets.Scripts.Aquarium.FishTanks
                 spawner.SpawnFish(fish);
 
             PauseController.IsGamePaused = true;
+
+            TutorialUIController.Instance.ShowTutorial("FishTank");
         }
 
         public void AddFish(TankFish fish, Vector2 mouseScreenPos)

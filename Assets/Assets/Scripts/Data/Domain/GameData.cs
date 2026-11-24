@@ -51,7 +51,7 @@ namespace Assets.Scripts.Data.Domain
             { "ComputerShop", false },
             { "ComputerUpgrade", false },
             { "ComputerEncyclopedia", false },
-            { "Fish Tank", false }
+            { "FishTank", false }
         };
     }
 }

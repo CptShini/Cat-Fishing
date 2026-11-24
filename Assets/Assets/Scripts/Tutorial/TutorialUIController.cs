@@ -16,7 +16,9 @@ public class TutorialUIController : MonoBehaviour, IDataPersistence
     workbenchTutorialPopup,
     computerShopTutorialPopup,
     computerUpgradeTutorialPopup,
-    computerEncyclopediaTutorialPopup;
+    computerEncyclopediaTutorialPopup,
+    fishTankTutorialPopup;
+
 
     private Dictionary<string, GameObject> tutorialPopups;
 
@@ -40,7 +42,8 @@ public class TutorialUIController : MonoBehaviour, IDataPersistence
             { "Workbench", workbenchTutorialPopup },
             { "ComputerShop", computerShopTutorialPopup },
             { "ComputerUpgrade", computerUpgradeTutorialPopup },
-            { "ComputerEncyclopedia", computerEncyclopediaTutorialPopup }
+            { "ComputerEncyclopedia", computerEncyclopediaTutorialPopup },
+            { "FishTank", fishTankTutorialPopup }
         };
 
         tutorialCanvas.SetActive(false);
