@@ -45,7 +45,7 @@ public class FacialExpressions : MonoBehaviour
         curEmotion = Emotion.DEFAULT;
        
         _interactionDetector.OnInteractibleEntered.AddListener(() => SetExpression(Emotion.CURIOUS, 5));
-        _interactionDetector.OnInteractibleExited.AddListener(() => ResetPriorityUsingState());
+        _interactionDetector.OnInteractibleExited.AddListener(() => ResetPriorityUsingState(5));
     }
 
     public void SetExpression(PlayerState state)
@@ -67,14 +67,20 @@ public class FacialExpressions : MonoBehaviour
         }
     }
 
-    public void ResetPriority()
+    public void ResetPriority(int priority)
     {
-        curPriority = -10;
+        if(priority >= curPriority)
+        {
+            curPriority = -10;
+        }
         SetExpression(queuedEmotion, 0);
     }
-    public void ResetPriorityUsingState()
+    public void ResetPriorityUsingState(int priority)
     {
-        curPriority = -10;
+        if(priority >= curPriority)
+        {
+            curPriority = -10;
+        }
         SetExpression(DivingController.Instance.state);
     }
 
@@ -105,7 +111,7 @@ public class FacialExpressions : MonoBehaviour
     {
         if(curDuration > duration && !finished)
         {
-            ResetPriority();
+            ResetPriority(10);
             finished = true;
         }
         if(curDuration > duration)
