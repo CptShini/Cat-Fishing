@@ -24,3 +24,6 @@ MonoBehaviour:
   dailyReport:
     BuildIndex: 3
     BGM: {fileID: 11400000, guid: 569962a43218a9c43b234f7bdb797f5f, type: 2}
+  letter:
+    BuildIndex: 4
+    BGM: {fileID: 11400000, guid: 569962a43218a9c43b234f7bdb797f5f, type: 2}
