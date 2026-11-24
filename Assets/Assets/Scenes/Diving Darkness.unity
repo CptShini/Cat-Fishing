@@ -5184,6 +5184,7 @@ GameObject:
   - component: {fileID: 468217184}
   - component: {fileID: 468217186}
   - component: {fileID: 468217185}
+  - component: {fileID: 468217187}
   m_Layer: 0
   m_Name: UnderwaterDarkness
   m_TagString: Untagged
@@ -5248,6 +5249,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 468217183}
   m_CullTransparentMesh: 1
+--- !u!114 &468217187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 468217183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb002fb8a2d6f0c4a8329b5cd105cafa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UnderwaterDarknessController
+  player: {fileID: 651395430}
+  darknessImage: {fileID: 468217185}
 --- !u!1 &475253802
 GameObject:
   m_ObjectHideFlags: 0
@@ -31622,6 +31637,22 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 651395430}
+    - target: {fileID: 6541992116239579157, guid: 00c4c735be6de9441b62ab6463139022, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 84.64275
+      objectReference: {fileID: 0}
+    - target: {fileID: 6541992116239579157, guid: 00c4c735be6de9441b62ab6463139022, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -81.51292
+      objectReference: {fileID: 0}
+    - target: {fileID: 8695834584669431874, guid: 00c4c735be6de9441b62ab6463139022, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 84.64275
+      objectReference: {fileID: 0}
+    - target: {fileID: 8695834584669431874, guid: 00c4c735be6de9441b62ab6463139022, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -81.51292
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -32408,11 +32439,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6619945467753677165, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -11.6
+      value: 85.3
       objectReference: {fileID: 0}
     - target: {fileID: 6619945467753677165, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 12.3
+      value: -2.3
       objectReference: {fileID: 0}
     - target: {fileID: 6619945467753677165, guid: 262047177a92c874888fbafd31ad2f22, type: 3}
       propertyPath: m_LocalPosition.z
