@@ -127,7 +127,7 @@ public class CatchingMinigame : MonoBehaviour
             Time.deltaTime * 500
         );
 
-        angleRad += Mathf.DeltaAngle(angleRad, newRotation);
+        angleRad += Mathf.DeltaAngle(angleRad, newRotation) + 360f;
 
         float wrappedRotation = (angleRad + 360f) % 360f;
         switch (flipped)
