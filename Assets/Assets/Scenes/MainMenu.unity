@@ -1476,7 +1476,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4899994335121518441, guid: 7a1c0add22ea0f640870120facc00645, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1177864763}
   m_SourcePrefab: {fileID: 100100000, guid: 7a1c0add22ea0f640870120facc00645, type: 3}
 --- !u!1 &555663868
 GameObject:
@@ -4092,6 +4095,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1089703028}
   m_CullTransparentMesh: 1
+--- !u!1 &1177864762 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4899994335121518441, guid: 7a1c0add22ea0f640870120facc00645, type: 3}
+  m_PrefabInstance: {fileID: 493968200}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1177864763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1177864762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce8ea3c27cfb4e009819a1fdda985e2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Helpers.VersionCanvas
 --- !u!1 &1178382430
 GameObject:
   m_ObjectHideFlags: 0

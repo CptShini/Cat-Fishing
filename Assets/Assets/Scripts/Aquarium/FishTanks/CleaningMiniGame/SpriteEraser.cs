@@ -1,14 +1,16 @@
-
 using UnityEngine;
+using System.Collections.Generic;
 
 namespace Assets.Scripts.Aquarium.FishTanks.CleaningMiniGame
 {
     [RequireComponent(typeof(SpriteRenderer))]
     public class SpriteEraser : MonoBehaviour
     {
-        [SerializeField, Min(1f)] private float brushRadius = 0.25f;
+        [SerializeField, Min(0f)] private float brushRadius = 0.25f;
         [SerializeField, Range(0f, 1f)] private float brushStrength = 1f;
         [SerializeField, Range(0.1f, 1f)] private float brushSoftness = 0.65f;
+
+        [SerializeField, Min(0.01f)] private float applyInterval = 0.05f; //it will limit how often modified pixel data is uploaded to the GPU
 
         private SpriteRenderer _renderer;
         private Sprite _originalSprite;
@@ -16,13 +18,35 @@ namespace Assets.Scripts.Aquarium.FishTanks.CleaningMiniGame
         private Texture2D _runtimeTexture;
 
         private Color32[] _pixels;
-        private Color32[] _originalPixels;
 
         private Rect _spriteRect;
         private int _textureWidth;
         private int _textureHeight;
         private float _pixelsPerUnit;
         private Vector2 _pivot;
+
+        private int _originalPixelCount;
+        private int _erasedPixelCount;
+
+        private float _lastApplyTime;
+        private bool _pendingApply;
+
+        // precalculate brush offsets and erase strengths to do it once and not in gameloop
+        private struct BrushPixel
+        {
+            public int X;
+            public int Y;
+            public int RemainingAlpha;
+
+            public BrushPixel(int x, int y, int remainingAlpha)
+            {
+                X = x;
+                Y = y;
+                RemainingAlpha = remainingAlpha;
+            }
+        }
+
+        private BrushPixel[] _brushPixels;
 
         private void Awake()
         {
@@ -41,7 +65,6 @@ namespace Assets.Scripts.Aquarium.FishTanks.CleaningMiniGame
             _runtimeTexture.name = $"{source.name}_RuntimeErasable";
 
             _pixels = _runtimeTexture.GetPixels32();
-            _originalPixels = (Color32[])_pixels.Clone();
 
             _textureWidth = _runtimeTexture.width;
             _textureHeight = _runtimeTexture.height;
@@ -50,15 +73,67 @@ namespace Assets.Scripts.Aquarium.FishTanks.CleaningMiniGame
             _pixelsPerUnit = _originalSprite.pixelsPerUnit;
             _pivot = _originalSprite.pivot;
 
-            _runtimeSprite = Sprite.Create(
-                _runtimeTexture,
-                _spriteRect,
-                new(
-                    _pivot.x / _spriteRect.width,
-                    _pivot.y / _spriteRect.height),
-                _pixelsPerUnit);
+            _runtimeSprite = Sprite.Create(_runtimeTexture, _spriteRect, new Vector2(_pivot.x / _spriteRect.width, _pivot.y / _spriteRect.height), _pixelsPerUnit);
 
             _renderer.sprite = _runtimeSprite;
+
+            CountOriginalPixels();
+            BuildBrush();
+        }
+
+        // for counting original non-transparent pixels
+        private void CountOriginalPixels()
+        {
+            _originalPixelCount = 0;
+
+            int xMin = Mathf.RoundToInt(_spriteRect.x);
+            int yMin = Mathf.RoundToInt(_spriteRect.y);
+            int xMax = xMin + Mathf.RoundToInt(_spriteRect.width);
+            int yMax = yMin + Mathf.RoundToInt(_spriteRect.height);
+
+            for (int y = yMin; y < yMax; y++)
+            {
+                for (int x = xMin; x < xMax; x++)
+                {
+                    if (_pixels[y * _textureWidth + x].a > 0)
+                        _originalPixelCount++;
+                }
+            }
+
+            _erasedPixelCount = 0;
+        }
+
+        //calculates brush shape once instead of every time we erase
+        private void BuildBrush()
+        {
+            int radius = Mathf.CeilToInt(brushRadius * _pixelsPerUnit);
+            int radiusSquared = radius * radius;
+
+            List<BrushPixel> brush = new();
+
+            for (int y = -radius; y <= radius; y++)
+            {
+                for (int x = -radius; x <= radius; x++)
+                {
+                    int distanceSquared = x * x + y * y;
+
+                    if (distanceSquared > radiusSquared)
+                        continue;
+
+                    float distance = Mathf.Sqrt(distanceSquared);
+                    float normalizedDistance = distance / radius;
+
+                    float falloff = Mathf.SmoothStep(0f, 1f, Mathf.Clamp01((1f - normalizedDistance) / brushSoftness));
+
+                    float eraseAmount = falloff * brushStrength;
+                    if (eraseAmount <= 0f) continue;
+
+                    int remainingAlpha = Mathf.RoundToInt((1f - eraseAmount) * 65536f);
+                    brush.Add(new(x, y, remainingAlpha));
+                }
+            }
+
+            _brushPixels = brush.ToArray();
         }
 
         public bool EraseAt(Vector2 worldPosition)
@@ -68,9 +143,7 @@ namespace Assets.Scripts.Aquarium.FishTanks.CleaningMiniGame
 
             Vector3 local = transform.InverseTransformPoint(worldPosition);
 
-            Vector2 spritePoint = new(
-                local.x * _pixelsPerUnit + _pivot.x,
-                local.y * _pixelsPerUnit + _pivot.y);
+            Vector2 spritePoint = new(local.x * _pixelsPerUnit + _pivot.x, local.y * _pixelsPerUnit + _pivot.y);
 
             if (!_spriteRect.Contains(spritePoint))
                 return false;
@@ -78,115 +151,86 @@ namespace Assets.Scripts.Aquarium.FishTanks.CleaningMiniGame
             int centerX = Mathf.RoundToInt(_spriteRect.x + spritePoint.x);
             int centerY = Mathf.RoundToInt(_spriteRect.y + spritePoint.y);
 
-            int radius = Mathf.CeilToInt(brushRadius * _pixelsPerUnit);
             bool changed = false;
 
-            for (int y = -radius; y <= radius; y++)
+            // reuse the precalculated brush pixels
+            foreach (BrushPixel brushPixel in _brushPixels)
             {
-                for (int x = -radius; x <= radius; x++)
-                {
-                    float distance = Mathf.Sqrt(x * x + y * y);
+                int px = centerX + brushPixel.X;
+                int py = centerY + brushPixel.Y;
 
-                    if (distance > radius)
-                        continue;
+                if (px < 0 || px >= _textureWidth || py < 0 || py >= _textureHeight)
+                    continue;
 
-                    int px = centerX + x;
-                    int py = centerY + y;
+                int index = py * _textureWidth + px;
 
-                    if (px < 0 || px >= _textureWidth || py < 0 || py >= _textureHeight)
-                        continue;
+                byte oldAlpha = _pixels[index].a;
+                if (oldAlpha == 0) continue;
 
-                    int index = py * _textureWidth + px;
+                byte newAlpha = (byte)((oldAlpha * brushPixel.RemainingAlpha + 32768) >> 16);
+                if (newAlpha == oldAlpha) continue;
 
-                    if (_pixels[index].a == 0)
-                        continue;
+                _pixels[index].a = newAlpha;
 
-                    float normalizedDistance = distance / radius;
+                if (newAlpha == 0)
+                    _erasedPixelCount++;
 
-                    float softStart = 1f - brushSoftness;
-
-                    float falloff = Mathf.SmoothStep(0f, 1f, Mathf.Clamp01((1f - normalizedDistance) / brushSoftness));
-
-                    float eraseAmount = falloff * brushStrength;
-
-                    byte newAlpha = (byte)Mathf.RoundToInt(_pixels[index].a * (1f - eraseAmount));
-
-                    if (newAlpha == _pixels[index].a)
-                        continue;
-
-                    _pixels[index].a = newAlpha;
-                    changed = true;
-                }
+                changed = true;
             }
 
             if (changed)
-                ApplyPixels();
+                RequestApply();
 
             return changed;
         }
 
         public float GetErasedPercentage()
         {
-            if (_originalPixels == null || _pixels == null)
+            if (_originalPixelCount == 0)
                 return 0f;
 
-            int originalPixelCount = 0;
-            int erasedPixelCount = 0;
-
-            for (int i = 0; i < _originalPixels.Length; i++)
-            {
-                if (_originalPixels[i].a == 0)
-                    continue;
-
-                originalPixelCount++;
-
-                if (_pixels[i].a == 0)
-                    erasedPixelCount++;
-            }
-
-            if (originalPixelCount == 0)
-                return 0f;
-
-            return (float)erasedPixelCount / originalPixelCount * 100f;
-        }
-
-        public byte[] GetAlphaData()
-        {
-            byte[] alpha = new byte[_pixels.Length];
-
-            for (int i = 0; i < _pixels.Length; i++)
-                alpha[i] = _pixels[i].a;
-
-            return alpha;
-        }
-
-        public void LoadAlphaData(byte[] alpha)
-        {
-            if (alpha == null || alpha.Length != _pixels.Length)
-            {
-                ResetTexture();
-                return;
-            }
-
-            for (int i = 0; i < _pixels.Length; i++)
-                _pixels[i].a = alpha[i];
-
-            ApplyPixels();
+            return (float)_erasedPixelCount / _originalPixelCount * 100f;
         }
 
         public void ResetTexture()
         {
-            if (_originalPixels == null)
+            if (_originalSprite == null)
                 return;
 
-            _pixels = (Color32[])_originalPixels.Clone();
+            _pixels = _originalSprite.texture.GetPixels32();
+
+            CountOriginalPixels();
+
             ApplyPixels();
+            _pendingApply = false;
+        }
+
+        private void RequestApply()
+        {
+            _pendingApply = true;
+
+            if (Time.time - _lastApplyTime < applyInterval)
+                return;
+
+            ApplyPixels();
+        }
+
+        private void LateUpdate()
+        {
+            if (!_pendingApply)
+                return;
+
+            if (Time.time - _lastApplyTime >= applyInterval)
+                ApplyPixels();
         }
 
         private void ApplyPixels()
         {
             _runtimeTexture.SetPixels32(_pixels);
             _runtimeTexture.Apply(false);
+
+            _lastApplyTime = Time.time;
+            _pendingApply = false;
         }
 
         private void OnDestroy()

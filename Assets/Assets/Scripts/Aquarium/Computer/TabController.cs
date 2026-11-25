@@ -1,4 +1,5 @@
 using Assets.Scripts.Audio.SFX;
+using Assets.Scripts.Tutorial;
 using UnityEngine;
 using UnityEngine.UI;
 

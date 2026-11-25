@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Assets.Scripts.PlayerState;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class FacialExpressions : MonoBehaviour
 {
@@ -12,9 +13,17 @@ public class FacialExpressions : MonoBehaviour
     private float duration;
 
     private float curDuration;
+    private int curPriority;
     private bool finished = true;
 
+    private Emotion curEmotion;
+
+    private Emotion queuedEmotion;
+
     [SerializeField] private SpriteRenderer _face;
+    [SerializeField] private InteractionDetector _interactionDetector;
+
+    public readonly UnityEvent OnExpressible = new();
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
@@ -29,43 +38,70 @@ public class FacialExpressions : MonoBehaviour
     void Start()
     {
         DivingController.Instance.OnStateChanged.AddListener(SetExpression);
-        GetComponent<DamagedScript>().OnDamaged.AddListener(() => SetExpressionWithDuration(Emotion.HURT, 1f));
+        GetComponent<DamagedScript>().OnDamaged.AddListener(() => SetExpressionWithDuration(Emotion.HURT, 1f, 10));
+        
         _face.sprite = _expressions[Emotion.DEFAULT];
+        queuedEmotion = Emotion.DEFAULT;
+        curEmotion = Emotion.DEFAULT;
+       
+        _interactionDetector.OnInteractibleEntered.AddListener(() => SetExpression(Emotion.CURIOUS, 5));
+        _interactionDetector.OnInteractibleExited.AddListener(() => ResetPriorityUsingState(5));
     }
 
     public void SetExpression(PlayerState state)
     {
-        if(curDuration < duration)
-        {
-            return;
-        }
         switch (state)
         {
             case PlayerState.STEALTH:
-                _face.sprite = _expressions[Emotion.CURIOUS];
+                SetExpression(Emotion.CURIOUS);
                 break;
             case PlayerState.POUNCE:
-                _face.sprite = _expressions[Emotion.CURIOUS];
+                SetExpression(Emotion.CURIOUS);
                 break;
-            
+            case PlayerState.STUN:
+                SetExpressionWithDuration(Emotion.HURT, DivingPlayerStats.Instance.stunDuration, 10);
+                break;
             default:
-                _face.sprite = _expressions[Emotion.DEFAULT];
+                SetExpression(Emotion.DEFAULT);
                 break;
         }
     }
 
-    public void SetExpression(Emotion emotion) 
+    public void ResetPriority(int priority)
     {
-        if(curDuration < duration)
+        if(priority >= curPriority)
         {
-            return;
+            curPriority = -10;
         }
-        _face.sprite = _expressions[emotion];
+        SetExpression(queuedEmotion, 0);
+    }
+    public void ResetPriorityUsingState(int priority)
+    {
+        if(priority >= curPriority)
+        {
+            curPriority = -10;
+        }
+        SetExpression(DivingController.Instance.state);
     }
 
-    public void SetExpressionWithDuration(Emotion emotion, float duration)
+    public bool SetExpression(Emotion emotion, int priority = 0, bool setQueued = true) 
     {
+        if (priority < curPriority)
+        {
+            queuedEmotion = emotion;
+            return false;
+        }
+        queuedEmotion = setQueued ? curEmotion : queuedEmotion;
+        curPriority = priority;
+        curEmotion = emotion;
         _face.sprite = _expressions[emotion];
+        return true;
+    }
+
+    public void SetExpressionWithDuration(Emotion emotion, float duration, int priority)
+    {
+        if (!SetExpression(emotion, priority)) return;
+        
         curDuration = 0;
         this.duration = duration;
         finished = false;
@@ -75,8 +111,8 @@ public class FacialExpressions : MonoBehaviour
     {
         if(curDuration > duration && !finished)
         {
+            ResetPriority(10);
             finished = true;
-            SetExpression(DivingController.Instance.state);
         }
         if(curDuration > duration)
         {

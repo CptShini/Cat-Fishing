@@ -28,7 +28,7 @@ namespace Assets.Scripts.Fishies.Movement
         {
             if (!Catching) return;
             
-            _catchClock -= Time.unscaledDeltaTime * _patternSpeed;
+            _catchClock -= Time.deltaTime * _patternSpeed;
             if (_catchClock > 0f) return;
             
             NextMove(_currentMove.move);

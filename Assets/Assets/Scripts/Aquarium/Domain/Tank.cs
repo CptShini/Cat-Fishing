@@ -29,13 +29,6 @@ namespace Assets.Scripts.Aquarium.Domain
             }
         }
 
-        private byte[] _dirtTextureAlpha;
-        public byte[] DirtTextureAlpha
-        {
-            get => (byte[])_dirtTextureAlpha?.Clone();
-            set => _dirtTextureAlpha = (byte[])value.Clone();
-        }
-
         private float _entertainmentValue;
         public float Entertainment => _entertainmentValue * (1f - DirtinessFactor*DirtinessFactor);
 
@@ -76,8 +69,6 @@ namespace Assets.Scripts.Aquarium.Domain
         
         public void DayStarted()
         {
-            _dirtTextureAlpha = null;
-            
             _fishes.ForEach(f => f.DayStarted());
             RecalculateEntertainment();
             

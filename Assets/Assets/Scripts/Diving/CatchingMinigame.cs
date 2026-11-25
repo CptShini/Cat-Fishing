@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Assets.Scripts.Audio.SFX;
 using Assets.Scripts.Diving.Bars;
 using Assets.Scripts.Diving.DivingInventory;
@@ -6,6 +7,7 @@ using Assets.Scripts.Diving.Managers;
 using Assets.Scripts.Fishies.Domain;
 using Assets.Scripts.Fishies.Movement;
 using Assets.Scripts.PlayerState;
+using Assets.Scripts.Tutorial;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -36,6 +38,8 @@ public class CatchingMinigame : MonoBehaviour
     [SerializeField] private RawImage MovingBubbles;
     [SerializeField] private RawImage MovingBackground;
 
+    [SerializeField] private List<GameObject> toggledUI = new();
+
     private float contestThreshold = 5; // The value that contest must be to catch a fish succesfully
     private float fishAngle;
 
@@ -47,6 +51,7 @@ public class CatchingMinigame : MonoBehaviour
 
 
     public readonly UnityEvent<bool> OnEnded = new();
+    public readonly UnityEvent OnStarted = new();
 
     public readonly UnityEvent<Fish> OnWin = new();
 
@@ -58,6 +63,12 @@ public class CatchingMinigame : MonoBehaviour
             Destroy(gameObject);
         else
             Instance = this;
+    }
+
+    void Start()
+    {
+        OnStarted.AddListener(() => ToggleUI(false));
+        OnEnded.AddListener(_ => ToggleUI(true));
     }
 
     public void Init(Fish fish, FishCaughtMovement caughtMovement)
@@ -85,6 +96,7 @@ public class CatchingMinigame : MonoBehaviour
 
         SFXManager.Instance.Play(SFXId.BattleBGM);
         TimeManager.Instance.SetCatchingScaledTime(true);
+        OnStarted.Invoke();
     }
 
     public void Grab(Vector2 velocityVector)
@@ -131,6 +143,15 @@ public class CatchingMinigame : MonoBehaviour
             TimeManager.Instance.SetCatchingScaledTime(false);
         }
     }
+
+    private void ToggleUI(bool show)
+    {
+        foreach (var UIObject in toggledUI)
+        {
+            UIObject.SetActive(show);
+        }
+        
+    }
     
     private void Rotate()
     {
@@ -142,7 +163,7 @@ public class CatchingMinigame : MonoBehaviour
             Time.deltaTime * 500
         );
 
-        angleRad += Mathf.DeltaAngle(angleRad, newRotation);
+        angleRad += Mathf.DeltaAngle(angleRad, newRotation) + 360f;
 
         float wrappedRotation = (angleRad + 360f) % 360f;
         switch (flipped)
