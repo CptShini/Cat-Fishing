@@ -6838,7 +6838,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 510068387}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Slipstream 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8943,6 +8943,7 @@ Transform:
   - {fileID: 960904383}
   - {fileID: 700313424}
   - {fileID: 1460074594}
+  - {fileID: 1673687438}
   - {fileID: 792497594}
   m_Father: {fileID: 1073803191}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9103,7 +9104,7 @@ GameObject:
   - component: {fileID: 777920658}
   - component: {fileID: 777920660}
   - component: {fileID: 777920661}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: stream
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24815,6 +24816,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Slipstream
       objectReference: {fileID: 0}
+    - target: {fileID: 8081562920833523802, guid: 2e8177c7cfa94e4478f96a6d2635a5bc, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -26177,7 +26182,7 @@ GameObject:
   - component: {fileID: 1504344846}
   - component: {fileID: 1504344848}
   - component: {fileID: 1504344847}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: stream
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27752,6 +27757,92 @@ SpriteRenderer:
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3841827207070036887, guid: a1f5dd710e0e41c4ea3fbad66bc9efee, type: 3}
   m_PrefabInstance: {fileID: 880628907}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1673687437
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 751409321}
+    m_Modifications:
+    - target: {fileID: 813203339166617903, guid: cbeba69ed5ce0f6448212f4018c4d171, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 5.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 813203339166617903, guid: cbeba69ed5ce0f6448212f4018c4d171, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -17.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 813203339166617903, guid: cbeba69ed5ce0f6448212f4018c4d171, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 813203339166617903, guid: cbeba69ed5ce0f6448212f4018c4d171, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 813203339166617903, guid: cbeba69ed5ce0f6448212f4018c4d171, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 813203339166617903, guid: cbeba69ed5ce0f6448212f4018c4d171, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 813203339166617903, guid: cbeba69ed5ce0f6448212f4018c4d171, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 813203339166617903, guid: cbeba69ed5ce0f6448212f4018c4d171, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 813203339166617903, guid: cbeba69ed5ce0f6448212f4018c4d171, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 813203339166617903, guid: cbeba69ed5ce0f6448212f4018c4d171, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 1952099121969527549, guid: cbeba69ed5ce0f6448212f4018c4d171, type: 3}
+      propertyPath: m_Name
+      value: Bubbles
+      objectReference: {fileID: 0}
+    - target: {fileID: 4862659999458702977, guid: cbeba69ed5ce0f6448212f4018c4d171, type: 3}
+      propertyPath: CollisionModule.type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4862659999458702977, guid: cbeba69ed5ce0f6448212f4018c4d171, type: 3}
+      propertyPath: CollisionModule.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4862659999458702977, guid: cbeba69ed5ce0f6448212f4018c4d171, type: 3}
+      propertyPath: CollisionModule.collisionMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4862659999458702977, guid: cbeba69ed5ce0f6448212f4018c4d171, type: 3}
+      propertyPath: CollisionModule.m_Bounce.scalar
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4862659999458702977, guid: cbeba69ed5ce0f6448212f4018c4d171, type: 3}
+      propertyPath: CollisionModule.m_Dampen.scalar
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4862659999458702977, guid: cbeba69ed5ce0f6448212f4018c4d171, type: 3}
+      propertyPath: CollisionModule.m_EnergyLossOnCollision.scalar
+      value: 0.5
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: cbeba69ed5ce0f6448212f4018c4d171, type: 3}
+--- !u!4 &1673687438 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 813203339166617903, guid: cbeba69ed5ce0f6448212f4018c4d171, type: 3}
+  m_PrefabInstance: {fileID: 1673687437}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &1684243754 stripped
 Transform:
@@ -36409,6 +36500,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Slipstream
       objectReference: {fileID: 0}
+    - target: {fileID: 8081562920833523802, guid: 2e8177c7cfa94e4478f96a6d2635a5bc, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -38644,9 +38739,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.Managers.DivingManager
   oxygenBar: {fileID: 880628908}
-  dangerColor: {r: 0.8627451, g: 0.27450982, b: 0.49803922, a: 1}
-  defaultColor: {r: 0.5529412, g: 0.8705883, b: 1, a: 1}
-  dangerThreshold: 0.3
+  dangerColor: {r: 0, g: 0, b: 0, a: 0}
+  defaultColor: {r: 0, g: 0, b: 0, a: 0}
+  dangerThreshold: 0
 --- !u!1 &2039121641
 GameObject:
   m_ObjectHideFlags: 0
@@ -38656,7 +38751,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2039121642}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Slipstream 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
