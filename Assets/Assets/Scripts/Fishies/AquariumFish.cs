@@ -18,13 +18,18 @@ namespace Assets.Scripts.Fishies
         [SerializeField] private Image happinessImage;
 
         [Header("Happiness Sprites")]
-        [SerializeField] private Sprite sadSprite;
-        [SerializeField] private Sprite neutralSprite;
-        [SerializeField] private Sprite happySprite;
+        [SerializeField] private Sprite
+            loveSprite,
+            happySprite,
+            neutralSprite,
+            sadSprite,
+            cryingSprite;
 
         [Header("Happiness Thresholds")]
+        [SerializeField, Range(0, 10)] private int cryingMax = 2;
         [SerializeField, Range(0, 10)] private int sadMax = 4;
         [SerializeField, Range(0, 10)] private int neutralMax = 7;
+        [SerializeField, Range(0, 10)] private int happyMax = 9;
 
         private void Awake()
         {
@@ -61,12 +66,16 @@ namespace Assets.Scripts.Fishies
         {
             int happiness = Fish.Happiness;
 
-            if (happiness <= sadMax)
+            if (happiness <= cryingMax)
+                happinessImage.sprite = cryingSprite;
+            else if (happiness <= sadMax)
                 happinessImage.sprite = sadSprite;
             else if (happiness <= neutralMax)
                 happinessImage.sprite = neutralSprite;
-            else
+            else if (happiness <= happyMax)
                 happinessImage.sprite = happySprite;
+            else
+                happinessImage.sprite = loveSprite;
         }
 
         public void Hovering() => _hovering = true;
