@@ -15567,9 +15567,9 @@ MonoBehaviour:
     price: 20
   shopUpgradeItems:
   - itemSO: {fileID: 11400000, guid: 67ff7d0da0bc64e4b8fe61b0a0a8e46c, type: 2}
-    price: 5
+    price: 100
   - itemSO: {fileID: 11400000, guid: 50224f22ddfbb3146a6e044837094b3f, type: 2}
-    price: 10
+    price: 550
 --- !u!114 &1808507265
 MonoBehaviour:
   m_ObjectHideFlags: 0
