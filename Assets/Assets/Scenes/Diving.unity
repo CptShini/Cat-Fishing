@@ -6838,7 +6838,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 510068387}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Slipstream 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9103,7 +9103,7 @@ GameObject:
   - component: {fileID: 777920658}
   - component: {fileID: 777920660}
   - component: {fileID: 777920661}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: stream
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24815,6 +24815,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Slipstream
       objectReference: {fileID: 0}
+    - target: {fileID: 8081562920833523802, guid: 2e8177c7cfa94e4478f96a6d2635a5bc, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -26177,7 +26181,7 @@ GameObject:
   - component: {fileID: 1504344846}
   - component: {fileID: 1504344848}
   - component: {fileID: 1504344847}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: stream
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36409,6 +36413,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Slipstream
       objectReference: {fileID: 0}
+    - target: {fileID: 8081562920833523802, guid: 2e8177c7cfa94e4478f96a6d2635a5bc, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -38656,7 +38664,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2039121642}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Slipstream 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
