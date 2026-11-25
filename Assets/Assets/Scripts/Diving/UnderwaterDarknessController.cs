@@ -10,7 +10,7 @@ public class UnderwaterDarknessController : MonoBehaviour
 
     [Header("Depth Settings")]
     private float depthTopY = 14f;
-    private float depthBottomY = -45f; // slightly below center (Y = -65 bottom edge)
+    private float depthBottomY = -45f; // slightly below center (Y = -65 bottom surface)
 
     [Header("Darkness Settings")]
     private float maxDarkness = 0.95f;
@@ -37,7 +37,6 @@ public class UnderwaterDarknessController : MonoBehaviour
             darkness = maxDarkness;
 
         runtimeMaterial.SetFloat("_Darkness", darkness);
-        // Debug.Log("Darkness: " + darkness);
     }
 
     private void OnDestroy()
