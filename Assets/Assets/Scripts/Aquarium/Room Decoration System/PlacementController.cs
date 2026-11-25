@@ -417,8 +417,7 @@ public class PlacementController : MonoBehaviour
         }
 
         inventory.RemoveItem(selectedItem);
-
-        Debug.Log("Placed item: " + selectedItem.itemName);
+        
         OnPlaced.Invoke(selectedItem);
         SFXManager.Instance.Play(SFXId.PlacementSuccess);
 

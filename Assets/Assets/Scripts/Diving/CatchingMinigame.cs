@@ -7,9 +7,9 @@ using Assets.Scripts.Diving.Managers;
 using Assets.Scripts.Fishies.Domain;
 using Assets.Scripts.Fishies.Movement;
 using Assets.Scripts.PlayerState;
+using Assets.Scripts.Tutorial;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.InputSystem.Composites;
 using UnityEngine.UI;
 
 public class CatchingMinigame : MonoBehaviour
@@ -54,6 +54,8 @@ public class CatchingMinigame : MonoBehaviour
     public readonly UnityEvent OnStarted = new();
 
     public readonly UnityEvent<Fish> OnWin = new();
+
+    private bool _waitingForTutorial;
     
     void Awake()
     {
@@ -82,6 +84,16 @@ public class CatchingMinigame : MonoBehaviour
         wiggleTime = 0;
         wiggleRad = 0;
         
+        _waitingForTutorial = TutorialDivingUIController.Instance.ShowCatchingTutorial();
+        if (_waitingForTutorial) return;
+
+        StartMinigameAfterTutorial();
+    }
+
+    public void StartMinigameAfterTutorial()
+    {
+        _waitingForTutorial = false;
+
         SFXManager.Instance.Play(SFXId.BattleBGM);
         TimeManager.Instance.SetCatchingScaledTime(true);
         OnStarted.Invoke();
@@ -89,6 +101,9 @@ public class CatchingMinigame : MonoBehaviour
 
     public void Grab(Vector2 velocityVector)
     {
+        if (_waitingForTutorial)
+            return;
+
         playerContest = velocityVector;
         contestAngle = Vector2.Angle(playerContest, _movement.Direction);
         contestMod = Mathf.Pow(contestAngle / 180, inaccuracyPenalty);
@@ -190,6 +205,9 @@ public class CatchingMinigame : MonoBehaviour
 
     private void Update()
     {
+        if (_waitingForTutorial)
+            return;
+            
         if (DivingController.Instance.state != PlayerState.GRAB)
             return;
         

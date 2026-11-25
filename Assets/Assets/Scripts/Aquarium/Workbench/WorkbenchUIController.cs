@@ -1,3 +1,4 @@
+using Assets.Scripts.Tutorial;
 using UnityEngine;
 
 public class WorkbenchUIController : MonoBehaviour
@@ -45,6 +46,8 @@ public class WorkbenchUIController : MonoBehaviour
         placementController.EnterDecorationMode();
 
         PauseController.IsGamePaused = true;
+
+        TutorialUIController.Instance.ShowTutorial("Workbench");
     }
 
     public void Close()

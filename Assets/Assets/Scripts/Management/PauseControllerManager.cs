@@ -102,6 +102,18 @@ namespace Assets.Scripts.Management
             pauseMenu.SetActive(false);
         }
 
+        public void PauseForTutorial()
+        {
+            isPaused = true;
+            Time.timeScale = 0f;
+        }
+
+        public void ResumeAfterTutorial()
+        {
+            isPaused = false;
+            Time.timeScale = 1f;
+        }
+
         public void ShowPauseMenu()
         {
             HideAllMenus();

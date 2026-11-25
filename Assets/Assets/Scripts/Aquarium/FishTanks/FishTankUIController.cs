@@ -1,6 +1,7 @@
 using Assets.Scripts.Aquarium.Domain;
 using Assets.Scripts.Aquarium.FishTanks.CleaningMiniGame;
 using Assets.Scripts.Aquarium.FishTanks.Interaction;
+using Assets.Scripts.Tutorial;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -93,6 +94,8 @@ namespace Assets.Scripts.Aquarium.FishTanks
                 spawner.SpawnFish(fish);
 
             PauseController.IsGamePaused = true;
+
+            TutorialUIController.Instance.ShowTutorial("FishTank");
         }
 
         public void AddFish(TankFish fish, Vector2 mouseScreenPos)
@@ -156,7 +159,7 @@ namespace Assets.Scripts.Aquarium.FishTanks
                 count == 1
                 ? Color.blue
                 : count <= capacity 
-                    ? Color.black 
+                    ? Color.white 
                     : Color.red;
 
             UpdateEntertainmentText();

@@ -1,4 +1,5 @@
 using Assets.Scripts.Audio.SFX;
+using Assets.Scripts.Tutorial;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +10,9 @@ public class TabController : MonoBehaviour
 
     public Sprite activeTab;
     public Sprite inactiveTab;
+
+    [Header("Tutorials")]
+    [SerializeField] private string[] tutorialIds;
 
     void Start()
     {
@@ -25,5 +29,11 @@ public class TabController : MonoBehaviour
         pages[tabIndex].SetActive(true);
         tabImages[tabIndex].sprite = activeTab;
         SFXManager.Instance.Play(SFXId.ButtonClick);
+
+        // show tutorial for selected tab
+        if (tutorialIds != null && tabIndex < tutorialIds.Length && !string.IsNullOrEmpty(tutorialIds[tabIndex]))
+        {
+            TutorialUIController.Instance.ShowTutorial(tutorialIds[tabIndex]);
+        }
     }
 }
