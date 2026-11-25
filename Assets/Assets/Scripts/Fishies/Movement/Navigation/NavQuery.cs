@@ -2,7 +2,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace Assets.Scripts.Fishies.Navigation
+namespace Assets.Scripts.Fishies.Movement.Navigation
 {
     public static class NavQuery
     {

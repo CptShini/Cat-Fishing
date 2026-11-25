@@ -25,11 +25,12 @@ namespace Assets.Scripts.Fishies
 
         public void Init(TankFish fish)
         {
-            name = fish.Fish.Species.Name;
-            
             Fish = fish;
-            visuals.Init(fish.Fish.Species.Icon, Fish.Fish.RelativeWeight);
-            _movement.Init(fish.Fish.Species.Speed);
+            
+            name = $"{fish.Fish.Species.Name} ({fish.Fish.Weight:F1} KG)";
+            visuals.Init(fish.Fish.Species.Icon, fish.Fish.Size);
+            
+            _movement.Init(fish.Fish.Species.Speed, fish.Fish.Size);
             
             _movement.Wander();
             Fish.Fed.AddListener(UpdateHappinessText);
