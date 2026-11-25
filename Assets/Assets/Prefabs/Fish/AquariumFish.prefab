@@ -447,13 +447,10 @@ MonoBehaviour:
   visuals: {fileID: 9206399475325001486}
   happinessImage: {fileID: 4088444769428205860}
   loveSprite: {fileID: 21300000, guid: 7453e72195f88514cac7de5d57929769, type: 3}
-  happySprite: {fileID: 5698727231245740599, guid: af5a3ac767099d24abae606ad1aff1b9, type: 3}
+  happySprite: {fileID: 21300000, guid: af5a3ac767099d24abae606ad1aff1b9, type: 3}
   neutralSprite: {fileID: 21300000, guid: 9e5a31ff53ee7e14285ef01d85e6fd80, type: 3}
-  sadSprite: {fileID: -1022550169963798847, guid: 9137248fa6abcc84bacdb957fd8aabb4, type: 3}
-  cryingSprite: {fileID: -6564747268353837345, guid: 16fe2b5cc73b2c749a6b66e8d526dbe7, type: 3}
-  sadMax: 4
-  neutralMax: 7
-  happyMax: 9
+  sadSprite: {fileID: 21300000, guid: 9137248fa6abcc84bacdb957fd8aabb4, type: 3}
+  cryingSprite: {fileID: 21300000, guid: 16fe2b5cc73b2c749a6b66e8d526dbe7, type: 3}
 --- !u!114 &7517340754007288589
 MonoBehaviour:
   m_ObjectHideFlags: 0
