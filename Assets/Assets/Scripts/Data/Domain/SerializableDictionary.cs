@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Assets.Scripts.Data.Domain
@@ -9,6 +10,16 @@ namespace Assets.Scripts.Data.Domain
     {
         [SerializeField] private List<TKey> keys = new();
         [SerializeField] private List<TValue> values = new();
+
+        public SerializableDictionary() { }
+        
+        public SerializableDictionary(Dictionary<TKey, TValue> dictionary)
+        {
+            foreach (KeyValuePair<TKey, TValue> pair in dictionary)
+            {
+                Add(pair.Key, pair.Value);
+            }
+        }
         
         public void OnBeforeSerialize()
         {
@@ -37,6 +48,14 @@ namespace Assets.Scripts.Data.Domain
 
     public static class SerializableDictionaryExtensions
     {
+        public static Dictionary<TKey, TValue> ToDictionary<TKey, TValue>(
+            this SerializableDictionary<TKey, TValue> dictionary) =>
+            dictionary.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+
+        public static SerializableDictionary<TKey, TValue> ToSerializableDictionary<TKey, TValue>(
+            this Dictionary<TKey, TValue> dictionary) =>
+            new(dictionary);
+
         public static Dictionary<Guid, TResult> ToDictionary<TSource, TResult>(
             this SerializableDictionary<string, TSource> dic,
             Func<TSource, TResult> converter

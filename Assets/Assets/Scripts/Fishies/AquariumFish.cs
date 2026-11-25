@@ -1,7 +1,7 @@
 ﻿using Assets.Scripts.Aquarium.Domain;
 using Assets.Scripts.Fishies.Movement;
 using Assets.Scripts.Fishies.Visuals;
-using TMPro;
+using UnityEngine.UI;
 using UnityEngine;
 
 namespace Assets.Scripts.Fishies
@@ -15,7 +15,16 @@ namespace Assets.Scripts.Fishies
         private FishNormalMovement _movement;
         
         [SerializeField] private FishVisuals visuals;
-        [SerializeField] private TextMeshProUGUI happinessText;
+        [SerializeField] private Image happinessImage;
+
+        [Header("Happiness Sprites")]
+        [SerializeField] private Sprite sadSprite;
+        [SerializeField] private Sprite neutralSprite;
+        [SerializeField] private Sprite happySprite;
+
+        [Header("Happiness Thresholds")]
+        [SerializeField, Range(0, 10)] private int sadMax = 4;
+        [SerializeField, Range(0, 10)] private int neutralMax = 7;
 
         private void Awake()
         {
@@ -25,29 +34,40 @@ namespace Assets.Scripts.Fishies
 
         public void Init(TankFish fish)
         {
-            name = fish.Fish.Species.Name;
-            
             Fish = fish;
-            visuals.Init(fish.Fish.Species.Icon, Fish.Fish.RelativeWeight);
-            _movement.Init(fish.Fish.Species.Speed);
+            
+            name = $"{fish.Fish.Species.Name} ({fish.Fish.Weight:F1} KG)";
+            visuals.Init(fish.Fish.Species.Icon, fish.Fish.Size);
+            
+            _movement.Init(fish.Fish.Species.Speed, fish.Fish.Size);
             
             _movement.Wander();
-            Fish.Fed.AddListener(UpdateHappinessText);
+            Fish.Fed.AddListener(UpdateHappinessImage);
+            UpdateHappinessImage();
         }
 
         private void LateUpdate()
         {
-            if (happinessText.gameObject.activeSelf != _hovering)
+            if (happinessImage.gameObject.activeSelf != _hovering)
             {
-                happinessText.gameObject.SetActive(_hovering);
-                UpdateHappinessText();
+                happinessImage.gameObject.SetActive(_hovering);
+                UpdateHappinessImage();
             }
 
             _hovering = false;
         }
         
-        private void UpdateHappinessText() =>
-            happinessText.text = $"{Fish.Happiness}/10";
+        private void UpdateHappinessImage()
+        {
+            int happiness = Fish.Happiness;
+
+            if (happiness <= sadMax)
+                happinessImage.sprite = sadSprite;
+            else if (happiness <= neutralMax)
+                happinessImage.sprite = neutralSprite;
+            else
+                happinessImage.sprite = happySprite;
+        }
 
         public void Hovering() => _hovering = true;
 

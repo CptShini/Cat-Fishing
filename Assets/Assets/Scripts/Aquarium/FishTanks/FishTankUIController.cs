@@ -1,6 +1,7 @@
 using Assets.Scripts.Aquarium.Domain;
 using Assets.Scripts.Aquarium.FishTanks.CleaningMiniGame;
 using Assets.Scripts.Aquarium.FishTanks.Interaction;
+using Assets.Scripts.Tutorial;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -34,7 +35,6 @@ namespace Assets.Scripts.Aquarium.FishTanks
         [Space]
 
         [SerializeField] private SpriteEraser spriteEraser;
-        [SerializeField, Min(0f)] private float dirtinessReductionPerSecond = 0.5f;
         [SerializeField, Range(0f, 100f)] private float requiredCleanPercentage = 90f;
 
         [Space]
@@ -75,11 +75,7 @@ namespace Assets.Scripts.Aquarium.FishTanks
             IsOpen = true;
             interactionController.enabled = true;
 
-            byte[] savedAlpha = tank.Tank.DirtTextureAlpha;
-            if (savedAlpha == null)
-                spriteEraser.ResetTexture();
-            else
-                spriteEraser.LoadAlphaData(savedAlpha);
+            spriteEraser.ResetTexture();
 
             UpdateUpgradeUI();
             UpdateDirtinessVisual();
@@ -98,6 +94,8 @@ namespace Assets.Scripts.Aquarium.FishTanks
                 spawner.SpawnFish(fish);
 
             PauseController.IsGamePaused = true;
+
+            TutorialUIController.Instance.ShowTutorial("FishTank");
         }
 
         public void AddFish(TankFish fish, Vector2 mouseScreenPos)
@@ -116,7 +114,6 @@ namespace Assets.Scripts.Aquarium.FishTanks
                 return;
 
             _isFadingOut = false;
-            _currentTank.Tank.DirtTextureAlpha = spriteEraser.GetAlphaData();
 
             _prevTank = _currentTank;
             _currentTank = null;
@@ -162,7 +159,7 @@ namespace Assets.Scripts.Aquarium.FishTanks
                 count == 1
                 ? Color.blue
                 : count <= capacity 
-                    ? Color.black 
+                    ? Color.white 
                     : Color.red;
 
             UpdateEntertainmentText();
@@ -216,32 +213,25 @@ namespace Assets.Scripts.Aquarium.FishTanks
             UpdateUpgradeUI();
         }
 
+        // cleaning progress is based only on number of fully erased pixels and not time now
         private void OnCleanAtPosition(Vector2 worldPosition)
         {
             if (!_currentTank || !spriteEraser || _isFadingOut)
                 return;
 
-            bool erased = spriteEraser.EraseAt(worldPosition);
-            if (!erased) return;
+            if (!spriteEraser.EraseAt(worldPosition))
+                return;
 
             float cleanPercentage = spriteEraser.GetErasedPercentage();
-            if (cleanPercentage >= requiredCleanPercentage)
-            {
-                _isFadingOut = true;
-                _fadeTimer = 0f;
-                _fadeStartDirtiness = _currentTank.Tank.Dirtiness;
 
-                Debug.Log($"{_currentTank.Tank.Name} is fully cleaned!");
-
-                _currentTank.Tank.DirtTextureAlpha = spriteEraser.GetAlphaData();
-
+            if (cleanPercentage < requiredCleanPercentage)
                 return;
-            }
 
-            _currentTank.Tank.Dirtiness -= dirtinessReductionPerSecond * Time.deltaTime;
-            _currentTank.Tank.DirtTextureAlpha = spriteEraser.GetAlphaData();
+            _isFadingOut = true;
+            _fadeTimer = 0f;
+            _fadeStartDirtiness = _currentTank.Tank.Dirtiness;
 
-            UpdateDirtinessVisual();
+            Debug.Log($"{_currentTank.Tank.Name} is fully cleaned!");
         }
 
         private void UpdateDirtinessVisual()
@@ -274,7 +264,6 @@ namespace Assets.Scripts.Aquarium.FishTanks
             if (progress < 1f) return;
             
             _currentTank.Tank.Dirtiness = 0f;
-            _currentTank.Tank.DirtTextureAlpha = spriteEraser.GetAlphaData();
 
             _isFadingOut = false;
             UpdateDirtinessVisual();

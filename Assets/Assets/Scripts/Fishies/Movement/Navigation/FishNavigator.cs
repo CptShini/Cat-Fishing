@@ -8,7 +8,7 @@ using UnityEngine.Events;
 using Random = UnityEngine.Random;
 using Range = Assets.Scripts.Helpers.Range;
 
-namespace Assets.Scripts.Fishies.Navigation
+namespace Assets.Scripts.Fishies.Movement.Navigation
 {
     [RequireComponent(typeof(FishEyes))]
     public class FishNavigator : MonoBehaviour
@@ -57,14 +57,16 @@ namespace Assets.Scripts.Fishies.Navigation
             CurrentDirection = Random.onUnitCircle;
         }
 
-        public void Init(int biome, int speedStat)
+        public void Init(int biome, int speedStat, float size)
         {
             _areaMask = biome;
-            _arrivalDistanceTolerance = speedStat / 6f + 4f/3f;
+            _arrivalDistanceTolerance = (speedStat / 6f + 4f/3f) * size;
             _wanderDist.Min = _arrivalDistanceTolerance * 1.5f;
             _wanderDist.Max = _arrivalDistanceTolerance * 3f;
             _fleeDist.Min = _wanderDist.Min * 2f;
             _fleeDist.Max = _wanderDist.Max * 2f;
+
+            _eyes.Init(size);
         }
 
         private void Update()

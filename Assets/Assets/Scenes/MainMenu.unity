@@ -1476,7 +1476,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4899994335121518441, guid: 7a1c0add22ea0f640870120facc00645, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1177864763}
   m_SourcePrefab: {fileID: 100100000, guid: 7a1c0add22ea0f640870120facc00645, type: 3}
 --- !u!1 &555663868
 GameObject:
@@ -3115,6 +3118,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7062119056608550090, guid: 6816ab796a2565b43a2e45fd6da3f700, type: 3}
+      propertyPath: m_Transition
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7062119056608550090, guid: 6816ab796a2565b43a2e45fd6da3f700, type: 3}
+      propertyPath: m_TargetGraphic
+      value: 
+      objectReference: {fileID: 1465639830}
+    - target: {fileID: 7062119056608550090, guid: 6816ab796a2565b43a2e45fd6da3f700, type: 3}
       propertyPath: m_Colors.m_HighlightedColor.b
       value: 0.8862745
       objectReference: {fileID: 0}
@@ -3127,8 +3138,24 @@ PrefabInstance:
       value: 0.57254905
       objectReference: {fileID: 0}
     - target: {fileID: 7062119056608550090, guid: 6816ab796a2565b43a2e45fd6da3f700, type: 3}
+      propertyPath: m_SpriteState.m_PressedSprite
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7062119056608550090, guid: 6816ab796a2565b43a2e45fd6da3f700, type: 3}
+      propertyPath: m_SpriteState.m_HighlightedSprite
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7062119056608550090, guid: 6816ab796a2565b43a2e45fd6da3f700, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1314121183}
+    - target: {fileID: 7062119056608550090, guid: 6816ab796a2565b43a2e45fd6da3f700, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: PauseGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 7062119056608550090, guid: 6816ab796a2565b43a2e45fd6da3f700, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Assets.Scripts.Management.PauseControllerManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7115001625350117156, guid: 6816ab796a2565b43a2e45fd6da3f700, type: 3}
       propertyPath: m_text
@@ -4092,6 +4119,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1089703028}
   m_CullTransparentMesh: 1
+--- !u!1 &1177864762 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4899994335121518441, guid: 7a1c0add22ea0f640870120facc00645, type: 3}
+  m_PrefabInstance: {fileID: 493968200}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1177864763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1177864762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce8ea3c27cfb4e009819a1fdda985e2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Helpers.VersionCanvas
 --- !u!1 &1178382430
 GameObject:
   m_ObjectHideFlags: 0
@@ -4415,6 +4459,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 339324079282021160, guid: 1cffe70a477ed03439fad01738847eb3, type: 3}
   m_PrefabInstance: {fileID: 1305188992}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1314121183 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6560107243184117304, guid: 6816ab796a2565b43a2e45fd6da3f700, type: 3}
+  m_PrefabInstance: {fileID: 899965364}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 193a3311363fb5646b8786bcfde05d55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PauseControllerManager
 --- !u!1 &1322347636
 GameObject:
   m_ObjectHideFlags: 0

@@ -701,6 +701,7 @@ MonoBehaviour:
   - emotion: 2
     sprite: {fileID: -1299260655118287662, guid: d07b232b347d6324290af2d5274d55e6, type: 3}
   _face: {fileID: 6760478591923334611}
+  _interactionDetector: {fileID: 8966860717013098395}
 --- !u!1 &5409390633235530069
 GameObject:
   m_ObjectHideFlags: 0
@@ -1556,4 +1557,5 @@ MonoBehaviour:
   - {fileID: 6333043902839386086}
   - {fileID: 6409437977860642128}
   - {fileID: 7520991533647727253}
+  vignetteAnimator: {fileID: 0}
   activePaws: 0

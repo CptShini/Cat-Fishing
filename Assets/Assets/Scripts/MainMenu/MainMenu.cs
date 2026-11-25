@@ -38,7 +38,13 @@ namespace Assets.Scripts.MainMenu
         public void Play()
         {
             if (SaveManager.Instance.CurrentSave == null)
+            {
                 SaveManager.Instance.StartNew("Default");
+                SFXManager.Instance.Play(SFXId.InventoryFull); //different sound
+                GameManager.Instance.ChangeScene(Scenes.Letter, "...");
+                return;
+
+            }
 
             SFXManager.Instance.Play(SFXId.OpeningDoor);
             GameManager.Instance.ChangeScene(Scenes.Aquarium, "Going to aquarium...");
