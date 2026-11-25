@@ -9946,7 +9946,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07f2d6f3da1b077479bfa51ad1d23866, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  feedingPrice: 5
+  feedingPrice: 1
   panel: {fileID: 1702940995}
   tankNameText: {fileID: 1645511638}
   tankCapacityText: {fileID: 1374727137}
