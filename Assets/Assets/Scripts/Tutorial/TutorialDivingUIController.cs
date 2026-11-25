@@ -1,4 +1,3 @@
-using Assets.Scripts.Data;
 using Assets.Scripts.Data.Domain;
 using Assets.Scripts.Data.Persistence;
 using UnityEngine;
@@ -6,18 +5,29 @@ using Assets.Scripts.Management;
 
 public class TutorialDivingUIController : MonoBehaviour, IDataPersistence
 {
+    public static TutorialDivingUIController Instance { get; private set; }
+    
     [SerializeField] private GameObject
-    tutorialPopup,
-    catchingTutorialPopup;
-
-
+        tutorialPopup,
+        catchingTutorialPopup;
+    
     private bool _hasReadTutorial;
     private bool _hasReadCatchingTutorial;
 
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+    }
+    
     public void LoadData(GameData data)
     {
         _hasReadTutorial = data.Tutorials.TryGetValue("Diving", out bool read) && read;
-
         _hasReadCatchingTutorial = data.Tutorials.TryGetValue("CatchingMinigame", out bool catchingRead) && catchingRead;
     }
 
@@ -29,19 +39,16 @@ public class TutorialDivingUIController : MonoBehaviour, IDataPersistence
 
     private void Start()
     {
-        if (!_hasReadTutorial)
-        {
-            tutorialPopup.SetActive(true);
-            PauseControllerManager.Instance.PauseForTutorial();
-        }
+        if (_hasReadTutorial) return;
+        
+        tutorialPopup.SetActive(true);
+        PauseControllerManager.Instance.PauseForTutorial();
     }
 
     public void CloseTutorial()
     {
         tutorialPopup.SetActive(false);
         _hasReadTutorial = true;
-
-        SaveTutorialProgress();
 
         PauseControllerManager.Instance.ResumeAfterTutorial();
     }
@@ -60,16 +67,6 @@ public class TutorialDivingUIController : MonoBehaviour, IDataPersistence
         catchingTutorialPopup.SetActive(false);
         _hasReadCatchingTutorial = true;
 
-        SaveTutorialProgress();
-
         CatchingMinigame.Instance.StartMinigameAfterTutorial();
-    }
-
-    private void SaveTutorialProgress()
-    {
-        DataPersistenceManager dpm = FindFirstObjectByType<DataPersistenceManager>();
-
-        dpm.SaveGameToData();
-        SaveManager.Instance.Save();
     }
 }

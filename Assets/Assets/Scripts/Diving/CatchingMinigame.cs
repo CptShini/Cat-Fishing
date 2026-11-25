@@ -51,7 +51,6 @@ public class CatchingMinigame : MonoBehaviour
     public readonly UnityEvent<Fish> OnWin = new();
 
     private bool _waitingForTutorial;
-    private TutorialDivingUIController TutorialDivingUIControllerReference;
     
     void Awake()
     {
@@ -74,12 +73,8 @@ public class CatchingMinigame : MonoBehaviour
         wiggleTime = 0;
         wiggleRad = 0;
         
-
-        TutorialDivingUIControllerReference = FindFirstObjectByType<TutorialDivingUIController>();
-        _waitingForTutorial = TutorialDivingUIControllerReference.ShowCatchingTutorial();
-
-        if (_waitingForTutorial)
-            return;
+        _waitingForTutorial = TutorialDivingUIController.Instance.ShowCatchingTutorial();
+        if (_waitingForTutorial) return;
 
         StartMinigameAfterTutorial();
     }
