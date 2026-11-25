@@ -81,13 +81,14 @@ public class BodyScript : MonoBehaviour
 
         _body.transform.rotation = Quaternion.Euler(0,0, newAngle);  
         
-        CheckFlip();
+        //CheckFlip();
     }
 
     private void CheckFlip()
     {
         float curRotation = _body.transform.rotation.eulerAngles.z;
         float wrappedRotation = (curRotation + 360) % 360;
+
         switch (_flipped)
         {
             case false when wrappedRotation is > 90f and <= 268f:

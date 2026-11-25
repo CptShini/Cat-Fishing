@@ -6,7 +6,7 @@ namespace Assets.Scripts.Diving.Bars
 {
     public class StatBar : MonoBehaviour
     {
-        [SerializeField] protected Image foreground;
+        [SerializeField] public Image foreground;
         [SerializeField] protected bool filledImage = true;
         [SerializeField] protected bool vertical = true;
         protected RectTransform rt;
@@ -26,7 +26,7 @@ namespace Assets.Scripts.Diving.Bars
         
         protected float _currentValue;
         protected float _minValue;
-        protected float MaxVal { get; private set; }
+        public float MaxVal { get; private set; }
 
         protected float maxLength;
         protected float curLength;
@@ -44,6 +44,7 @@ namespace Assets.Scripts.Diving.Bars
             _currentValue = newVal < 0 ? maxVal : newVal;
             OnValueChanged();
         }
+
         
         public void SetMinValue(float minVal) => _minValue = minVal;
 

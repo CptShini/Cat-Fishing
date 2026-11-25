@@ -15,10 +15,14 @@ namespace Assets.Scripts.Data.Domain.TankDecor
         [field: SerializeField]
         public string Name;
 
+        [field: SerializeField]
+        public TankDecorationPlacementType placementType;
+
         // --- Visuals ---
 
         [field: SerializeField, Header("Visuals")]
         public Sprite Icon;
+        public Sprite IconInFishTank;
 
         // --- Stats ---
 
