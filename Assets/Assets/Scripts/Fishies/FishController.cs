@@ -13,7 +13,7 @@ namespace Assets.Scripts.Fishies
         public Fish Fish { get; private set; }
         
         private FishNormalMovement _normalMovement;
-        private FishCaughtMovement _caughtMovement;
+        public FishCaughtMovement CaughtMovement { get; private set; }
 
         [SerializeField] private FishVisuals visuals;
         [SerializeField] private FishSightHandler sightHandler;
@@ -25,10 +25,10 @@ namespace Assets.Scripts.Fishies
             perceptionHandler.OnDetectPlayer.AddListener(Flee);
             
             _normalMovement = GetComponent<FishNormalMovement>();
-            _caughtMovement = GetComponent<FishCaughtMovement>();
+            CaughtMovement = GetComponent<FishCaughtMovement>();
             
             _normalMovement.MovementDone.AddListener(Wander);
-            _caughtMovement.OnLose.AddListener(Flee);
+            CaughtMovement.OnLose.AddListener(Flee);
         }
 
         public void Init(FishSpecies species)
@@ -36,10 +36,10 @@ namespace Assets.Scripts.Fishies
             Fish = new(species);
 
             name = $"{species.Name} ({Fish.Weight:F1} KG)";
-            visuals.Init(species.Icon, Fish.RelativeWeight);
+            visuals.Init(species.Icon, Fish.Size);
             
-            _normalMovement.Init(species.Speed, species.Biome);
-            _caughtMovement.Init(species.CatchPattern, 1f);
+            _normalMovement.Init(species.Speed, Fish.Size, species.Biome);
+            CaughtMovement.Init(species.CatchPattern, 1f);
             
             sightHandler.Init(species.Reaction, species.Sight);
             perceptionHandler.Init(species.Reaction, species.Perception);
@@ -62,13 +62,13 @@ namespace Assets.Scripts.Fishies
         public void Catch()
         {
             ToggleSystems(true);
-            _caughtMovement.Catch();
+            CaughtMovement.Catch();
         }
 
         private void ToggleSystems(bool gettingCaught)
         {
             _normalMovement.enabled = !gettingCaught;
-            _caughtMovement.enabled = gettingCaught;
+            CaughtMovement.enabled = gettingCaught;
             sightHandler.enabled = !gettingCaught;
             perceptionHandler.enabled = !gettingCaught;
         }

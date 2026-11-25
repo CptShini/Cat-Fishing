@@ -1,5 +1,5 @@
 ﻿using System.Collections;
-using Assets.Scripts.Audio;
+using Assets.Scripts.Audio.Music;
 using Assets.Scripts.Data;
 using Assets.Scripts.Data.Persistence;
 using UnityEngine;
@@ -70,6 +70,7 @@ namespace Assets.Scripts.Management
             Transitioning = true;
             
             _dpm.SaveGameToData();
+            SaveManager.Instance.Save();
             
             sceneTransition.FadeOut(text);
             musicPlayer.StopTrack(sceneTransitionTime);

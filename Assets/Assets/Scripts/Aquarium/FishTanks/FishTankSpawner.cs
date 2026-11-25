@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Assets.Scripts.Data.Domain.Aquarium;
+using Assets.Scripts.Aquarium.Domain;
 using Assets.Scripts.Fishies;
 using UnityEngine;
 using Range = Assets.Scripts.Helpers.Range;
@@ -17,12 +17,17 @@ namespace Assets.Scripts.Aquarium.FishTanks
 
         public bool SpawnFish(TankFish fish)
         {
-            if (_fishes.ContainsKey(fish.Fish.Id))
-                return false;
-            
             float x = transform.position.x + spawnPosRangeX.Random();
             float y = transform.position.y + spawnPosRangeY.Random();
             Vector2 spawnPos = new(x, y);
+            return SpawnFish(fish, spawnPos);
+        }
+        
+        public bool SpawnFish(TankFish fish, Vector2 spawnPos)
+        {
+            if (_fishes.ContainsKey(fish.Fish.Id))
+                return false;
+            
             GameObject fishObject = Instantiate(fishPrefab, spawnPos, Quaternion.identity, transform);
             
             AquariumFish aquariumFish = fishObject.GetComponent<AquariumFish>();

@@ -1,3 +1,4 @@
+using Assets.Scripts.Tutorial;
 using UnityEngine;
 
 public class WorkbenchUIController : MonoBehaviour
@@ -9,6 +10,8 @@ public class WorkbenchUIController : MonoBehaviour
     
     [SerializeField] private DecorationGridVisuals gridVisuals;
     [SerializeField] private PlacementController placementController;
+
+    [SerializeField] private GameObject inventoryPanel;
 
     public bool IsOpen { get; private set; }
     
@@ -23,6 +26,16 @@ public class WorkbenchUIController : MonoBehaviour
         IsOpen = false;
     }
 
+    public void HideInventory()
+    {
+        inventoryPanel.SetActive(false);
+    }
+
+    public void ShowInventory()
+    {
+        inventoryPanel.SetActive(true);
+    }
+
     public void Open()
     {
         roomCameraZoom.EnterDecorationMode();
@@ -33,13 +46,15 @@ public class WorkbenchUIController : MonoBehaviour
         placementController.EnterDecorationMode();
 
         PauseController.IsGamePaused = true;
+
+        TutorialUIController.Instance.ShowTutorial("Workbench");
     }
 
     public void Close()
     {
         if (placementController != null && placementController.IsPlacingItem)
         {
-            return;
+            placementController.CancelPlacement();
         }
 
         placementController.ExitDecorationMode();

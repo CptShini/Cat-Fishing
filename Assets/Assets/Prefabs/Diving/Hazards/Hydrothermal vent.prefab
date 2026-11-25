@@ -113,6 +113,7 @@ GameObject:
   - component: {fileID: 6683443964317262769}
   - component: {fileID: 8397904770855893289}
   - component: {fileID: 8796944150181520512}
+  - component: {fileID: 2269675556868966081}
   m_Layer: 14
   m_Name: Hydrothermal vent
   m_TagString: Untagged
@@ -343,6 +344,22 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2269675556868966081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 308679117209592499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: a98c17ec
 --- !u!1 &8072082361545599670
 GameObject:
   m_ObjectHideFlags: 0

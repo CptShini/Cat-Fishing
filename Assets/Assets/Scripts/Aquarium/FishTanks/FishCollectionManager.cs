@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
+using Assets.Scripts.Aquarium.Domain;
 using Assets.Scripts.Data.Domain;
-using Assets.Scripts.Data.Domain.Aquarium;
 using Assets.Scripts.Data.Persistence;
 using Assets.Scripts.Fishies.Domain;
 using UnityEngine;
@@ -36,6 +36,19 @@ namespace Assets.Scripts.Aquarium.FishTanks
         public void Add(TankFish fish)
         {
             _collectedFish.Add(fish.Fish.Id, fish);
+            CollectionChanged.Invoke();
+        }
+
+        public void AddRange(IReadOnlyList<TankFish> fishes)
+        {
+            if (fishes.Count == 0)
+                return;
+            
+            foreach (TankFish fish in fishes)
+            {
+                _collectedFish.Add(fish.Fish.Id, fish);
+            }
+            
             CollectionChanged.Invoke();
         }
 

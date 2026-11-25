@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d1c169a328aed5439fc26bea07ac6fd, type: 3}
+  m_Name: 3 - CatCharm
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Data.Domain.TankDecor.TankDecorationType
+  <Id>k__BackingField: 3
+  Name: Cat Charm
+  placementType: 1
+  Icon: {fileID: 6540074883771016195, guid: fb01451937ce8c24083d8d4692141618, type: 3}
+  IconInFishTank: {fileID: 6512550194705085344, guid: d84411cbad79b524287c7db8e398bece, type: 3}
+  EntertainmentValue: 1
+  Weight: 2

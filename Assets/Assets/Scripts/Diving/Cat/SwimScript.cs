@@ -1,4 +1,7 @@
+using System.Collections.Generic;
 using Assets.Scripts.Audio;
+using Assets.Scripts.Audio.SFX;
+using Assets.Scripts.Diving.Hazards;
 using Assets.Scripts.PlayerState;
 using UnityEngine;
 using UnityEngine.Events;
@@ -6,7 +9,7 @@ using static UnityEngine.InputSystem.InputAction;
 
 
 
-public class SwimScript : MonoBehaviour
+public class SwimScript : MonoBehaviour, IEnvironmentAffectedMovement
 {
 
     [SerializeField] Animator animator;
@@ -15,6 +18,7 @@ public class SwimScript : MonoBehaviour
     private float acceleration;
     public readonly UnityEvent<Vector2, float> OnSwim = new();
     public readonly UnityEvent<Vector2> OnStealth = new();
+    private List<EnvironmentalMovementAffector> affectors = new();
 
     private Vector2 velocityVector;
 
@@ -63,6 +67,8 @@ public class SwimScript : MonoBehaviour
     private void Swim(Vector2 direction)
     {
         Vector2 targetVelocity = direction.normalized * swimSpeed;
+        Vector2 environmentVelocity = CalculateVelocityChange();
+
         if (!stealth && swimSpeed != 0)
         {
             OnSwim.Invoke(direction, 250);
@@ -75,15 +81,15 @@ public class SwimScript : MonoBehaviour
 
         Vector2 newVelocity = Vector2.MoveTowards(
             _rb.linearVelocity,
-            targetVelocity,
+            targetVelocity + environmentVelocity,
             currentAcceleration * Time.deltaTime
         ); 
         _rb.linearVelocity = new Vector3(newVelocity.x, newVelocity.y, 0);
 
         // Play swimming audio only when actually moving
-        if (!stealth && _rb.linearVelocity.magnitude > 0.1f)
+        if (!stealth && direction != Vector2.zero)
         {
-            AudioManager.Instance.Play(AudioId.CatSwim);
+            SFXManager.Instance.Play(SFXId.CatSwim);
             bool isSwimming = true;
             float speed = 1f;
             animator.SetBool("swimming", isSwimming);
@@ -95,7 +101,7 @@ public class SwimScript : MonoBehaviour
             float speed = .4f;
             animator.SetBool("swimming", isSwimming);
             animator.SetFloat("speed", speed);
-            AudioManager.Instance.FadeOutLoop(AudioId.CatSwim);
+            SFXManager.Instance.FadeOutLoop(SFXId.CatSwim);
         }
     }
 
@@ -106,4 +112,25 @@ public class SwimScript : MonoBehaviour
             Swim(velocityVector);
         }
     }
+
+     public void AddAffector(EnvironmentalMovementAffector affector)
+    {
+        affectors.Add(affector);
+    }
+
+    public void RemoveAffector(EnvironmentalMovementAffector affector)
+    {
+        affectors.Remove(affector);
+    }
+
+    public Vector2 CalculateVelocityChange()
+    {
+        Vector2 velocity = new();
+        foreach (var affector in affectors)
+        {
+            velocity += affector.Velocity;
+        }
+        return velocity;
+    }
+
 }

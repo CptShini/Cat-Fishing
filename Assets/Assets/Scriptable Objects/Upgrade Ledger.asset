@@ -14,67 +14,67 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Upgrades.UpgradeLedger
   <Speed>k__BackingField:
   - Stat: 3
-    Price: 10
+    Price: 5
   - Stat: 4
     Price: 30
   - Stat: 5
-    Price: 65
+    Price: 100
   - Stat: 6.5
-    Price: 250
+    Price: 300
   - Stat: 8
-    Price: 400
+    Price: 500
   - Stat: 10
-    Price: 0
+    Price: 1000
   <PounceSpeed>k__BackingField:
-  - Stat: 10
-    Price: 10
-  - Stat: 12
+  - Stat: 5
+    Price: 15
+  - Stat: 6.5
     Price: 30
-  - Stat: 14
+  - Stat: 8
     Price: 65
-  - Stat: 16
+  - Stat: 10
     Price: 250
-  - Stat: 18
+  - Stat: 14
     Price: 400
   - Stat: 20
-    Price: 0
+    Price: 600
   <ClawStrength>k__BackingField:
   - Stat: 3
-    Price: 10
+    Price: 20
   - Stat: 6
-    Price: 30
+    Price: 50
   - Stat: 9
-    Price: 65
+    Price: 100
   - Stat: 12
     Price: 250
   - Stat: 15
     Price: 400
   - Stat: 20
-    Price: 0
+    Price: 1000
   <OxygenCapacity>k__BackingField:
   - Stat: 80
-    Price: 10
+    Price: 5
   - Stat: 100
-    Price: 30
+    Price: 25
   - Stat: 120
     Price: 65
   - Stat: 150
-    Price: 250
+    Price: 150
   - Stat: 200
-    Price: 400
+    Price: 300
   - Stat: 300
-    Price: 0
+    Price: 500
   <CarryingCapacity>k__BackingField:
   - Stat: 25
-    Price: 10
+    Price: 15
   - Stat: 50
-    Price: 30
+    Price: 35
   - Stat: 100
-    Price: 65
+    Price: 70
   - Stat: 200
-    Price: 250
-  - Stat: 300
-    Price: 400
+    Price: 200
   - Stat: 500
-    Price: 0
+    Price: 300
+  - Stat: 1000
+    Price: 1000
   <MinimapPrice>k__BackingField: 100

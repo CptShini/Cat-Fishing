@@ -15,38 +15,38 @@ MonoBehaviour:
   UpMoves: []
   UpRightMoves:
   - move: 7
-    duration: 0.4
+    duration: 0.8
     weight: 2
   - move: 3
-    duration: 0.4
+    duration: 0.8
     weight: 1
   - move: 1
-    duration: 1.5
+    duration: 1.9
     weight: 1
   RightMoves:
   - move: 1
-    duration: 1.5
+    duration: 1.9
     weight: 1
   DownRightMoves:
   - move: 2
-    duration: 0.4
+    duration: 0.8
     weight: 1
   DownMoves: []
   DownLeftMoves:
   - move: 3
-    duration: 0.4
+    duration: 0.8
     weight: 2
   - move: 7
-    duration: 0.4
+    duration: 0.8
     weight: 1
   - move: 5
-    duration: 1.5
+    duration: 1.9
     weight: 1
   LeftMoves:
   - move: 5
-    duration: 1.5
+    duration: 1.9
     weight: 1
   UpLeftMoves:
   - move: 6
-    duration: 0.4
+    duration: 0.8
     weight: 1

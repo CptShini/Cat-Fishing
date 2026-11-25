@@ -4,6 +4,8 @@
     {
         MainMenu = 0,
         Aquarium = 1,
-        Diving = 2
+        Diving = 2,
+        DailyReport = 3,
+        Letter = 4
     }
 }

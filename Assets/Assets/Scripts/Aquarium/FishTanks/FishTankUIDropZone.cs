@@ -1,5 +1,5 @@
+using Assets.Scripts.Aquarium.Domain;
 using Assets.Scripts.Aquarium.FishTanks.FishInventory;
-using Assets.Scripts.Data.Domain.Aquarium;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -12,7 +12,7 @@ namespace Assets.Scripts.Aquarium.FishTanks
             TankFish fish = FishInventorySlot.DraggedFish;
             if (fish == null) return;
             
-            FishTankUIController.Instance.AddFish(fish);
+            FishTankUIController.Instance.AddFish(fish, eventData.position);
             FishCollectionManager.Instance.Remove(fish);
         }
     }

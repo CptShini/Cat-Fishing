@@ -6,7 +6,10 @@ namespace Assets.Scripts.Diving.Bars
 {
     public class StatBar : MonoBehaviour
     {
-        [SerializeField] private Image foreground;
+        [SerializeField] public Image foreground;
+        [SerializeField] protected bool filledImage = true;
+        [SerializeField] protected bool vertical = true;
+        protected RectTransform rt;
         
         public float CurrentValue
         {
@@ -21,9 +24,19 @@ namespace Assets.Scripts.Diving.Bars
         public readonly UnityEvent<float, float> ValueChanged = new();
         public readonly UnityEvent BarEmpty = new();
         
-        private float _currentValue;
-        private float _minValue;
-        protected float MaxVal { get; private set; }
+        protected float _currentValue;
+        protected float _minValue;
+        public float MaxVal { get; private set; }
+
+        protected float maxLength;
+        protected float curLength;
+
+        void Awake()
+        {
+            rt = foreground.gameObject.GetComponent<RectTransform>();
+            maxLength = vertical ? rt.sizeDelta.y : rt.sizeDelta.x;
+            curLength = maxLength;
+        }
 
         public void SetMaxValue(float maxVal, float newVal = -1f)
         {
@@ -31,6 +44,7 @@ namespace Assets.Scripts.Diving.Bars
             _currentValue = newVal < 0 ? maxVal : newVal;
             OnValueChanged();
         }
+
         
         public void SetMinValue(float minVal) => _minValue = minVal;
 
@@ -39,12 +53,25 @@ namespace Assets.Scripts.Diving.Bars
             if (_currentValue <= _minValue) BarEmpty.Invoke();
             
             _currentValue = Mathf.Clamp(_currentValue, _minValue, MaxVal);
-            UpdateFill();
+
+            if (filledImage)
+            {
+                UpdateFill();
+            }
+            else
+            {
+                UpdateSliced();
+            }           
             
             ValueChanged.Invoke(_currentValue, MaxVal);
         }
         
-        private void UpdateFill() =>
+        protected virtual void UpdateFill() =>
             foreground.fillAmount = _currentValue / MaxVal;
+        protected virtual void UpdateSliced()
+        {
+            curLength = maxLength * (CurrentValue / MaxVal);
+            rt.sizeDelta = vertical ? new Vector2(rt.sizeDelta.x, curLength) : new Vector2(curLength, rt.sizeDelta.y);
+        }
     }
 }

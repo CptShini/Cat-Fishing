@@ -1,4 +1,4 @@
-using Assets.Scripts.Audio;
+using Assets.Scripts.Audio.SFX;
 using Assets.Scripts.Data;
 using Assets.Scripts.Data.Persistence;
 using Assets.Scripts.Management;
@@ -38,13 +38,19 @@ namespace Assets.Scripts.MainMenu
         public void Play()
         {
             if (SaveManager.Instance.CurrentSave == null)
+            {
                 SaveManager.Instance.StartNew("Default");
+                SFXManager.Instance.Play(SFXId.InventoryFull); //different sound
+                GameManager.Instance.ChangeScene(Scenes.Letter, "...");
+                return;
 
-            AudioManager.Instance.Play(AudioId.OpeningDoor);
+            }
+
+            SFXManager.Instance.Play(SFXId.OpeningDoor);
             GameManager.Instance.ChangeScene(Scenes.Aquarium, "Going to aquarium...");
         }
         
-        public void ButtonClickSound() => AudioManager.Instance.Play(AudioId.ButtonClick);
+        public void ButtonClickSound() => SFXManager.Instance.Play(SFXId.ButtonClick);
 
         public void Quit() => Application.Quit();
     }

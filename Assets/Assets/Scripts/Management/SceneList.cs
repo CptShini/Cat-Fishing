@@ -11,7 +11,9 @@ namespace Assets.Scripts.Management
         [SerializeField] private SceneInfo 
             mainMenu,
             aquarium,
-            diving;
+            diving,
+            dailyReport,
+            letter;
 
         public SceneInfo GetSceneInfo(Scenes scene) =>
             scene switch
@@ -19,6 +21,8 @@ namespace Assets.Scripts.Management
                 Scenes.MainMenu => mainMenu,
                 Scenes.Aquarium => aquarium,
                 Scenes.Diving => diving,
+                Scenes.DailyReport => dailyReport,
+                Scenes.Letter => letter,
                 _ => throw new ArgumentOutOfRangeException(nameof(scene), scene, null)
             };
 
@@ -29,6 +33,8 @@ namespace Assets.Scripts.Management
                 currentBuildIndex == mainMenu.BuildIndex ? mainMenu :
                 currentBuildIndex == aquarium.BuildIndex ? aquarium :
                 currentBuildIndex == diving.BuildIndex ? diving :
+                currentBuildIndex == dailyReport.BuildIndex ? dailyReport :
+                currentBuildIndex == letter.BuildIndex ? letter :
                 throw new ArgumentOutOfRangeException(nameof(currentBuildIndex), currentBuildIndex, null);
         }
     }

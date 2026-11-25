@@ -1,16 +1,19 @@
+using System.Collections.Generic;
+using System.Linq;
 using Assets.Scripts.Aquarium.FishTanks;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class InteractionDetector : MonoBehaviour
 {
-    private IInteractable interactableInRange = null;
-    public GameObject interactionIcon;
+    [SerializeField] private GameObject interactionIcon;
+    
+    private readonly Dictionary<IInteractable, Transform> _interactableList = new();
 
-    void Start()
-    {
-        interactionIcon.SetActive(false);
-    }
+    public readonly UnityEvent OnInteractibleEntered = new();
+    public readonly UnityEvent OnInteractibleExited = new();
+
 
     public void OnInteract(InputAction.CallbackContext context)
     {
@@ -20,55 +23,62 @@ public class InteractionDetector : MonoBehaviour
         if (CloseCurrentUI())
             return;
 
-        interactableInRange?.Interact();
-    }
-
-    public void OnEscape(InputAction.CallbackContext context)
-    {
-        if (!context.performed)
-            return;
-            
-        CloseCurrentUI();
-    }
-
-    private bool CloseCurrentUI()
-    {
-        if (FishTankUIController.Instance != null && FishTankUIController.Instance.IsOpen)
-        {
-            FishTankUIController.Instance.Close();
-            return true;
-        }
-
-        if (WorkbenchUIController.Instance != null && WorkbenchUIController.Instance.IsOpen)
-        {
-            WorkbenchUIController.Instance.Close();
-            return true;
-        }
-
-        if (ComputerUIController.Instance != null && ComputerUIController.Instance.IsOpen)
-        {
-            ComputerUIController.Instance.Close();
-            return true;
-        }
-
-        return false;
+        _interactableList
+            .OrderBy(kvp => Vector2.Distance(transform.position, kvp.Value.position))
+            .FirstOrDefault()
+            .Key?
+            .Interact();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.TryGetComponent(out IInteractable interactable) && interactable.CanInteract())
+        if (
+            !collision.TryGetComponent(out IInteractable interactable) || 
+            !interactable.CanInteract() ||
+            !_interactableList.TryAdd(interactable, collision.transform)
+        ) return;
+        
+        if (_interactableList.Count == 1) 
         {
-            interactableInRange = interactable;
+            OnInteractibleEntered.Invoke();
             interactionIcon.SetActive(true);
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.TryGetComponent(out IInteractable interactable) && interactable == interactableInRange)
+        if (
+            !collision.TryGetComponent(out IInteractable interactable) ||
+            !_interactableList.Remove(interactable)
+        ) return;
+
+        if (_interactableList.Count == 0) 
         {
-            interactableInRange = null;
+            OnInteractibleExited.Invoke();
             interactionIcon.SetActive(false);
         }
+    }
+    
+    private static bool CloseCurrentUI()
+    {
+        if (FishTankUIController.Instance && FishTankUIController.Instance.IsOpen)
+        {
+            FishTankUIController.Instance.Close();
+            return true;
+        }
+
+        if (WorkbenchUIController.Instance && WorkbenchUIController.Instance.IsOpen)
+        {
+            WorkbenchUIController.Instance.Close();
+            return true;
+        }
+
+        if (ComputerUIController.Instance && ComputerUIController.Instance.IsOpen)
+        {
+            ComputerUIController.Instance.Close();
+            return true;
+        }
+
+        return false;
     }
 }

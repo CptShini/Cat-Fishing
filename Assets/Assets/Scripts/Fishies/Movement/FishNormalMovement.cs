@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Assets.Scripts.Fishies.Navigation;
+using Assets.Scripts.Fishies.Movement.Navigation;
 using Assets.Scripts.Helpers;
 using UnityEngine;
 using UnityEngine.Events;
@@ -33,10 +33,10 @@ namespace Assets.Scripts.Fishies.Movement
             _navigator.DestinationReached.AddListener(MovementDone.Invoke);
         }
 
-        public void Init(int speedStat, int biome = -1)
+        public void Init(int speedStat, float size, int biome = -1)
         {
             _mover.Init(speedStat);
-            _navigator.Init(biome, speedStat);
+            _navigator.Init(biome, speedStat, size);
         }
 
         private void Update()
@@ -49,7 +49,6 @@ namespace Assets.Scripts.Fishies.Movement
         public void Wander()
         {
             _wandering = true;
-            _wanderSpeedClock = 0f;
             _navigator.Wander();
         }
         

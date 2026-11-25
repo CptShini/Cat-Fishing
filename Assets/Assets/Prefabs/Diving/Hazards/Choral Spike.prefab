@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4976954398768335759}
   - component: {fileID: 4582899270442046921}
   - component: {fileID: 4092688576814414326}
+  - component: {fileID: 2286990388707333822}
   m_Layer: 14
   m_Name: Choral Spike
   m_TagString: Untagged
@@ -268,3 +269,19 @@ PolygonCollider2D:
       - {x: -2.8735793, y: -1.955074}
       - {x: -2.6085055, y: -1.9204991}
   m_UseDelaunayMesh: 1
+--- !u!114 &2286990388707333822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1125391797970690189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: a98c17ec

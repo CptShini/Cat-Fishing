@@ -1,4 +1,4 @@
-using Assets.Scripts.Audio;
+using Assets.Scripts.Audio.SFX;
 using UnityEngine;
 using Assets.Scripts.Data.Domain;
 using Assets.Scripts.Data.Persistence;
@@ -49,13 +49,13 @@ public class GoldManager : MonoBehaviour, IDataPersistence
     {
         if (amount <= 0 || Gold < amount)
         {
-            AudioManager.Instance.Play(AudioId.NotEnoughGold);
+            SFXManager.Instance.Play(SFXId.NotEnoughGold);
             return false;
         }
 
         Gold -= amount;
 
-        AudioManager.Instance.Play(AudioId.PurchaseSuccess);
+        SFXManager.Instance.Play(SFXId.PurchaseSuccess);
         return true;
     }
 

@@ -1,70 +1,36 @@
-﻿using System.Linq;
-using Assets.Scripts.Aquarium.FishTanks;
+﻿using Assets.Scripts.Aquarium.FishTanks;
 using Assets.Scripts.Data.Domain;
 using Assets.Scripts.Data.Persistence;
-using TMPro;
 using UnityEngine;
 
 namespace Assets.Scripts.Aquarium
 {
-    public class EntertainmentManager : MonoBehaviour, IDataPersistence, IDayAware
+    public class EntertainmentManager : MonoBehaviour, IDataPersistence
     {
-        [SerializeField] private int ticketPrice = 2;
-        [SerializeField] private float k = 2f;
-        [SerializeField] private float crowdGrowthRate = 0.2f;
-        [SerializeField] private TextMeshProUGUI crowdText;
-        
+        private float _decorationEntertainment;
         private FishTank[] _fishTanks;
 
-        private int 
-            _currentCrowd,
-            _targetCrowd;
-        
         private void Start()
         {
-            _fishTanks = 
-                FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None)
-                .OfType<FishTank>()
-                .ToArray();
-
-            foreach (FishTank fishTank in _fishTanks)
-            {
-                fishTank.TankChanged.AddListener(TanksChanged);
-            }
-            TanksChanged();
+            PlacementController.Instance.OnPlaced.AddListener(HandlePlacedFurniture);
+            PlacementController.Instance.OnPickedUp.AddListener(HandlePickedUpFurniture);
         }
 
-        private void TanksChanged()
-        {
-            float entertainmentSum = _fishTanks.Sum(ft => ft.Tank.Entertainment);
-            _targetCrowd = Mathf.RoundToInt(entertainmentSum * k);
-        }
+        private void HandlePlacedFurniture(ItemSO item) => 
+            _decorationEntertainment += item.EntertainmentValue;
 
-        public void DayPassed()
-        {
-            int crowdDelta = _targetCrowd - _currentCrowd;
-            int change = crowdDelta >= 0
-                ? Mathf.CeilToInt(crowdDelta * crowdGrowthRate)
-                : Mathf.FloorToInt(crowdDelta * crowdGrowthRate);
-            _currentCrowd += change;
-            
-            int profit = _currentCrowd * ticketPrice;
-            GoldManager.Instance.AddGold(profit);
-            UpdateCrowd();
-        }
-
-        private void UpdateCrowd()
-        {
-            crowdText.text = $"{_currentCrowd}";
-            CrowdPopulator.Instance.InitializeCrowd(_currentCrowd);
-        }
+        private void HandlePickedUpFurniture(ItemSO item) => 
+            _decorationEntertainment -= item.EntertainmentValue;
 
         public void LoadData(GameData data)
         {
-            _currentCrowd = data.CurrentCrowd;
-            if (data.DayPassed) UpdateCrowd();
+            _decorationEntertainment = data.DecorationEntertainment;
+            CrowdPopulator.Instance.InitializeCrowd(data.CrowdHistory[0]);
         }
 
-        public void SaveData(ref GameData data) => data.CurrentCrowd = _currentCrowd;
+        public void SaveData(ref GameData data)
+        {
+            data.DecorationEntertainment = _decorationEntertainment;
+        }
     }
 }
