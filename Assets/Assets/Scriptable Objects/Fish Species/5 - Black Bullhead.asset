@@ -17,6 +17,7 @@ MonoBehaviour:
   <LatinName>k__BackingField: Ameiurus Melas
   <Description>k__BackingField: It gets its name, because the first cats to see it
     were stupid and thought it had horns.
+  <Scale>k__BackingField: 1
   <Lifetime>k__BackingField: 7
   <Rarity>k__BackingField: 1
   <Biome>k__BackingField: 24
@@ -26,7 +27,7 @@ MonoBehaviour:
     Min: 0.5
     Max: 2.5
   <Strength>k__BackingField: 2
-  <Speed>k__BackingField: 2
-  <Reaction>k__BackingField: 8
+  <Speed>k__BackingField: 3
+  <Reaction>k__BackingField: 7
   <Perception>k__BackingField: 2
   <Sight>k__BackingField: 2

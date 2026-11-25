@@ -17,7 +17,8 @@ MonoBehaviour:
   <LatinName>k__BackingField: Peckoltia Compta
   <Description>k__BackingField: Other suggested names in the scientific community
     include; Tiger Lizzard pleco or Lion Snake pleco.
-  <Lifetime>k__BackingField: 0
+  <Scale>k__BackingField: 0.6
+  <Lifetime>k__BackingField: 12
   <Rarity>k__BackingField: 2
   <Biome>k__BackingField: 16
   <Icon>k__BackingField: {fileID: 2195318162131709315, guid: a1c37738970e54f47ae842062fd8d570, type: 3}

@@ -17,10 +17,11 @@ MonoBehaviour:
   <LatinName>k__BackingField: Silurus Glanis
   <Description>k__BackingField: Wildly territorial and procective of its home, while
     also wanting it dispanded.
-  <Lifetime>k__BackingField: 0
+  <Scale>k__BackingField: 2.5
+  <Lifetime>k__BackingField: 50
   <Rarity>k__BackingField: 8
   <Biome>k__BackingField: 136
-  <Icon>k__BackingField: {fileID: 0}
+  <Icon>k__BackingField: {fileID: -8280551178217392187, guid: 73eba5fce829efe4f82e3523e23f9dde, type: 3}
   <CatchPattern>k__BackingField: {fileID: 11400000, guid: ca4f727070efc2a4aa21cc0198d45d25, type: 2}
   <Weight>k__BackingField:
     Min: 30

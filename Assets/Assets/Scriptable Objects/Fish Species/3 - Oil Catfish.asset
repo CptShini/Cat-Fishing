@@ -16,7 +16,8 @@ MonoBehaviour:
   <Name>k__BackingField: Oil Catfish
   <LatinName>k__BackingField: Duringlanis Perugiae
   <Description>k__BackingField: So is this where the medication come from?
-  <Lifetime>k__BackingField: 0
+  <Scale>k__BackingField: 0.5
+  <Lifetime>k__BackingField: 16
   <Rarity>k__BackingField: 3
   <Biome>k__BackingField: 48
   <Icon>k__BackingField: {fileID: -932955607499960440, guid: 734cf2ae92083c54daf6009c8a14db41, type: 3}
