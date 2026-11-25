@@ -13,7 +13,7 @@ public class UnderwaterDarknessController : MonoBehaviour
     private float depthBottomY = -45f; // slightly below center (Y = -65 bottom edge)
 
     [Header("Darkness Settings")]
-    private float maxDarkness = 0.98f;
+    private float maxDarkness = 0.95f;
 
     private Material runtimeMaterial;
 
