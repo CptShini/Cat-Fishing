@@ -6,7 +6,7 @@ namespace Assets.Scripts.Aquarium.FishTanks.CleaningMiniGame
     [RequireComponent(typeof(SpriteRenderer))]
     public class SpriteEraser : MonoBehaviour
     {
-        [SerializeField, Min(1f)] private float brushRadius = 0.25f;
+        [SerializeField, Min(0f)] private float brushRadius = 0.25f;
         [SerializeField, Range(0f, 1f)] private float brushStrength = 1f;
         [SerializeField, Range(0.1f, 1f)] private float brushSoftness = 0.65f;
 
@@ -36,13 +36,13 @@ namespace Assets.Scripts.Aquarium.FishTanks.CleaningMiniGame
         {
             public int X;
             public int Y;
-            public float EraseAmount;
+            public int RemainingAlpha;
 
-            public BrushPixel(int x, int y, float eraseAmount)
+            public BrushPixel(int x, int y, int remainingAlpha)
             {
                 X = x;
                 Y = y;
-                EraseAmount = eraseAmount;
+                RemainingAlpha = remainingAlpha;
             }
         }
 
@@ -126,11 +126,10 @@ namespace Assets.Scripts.Aquarium.FishTanks.CleaningMiniGame
                     float falloff = Mathf.SmoothStep(0f, 1f, Mathf.Clamp01((1f - normalizedDistance) / brushSoftness));
 
                     float eraseAmount = falloff * brushStrength;
+                    if (eraseAmount <= 0f) continue;
 
-                    if (eraseAmount <= 0f)
-                        continue;
-
-                    brush.Add(new BrushPixel(x, y, eraseAmount));
+                    int remainingAlpha = Mathf.RoundToInt((1f - eraseAmount) * 65536f);
+                    brush.Add(new(x, y, remainingAlpha));
                 }
             }
 
@@ -166,14 +165,10 @@ namespace Assets.Scripts.Aquarium.FishTanks.CleaningMiniGame
                 int index = py * _textureWidth + px;
 
                 byte oldAlpha = _pixels[index].a;
+                if (oldAlpha == 0) continue;
 
-                if (oldAlpha == 0)
-                    continue;
-
-                byte newAlpha = (byte)Mathf.RoundToInt(oldAlpha * (1f - brushPixel.EraseAmount));
-
-                if (newAlpha == oldAlpha)
-                    continue;
+                byte newAlpha = (byte)((oldAlpha * brushPixel.RemainingAlpha + 32768) >> 16);
+                if (newAlpha == oldAlpha) continue;
 
                 _pixels[index].a = newAlpha;
 

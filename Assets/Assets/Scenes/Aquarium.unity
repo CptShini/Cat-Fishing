@@ -5544,9 +5544,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 825779fd4f9ec3c4680cd829f996b171, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  brushRadius: 0.25
+  brushRadius: 0.5
   brushStrength: 1
-  brushSoftness: 0.65
+  brushSoftness: 0.75
+  applyInterval: 0.05
 --- !u!1 &862072089
 GameObject:
   m_ObjectHideFlags: 0
@@ -9237,8 +9238,7 @@ MonoBehaviour:
   spawner: {fileID: 509394458}
   interactionController: {fileID: 509394457}
   spriteEraser: {fileID: 856847345}
-  dirtinessReductionPerSecond: 0.5
-  requiredCleanPercentage: 90
+  requiredCleanPercentage: 80
   fullCleanFadeDuration: 1.5
 --- !u!114 &1058299128
 MonoBehaviour:
