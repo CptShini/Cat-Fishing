@@ -26,10 +26,10 @@ public class DecorationSaveData
 public class BaseFloorSaveData
 {
     public string itemID = "floor_tile";
-    public int x = -9;
-    public int y = -3;
-    public int width = 18;
-    public int height = 12;
+    public int x = 3 * -2;
+    public int y = 3 * 0;
+    public int width = 3 * 4;
+    public int height = 3 * 3;
 }
 
 [Serializable]

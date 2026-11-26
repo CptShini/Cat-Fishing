@@ -8,7 +8,7 @@ namespace Editor
     {
         public override void Configure(SentryCliOptions cliOptions)
         {
-            cliOptions.Auth = System.Environment.GetEnvironmentVariable("SENTRY_AUTH_TOKEN");
+            cliOptions.Auth = LocalSecrets.Get("SENTRY_AUTH_TOKEN");
         }
     }
 }

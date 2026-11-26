@@ -18,17 +18,8 @@ public class TutorialManager : MonoBehaviour
     // [SerializeField] private Color unselectedPageColor = new Color32(150, 150, 150, 200);
     [SerializeField] private Color unselectedPageColor = new Color32(120, 120, 120, 140);
 
-
-    [SerializeField, Range(0f, 1f)]
-    private float transparency = 0.1f;
-
-    private int currentImageIndex = 0;
+    private int currentImageIndex;
     private Color originalColor;
-
-    private void Awake()
-    {
-        // originalColor = backgroundImage.color;
-    }
 
     private void Start()
     {

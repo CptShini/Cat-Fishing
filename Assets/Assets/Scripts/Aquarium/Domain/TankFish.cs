@@ -65,7 +65,7 @@ namespace Assets.Scripts.Aquarium.Domain
             if (count == 1)
                 _capacityPenalty = 3;
             else if (count > capacity)
-                _capacityPenalty = count - capacity;
+                _capacityPenalty = (count - capacity) * 2;
             
             Recalculate();
         }

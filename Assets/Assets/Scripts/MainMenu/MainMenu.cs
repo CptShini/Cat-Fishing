@@ -41,7 +41,7 @@ namespace Assets.Scripts.MainMenu
             {
                 SaveManager.Instance.StartNew("Default");
                 SFXManager.Instance.Play(SFXId.InventoryFull); //different sound
-                GameManager.Instance.ChangeScene(Scenes.Letter, "...");
+                GameManager.Instance.ChangeScene(Scenes.Letter);
                 return;
 
             }
