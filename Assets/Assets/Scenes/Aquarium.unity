@@ -1317,8 +1317,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.00011044741, y: 0}
-  m_Size: {x: 0.27342105, y: 0.27342117}
+  m_Offset: {x: -0.054579407, y: -0.41227758}
+  m_Size: {x: 0.38280076, y: 0.38280082}
   m_Direction: 0
 --- !u!212 &214669059
 SpriteRenderer:
@@ -1369,7 +1369,7 @@ SpriteRenderer:
   m_SortingLayer: 2
   m_SortingOrder: 5
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 7928629845994636789, guid: 170689bd856d4d1498b39618db22b7ca, type: 3}
+  m_Sprite: {fileID: 5808425922512336907, guid: 926b0aed250ef0c4da6e251edb80b9d1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -3167,6 +3167,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CanvasMenuSettings
       objectReference: {fileID: 0}
+    - target: {fileID: 8652744795979600766, guid: 6816ab796a2565b43a2e45fd6da3f700, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3305,7 +3309,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 4.5, z: -10}
+  m_LocalPosition: {x: 3.71, y: 7.21, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8686,7 +8690,7 @@ Transform:
   m_GameObject: {fileID: 1032254279}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.2, z: 0}
+  m_LocalPosition: {x: -0.025, y: -0.094, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
