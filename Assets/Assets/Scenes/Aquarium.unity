@@ -3056,7 +3056,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 7830460700651142764, guid: 1be1e419626099d4eb5d43e864fc6d0e, type: 3}
+    - {fileID: 8472828031763184275, guid: 1be1e419626099d4eb5d43e864fc6d0e, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1be1e419626099d4eb5d43e864fc6d0e, type: 3}
@@ -9244,6 +9246,7 @@ MonoBehaviour:
   feedParticles: {fileID: 509394459}
   spawner: {fileID: 509394458}
   interactionController: {fileID: 509394457}
+  tankDecorSpawner: {fileID: 1477019750}
   spriteEraser: {fileID: 856847345}
   requiredCleanPercentage: 80
   fullCleanFadeDuration: 1.5
@@ -11964,6 +11967,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6113a5a05ef03a34a8e4e6712dea3454, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GoldManager
+--- !u!114 &1477019750 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3044259115943604211, guid: 1be1e419626099d4eb5d43e864fc6d0e, type: 3}
+  m_PrefabInstance: {fileID: 509394456}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 547b5c81e1b7ff942a08e47fee9215aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Aquarium.FishTanks.TankDecorationSpawner
 --- !u!1 &1523659192
 GameObject:
   m_ObjectHideFlags: 0

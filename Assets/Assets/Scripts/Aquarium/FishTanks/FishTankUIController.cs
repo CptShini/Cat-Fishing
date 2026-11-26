@@ -1,6 +1,9 @@
+using System.Collections.Generic;
 using Assets.Scripts.Aquarium.Domain;
 using Assets.Scripts.Aquarium.FishTanks.CleaningMiniGame;
+using Assets.Scripts.Aquarium.FishTanks.DecorInventory;
 using Assets.Scripts.Aquarium.FishTanks.Interaction;
+using Assets.Scripts.Data.Domain.TankDecor;
 using Assets.Scripts.Tutorial;
 using TMPro;
 using UnityEngine;
@@ -31,6 +34,11 @@ namespace Assets.Scripts.Aquarium.FishTanks
         
         [SerializeField] private FishTankSpawner spawner;
         [SerializeField] private FishInteractionController interactionController;
+
+        [Space]
+
+        [SerializeField] private TankDecorationSpawner tankDecorSpawner;
+
 
         [Space]
 
@@ -86,12 +94,17 @@ namespace Assets.Scripts.Aquarium.FishTanks
                 UpdateTankText();
 
                 spawner.Clear();
+                tankDecorSpawner.Clear();
                 feedParticles.Stop();
                 feedParticles.Clear();
             }
 
             foreach (TankFish fish in tank.Tank.Fishes)
                 spawner.SpawnFish(fish);
+            foreach (PlacedTankDecoration placedTankDecoration in tank.Tank.Decorations)
+            {
+                tankDecorSpawner.PlaceTankDecoration(placedTankDecoration);
+            }
 
             PauseController.IsGamePaused = true;
 
@@ -106,6 +119,16 @@ namespace Assets.Scripts.Aquarium.FishTanks
             interactionController.CursorMapper.TryGetWorldPosition(mouseScreenPos, out Vector2 mouseWorldPos);
             spawner.SpawnFish(fish, mouseWorldPos);
             UpdateTankText();
+        }
+
+        public void TryPlaceDecor(TankDecorInventorySlot tankDecorInventorySlot)
+        {
+            Debug.Log($"HI! {_currentTank.Tank.Decorations.Count}, {_currentTank.Tank.DecorCapacity}");
+            if(_currentTank.Tank.Decorations.Count >= _currentTank.Tank.DecorCapacity)
+            {
+                return;
+            }
+            tankDecorSpawner.TryPlaceDecor(tankDecorInventorySlot);
         }
 
         public void Close()

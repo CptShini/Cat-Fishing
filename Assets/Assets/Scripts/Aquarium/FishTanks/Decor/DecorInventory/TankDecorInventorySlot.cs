@@ -2,6 +2,7 @@ using Assets.Scripts.Aquarium.Domain;
 using Assets.Scripts.Data.Domain.TankDecor;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -18,6 +19,9 @@ namespace Assets.Scripts.Aquarium.FishTanks.DecorInventory
 
         private TankDecoration _tankDecor;
         public static TankDecoration DraggedTankDecor { get; private set; }
+
+        public readonly UnityEvent<TankDecorInventorySlot> OnClicked = new();
+        public TankDecoration TankDecor => _tankDecor;
 
         private void Awake()
         {
@@ -37,6 +41,13 @@ namespace Assets.Scripts.Aquarium.FishTanks.DecorInventory
             tankDecorName.text = $"{tankDecoration.Type.Name}";
             tankDecorIcon.enabled = tankDecoration.Type.Icon != null;
         }
+
+        public void OnClick()
+        {
+            Debug.Log("HELLO?");
+            OnClicked.Invoke(this);
+        }
+
     }
 
 }

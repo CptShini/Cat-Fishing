@@ -1,6 +1,7 @@
 using Assets.Scripts.Aquarium.Domain;
 using Assets.Scripts.Data.Domain.TankDecor;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -48,10 +49,14 @@ namespace Assets.Scripts.Aquarium.FishTanks.DecorInventory
 
                 TankDecorInventorySlot slot = Instantiate(slotPrefab, content);
 
+                slot.OnClicked.AddListener(FishTankUIController.Instance.TryPlaceDecor);
+
                 if (slot != null)
                     slot.SetTankDecor(tankDecoration);
             }
         }
+
+        
 
         private void OnDestroy()
         {

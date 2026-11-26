@@ -56,6 +56,7 @@ namespace Assets.Scripts.Aquarium.Domain
             _entertainmentValue = 0f;
             _fishes = new();
             _fishDeathCount = new int[3];
+            _decorations = new();
         }
 
         public Tank(TankDTO tankDTO, FishSpeciesDatabase db, TankDecorationTypeDatabase dbDecoration)
