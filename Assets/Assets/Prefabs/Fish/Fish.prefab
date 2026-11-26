@@ -307,8 +307,8 @@ MonoBehaviour:
   slowTurnAngle: 50
   minSpeedWhileTurning: 0.4
   lateralSlipDamping: 60
-  wanderAngle: 30
-  wanderFrequency: 1.5
+  wanderAngle: 15
+  wanderFrequency: 1
   slowDownDistance: 2
   Heading: {x: 0, y: 0}
   NearDistance: 0
