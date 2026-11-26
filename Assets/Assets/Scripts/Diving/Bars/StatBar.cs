@@ -9,7 +9,7 @@ namespace Assets.Scripts.Diving.Bars
         [SerializeField] public Image foreground;
         [SerializeField] protected bool filledImage = true;
         [SerializeField] protected bool vertical = true;
-        protected RectTransform rt;
+        private RectTransform rt;
         
         public float CurrentValue
         {
@@ -21,17 +21,18 @@ namespace Assets.Scripts.Diving.Bars
             }
         }
 
+        public float CurrentPercent => _currentValue / MaxVal;
+
         public readonly UnityEvent<float, float> ValueChanged = new();
         public readonly UnityEvent BarEmpty = new();
         
-        protected float _currentValue;
-        protected float _minValue;
-        public float MaxVal { get; private set; }
+        private float _currentValue;
+        private float _minValue;
+        protected float MaxVal { get; private set; }
 
-        protected float maxLength;
-        protected float curLength;
+        private float maxLength, curLength;
 
-        void Awake()
+        private void Awake()
         {
             rt = foreground.gameObject.GetComponent<RectTransform>();
             maxLength = vertical ? rt.sizeDelta.y : rt.sizeDelta.x;
@@ -44,7 +45,6 @@ namespace Assets.Scripts.Diving.Bars
             _currentValue = newVal < 0 ? maxVal : newVal;
             OnValueChanged();
         }
-
         
         public void SetMinValue(float minVal) => _minValue = minVal;
 
@@ -55,14 +55,10 @@ namespace Assets.Scripts.Diving.Bars
             _currentValue = Mathf.Clamp(_currentValue, _minValue, MaxVal);
 
             if (filledImage)
-            {
                 UpdateFill();
-            }
             else
-            {
                 UpdateSliced();
-            }           
-            
+
             ValueChanged.Invoke(_currentValue, MaxVal);
         }
         
@@ -71,7 +67,7 @@ namespace Assets.Scripts.Diving.Bars
         protected virtual void UpdateSliced()
         {
             curLength = maxLength * (CurrentValue / MaxVal);
-            rt.sizeDelta = vertical ? new Vector2(rt.sizeDelta.x, curLength) : new Vector2(curLength, rt.sizeDelta.y);
+            rt.sizeDelta = vertical ? new(rt.sizeDelta.x, curLength) : new(curLength, rt.sizeDelta.y);
         }
     }
 }

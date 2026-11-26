@@ -11,8 +11,9 @@ namespace Assets.Scripts.Diving.Managers
         
         [SerializeField] private Color dangerColor;
         [SerializeField] private Color defaultColor;
-        [SerializeField] private float dangerThreshold; // between 0 and 1
-        private bool danger;
+        [SerializeField] [Range(0f, 1f)] private float dangerThreshold;
+        
+        private bool _danger;
 
 
         private static PlayerState.PlayerState PlayerState => DivingController.Instance.state;
@@ -28,24 +29,25 @@ namespace Assets.Scripts.Diving.Managers
 
         private void Update()
         {
-            if (PlayerState != Scripts.PlayerState.PlayerState.GRAB)
+            if (PlayerState == Scripts.PlayerState.PlayerState.GRAB) return;
+            
+            oxygenBar.CurrentValue -= TimeManager.Instance.catchingTimeScale * Time.deltaTime;
+            
+            switch (_danger)
             {
-                oxygenBar.CurrentValue -= TimeManager.Instance.catchingTimeScale * Time.deltaTime;
-                if(!danger && oxygenBar.CurrentValue / oxygenBar.MaxVal < dangerThreshold)
-                {
+                case false when oxygenBar.CurrentPercent < dangerThreshold:
                     SetDanger(true);
-                }
-                else if(danger && oxygenBar.CurrentValue / oxygenBar.MaxVal > dangerThreshold)
-                {
+                    break;
+                case true when oxygenBar.CurrentPercent > dangerThreshold:
                     SetDanger(false);
-                }
+                    break;
             }
         }
 
         private void SetDanger(bool danger)
         {
             oxygenBar.foreground.color = danger ? dangerColor : defaultColor;
-            this.danger = danger;
+            _danger = danger;
         }
 
         private void NoOxygen()
@@ -53,7 +55,7 @@ namespace Assets.Scripts.Diving.Managers
             if (_noOxygen || GameManager.Instance.Transitioning) return;
         
             _noOxygen = true;
-            GameManager.Instance.ChangeScene(Scenes.DailyReport, "You ran out of oxygen. You have to go back without your fish...");
+            GameManager.Instance.ChangeScene(Scenes.DailyReport, "You ran out of oxygen. You have to go back without your stuff...");
         }
     }
 }
