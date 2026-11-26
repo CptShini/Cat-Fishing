@@ -20,8 +20,7 @@ namespace Assets.Scripts.MainMenu.SaveSelect
 
         private void Start()
         {
-            SaveFile[] saveFiles = SaveManager.Instance.Saves;
-            foreach (SaveFile saveFile in saveFiles)
+            foreach (SaveFile saveFile in SaveManager.Instance.Saves)
             {
                 GameObject saveFileButtonObject = Instantiate(saveFileButtonPrefab, saveFileButtonContent);
                 SaveFileButton saveFileButton = saveFileButtonObject.GetComponent<SaveFileButton>();
@@ -39,7 +38,7 @@ namespace Assets.Scripts.MainMenu.SaveSelect
         {
             SFXManager.Instance.Play(SFXId.InventoryFull); //different sound? paper?
             SaveManager.Instance.StartNew(_newSaveName);
-            GameManager.Instance.ChangeScene(Scenes.Letter, "...");
+            GameManager.Instance.ChangeScene(Scenes.Letter);
         }
     }
 }

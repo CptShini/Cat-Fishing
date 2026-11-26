@@ -73,7 +73,7 @@ namespace Assets.Scripts.Management
             SaveManager.Instance.Save();
             
             sceneTransition.FadeOut(text);
-            musicPlayer.StopTrack(sceneTransitionTime);
+            musicPlayer.PlayTrack(_currentScene.BGM, musicFadeInTime);
         }
 
         private void FadeIn()
@@ -81,7 +81,6 @@ namespace Assets.Scripts.Management
             if (!Transitioning) return;
             
             SaveManager.Instance.Initialize();
-            SaveManager.Instance.RefetchSaves();
             _dpm.FindDPOs();
             _dpm.LoadDataToGame();
             

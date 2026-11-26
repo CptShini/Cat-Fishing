@@ -16,7 +16,7 @@ MonoBehaviour:
   <Dsn>k__BackingField: 
   <CaptureInEditor>k__BackingField: 1
   <EnableErrorEventThrottling>k__BackingField: 1
-  <ThrottleDedupeWindow>k__BackingField: 1000
+  <ThrottleDedupeWindow>k__BackingField: 5000
   <EnableLogDebouncing>k__BackingField: 0
   <DebounceTimeLog>k__BackingField: 1000
   <DebounceTimeWarning>k__BackingField: 1000

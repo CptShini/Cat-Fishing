@@ -1,4 +1,6 @@
-﻿using Assets.Scripts.Data.Persistence;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Assets.Scripts.Data.Persistence;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -10,11 +12,13 @@ namespace Assets.Scripts.Data
         public static SaveManager Instance { get; private set; }
         
         public SaveFile CurrentSave { get; private set; }
-        public SaveFile[] Saves { get; private set; }
+
+        public IReadOnlyList<SaveFile> Saves => _saves.AsReadOnly();
+        private List<SaveFile> _saves;
         
         public readonly UnityEvent CurrentSaveChanged = new();
         
-        private bool _isInitialized, _saveListDirty;
+        private bool _isInitialized;
         private DataPersistenceManager _dpm;
         
         private void Awake()
@@ -33,23 +37,14 @@ namespace Assets.Scripts.Data
         {
             if (_isInitialized) return;
             
-            Saves = _dpm.GetSaves();
-            if (Saves.Length > 0)
+            _saves = _dpm.GetSaves().ToList();
+            if (_saves.Count > 0)
             {
-                Select(Saves[0]);
+                Select(_saves.First());
                 Load();
             }
             
             _isInitialized = true;
-        }
-
-        public void RefetchSaves()
-        {
-            if (!_saveListDirty) return;
-            
-            Saves = _dpm.GetSaves();
-            
-            _saveListDirty = false;
         }
         
         public void Select(SaveFile saveFile)
@@ -69,9 +64,9 @@ namespace Assets.Scripts.Data
         public void StartNew(string saveName)
         {
             SaveFile newSaveFile = _dpm.StartNewSaveFile(saveName);
-            Select(newSaveFile);
+            _saves.Insert(0, newSaveFile);
             
-            _saveListDirty = true;
+            Select(newSaveFile);
         }
 
         public void Load()
@@ -93,9 +88,9 @@ namespace Assets.Scripts.Data
         public void Delete(SaveFile saveFile)
         {
             _dpm.DeleteSaveFile(saveFile);
-            _saveListDirty = true;
-            
-            if (saveFile == CurrentSave) Select(null);
+            _saves.Remove(saveFile);
+
+            if (saveFile == CurrentSave) Select(_saves.FirstOrDefault());
         }
 
         private void OnApplicationQuit()

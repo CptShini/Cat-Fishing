@@ -9,7 +9,7 @@ namespace Assets.Scripts.Letter
         public void Next()
         {
             SFXManager.Instance.Play(SFXId.OpeningDoor);
-            GameManager.Instance.ChangeScene(Scenes.Aquarium,"Going to aquarium...");
+            GameManager.Instance.ChangeScene(Scenes.Aquarium, "Going to aquarium...");
         }
     }
 }
