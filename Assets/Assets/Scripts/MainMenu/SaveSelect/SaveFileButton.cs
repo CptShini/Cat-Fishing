@@ -22,6 +22,8 @@ namespace Assets.Scripts.MainMenu.SaveSelect
                 SaveManager.Instance.Select(saveFile);
                 SaveManager.Instance.Load();
                 GameManager.Instance.ChangeScene(Scenes.Aquarium, "Going to aquarium...");
+                
+                deleteSaveButton.interactable = false;
             });
             deleteSaveButton.onClick.AddListener(() =>
             {
