@@ -22,7 +22,7 @@ MonoBehaviour:
   blocksPlacement: 1
   sortingLayer: 1
   sortingOrder: 0
-  splitRendering: 1
+  splitRendering: 0
   splitHeight: 0.3
   floorTile: {fileID: 0}
   floorSize: {x: 3, y: 3}

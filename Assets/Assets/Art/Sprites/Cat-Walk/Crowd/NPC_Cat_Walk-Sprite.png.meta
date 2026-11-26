@@ -1,0 +1,519 @@
+fileFormatVersion: 2
+guid: cf6843bb97c058e4088dc1063157e988
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 107221604739889452
+    second: NPC_Cat_Walk-Sprite_0
+  - first:
+      213: -4263336196433990575
+    second: NPC_Cat_Walk-Sprite_1
+  - first:
+      213: 2696317652431767241
+    second: NPC_Cat_Walk-Sprite_2
+  - first:
+      213: 7879846249543781037
+    second: NPC_Cat_Walk-Sprite_3
+  - first:
+      213: -1952246457509954356
+    second: NPC_Cat_Walk-Sprite_4
+  - first:
+      213: -4352425998373069598
+    second: NPC_Cat_Walk-Sprite_5
+  - first:
+      213: 1367281283322651237
+    second: NPC_Cat_Walk-Sprite_6
+  - first:
+      213: -7742326737285902243
+    second: NPC_Cat_Walk-Sprite_7
+  - first:
+      213: -4518568630837932572
+    second: NPC_Cat_Walk-Sprite_8
+  - first:
+      213: -4620417271472705372
+    second: NPC_Cat_Walk-Sprite_9
+  - first:
+      213: -4091883721836882316
+    second: NPC_Cat_Walk-Sprite_10
+  - first:
+      213: 2604931554183538523
+    second: NPC_Cat_Walk-Sprite_11
+  - first:
+      213: 8747078974741643845
+    second: NPC_Cat_Walk-Sprite_12
+  - first:
+      213: 1038007628795224263
+    second: NPC_Cat_Walk-Sprite_13
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 500
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: 4
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: NPC_Cat_Walk-Sprite_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1389
+        width: 600
+        height: 694
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c29b4ce3b7dec7100800000000000000
+      internalID: 107221604739889452
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NPC_Cat_Walk-Sprite_1
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 1389
+        width: 600
+        height: 694
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 15cac75415695d4c0800000000000000
+      internalID: -4263336196433990575
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NPC_Cat_Walk-Sprite_2
+      rect:
+        serializedVersion: 2
+        x: 1200
+        y: 1389
+        width: 600
+        height: 694
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c68fc28e9e3b6520800000000000000
+      internalID: 2696317652431767241
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NPC_Cat_Walk-Sprite_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 695
+        width: 600
+        height: 694
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: daa40cc2a66da5d60800000000000000
+      internalID: 7879846249543781037
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NPC_Cat_Walk-Sprite_4
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 695
+        width: 600
+        height: 694
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cccba1ab03a38e4e0800000000000000
+      internalID: -1952246457509954356
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NPC_Cat_Walk-Sprite_5
+      rect:
+        serializedVersion: 2
+        x: 1200
+        y: 695
+        width: 600
+        height: 694
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2ec5cc75d931993c0800000000000000
+      internalID: -4352425998373069598
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NPC_Cat_Walk-Sprite_6
+      rect:
+        serializedVersion: 2
+        x: 1800
+        y: 695
+        width: 600
+        height: 694
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 562ac70451f89f210800000000000000
+      internalID: 1367281283322651237
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NPC_Cat_Walk-Sprite_7
+      rect:
+        serializedVersion: 2
+        x: 2400
+        y: 695
+        width: 600
+        height: 694
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d5090116adabd8490800000000000000
+      internalID: -7742326737285902243
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NPC_Cat_Walk-Sprite_8
+      rect:
+        serializedVersion: 2
+        x: 3000
+        y: 695
+        width: 600
+        height: 694
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4ed8ea945c1da41c0800000000000000
+      internalID: -4518568630837932572
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NPC_Cat_Walk-Sprite_9
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1
+        width: 600
+        height: 694
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4a03acbb8faf0efb0800000000000000
+      internalID: -4620417271472705372
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NPC_Cat_Walk-Sprite_10
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 1
+        width: 600
+        height: 694
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 47695b94f65b637c0800000000000000
+      internalID: -4091883721836882316
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NPC_Cat_Walk-Sprite_11
+      rect:
+        serializedVersion: 2
+        x: 1200
+        y: 1
+        width: 600
+        height: 694
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b57e05f6273962420800000000000000
+      internalID: 2604931554183538523
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NPC_Cat_Walk-Sprite_12
+      rect:
+        serializedVersion: 2
+        x: 1800
+        y: 1
+        width: 600
+        height: 694
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 54283c7cbfdd36970800000000000000
+      internalID: 8747078974741643845
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NPC_Cat_Walk-Sprite_13
+      rect:
+        serializedVersion: 2
+        x: 2400
+        y: 1
+        width: 600
+        height: 694
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7c02c74507eb76e00800000000000000
+      internalID: 1038007628795224263
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NPC_Cat_Walk-Sprite_14
+      rect:
+        serializedVersion: 2
+        x: 3000
+        y: 1
+        width: 600
+        height: 694
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f0579c86f4c126143a05ee9673627bab
+      internalID: -331997944
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 68f1717ac4fc1bf4caecc3bf5f9d3ff0
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":6.0,"y":3.0},"gridSpriteSize":{"x":600.0,"y":694.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.0},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":7,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      NPC_Cat_Walk-Sprite_0: 107221604739889452
+      NPC_Cat_Walk-Sprite_1: -4263336196433990575
+      NPC_Cat_Walk-Sprite_10: -4091883721836882316
+      NPC_Cat_Walk-Sprite_11: 2604931554183538523
+      NPC_Cat_Walk-Sprite_12: 8747078974741643845
+      NPC_Cat_Walk-Sprite_13: 1038007628795224263
+      NPC_Cat_Walk-Sprite_14: -331997944
+      NPC_Cat_Walk-Sprite_2: 2696317652431767241
+      NPC_Cat_Walk-Sprite_3: 7879846249543781037
+      NPC_Cat_Walk-Sprite_4: -1952246457509954356
+      NPC_Cat_Walk-Sprite_5: -4352425998373069598
+      NPC_Cat_Walk-Sprite_6: 1367281283322651237
+      NPC_Cat_Walk-Sprite_7: -7742326737285902243
+      NPC_Cat_Walk-Sprite_8: -4518568630837932572
+      NPC_Cat_Walk-Sprite_9: -4620417271472705372
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
