@@ -12,7 +12,7 @@ namespace Assets.Scripts.Fishies.Movement.Navigation
         public float NearDistance { get; private set; }
         
         [SerializeField] private Transform eyes;
-        [SerializeField] private float viewDistance = 1.5f;
+        [SerializeField] private float viewDistance = 2f;
         [SerializeField] private LayerMask layerMask;
 
         [Space]
@@ -35,9 +35,9 @@ namespace Assets.Scripts.Fishies.Movement.Navigation
             _eyesTransform = eyes;
         }
 
-        public void Init(float size)
+        public void Init(float sizeFactor)
         {
-            viewDistance *= size;
+            viewDistance *= sizeFactor;
         }
 
         private void Update()

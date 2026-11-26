@@ -488,8 +488,8 @@ MonoBehaviour:
   slowTurnAngle: 50
   minSpeedWhileTurning: 0.4
   lateralSlipDamping: 60
-  wanderAngle: 15
-  wanderFrequency: 1
+  wanderAngle: 10
+  wanderFrequency: 0.8
   slowDownDistance: 2
   Heading: {x: 0, y: 0}
   NearDistance: 0
@@ -525,7 +525,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Fish.Navigation.FishEyes
   eyes: {fileID: 7665592108927822498}
-  viewDistance: 1.5
+  viewDistance: 2
   layerMask:
     serializedVersion: 2
     m_Bits: 1

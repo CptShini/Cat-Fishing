@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3916202253146841134}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Slipstream
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 3565138470301993757}
   - component: {fileID: 8896305310210836343}
   - component: {fileID: 8852512126189550149}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: stream
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -196,6 +196,10 @@ PrefabInstance:
     - target: {fileID: 8081562920833523802, guid: 2e8177c7cfa94e4478f96a6d2635a5bc, type: 3}
       propertyPath: m_Name
       value: Slipstream
+      objectReference: {fileID: 0}
+    - target: {fileID: 8081562920833523802, guid: 2e8177c7cfa94e4478f96a6d2635a5bc, type: 3}
+      propertyPath: m_Layer
+      value: 14
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

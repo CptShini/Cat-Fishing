@@ -41,7 +41,7 @@ public class CatchScript : MonoBehaviour
 
     private void SetGrabbing(bool won)
     {
-        SFXManager.Instance.Play(SFXId.CatchFishSuccess);
+        if (won) SFXManager.Instance.Play(SFXId.CatchFishSuccess);
         _grabbing = false;
     }
 
