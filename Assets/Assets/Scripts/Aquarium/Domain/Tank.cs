@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.Scripts.Data.Domain.TankDecor;
 using Assets.Scripts.Fishies.Domain;
 using UnityEngine;
 
@@ -12,6 +13,7 @@ namespace Assets.Scripts.Aquarium.Domain
         public string Name;
         
         public int Capacity { get; private set; }
+        public int DecorCapacity { get; private set; }
         public int UpgradeLevel { get; private set; }
 
         private const float MaxDirtiness = 6f, DirtinessThreshold = 1f;
@@ -35,16 +37,20 @@ namespace Assets.Scripts.Aquarium.Domain
         public IReadOnlyList<TankFish> Fishes => _fishes;
         private readonly List<TankFish> _fishes;
 
+        public IReadOnlyList<PlacedTankDecoration> Decorations => _decorations;
+        private readonly List<PlacedTankDecoration> _decorations;
+
         public IReadOnlyList<int> FishDeathCount => _fishDeathCount;
         private int[] _fishDeathCount;
 
         private readonly List<TankFish> _deadFish = new();
 
-        public Tank(Guid id, string name, int capacity)
+        public Tank(Guid id, string name, int capacity, int decorCapacity)
         {
             Id = id;
             Name = name;
             Capacity = capacity;
+            DecorCapacity = decorCapacity;
             UpgradeLevel = 1;
             Dirtiness = 0;
             _entertainmentValue = 0f;
@@ -52,16 +58,21 @@ namespace Assets.Scripts.Aquarium.Domain
             _fishDeathCount = new int[3];
         }
 
-        public Tank(TankDTO tankDTO, FishSpeciesDatabase db)
+        public Tank(TankDTO tankDTO, FishSpeciesDatabase db, TankDecorationTypeDatabase dbDecoration)
         {
             Id = Guid.Parse(tankDTO.Id);
             Name = tankDTO.Name;
             Capacity = tankDTO.Capacity;
+            DecorCapacity = tankDTO.DecorCapacity;
             UpgradeLevel = tankDTO.UpgradeLevel <= 0 ? 1 : tankDTO.UpgradeLevel;
             Dirtiness = tankDTO.Dirtiness;
             
+
             _fishes = tankDTO.Fishes.Select(dto => new TankFish(dto, db)).ToList();
             _fishes.ForEach(RegisterFish);
+
+            _decorations = tankDTO.Decorations.Select(dto => new PlacedTankDecoration(dto, dbDecoration)).ToList();
+
             OnFishChanged();
 
             _fishDeathCount = tankDTO.FishDeathCount;
@@ -103,6 +114,18 @@ namespace Assets.Scripts.Aquarium.Domain
             OnFishChanged();
         }
 
+        public void AddDecoration(PlacedTankDecoration tankDecoration)
+        {
+            _decorations.Add(tankDecoration);
+            RecalculateEntertainment();
+        }
+
+        public void RemoveDecoration(PlacedTankDecoration tankDecoration)
+        {
+            _decorations.Remove(tankDecoration);
+            RecalculateEntertainment();
+        }
+
         private void RegisterFish(TankFish fish)
         {
             fish.Fed.AddListener(RecalculateEntertainment);
@@ -142,6 +165,10 @@ namespace Assets.Scripts.Aquarium.Domain
 
                 float noveltyFactor = Mathf.Pow(2f, 1 - speciesCount[speciesId]);
                 _entertainmentValue += fish.Entertainment * noveltyFactor;
+            }
+            foreach (var tankDecoration in _decorations)
+            {
+                _entertainmentValue += tankDecoration.TankDecoration.Type.EntertainmentValue;
             }
         }
 
