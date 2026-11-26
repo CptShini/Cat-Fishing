@@ -1,5 +1,6 @@
 using Assets.Scripts.Diving.Cat;
 using Assets.Scripts.Diving.DivingInventory;
+using Assets.Scripts.Management;
 using Assets.Scripts.PlayerState;
 using UnityEngine;
 using UnityEngine.Events;
@@ -105,10 +106,9 @@ public class DivingController : MonoBehaviour
  
     public void OnToggle(CallbackContext  input)
     {
-        if(state == PlayerState.GRAB)
-        {
+        if (state == PlayerState.GRAB || PauseControllerManager.Instance.isPaused)
             return;
-        }
+        
         DivingInventory.Instance.Toggle();
     }
 

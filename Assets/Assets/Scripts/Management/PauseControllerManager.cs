@@ -7,14 +7,15 @@ namespace Assets.Scripts.Management
     public class PauseControllerManager : MonoBehaviour
     {
         public static PauseControllerManager Instance { get; private set; }
-
-        [Header("Menus")]
-        [SerializeField] private GameObject pauseMenu;
-        [SerializeField] private GameObject pausePanel;
-        [SerializeField] private GameObject optionsMenu;
-        [SerializeField] private GameObject soundOptionsMenu;
-        [SerializeField] private GameObject controlsMenu;
-        [SerializeField] private GameObject tutorialMenu;
+        
+        [SerializeField] private GameObject 
+            pauseMenu,
+            pausePanel,
+            optionsMenu,
+            soundOptionsMenu,
+            controlsMenu,
+            tutorialMenu,
+            feedbackMenu;
         
         public bool isPaused { get; private set; }
         
@@ -48,7 +49,7 @@ namespace Assets.Scripts.Management
             // Main Menu
             if (sceneIndex == 0)
             {
-                if (optionsMenu.activeSelf)
+                if (optionsMenu.activeSelf || feedbackMenu.activeSelf)
                     ResumeGame();
 
                 return;
@@ -58,10 +59,11 @@ namespace Assets.Scripts.Management
             if (!isPaused)
             {
                 PauseGame();
+                ShowPauseMenu();
                 return;
             }
 
-            if (optionsMenu.activeSelf)
+            if (optionsMenu.activeSelf || feedbackMenu.activeSelf)
                 ShowPauseMenu();
             else if (pausePanel.activeSelf)
                 ResumeGame();
@@ -86,11 +88,6 @@ namespace Assets.Scripts.Management
             Time.timeScale = 0f;
 
             pauseMenu.SetActive(true);
-
-            if (sceneIndex == 0)
-                ShowOptions();
-            else
-                ShowPauseMenu();
         }
 
         public void ResumeGame()
@@ -144,6 +141,12 @@ namespace Assets.Scripts.Management
             tutorialMenu.SetActive(true);
         }
 
+        public void ShowFeedback()
+        {
+            HideAllMenus();
+            feedbackMenu.SetActive(true);
+        }
+
         private void HideAllMenus()
         {
             pausePanel.SetActive(false);
@@ -151,6 +154,7 @@ namespace Assets.Scripts.Management
             soundOptionsMenu.SetActive(false);
             controlsMenu.SetActive(false);
             tutorialMenu.SetActive(false);
+            feedbackMenu.SetActive(false);
         }
         
         public void BackToMenu()
