@@ -1,6 +1,4 @@
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.UI;
 
 namespace Assets.Scripts.Diving.Bars
 {
@@ -14,11 +12,11 @@ namespace Assets.Scripts.Diving.Bars
             base.UpdateFill();
             foreground.color = Color.Lerp(minColor, maxColor, foreground.fillAmount);
         }
+        
         protected override void UpdateSliced()
         {
             base.UpdateSliced();
-            float ratio = CurrentValue / MaxVal;
-            foreground.color = Color.Lerp(minColor, maxColor, ratio);
+            foreground.color = Color.Lerp(minColor, maxColor, CurrentPercent);
         }
     }
 }
