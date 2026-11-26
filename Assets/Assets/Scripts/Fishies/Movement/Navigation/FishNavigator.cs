@@ -59,14 +59,17 @@ namespace Assets.Scripts.Fishies.Movement.Navigation
 
         public void Init(int biome, int speedStat, float size)
         {
+            const float sizeStrength = 3f;
+            float sizeFactor = (size - 1f) / sizeStrength + 1f;
+            
             _areaMask = biome;
-            _arrivalDistanceTolerance = (speedStat / 6f + 4f/3f) * size;
+            _arrivalDistanceTolerance = (speedStat / 10f + 7f/5f) * sizeFactor;
             _wanderDist.Min = _arrivalDistanceTolerance * 1.5f;
             _wanderDist.Max = _arrivalDistanceTolerance * 3f;
             _fleeDist.Min = _wanderDist.Min * 2f;
             _fleeDist.Max = _wanderDist.Max * 2f;
 
-            _eyes.Init(size);
+            _eyes.Init(sizeFactor);
         }
 
         private void Update()

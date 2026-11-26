@@ -113,7 +113,7 @@ MonoBehaviour:
   sceneTransition: {fileID: 3976980917610927689}
   musicPlayer: {fileID: 4855906050645497207}
   sceneTransitionTime: 2
-  musicFadeInTime: 2
+  musicFadeInTime: 3
 --- !u!1001 &1742305709771552140
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -17,10 +17,11 @@ MonoBehaviour:
   <LatinName>k__BackingField: Synodontis Angelicus
   <Description>k__BackingField: It might have the dots, but it can't do the dance,
     because it has no legs...
-  <Lifetime>k__BackingField: 0
+  <Scale>k__BackingField: 1
+  <Lifetime>k__BackingField: 25
   <Rarity>k__BackingField: 6
   <Biome>k__BackingField: 448
-  <Icon>k__BackingField: {fileID: -3301563699319517402, guid: 3eea6ed99406c8d4987e84b0ae2463a0, type: 3}
+  <Icon>k__BackingField: {fileID: 21300000, guid: 3eea6ed99406c8d4987e84b0ae2463a0, type: 3}
   <CatchPattern>k__BackingField: {fileID: 11400000, guid: 1da629f80cf86ca498603dd50c27cdda, type: 2}
   <Weight>k__BackingField:
     Min: 0.7

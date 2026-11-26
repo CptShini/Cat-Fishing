@@ -25,6 +25,7 @@ namespace Assets.Scripts.Tutorial
             }
 
             Instance = this;
+            Invoke(nameof(ShowTutorial), 1f);
         }
     
         public void LoadData(GameData data)
@@ -39,7 +40,7 @@ namespace Assets.Scripts.Tutorial
             data.Tutorials["CatchingMinigame"] = _hasReadCatchingTutorial;
         }
 
-        private void Start()
+        private void ShowTutorial()
         {
             if (_hasReadTutorial) return;
         

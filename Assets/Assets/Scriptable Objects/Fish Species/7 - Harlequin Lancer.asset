@@ -17,10 +17,11 @@ MonoBehaviour:
   <LatinName>k__BackingField: Bagroides Melapterus
   <Description>k__BackingField: A very funny fish, alongside its other cousins from
     comedie dell'arte.
-  <Lifetime>k__BackingField: 0
+  <Scale>k__BackingField: 1
+  <Lifetime>k__BackingField: 10
   <Rarity>k__BackingField: 5
   <Biome>k__BackingField: 96
-  <Icon>k__BackingField: {fileID: -1562096778675612243, guid: c1da8e38d58f1c245ad124c6444a6237, type: 3}
+  <Icon>k__BackingField: {fileID: 21300000, guid: c1da8e38d58f1c245ad124c6444a6237, type: 3}
   <CatchPattern>k__BackingField: {fileID: 11400000, guid: 793900cc9d8144c47bf143ee5fc850f4, type: 2}
   <Weight>k__BackingField:
     Min: 0.6

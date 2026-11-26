@@ -340,10 +340,10 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 5.85, y: 3.5}
+  m_Size: {x: 10.67, y: 5.66}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
 --- !u!114 &3831577865461553534
 MonoBehaviour:
@@ -446,11 +446,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Fishies.AquariumFish
   visuals: {fileID: 9206399475325001486}
   happinessImage: {fileID: 4088444769428205860}
-  sadSprite: {fileID: 21300000, guid: 8b1e8e88db6445941a2fd49c2c2cc9d1, type: 3}
+  loveSprite: {fileID: 21300000, guid: 7453e72195f88514cac7de5d57929769, type: 3}
+  happySprite: {fileID: 21300000, guid: af5a3ac767099d24abae606ad1aff1b9, type: 3}
   neutralSprite: {fileID: 21300000, guid: 9e5a31ff53ee7e14285ef01d85e6fd80, type: 3}
-  happySprite: {fileID: 21300000, guid: 7453e72195f88514cac7de5d57929769, type: 3}
-  sadMax: 4
-  neutralMax: 7
+  sadSprite: {fileID: 21300000, guid: 9137248fa6abcc84bacdb957fd8aabb4, type: 3}
+  cryingSprite: {fileID: 21300000, guid: 16fe2b5cc73b2c749a6b66e8d526dbe7, type: 3}
 --- !u!114 &7517340754007288589
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -488,8 +488,8 @@ MonoBehaviour:
   slowTurnAngle: 50
   minSpeedWhileTurning: 0.4
   lateralSlipDamping: 60
-  wanderAngle: 30
-  wanderFrequency: 1.5
+  wanderAngle: 10
+  wanderFrequency: 0.8
   slowDownDistance: 2
   Heading: {x: 0, y: 0}
   NearDistance: 0
@@ -525,7 +525,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Fish.Navigation.FishEyes
   eyes: {fileID: 7665592108927822498}
-  viewDistance: 1.5
+  viewDistance: 2
   layerMask:
     serializedVersion: 2
     m_Bits: 1

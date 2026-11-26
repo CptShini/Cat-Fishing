@@ -561,7 +561,29 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Here should be text on the letter :3
+  m_text: 'CULTURE ENRICHMENT GRANT
+
+
+    Congratulations on having the esteemed
+    honours of receiving the Catsbury Culture Grant.
+
+
+    After hearing your plans
+    to investigate and showcase the wonders of the ocean to ordinary cats around
+    town, the council was mesmerised. Never has there been a cat stupid enough to
+    venture into the wet depths.
+
+
+    As part of the grant, you will be receiving
+    full building rights to the old wetfood canning factory, just off the coast,
+    which we hope will serve as a good foundation for your new discoveries.
+
+
+    Best
+    of luck with your endeavours.
+
+
+    - The Catsbury City Council'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0932719f89a9eee4d9a6adde0a2e8f2a, type: 2}
   m_sharedMaterial: {fileID: 8190463702012786997, guid: 0932719f89a9eee4d9a6adde0a2e8f2a, type: 2}
@@ -627,7 +649,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: -18.280884, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
