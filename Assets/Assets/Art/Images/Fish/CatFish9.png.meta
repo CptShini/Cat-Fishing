@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 1112fe90907f3a44e9745f2813a8a657
+guid: 501fb410b0e7aab4c9fd821d04d119cb
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3050367558452241231
-    second: Normal-Catfish_1_0
+      213: -7997555877713688910
+    second: CatFish9_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Normal-Catfish_1_0
+      name: CatFish9_0
       rect:
         serializedVersion: 2
-        x: 6
-        y: 276
-        width: 1067
-        height: 566
+        x: 11
+        y: 218
+        width: 1042
+        height: 563
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f43ebe30225155a20800000000000000
-      internalID: 3050367558452241231
+      spriteID: 2b6c9855d49f20190800000000000000
+      internalID: -7997555877713688910
       vertices: []
       indices: 
       edges: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Normal-Catfish_1_0: 3050367558452241231
+      CatFish9_0: -7997555877713688910
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

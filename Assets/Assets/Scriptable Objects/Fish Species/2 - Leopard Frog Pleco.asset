@@ -21,7 +21,7 @@ MonoBehaviour:
   <Lifetime>k__BackingField: 12
   <Rarity>k__BackingField: 2
   <Biome>k__BackingField: 16
-  <Icon>k__BackingField: {fileID: 2195318162131709315, guid: a1c37738970e54f47ae842062fd8d570, type: 3}
+  <Icon>k__BackingField: {fileID: 21300000, guid: a1c37738970e54f47ae842062fd8d570, type: 3}
   <CatchPattern>k__BackingField: {fileID: 11400000, guid: 9b63fb7c51593774b916c9de7a885971, type: 2}
   <Weight>k__BackingField:
     Min: 0.3

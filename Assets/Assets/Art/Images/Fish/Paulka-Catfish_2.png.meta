@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 32d520f58a1f49f4d8c4d663f56273fd
+guid: 3eea6ed99406c8d4987e84b0ae2463a0
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6460892115176274126
-    second: CatFish12_0
+      213: -3301563699319517402
+    second: Paulka-Catfish_2_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: CatFish12_0
+      name: Paulka-Catfish_2_0
       rect:
         serializedVersion: 2
-        x: 20
-        y: 269
-        width: 1045
-        height: 497
+        x: 0
+        y: 94
+        width: 1072
+        height: 813
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 237cbce3adc4656a0800000000000000
-      internalID: -6460892115176274126
+      spriteID: 62f4cb2de4d7e22d0800000000000000
+      internalID: -3301563699319517402
       vertices: []
       indices: 
       edges: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      CatFish12_0: -6460892115176274126
+      Paulka-Catfish_2_0: -3301563699319517402
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

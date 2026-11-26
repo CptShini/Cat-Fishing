@@ -42,7 +42,7 @@ namespace Assets.Scripts.Aquarium.Computer.Encyclopedia
         private void Init()
         {
             bool pageSet = false;
-            foreach (FishSpecies species in speciesDb.Species)
+            foreach (FishSpecies species in speciesDb.Species.OrderBy(s => s.Rarity).ThenBy(s => s.Weight.Average))
             {
                 EncyclopediaSlot slot = Instantiate(slotPrefab, grid, false);
                 slot.Setup(species);
