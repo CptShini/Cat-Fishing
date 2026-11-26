@@ -17,10 +17,11 @@ MonoBehaviour:
   <LatinName>k__BackingField: Malapterurus Electricus
   <Description>k__BackingField: This is highly electic if provoked, and if it had
     enough development time.
-  <Lifetime>k__BackingField: 0
-  <Rarity>k__BackingField: 6
+  <Scale>k__BackingField: 1.5
+  <Lifetime>k__BackingField: 20
+  <Rarity>k__BackingField: 9
   <Biome>k__BackingField: 256
-  <Icon>k__BackingField: {fileID: 0}
+  <Icon>k__BackingField: {fileID: 21300000, guid: 58e343f128fdcaf48a10b463d0d449c8, type: 3}
   <CatchPattern>k__BackingField: {fileID: 11400000, guid: b4367048005f42c49a5dcae6c225d168, type: 2}
   <Weight>k__BackingField:
     Min: 2

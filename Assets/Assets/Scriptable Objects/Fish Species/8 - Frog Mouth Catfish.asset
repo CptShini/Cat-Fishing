@@ -16,11 +16,12 @@ MonoBehaviour:
   <Name>k__BackingField: Frog Mouth Catfish
   <LatinName>k__BackingField: Chaca Chaca
   <Description>k__BackingField: It's really more festive than it looks, as it chachas
-    and shakes it all about.
-  <Lifetime>k__BackingField: 0
+    and shakes it all about at parties.
+  <Scale>k__BackingField: 1
+  <Lifetime>k__BackingField: 13
   <Rarity>k__BackingField: 3
   <Biome>k__BackingField: 208
-  <Icon>k__BackingField: {fileID: 0}
+  <Icon>k__BackingField: {fileID: 21300000, guid: 05c3fdac57cbd39449e31e842a6e4454, type: 3}
   <CatchPattern>k__BackingField: {fileID: 11400000, guid: 61738cef8cb9bd041b426e85f82f8fb5, type: 2}
   <Weight>k__BackingField:
     Min: 0.4

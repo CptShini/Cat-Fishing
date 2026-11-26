@@ -9946,7 +9946,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07f2d6f3da1b077479bfa51ad1d23866, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  feedingPrice: 5
+  feedingPrice: 1
   panel: {fileID: 1702940995}
   tankNameText: {fileID: 1645511638}
   tankCapacityText: {fileID: 1374727137}
@@ -15567,9 +15567,9 @@ MonoBehaviour:
     price: 20
   shopUpgradeItems:
   - itemSO: {fileID: 11400000, guid: 67ff7d0da0bc64e4b8fe61b0a0a8e46c, type: 2}
-    price: 5
+    price: 100
   - itemSO: {fileID: 11400000, guid: 50224f22ddfbb3146a6e044837094b3f, type: 2}
-    price: 10
+    price: 550
 --- !u!114 &1808507265
 MonoBehaviour:
   m_ObjectHideFlags: 0
