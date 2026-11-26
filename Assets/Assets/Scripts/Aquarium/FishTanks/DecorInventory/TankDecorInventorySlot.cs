@@ -1,0 +1,42 @@
+using Assets.Scripts.Aquarium.Domain;
+using Assets.Scripts.Data.Domain.TankDecor;
+using TMPro;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
+
+namespace Assets.Scripts.Aquarium.FishTanks.DecorInventory
+{
+    public class TankDecorInventorySlot : MonoBehaviour
+    {
+        [SerializeField] private Image tankDecorIcon;
+        [SerializeField] private TMP_Text tankDecorName;
+
+        private Canvas canvas;
+        private CanvasGroup canvasGroup;
+        //private GameObject dragVisual;
+
+        private TankDecoration _tankDecor;
+        public static TankDecoration DraggedTankDecor { get; private set; }
+
+        private void Awake()
+        {
+            canvas = GetComponentInParent<Canvas>();
+            canvasGroup = GetComponent<CanvasGroup>();
+
+            if (canvasGroup == null)
+                canvasGroup = gameObject.AddComponent<CanvasGroup>();
+        }
+
+        public void SetTankDecor(TankDecoration tankDecoration)
+        {
+            if (tankDecoration == null) return;
+
+            _tankDecor = tankDecoration;
+            tankDecorIcon.sprite = tankDecoration.Type.Icon;
+            tankDecorName.text = $"{tankDecoration.Type.Name}";
+            tankDecorIcon.enabled = tankDecoration.Type.Icon != null;
+        }
+    }
+
+}
