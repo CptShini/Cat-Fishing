@@ -8,7 +8,7 @@ namespace Editor
     {
         public override void Configure(SentryUnityOptions options)
         {
-            string dsn = System.Environment.GetEnvironmentVariable("SENTRY_DSN");
+            string dsn = LocalSecrets.Get("SENTRY_DSN");
             if (string.IsNullOrEmpty(dsn)) return;
             
             options.Dsn = dsn;
