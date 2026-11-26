@@ -120,6 +120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Aquarium.FishTanks.FishTank
   fishSpeciesDatabase: {fileID: 11400000, guid: 69c0a0e81678bc0419aa277dd4158367, type: 2}
+  tankDecorationTypeDatabase: {fileID: 11400000, guid: 929023803bb3b1b49ae179cc9ff1db34, type: 2}
   exclamationImage: {fileID: 8343498811109530423}
   dirtinessWarningThreshold: 3
 --- !u!1 &8343498811109530423

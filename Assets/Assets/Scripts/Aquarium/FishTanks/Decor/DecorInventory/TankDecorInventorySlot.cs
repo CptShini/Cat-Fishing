@@ -44,7 +44,6 @@ namespace Assets.Scripts.Aquarium.FishTanks.DecorInventory
 
         public void OnClick()
         {
-            Debug.Log("HELLO?");
             OnClicked.Invoke(this);
         }
 

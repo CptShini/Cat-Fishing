@@ -19,7 +19,7 @@ namespace Assets.Scripts.Aquarium.FishTanks
 
         private readonly Dictionary<Guid, PlacedTankDecorationObject> _decorations = new();
 
-        public void TryPlaceDecor(TankDecorInventorySlot tankDecorInventorySlot)
+        public bool TryPlaceDecor(TankDecorInventorySlot tankDecorInventorySlot, Tank tank)
         {
             Debug.Log("tankDecorInventorySlot.TankDecor.Type.placementType");
             switch (tankDecorInventorySlot.TankDecor.Type.placementType)
@@ -31,30 +31,32 @@ namespace Assets.Scripts.Aquarium.FishTanks
                         if(decorFrontLocations[i].childCount == 0)
                         {
                             Debug.Log("PLACING FRONT");
-                            PlaceTankDecoration(tankDecorInventorySlot, decorFrontLocations[i], i);
+                            PlaceTankDecoration(tankDecorInventorySlot, decorFrontLocations[i], i, tank);
+                            return true;
                         }
                     }
-                    break;
+                    return false;
                 case TankDecorationPlacementType.OUTSIDE:
                     if(decorOutsideLocation.childCount == 0)
                     {
                         Debug.Log("PLACING OUTSIDE");
-                        PlaceTankDecoration(tankDecorInventorySlot, decorOutsideLocation, 0);
+                        PlaceTankDecoration(tankDecorInventorySlot, decorOutsideLocation, 0, tank);
+                        return true;
                     }
-                    break;
+                    return false;
                 case TankDecorationPlacementType.BACK:
                     if(decorBackLocation.childCount == 0)
                     {
-                        PlaceTankDecoration(tankDecorInventorySlot, decorBackLocation, 0);
+                        PlaceTankDecoration(tankDecorInventorySlot, decorBackLocation, 0, tank);
+                        return true;
                     }
-                    break;
-
+                    return false;;
                 default:
-                    break;
+                    return false;
             }
         }
         
-        public bool PlaceTankDecoration(TankDecorInventorySlot tankDecorInventorySlot, Transform spawnTransform, int index)
+        public bool PlaceTankDecoration(TankDecorInventorySlot tankDecorInventorySlot, Transform spawnTransform, int index, Tank tank)
         {
             if (_decorations.ContainsKey(tankDecorInventorySlot.TankDecor.Id))
                 return false;
@@ -62,9 +64,13 @@ namespace Assets.Scripts.Aquarium.FishTanks
             PlacedTankDecorationObject tankDecorObject = Instantiate(placedtankDecorPrefab, spawnTransform.position, Quaternion.identity);
             tankDecorObject.transform.SetParent(spawnTransform);
             
-            tankDecorObject.Init(new PlacedTankDecoration(tankDecorInventorySlot.TankDecor, index));
+            PlacedTankDecoration placedTankDecoration = new PlacedTankDecoration(tankDecorInventorySlot.TankDecor, index);
+
+            tankDecorObject.Init(placedTankDecoration);
+
+            tank.AddDecoration(placedTankDecoration);
             
-            _decorations.Add(tankDecorObject.PlacedTankDecoration.Id, tankDecorObject);
+            _decorations.Add(tankDecorObject.PlacedTankDecoration.TankDecoration.Id, tankDecorObject);
             return true;
         }
 
@@ -72,7 +78,7 @@ namespace Assets.Scripts.Aquarium.FishTanks
         {
             Transform spawnTransform;
 
-            if (_decorations.ContainsKey(placedTankDecoration.Id))
+            if (_decorations.ContainsKey(placedTankDecoration.TankDecoration.Id))
                 return false;
 
            switch (placedTankDecoration.TankDecoration.Type.placementType)
@@ -95,16 +101,15 @@ namespace Assets.Scripts.Aquarium.FishTanks
             
             tankDecorObject.Init(placedTankDecoration);
             
-            _decorations.Add(tankDecorObject.PlacedTankDecoration.Id, tankDecorObject);
+            _decorations.Add(tankDecorObject.PlacedTankDecoration.TankDecoration.Id, tankDecorObject);
             return true;
         }
 
         public bool RemoveTankDecoration(PlacedTankDecoration placedTankDecoration)
         {
-            if (!_decorations.Remove(placedTankDecoration.Id, out PlacedTankDecorationObject tankDecorObject))
+            if (!_decorations.Remove(placedTankDecoration.TankDecoration.Id, out PlacedTankDecorationObject tankDecorObject))
                 return false;
             Destroy(tankDecorObject);
-            
             return true;
         }
         
@@ -112,8 +117,10 @@ namespace Assets.Scripts.Aquarium.FishTanks
         {
             foreach (PlacedTankDecorationObject tankDecorObject in _decorations.Values)
             {
-                Destroy(tankDecorObject);
+                Destroy(tankDecorObject.gameObject);
+                Debug.Log("DESTROYED");
             }
+            Debug.Log("CLEAR");
             
             _decorations.Clear();
         }

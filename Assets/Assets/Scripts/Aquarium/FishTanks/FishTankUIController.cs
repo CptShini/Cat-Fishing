@@ -103,6 +103,7 @@ namespace Assets.Scripts.Aquarium.FishTanks
                 spawner.SpawnFish(fish);
             foreach (PlacedTankDecoration placedTankDecoration in tank.Tank.Decorations)
             {
+                Debug.Log("HELLO???");
                 tankDecorSpawner.PlaceTankDecoration(placedTankDecoration);
             }
 
@@ -128,7 +129,7 @@ namespace Assets.Scripts.Aquarium.FishTanks
             {
                 return;
             }
-            tankDecorSpawner.TryPlaceDecor(tankDecorInventorySlot);
+            if(!tankDecorSpawner.TryPlaceDecor(tankDecorInventorySlot, _currentTank.Tank)) return;
         }
 
         public void Close()

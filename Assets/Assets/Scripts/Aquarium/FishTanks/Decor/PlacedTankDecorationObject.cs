@@ -17,8 +17,7 @@ namespace Assets.Scripts.Aquarium.FishTanks.Decor
         public void Init(PlacedTankDecoration placedTankDecoration)
         {
             PlacedTankDecoration = placedTankDecoration;
-            
-            image.sprite = placedTankDecoration.TankDecoration.Type.Icon;
+            image.sprite = placedTankDecoration.TankDecoration.Type.IconInFishTank;
         }
 
         private void LateUpdate()

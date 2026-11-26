@@ -9,7 +9,6 @@ namespace Assets.Scripts.Aquarium.Domain
 
     public class PlacedTankDecoration
     {
-        public Guid Id;
         public readonly TankDecoration TankDecoration;
         public int PlacementIndex;
 

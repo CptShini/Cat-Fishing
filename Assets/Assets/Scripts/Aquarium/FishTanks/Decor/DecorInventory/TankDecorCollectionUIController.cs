@@ -56,8 +56,6 @@ namespace Assets.Scripts.Aquarium.FishTanks.DecorInventory
             }
         }
 
-        
-
         private void OnDestroy()
         {
             if (tankDecorCollection != null)
