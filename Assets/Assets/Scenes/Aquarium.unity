@@ -2999,6 +2999,18 @@ PrefabInstance:
       propertyPath: rawImage
       value: 
       objectReference: {fileID: 1154083801}
+    - target: {fileID: 2704231002176477791, guid: 1be1e419626099d4eb5d43e864fc6d0e, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2704231002176477791, guid: 1be1e419626099d4eb5d43e864fc6d0e, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2704231002176477791, guid: 1be1e419626099d4eb5d43e864fc6d0e, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8169978185349357716, guid: 1be1e419626099d4eb5d43e864fc6d0e, type: 3}
       propertyPath: m_Name
       value: Fish Tank View
@@ -3305,7 +3317,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 4.5, z: -10}
+  m_LocalPosition: {x: 3.71, y: 7.21, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
