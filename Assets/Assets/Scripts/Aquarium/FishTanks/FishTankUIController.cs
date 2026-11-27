@@ -209,11 +209,11 @@ namespace Assets.Scripts.Aquarium.FishTanks
                 int capacityDecor = _currentTank.Tank.DecorCapacity;
                 tankDecorCapacityText.text = $"{countDecor}/{capacityDecor}";
                 tankDecorCapacityText.color =
-                    countDecor == 1
-                    ? Color.blue
-                    : countDecor <= capacityDecor 
-                        ? Color.white 
-                        : Color.red;
+                    countDecor < 1
+                    ? Color.white
+                    : countDecor >= capacityDecor 
+                        ? Color.green 
+                        : Color.blue;
             }
 
             UpdateEntertainmentText();
