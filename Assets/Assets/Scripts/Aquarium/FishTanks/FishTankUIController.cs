@@ -1,6 +1,10 @@
+using System.Collections.Generic;
 using Assets.Scripts.Aquarium.Domain;
 using Assets.Scripts.Aquarium.FishTanks.CleaningMiniGame;
+using Assets.Scripts.Aquarium.FishTanks.Decor;
+using Assets.Scripts.Aquarium.FishTanks.DecorInventory;
 using Assets.Scripts.Aquarium.FishTanks.Interaction;
+using Assets.Scripts.Data.Domain.TankDecor;
 using Assets.Scripts.Tutorial;
 using TMPro;
 using UnityEngine;
@@ -18,6 +22,7 @@ namespace Assets.Scripts.Aquarium.FishTanks
         [SerializeField] private TextMeshProUGUI 
             tankNameText,
             tankCapacityText,
+            tankDecorCapacityText,
             tankEntertainmentText,
             upgradePriceText,
             feedingPriceText;
@@ -31,6 +36,11 @@ namespace Assets.Scripts.Aquarium.FishTanks
         
         [SerializeField] private FishTankSpawner spawner;
         [SerializeField] private FishInteractionController interactionController;
+
+        [Space]
+
+        [SerializeField] private TankDecorationSpawner tankDecorSpawner;
+
 
         [Space]
 
@@ -56,6 +66,7 @@ namespace Assets.Scripts.Aquarium.FishTanks
             interactionController.DropFish.AddListener(OnFishDropped);
             interactionController.FeedFish.AddListener(OnFishFed);
             interactionController.CleanAtPosition.AddListener(OnCleanAtPosition);
+            interactionController.SelectTankDecor.AddListener(OnTankDecorSelected);
 
             GoldManager.Instance.GoldChanged.AddListener(UpdateUpgradeUI);
 
@@ -86,12 +97,17 @@ namespace Assets.Scripts.Aquarium.FishTanks
                 UpdateTankText();
 
                 spawner.Clear();
+                tankDecorSpawner.Clear();
                 feedParticles.Stop();
                 feedParticles.Clear();
             }
 
             foreach (TankFish fish in tank.Tank.Fishes)
                 spawner.SpawnFish(fish);
+            foreach (PlacedTankDecoration placedTankDecoration in tank.Tank.Decorations)
+            {
+                tankDecorSpawner.PlaceTankDecoration(placedTankDecoration);
+            }
 
             PauseController.IsGamePaused = true;
 
@@ -107,6 +123,30 @@ namespace Assets.Scripts.Aquarium.FishTanks
             spawner.SpawnFish(fish, mouseWorldPos);
             UpdateTankText();
         }
+
+        public void TryPlaceDecor(TankDecorInventorySlot tankDecorInventorySlot)
+        {
+            Debug.Log($"HI! {_currentTank.Tank.Decorations.Count}, {_currentTank.Tank.DecorCapacity}");
+            if(_currentTank.Tank.Decorations.Count >= _currentTank.Tank.DecorCapacity)
+            {
+                return;
+            }
+            if(!tankDecorSpawner.TryPlaceDecor(tankDecorInventorySlot, _currentTank.Tank)) return;
+            
+            TankDecorCollectionManager.Instance.Remove(tankDecorInventorySlot.TankDecor);
+            UpdateTankText();
+        }
+
+        public void OnTankDecorSelected(PlacedTankDecorationObject placedTankDecorationObject)
+        {
+            Debug.Log("TANK DECORE SELECTED");
+            _currentTank.Tank.RemoveDecoration(placedTankDecorationObject.PlacedTankDecoration);
+            tankDecorSpawner.RemoveTankDecoration(placedTankDecorationObject.PlacedTankDecoration);
+            TankDecorCollectionManager.Instance.Add(placedTankDecorationObject.PlacedTankDecoration.TankDecoration);
+            UpdateTankText();
+        }
+
+
 
         public void Close()
         {
@@ -152,15 +192,29 @@ namespace Assets.Scripts.Aquarium.FishTanks
 
         private void UpdateTankText()
         {
-            int count = _currentTank.Tank.Fishes.Count;
-            int capacity = _currentTank.Tank.Capacity;
-            tankCapacityText.text = $"{count}/{capacity}";
-            tankCapacityText.color =
-                count == 1
-                ? Color.blue
-                : count <= capacity 
-                    ? Color.white 
-                    : Color.red;
+            {
+                int count = _currentTank.Tank.Fishes.Count;
+                int capacity = _currentTank.Tank.Capacity;
+                tankCapacityText.text = $"{count}/{capacity}";
+                tankCapacityText.color =
+                    count == 1
+                    ? Color.blue
+                    : count <= capacity 
+                        ? Color.white 
+                        : Color.red;
+            }
+
+            {
+                int countDecor = _currentTank.Tank.Decorations.Count;
+                int capacityDecor = _currentTank.Tank.DecorCapacity;
+                tankDecorCapacityText.text = $"{countDecor}/{capacityDecor}";
+                tankDecorCapacityText.color =
+                    countDecor < 1
+                    ? Color.white
+                    : countDecor >= capacityDecor 
+                        ? Color.green 
+                        : Color.blue;
+            }
 
             UpdateEntertainmentText();
         }

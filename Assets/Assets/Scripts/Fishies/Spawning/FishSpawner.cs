@@ -14,7 +14,7 @@ namespace Assets.Scripts.Fishies.Spawning
         [Space]
         
         [SerializeField] private RangeInt spawnCount;
-        [SerializeField] private SpeciesSpawn[] spawnList;
+        [SerializeField] private WeightedSpawnList<FishSpecies> spawnList;
         [SerializeField] private List<Transform> spawnPoints;
 
         private void Start()
@@ -32,18 +32,11 @@ namespace Assets.Scripts.Fishies.Spawning
             Quaternion randomRotation = Quaternion.Euler(0, 0, Random.Range(0, 360));
             GameObject fish = Instantiate(fishPrefab, randomSpawnPoint.position, randomRotation);
             FishController fc = fish.GetComponent<FishController>();
-            
-            FishSpecies randomSpecies = SelectRandomSpecies();
-            fc.Init(randomSpecies);
 
-            return;
+            FishSpecies randomSpecies = spawnList.GetRandomSpawn();
+            if (!randomSpecies) return;
             
-            FishSpecies SelectRandomSpecies()
-            {
-                Dictionary<FishSpecies, int> speciesSpawns = spawnList
-                    .ToDictionary(s => s.Species, s => s.Weight);
-                return RandomHelper.WeightedRandom(speciesSpawns);
-            }
+            fc.Init(randomSpecies);
         }
     }
 }

@@ -12,6 +12,8 @@ namespace Assets.Scripts.Aquarium.FishTanks
         [Tooltip("Capacity for each level: Level 1, Level 2, Level 3.")]
         [Min(1)] public int[] capacities = { 4, 7, 10 };
 
+        public int decorCapacity = 2;
+
         [Tooltip("Price to upgrade from Level 1 to 2, then Level 2 to 3.")]
         [Min(0)] public int[] upgradePrices = { 100, 250 };
         
