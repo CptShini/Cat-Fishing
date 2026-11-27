@@ -31,8 +31,7 @@ namespace Assets.Scripts.Aquarium.FishTanks
                         if(decorFrontLocations[i].childCount == 0)
                         {
                             Debug.Log("PLACING FRONT");
-                            PlaceTankDecoration(tankDecorInventorySlot, decorFrontLocations[i], i, tank);
-                            return true;
+                            return PlaceTankDecoration(tankDecorInventorySlot, decorFrontLocations[i], i, tank);
                         }
                     }
                     return false;
@@ -40,15 +39,13 @@ namespace Assets.Scripts.Aquarium.FishTanks
                     if(decorOutsideLocation.childCount == 0)
                     {
                         Debug.Log("PLACING OUTSIDE");
-                        PlaceTankDecoration(tankDecorInventorySlot, decorOutsideLocation, 0, tank);
-                        return true;
+                        return PlaceTankDecoration(tankDecorInventorySlot, decorOutsideLocation, 0, tank);
                     }
                     return false;
                 case TankDecorationPlacementType.BACK:
                     if(decorBackLocation.childCount == 0)
                     {
-                        PlaceTankDecoration(tankDecorInventorySlot, decorBackLocation, 0, tank);
-                        return true;
+                        return PlaceTankDecoration(tankDecorInventorySlot, decorBackLocation, 0, tank);
                     }
                     return false;;
                 default:
@@ -109,7 +106,7 @@ namespace Assets.Scripts.Aquarium.FishTanks
         {
             if (!_decorations.Remove(placedTankDecoration.TankDecoration.Id, out PlacedTankDecorationObject tankDecorObject))
                 return false;
-            Destroy(tankDecorObject);
+            Destroy(tankDecorObject.gameObject);
             return true;
         }
         
@@ -118,9 +115,7 @@ namespace Assets.Scripts.Aquarium.FishTanks
             foreach (PlacedTankDecorationObject tankDecorObject in _decorations.Values)
             {
                 Destroy(tankDecorObject.gameObject);
-                Debug.Log("DESTROYED");
             }
-            Debug.Log("CLEAR");
             
             _decorations.Clear();
         }

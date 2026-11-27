@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 259774660945246688}
   - component: {fileID: 4791425228148337203}
   - component: {fileID: 7525767528334997349}
-  m_Layer: 0
+  - component: {fileID: 3227604563819877228}
+  m_Layer: 17
   m_Name: FishTankDecoration
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,3 +106,49 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Aquarium.FishTanks.Decor.PlacedTankDecorationObject
   image: {fileID: 4791425228148337203}
+--- !u!61 &3227604563819877228
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 815915256005266944}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: -0.0071989894, y: 0.21331209}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.50760186, y: 0.26636136}
+    oldSize: {x: 0.947, y: 0.913}
+    newSize: {x: 0.934, y: 0.863}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 0.947, y: 0.913}
+  m_EdgeRadius: 0

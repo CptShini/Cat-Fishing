@@ -25,6 +25,9 @@ namespace Assets.Scripts.Aquarium.FishTanks.Decor
             _hovering = false;
         }
 
-        public void Hovering() => _hovering = true;
+        public void Hovering() {
+            Debug.Log("HOVERING");
+            _hovering = true;
+        }
     }
 }

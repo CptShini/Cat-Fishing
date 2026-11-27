@@ -1,4 +1,5 @@
 ﻿﻿using Assets.Scripts.Aquarium.Domain;
+using Assets.Scripts.Aquarium.FishTanks.Decor;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -14,6 +15,7 @@ namespace Assets.Scripts.Aquarium.FishTanks.Interaction
         public FishInteractionMode Mode { get; private set; } = FishInteractionMode.MoveFish;
 
         public readonly UnityEvent<TankFish, Vector2> DropFish = new();
+        public readonly UnityEvent<PlacedTankDecorationObject> SelectTankDecor = new();
         public readonly UnityEvent<TankFish, Vector2> FeedFish = new();
         public readonly UnityEvent<Vector2> CleanAtPosition = new();
         
@@ -21,6 +23,8 @@ namespace Assets.Scripts.Aquarium.FishTanks.Interaction
         private FishDragHandler _dragHandler;
         private FishFeedingHandler _feedingHandler;
         private TankCleaningHandler _cleaningHandler;
+
+        private TankDecorInteractionHandler _tankDecorHandler;
 
         private void Awake()
         {
@@ -34,6 +38,9 @@ namespace Assets.Scripts.Aquarium.FishTanks.Interaction
             
             _cleaningHandler = GetComponent<TankCleaningHandler>();
             _cleaningHandler.OnCleanPosition.AddListener(CleanAtPosition.Invoke);
+
+            _tankDecorHandler = GetComponent<TankDecorInteractionHandler>();
+            _tankDecorHandler.OnSelectingTankDecor.AddListener(SelectTankDecor.Invoke);
         }
 
         private void Update()
@@ -45,6 +52,7 @@ namespace Assets.Scripts.Aquarium.FishTanks.Interaction
             Vector2 mousePosition = mouse.position.ReadValue();
             
             _dragHandler.UpdateHover(mousePosition);
+            _tankDecorHandler.UpdateHover(mousePosition);
             
             switch (Mode)
             {
@@ -54,6 +62,10 @@ namespace Assets.Scripts.Aquarium.FishTanks.Interaction
                         mouse.leftButton.wasPressedThisFrame,
                         mouse.leftButton.isPressed,
                         mouse.leftButton.wasReleasedThisFrame
+                    );
+                    _tankDecorHandler.Tick(
+                        mousePosition,
+                        mouse.rightButton.wasPressedThisFrame
                     );
                     break;
                 case FishInteractionMode.CleanTank:
