@@ -65,7 +65,7 @@ namespace Assets.Scripts.Aquarium.FishTanks.Interaction
                     );
                     _tankDecorHandler.Tick(
                         mousePosition,
-                        mouse.rightButton.wasPressedThisFrame
+                        mouse.leftButton.wasPressedThisFrame
                     );
                     break;
                 case FishInteractionMode.CleanTank:
