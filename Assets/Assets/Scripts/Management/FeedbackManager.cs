@@ -1,6 +1,8 @@
-﻿using Sentry.Unity;
+﻿using System.Collections;
+using Sentry.Unity;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace Assets.Scripts.Management
@@ -13,6 +15,10 @@ namespace Assets.Scripts.Management
             nameInputField,
             emailInputField,
             descriptionInputField;
+        
+        [SerializeField] private Toggle addScreenshot;
+        
+        [SerializeField] private UnityEvent onSubmitFeedback, onSubmitFeedbackWithScreenshot;
         
         private string 
             _name,
@@ -38,7 +44,30 @@ namespace Assets.Scripts.Management
         
         public void GiveFeedback()
         {
-            SentrySdk.CaptureFeedback(_description, _email, _name);
+            if (addScreenshot.isOn)
+            {
+                StartCoroutine(HideFormAndCaptureFeedback());
+                return;
+            }
+                
+            SendFeedback(false);
+            onSubmitFeedback.Invoke();
+        }
+
+        private IEnumerator HideFormAndCaptureFeedback()
+        {
+            PauseControllerManager.Instance.ResumeGame();
+            
+            yield return new WaitForEndOfFrame();
+            
+            SendFeedback(true);
+            onSubmitFeedbackWithScreenshot.Invoke();
+        }
+
+        private void SendFeedback(bool takeScreenshot)
+        {
+            bool canScreenshot = takeScreenshot && !Application.isEditor;
+            SentrySdk.CaptureFeedback(_description, _email, _name, addScreenshot: canScreenshot);
             descriptionInputField.text = string.Empty;
         }
 
