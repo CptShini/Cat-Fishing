@@ -13,9 +13,7 @@ namespace Assets.Scripts.Aquarium.FishTanks.DecorInventory
         [SerializeField] private Image tankDecorIcon;
         [SerializeField] private TMP_Text tankDecorName;
 
-        private Canvas canvas;
         private CanvasGroup canvasGroup;
-        //private GameObject dragVisual;
 
         private TankDecoration _tankDecor;
         public static TankDecoration DraggedTankDecor { get; private set; }
@@ -25,7 +23,6 @@ namespace Assets.Scripts.Aquarium.FishTanks.DecorInventory
 
         private void Awake()
         {
-            canvas = GetComponentInParent<Canvas>();
             canvasGroup = GetComponent<CanvasGroup>();
 
             if (canvasGroup == null)

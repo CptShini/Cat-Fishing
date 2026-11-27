@@ -14,10 +14,7 @@ namespace Assets.Scripts.Aquarium.FishTanks.Interaction
         
         private AquariumCursorMapper _cursorMapper;
         private FishDragHandler _dragHandler;
-
         private PlacedTankDecorationObject _targetTankDecoration;
-        private Vector2 _offset;
-
         public readonly UnityEvent<PlacedTankDecorationObject> OnSelectingTankDecor = new();
 
         private void Awake() 

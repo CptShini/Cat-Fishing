@@ -11,7 +11,6 @@ namespace Assets.Scripts.Aquarium.FishTanks.Decor
         public PlacedTankDecoration PlacedTankDecoration { get; private set; }
 
         [SerializeField] private SpriteRenderer image;
-
         [SerializeField] private Color hoverColor = Color.lightGray;
 
         private bool _hovering;
