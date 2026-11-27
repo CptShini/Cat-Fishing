@@ -77,6 +77,7 @@ public class CatchingMinigame : MonoBehaviour
         _movement = caughtMovement;
         
         fishImage.sprite = fish.Species.Icon;
+        fishImage.transform.localScale = Vector3.one * fish.Size;
         minigameCanvas.SetActive(true);
 
         catchBar.SetMaxValue(contestThreshold, contestThreshold / 2);

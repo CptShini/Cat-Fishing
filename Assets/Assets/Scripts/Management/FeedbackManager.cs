@@ -13,7 +13,6 @@ namespace Assets.Scripts.Management
         
         [SerializeField] private TMP_InputField
             nameInputField,
-            emailInputField,
             descriptionInputField;
         
         [SerializeField] private Toggle addScreenshot;
@@ -22,20 +21,16 @@ namespace Assets.Scripts.Management
         
         private string 
             _name,
-            _email,
             _description;
 
         private void Start()
         {
             _name = PlayerPrefs.GetString("FeedbackName", null);
-            _email = PlayerPrefs.GetString("FeedbackEmail", null);
             
             if (!string.IsNullOrWhiteSpace(_name)) nameInputField.text = _name;
-            if (!string.IsNullOrWhiteSpace(_email)) emailInputField.text = _email;
         }
 
         public void OnNameChanged(string name) => _name = name;
-        public void OnEmailChanged(string email) => _email = email;
         public void OnDescriptionChanged(string description)
         {
             _description = description;
@@ -67,14 +62,10 @@ namespace Assets.Scripts.Management
         private void SendFeedback(bool takeScreenshot)
         {
             bool canScreenshot = takeScreenshot && !Application.isEditor;
-            SentrySdk.CaptureFeedback(_description, _email, _name, addScreenshot: canScreenshot);
+            SentrySdk.CaptureFeedback(_description, null, _name, canScreenshot);
             descriptionInputField.text = string.Empty;
         }
 
-        private void OnDestroy()
-        {
-            PlayerPrefs.SetString("FeedbackName", _name);
-            PlayerPrefs.SetString("FeedbackEmail", _email);
-        }
+        private void OnDestroy() => PlayerPrefs.SetString("FeedbackName", _name);
     }
 }
