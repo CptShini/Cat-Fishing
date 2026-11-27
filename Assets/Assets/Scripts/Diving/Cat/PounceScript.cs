@@ -42,8 +42,8 @@ namespace Assets.Scripts.Diving.Cat
         {
             _rb = GetComponent<Rigidbody2D>();
             _mainCamera = Camera.main;
-            staminaBar.SetMaxValue(DivingPlayerStats.Instance.maxStamina);
-            staminaBar.SetMinValue(0);
+            staminaBar.MaxVal = DivingPlayerStats.Instance.maxStamina;
+            staminaBar.CurrentValue = DivingPlayerStats.Instance.maxStamina;
             acceleration = DivingPlayerStats.Instance.acceleration;
             friction = DivingPlayerStats.Instance.friction;
             DamagedScript damaged = GetComponent<DamagedScript>();

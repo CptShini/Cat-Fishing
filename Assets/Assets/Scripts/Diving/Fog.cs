@@ -8,31 +8,40 @@ using Assets.Scripts.Data.Persistence;
 
 public class Fog : MonoBehaviour, IDataPersistence
 {
-    private static bool saved, loaded, hasMinimap;
+    private static bool hasMinimap;
     private static HashSet<int> exploredFogs = new();
 
     [SerializeField] private int fogID;
 
     private bool _isFading;
+
     private SpriteRenderer _spriteRenderer;
-    
     private PolygonCollider2D _collider;
+
+    private Color _originalColor;
 
     private void Awake()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
-        _spriteRenderer.enabled = true;
-        
         _collider = GetComponent<PolygonCollider2D>();
+
+        _originalColor = _spriteRenderer.color;
+        
+        _collider.isTrigger = true;
         _collider.enabled = false;
     }
 
-    private void Start() => gameObject.SetActive(!exploredFogs.Contains(fogID));
-    
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D other) => 
+        TryReveal(other);
+
+    private void OnTriggerStay2D(Collider2D other) => 
+        TryReveal(other);
+
+    private void TryReveal(Collider2D other)
     {
-        if (!hasMinimap || !other.CompareTag("Player") || _isFading) return;
-        
+        if (!hasMinimap || !other.CompareTag("Player") || _isFading)
+            return;
+
         StartCoroutine(FadeOut());
     }
 
@@ -43,45 +52,59 @@ public class Fog : MonoBehaviour, IDataPersistence
         float duration = 2f;
         float elapsed = 0f;
 
-        Color color = _spriteRenderer.color;
-        float startAlpha = color.a;
-
         while (elapsed < duration)
         {
             elapsed += Time.deltaTime;
 
-            float alpha = Mathf.Lerp(startAlpha, 0f, elapsed / duration);
+            float alpha = Mathf.Lerp(
+                _originalColor.a,
+                0f,
+                elapsed / duration
+            );
 
-            _spriteRenderer.color = new(color.r, color.g, color.b, alpha);
+            _spriteRenderer.color = new(
+                _originalColor.r,
+                _originalColor.g,
+                _originalColor.b,
+                alpha
+            );
 
             yield return null;
         }
 
-        _spriteRenderer.color = new(color.r, color.g, color.b, 0f);
-
-        // Remember explored state
+        // Remember that this fog has been explored.
         exploredFogs.Add(fogID);
 
-        gameObject.SetActive(false);
+        // Hide the fog without disabling the GameObject.
+        HideFog();
+    }
+
+    private void HideFog()
+    {
+        _spriteRenderer.enabled = false;
+        _collider.enabled = false;
+    }
+
+    private void ShowFog()
+    {
+        _spriteRenderer.color = _originalColor;
+
+        _spriteRenderer.enabled = true;
+        _collider.enabled = true;
     }
 
     public void LoadData(GameData data)
     {
-        if (!loaded)
-        {
-            loaded = true;
-            hasMinimap = data.OneTimeUpgrades[OneTimeUpgrade.Minimap];
-            exploredFogs = data.ExploredFogs.ToHashSet();
-        }
-        
-        _collider.enabled = true;
+        hasMinimap = data.OneTimeUpgrades[OneTimeUpgrade.Minimap];
+
+        exploredFogs = data.ExploredFogs?.ToHashSet() ?? new HashSet<int>();
+
+        if (exploredFogs.Contains(fogID))
+            HideFog();
+        else
+            ShowFog();
     }
 
-    public void SaveData(ref GameData data)
-    {
-        if (saved) return;
-        
-        saved = true;
+    public void SaveData(ref GameData data) => 
         data.ExploredFogs = exploredFogs.ToList();
-    }
 }

@@ -1,15 +1,14 @@
+using Assets.Scripts.Diving.Bars.BarVisuals;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UI;
 
 namespace Assets.Scripts.Diving.Bars
 {
     public class StatBar : MonoBehaviour
     {
-        [SerializeField] public Image foreground;
-        [SerializeField] protected bool filledImage = true;
-        [SerializeField] protected bool vertical = true;
-        private RectTransform rt;
+        [SerializeField] private BarVisual visual;
+        
+        private float _currentValue, _maxVal;
         
         public float CurrentValue
         {
@@ -21,53 +20,31 @@ namespace Assets.Scripts.Diving.Bars
             }
         }
 
-        public float CurrentPercent => _currentValue / MaxVal;
+        public float CurrentPercent { get; private set; }
+        
+        public float MaxVal
+        {
+            get => _maxVal;
+            set
+            {
+                _maxVal = value;
+                OnValueChanged();
+            }
+        }
 
         public readonly UnityEvent<float, float> ValueChanged = new();
         public readonly UnityEvent BarEmpty = new();
         
-        private float _currentValue;
-        private float _minValue;
-        protected float MaxVal { get; private set; }
-
-        private float maxLength, curLength;
-
-        private void Awake()
-        {
-            rt = foreground.gameObject.GetComponent<RectTransform>();
-            maxLength = vertical ? rt.sizeDelta.y : rt.sizeDelta.x;
-            curLength = maxLength;
-        }
-
-        public void SetMaxValue(float maxVal, float newVal = -1f)
-        {
-            MaxVal = maxVal;
-            _currentValue = newVal < 0 ? maxVal : newVal;
-            OnValueChanged();
-        }
-        
-        public void SetMinValue(float minVal) => _minValue = minVal;
-
         private void OnValueChanged()
         {
-            if (_currentValue <= _minValue) BarEmpty.Invoke();
+            if (_currentValue <= 0f) BarEmpty.Invoke();
             
-            _currentValue = Mathf.Clamp(_currentValue, _minValue, MaxVal);
-
-            if (filledImage)
-                UpdateFill();
-            else
-                UpdateSliced();
+            _currentValue = Mathf.Clamp(_currentValue, 0f, MaxVal);
+            CurrentPercent = _currentValue / MaxVal;
+            
+            visual?.UpdateVisual(CurrentPercent);
 
             ValueChanged.Invoke(_currentValue, MaxVal);
-        }
-        
-        protected virtual void UpdateFill() =>
-            foreground.fillAmount = _currentValue / MaxVal;
-        protected virtual void UpdateSliced()
-        {
-            curLength = maxLength * (CurrentValue / MaxVal);
-            rt.sizeDelta = vertical ? new(rt.sizeDelta.x, curLength) : new(curLength, rt.sizeDelta.y);
         }
     }
 }
