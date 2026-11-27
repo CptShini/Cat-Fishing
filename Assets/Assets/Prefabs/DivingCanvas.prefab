@@ -798,8 +798,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6751562458667321514}
-  - component: {fileID: 6213074359607386840}
   - component: {fileID: 5112116071914907589}
+  - component: {fileID: 6213074359607386840}
+  - component: {fileID: 109197819042214335}
+  - component: {fileID: 7918094991964188297}
   m_Layer: 5
   m_Name: Weight Meter
   m_TagString: Untagged
@@ -829,21 +831,6 @@ RectTransform:
   m_AnchoredPosition: {x: 25, y: 25}
   m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &6213074359607386840
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2365761184008796080}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08b3d7d2130641aeb925b3db05c1991e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.Bars.WeightBar
-  foreground: {fileID: 1657603122806773197}
-  filledImage: 1
-  vertical: 1
 --- !u!95 &5112116071914907589
 Animator:
   serializedVersion: 7
@@ -866,6 +853,46 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6213074359607386840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2365761184008796080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08b3d7d2130641aeb925b3db05c1991e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.Bars.WeightBar
+  visual: {fileID: 109197819042214335}
+--- !u!114 &109197819042214335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2365761184008796080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41c2e2c2c9ff41f7940a1b42fe0f2d02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.Bars.BarVisuals.BarVisual
+  barImage: {fileID: 1657603122806773197}
+  barFiller: {fileID: 7918094991964188297}
+  barColor: {fileID: 0}
+--- !u!114 &7918094991964188297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2365761184008796080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa961c07fd5248f6b7e0ea60d4c8203c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.Bars.BarVisuals.BarFillers.BarFillerFilled
 --- !u!1 &2536377611150764205
 GameObject:
   m_ObjectHideFlags: 0
@@ -1089,7 +1116,7 @@ MonoBehaviour:
   m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 1
-  m_FillAmount: 0.449
+  m_FillAmount: 0.5
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -1201,10 +1228,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 7122091259670730573}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 12, y: 0}
-  m_SizeDelta: {x: 976, y: 20}
+  m_SizeDelta: {x: -24, y: -20}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &4668296326723802197
 CanvasRenderer:
@@ -1688,6 +1715,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4651415735339665302}
   - component: {fileID: 2991899046791209115}
+  - component: {fileID: 7885887959555996705}
+  - component: {fileID: 4381731963163226900}
   m_Layer: 5
   m_Name: Stamina Meter
   m_TagString: Untagged
@@ -1729,8 +1758,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cca9e2d644debcf4ba81c0b314dcfd80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.Bars.StatBar
-  foreground: {fileID: 5688202531316886813}
-  filledImage: 0
+  visual: {fileID: 7885887959555996705}
+--- !u!114 &7885887959555996705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4421625064726149190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41c2e2c2c9ff41f7940a1b42fe0f2d02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.Bars.BarVisuals.BarVisual
+  barImage: {fileID: 5688202531316886813}
+  barFiller: {fileID: 4381731963163226900}
+  barColor: {fileID: 0}
+--- !u!114 &4381731963163226900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4421625064726149190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa3bf1b4b343449a9a6b3506a5816569, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.Bars.BarVisuals.BarFillers.BarFillerSliced
   vertical: 0
 --- !u!1 &4552934184845324635
 GameObject:
@@ -2142,10 +2197,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 4651415735339665302}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 12, y: 0}
-  m_SizeDelta: {x: 476, y: 20}
+  m_SizeDelta: {x: -24, y: -20}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &5601695153459972031
 CanvasRenderer:
@@ -2305,8 +2360,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4194146738621142918}
   m_HandleRect: {fileID: 1785921654982842227}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 0.7039216
+  m_Value: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2572,6 +2627,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7122091259670730573}
   - component: {fileID: 5699938357424794612}
+  - component: {fileID: 6984196441592608650}
+  - component: {fileID: 7574131154505354106}
+  - component: {fileID: 586290609981684486}
   m_Layer: 5
   m_Name: Oxygen Meter
   m_TagString: Untagged
@@ -2613,9 +2671,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cca9e2d644debcf4ba81c0b314dcfd80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.Bars.StatBar
-  foreground: {fileID: 2429995756911053735}
-  filledImage: 0
+  visual: {fileID: 6984196441592608650}
+--- !u!114 &6984196441592608650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8471800922274905492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41c2e2c2c9ff41f7940a1b42fe0f2d02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.Bars.BarVisuals.BarVisual
+  barImage: {fileID: 2429995756911053735}
+  barFiller: {fileID: 7574131154505354106}
+  barColor: {fileID: 586290609981684486}
+--- !u!114 &7574131154505354106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8471800922274905492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa3bf1b4b343449a9a6b3506a5816569, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.Bars.BarVisuals.BarFillers.BarFillerSliced
   vertical: 0
+--- !u!114 &586290609981684486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8471800922274905492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80f762aba6fc4265a9b3044386cf02e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.Bars.BarVisuals.BarColors.BarColorThreshold
+  threshold: 0.3
+  defaultColor: {r: 0.5529412, g: 0.87058824, b: 1, a: 1}
+  thresholdColor: {r: 0.8627451, g: 0.27450982, b: 0.49803922, a: 1}
 --- !u!1 &8862431338433532790
 GameObject:
   m_ObjectHideFlags: 0

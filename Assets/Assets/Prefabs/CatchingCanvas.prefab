@@ -452,10 +452,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 5084668181287801646}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 5}
-  m_SizeDelta: {x: 30, y: 660}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 8}
+  m_SizeDelta: {x: -16, y: -16}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &4969433183906833040
 CanvasRenderer:
@@ -494,7 +494,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 0.75
 --- !u!1 &4441618678341762253
 GameObject:
   m_ObjectHideFlags: 0
@@ -746,7 +746,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5084668181287801646}
-  - component: {fileID: 7296056615623843322}
+  - component: {fileID: 3241488012295673622}
+  - component: {fileID: 8339665094047562485}
+  - component: {fileID: 2541634757246600248}
+  - component: {fileID: 5467218574918211567}
   m_Layer: 5
   m_Name: Catch Meter
   m_TagString: Untagged
@@ -775,7 +778,7 @@ RectTransform:
   m_AnchoredPosition: {x: -25, y: 0}
   m_SizeDelta: {x: 40, y: -80}
   m_Pivot: {x: 1, y: 0.5}
---- !u!114 &7296056615623843322
+--- !u!114 &3241488012295673622
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -784,14 +787,52 @@ MonoBehaviour:
   m_GameObject: {fileID: 4763702304540754476}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e94868c06dda9ea4f829339a11ffb984, type: 3}
+  m_Script: {fileID: 11500000, guid: cca9e2d644debcf4ba81c0b314dcfd80, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.Bars.ColorChangeBar
-  foreground: {fileID: 2937280829304091205}
-  filledImage: 0
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.Bars.StatBar
+  visual: {fileID: 8339665094047562485}
+--- !u!114 &8339665094047562485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4763702304540754476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41c2e2c2c9ff41f7940a1b42fe0f2d02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.Bars.BarVisuals.BarVisual
+  barImage: {fileID: 2937280829304091205}
+  barFiller: {fileID: 2541634757246600248}
+  barColor: {fileID: 5467218574918211567}
+--- !u!114 &2541634757246600248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4763702304540754476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa3bf1b4b343449a9a6b3506a5816569, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.Bars.BarVisuals.BarFillers.BarFillerSliced
   vertical: 1
+--- !u!114 &5467218574918211567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4763702304540754476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7a59f17ba3941fba81fc9e0f8d79027, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.Bars.BarVisuals.BarColors.BarColorLerp
   minColor: {r: 1, g: 0, b: 0, a: 1}
-  maxColor: {r: 0, g: 1, b: 0.11965656, a: 1}
+  maxColor: {r: 0, g: 1, b: 0.116666794, a: 1}
 --- !u!1 &5984180908268520226
 GameObject:
   m_ObjectHideFlags: 0
