@@ -12,21 +12,36 @@ namespace Assets.Scripts.Aquarium.FishTanks.Decor
 
         [SerializeField] private SpriteRenderer image;
 
+        [SerializeField] private Color hoverColor = Color.lightGray;
+
         private bool _hovering;
         
         public void Init(PlacedTankDecoration placedTankDecoration)
         {
             PlacedTankDecoration = placedTankDecoration;
             image.sprite = placedTankDecoration.TankDecoration.Type.IconInFishTank;
+
+            BoxCollider2D collider = GetComponent<BoxCollider2D>();
+                                    
+            collider.size = image.sprite.bounds.size;
+            collider.offset = image.sprite.bounds.center;
         }
 
         private void LateUpdate()
         {
+            if (_hovering && image.color != hoverColor)
+            {
+                image.color = hoverColor;
+            }
+            else if(!_hovering && image.color == hoverColor)
+            {
+                image.color = Color.white;
+            }
+
             _hovering = false;
         }
 
         public void Hovering() {
-            Debug.Log("HOVERING");
             _hovering = true;
         }
     }
