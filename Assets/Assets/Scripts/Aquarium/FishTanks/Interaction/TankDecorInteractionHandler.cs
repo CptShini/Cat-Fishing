@@ -13,20 +13,24 @@ namespace Assets.Scripts.Aquarium.FishTanks.Interaction
         [SerializeField] private LayerMask draggableLayer;
         
         private AquariumCursorMapper _cursorMapper;
+        private FishDragHandler _dragHandler;
 
         private PlacedTankDecorationObject _targetTankDecoration;
         private Vector2 _offset;
 
         public readonly UnityEvent<PlacedTankDecorationObject> OnSelectingTankDecor = new();
 
-        private void Awake() => _cursorMapper = GetComponent<AquariumCursorMapper>();
+        private void Awake() 
+        { 
+            _cursorMapper = GetComponent<AquariumCursorMapper>();
+            _dragHandler = GetComponent<FishDragHandler>();
+        }
 
         public void UpdateHover(Vector2 mousePosition)
         {
-
-            if (!_cursorMapper.TryGetMouseRay(mousePosition, out var ray))
+            
+            if (_dragHandler.Dragging || !_cursorMapper.TryGetMouseRay(mousePosition, out var ray))
                 return;
-
 
             PlacedTankDecorationObject hoveredTankDecor = GetTankDecorUnderMouse(ray);
             hoveredTankDecor?.Hovering();
