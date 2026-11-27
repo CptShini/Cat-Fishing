@@ -36581,30 +36581,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2143443979087033762, guid: c7fc9bcbb8773d74c9d7602515a8fab6, type: 3}
-      propertyPath: m_Pivot.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2143443979087033762, guid: c7fc9bcbb8773d74c9d7602515a8fab6, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2143443979087033762, guid: c7fc9bcbb8773d74c9d7602515a8fab6, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2143443979087033762, guid: c7fc9bcbb8773d74c9d7602515a8fab6, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 22
-      objectReference: {fileID: 0}
-    - target: {fileID: 2143443979087033762, guid: c7fc9bcbb8773d74c9d7602515a8fab6, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 652
-      objectReference: {fileID: 0}
-    - target: {fileID: 2143443979087033762, guid: c7fc9bcbb8773d74c9d7602515a8fab6, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 9
-      objectReference: {fileID: 0}
     - target: {fileID: 7335549621974585821, guid: c7fc9bcbb8773d74c9d7602515a8fab6, type: 3}
       propertyPath: m_Color.b
       value: 0.79287153
@@ -50911,9 +50887,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.Managers.DivingManager
   oxygenBar: {fileID: 880628908}
-  dangerColor: {r: 0.8627451, g: 0.27450982, b: 0.49803922, a: 1}
-  defaultColor: {r: 0.5529412, g: 0.8705883, b: 1, a: 1}
-  dangerThreshold: 0.3
 --- !u!1 &2039121641
 GameObject:
   m_ObjectHideFlags: 0

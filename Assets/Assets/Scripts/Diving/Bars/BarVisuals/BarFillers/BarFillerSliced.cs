@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.Scripts.Diving.Bars.BarVisuals.BarFillers
 {
@@ -6,28 +7,42 @@ namespace Assets.Scripts.Diving.Bars.BarVisuals.BarFillers
     {
         [SerializeField] private bool vertical = true;
 
-        private float _width;
-        private float _maxLength;
-        
         private RectTransform _foreground;
+
+        private Vector2 _anchorMin, _anchorMax;
+        private Vector2 _offsetMin, _offsetMax;
         
-        private void Start()
+        public override void SetImage(Image image)
         {
+            base.SetImage(image);
             _foreground = Image.rectTransform;
-            _maxLength = vertical
-                ? _foreground.sizeDelta.y
-                : _foreground.sizeDelta.x;
-            _width = vertical
-                ? _foreground.sizeDelta.x
-                : _foreground.sizeDelta.y;
+            
+            _anchorMin = _foreground.anchorMin;
+            _anchorMax = _foreground.anchorMax;
+            _offsetMin = _foreground.offsetMin;
+            _offsetMax = _foreground.offsetMax;
         }
 
         protected override void SetFill(float fill)
         {
-            float newLength = _maxLength * fill;
-            _foreground.sizeDelta = vertical
-                ? new(_width, newLength)
-                : new(newLength, _width);
+            Vector2 anchorMax = _anchorMax;
+            Vector2 offsetMax = _offsetMax;
+
+            if (vertical)
+            {
+                anchorMax.y = Mathf.Lerp(_anchorMin.y, _anchorMax.y, fill);
+                offsetMax.y = Mathf.Lerp(_offsetMin.y, _offsetMax.y, fill);
+            }
+            else
+            {
+                anchorMax.x = Mathf.Lerp(_anchorMin.x, _anchorMax.x, fill);
+                offsetMax.x = Mathf.Lerp(_offsetMin.x, _offsetMax.x, fill);
+            }
+
+            _foreground.anchorMin = _anchorMin;
+            _foreground.anchorMax = anchorMax;
+            _foreground.offsetMin = _offsetMin;
+            _foreground.offsetMax = offsetMax;
         }
     }
 }
