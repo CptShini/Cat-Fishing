@@ -15,15 +15,20 @@ MonoBehaviour:
   mainMenu:
     BuildIndex: 0
     BGM: {fileID: 11400000, guid: 569962a43218a9c43b234f7bdb797f5f, type: 2}
+    CursorID: 1
   aquarium:
     BuildIndex: 1
     BGM: {fileID: 11400000, guid: dd6980ef5341ce64ca9f876913f93e6f, type: 2}
+    CursorID: 1
   diving:
     BuildIndex: 2
     BGM: {fileID: 11400000, guid: c7a314fb36778604bac2ecbceb9bbe43, type: 2}
+    CursorID: 0
   dailyReport:
     BuildIndex: 3
     BGM: {fileID: 11400000, guid: 569962a43218a9c43b234f7bdb797f5f, type: 2}
+    CursorID: 1
   letter:
     BuildIndex: 4
     BGM: {fileID: 11400000, guid: 569962a43218a9c43b234f7bdb797f5f, type: 2}
+    CursorID: 1

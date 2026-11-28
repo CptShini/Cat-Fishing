@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using Assets.Scripts.Audio.Music;
+using Assets.Scripts.Cursors;
 using Assets.Scripts.Data;
 using Assets.Scripts.Data.Persistence;
 using UnityEngine;
@@ -79,6 +80,8 @@ namespace Assets.Scripts.Management
         private void FadeIn()
         {
             if (!Transitioning) return;
+            
+            CursorManager.Instance.SetCursor(_currentScene.CursorID);
             
             SaveManager.Instance.Initialize();
             _dpm.FindDPOs();
