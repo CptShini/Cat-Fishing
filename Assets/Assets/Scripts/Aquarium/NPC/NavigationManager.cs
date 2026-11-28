@@ -3,11 +3,10 @@ using UnityEngine;
 
 public class NavigationManager : MonoBehaviour
 {
-
     public static NavigationManager Instance { get; private set; }
     [SerializeField] public NavMeshSurface surface;
 
-    bool buildReady = true;
+    private bool buildReady = true;
 
     private void Awake()
     {
@@ -16,10 +15,11 @@ public class NavigationManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+        
         Instance = this;
     }
 
-    void Start()
+    private void Start()
     {
         PlacementController.Instance.OnPlaced.AddListener(_ => ReadyBuild());
         PlacementController.Instance.OnPickedUp.AddListener(_ => ReadyBuild());
@@ -37,12 +37,11 @@ public class NavigationManager : MonoBehaviour
         buildReady = false;
     }
 
-    void LateUpdate()
+    private void LateUpdate()
     {
         if (!buildReady)
-        {
             return;
-        }
+        
         RebuildNavigation();
     }
 }

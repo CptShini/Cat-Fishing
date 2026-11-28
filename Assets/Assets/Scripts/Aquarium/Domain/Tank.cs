@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Data.Domain.TankDecor;
 using Assets.Scripts.Fishies.Domain;
+using Assets.Scripts.Helpers;
 using UnityEngine;
 
 namespace Assets.Scripts.Aquarium.Domain
@@ -63,7 +64,7 @@ namespace Assets.Scripts.Aquarium.Domain
 
         public Tank(TankDTO tankDTO, FishSpeciesDatabase db, TankDecorationTypeDatabase dbDecoration)
         {
-            Id = Guid.Parse(tankDTO.Id);
+            Id = tankDTO.Id.TryParseGuid();
             Name = tankDTO.Name;
             Capacity = tankDTO.Capacity;
             DecorCapacity = tankDTO.DecorCapacity;

@@ -2,6 +2,7 @@ using Assets.Scripts.Aquarium.Domain;
 using Assets.Scripts.Data.Domain;
 using Assets.Scripts.Data.Domain.TankDecor;
 using Assets.Scripts.Fishies.Domain;
+using Assets.Scripts.Helpers;
 using UnityEngine;
 
 namespace Assets.Scripts.Aquarium.FishTanks
@@ -27,13 +28,8 @@ namespace Assets.Scripts.Aquarium.FishTanks
 
             Definition = furniture.itemSO.fishTankDefinition;
 
-            if (!System.Guid.TryParse(furniture.instanceID, out System.Guid tankId))
-            {
-                Debug.LogError($"Invalid tank ID: {furniture.instanceID}", this);
-                return;
-            }
-
-            if (gameData is { Tanks: not null } && gameData.Tanks.TryGetValue(furniture.instanceID, out TankDTO savedTank))
+            System.Guid tankId = furniture.instanceID.TryParseGuid();
+            if (gameData.Tanks.TryGetValue(furniture.instanceID, out TankDTO savedTank))
             {
                 Tank = new(savedTank, fishSpeciesDatabase, tankDecorationTypeDatabase);
             }

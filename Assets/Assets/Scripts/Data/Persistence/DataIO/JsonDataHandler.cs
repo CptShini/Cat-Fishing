@@ -71,10 +71,7 @@ namespace Assets.Scripts.Data.Persistence.DataIO
             {
                 fullPath = GetSaveFilePath(saveFile.Name);
                 if (!File.Exists(fullPath))
-                {
-                    Debug.LogError($"Save file \"{saveFile.Name}\" does not exist.");
-                    return null;
-                }
+                    throw new FileNotFoundException($"Save file \"{saveFile.Name}\" does not exist.");
 
                 string dataToLoad = File.ReadAllText(fullPath);
 
@@ -121,12 +118,13 @@ namespace Assets.Scripts.Data.Persistence.DataIO
             {
                 fullPath = GetSaveFilePath(saveFile.Name);
                 if (!File.Exists(fullPath))
-                {
-                    Debug.LogError($"Save file \"{saveFile.Name}\" does not exist.");
-                    return;
-                }
+                    throw new FileNotFoundException($"Save file \"{saveFile.Name}\" does not exist.");
 
                 File.Delete(fullPath);
+            }
+            catch (FileNotFoundException e)
+            {
+                Debug.LogWarning($"Tried deleting save file that doesn't exist (\"{fullPath}\"): {e.Message}");
             }
             catch (Exception e)
             {

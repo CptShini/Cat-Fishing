@@ -1,4 +1,5 @@
 using System;
+using Assets.Scripts.Helpers;
 
 namespace Assets.Scripts.Data.Domain.TankDecor
 {
@@ -17,7 +18,7 @@ namespace Assets.Scripts.Data.Domain.TankDecor
 
         public TankDecoration(TankDecorationDTO tankDecorDTO, TankDecorationTypeDatabase db)
         {
-            Id = Guid.Parse(tankDecorDTO.Id);
+            Id = tankDecorDTO.Id.TryParseGuid();
             Type = db[tankDecorDTO.TypeId];
         }
     
