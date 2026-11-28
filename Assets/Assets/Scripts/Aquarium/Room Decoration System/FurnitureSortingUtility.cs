@@ -24,6 +24,7 @@ public class FurnitureSortingUtility  : MonoBehaviour
     public static void ApplySorting(GameObject obj, ItemSO item)
     {
         FurnitureSplitRenderer splitRenderer = obj.GetComponent<FurnitureSplitRenderer>();
+        
 
         if (item.splitRendering)
         {

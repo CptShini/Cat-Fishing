@@ -567,7 +567,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -1261993587
   m_SortingLayer: 2
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: aede7051e372cc0478e6898b2708f2d4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -578,7 +578,7 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!1 &129798106
 GameObject:
   m_ObjectHideFlags: 0
@@ -1420,7 +1420,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.0040705204, y: 0.12383151}
+  m_Offset: {x: 0.0040705204, y: -0.44103813}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -1430,7 +1430,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 2.103723, y: 2.4984221}
+  m_Size: {x: 2.103723, y: 1.3686829}
   m_EdgeRadius: 0
 --- !u!1839735485 &348595197
 Tilemap:
@@ -1528,7 +1528,7 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!114 &348595199
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2428,7 +2428,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.71, y: 7.21, z: -10}
+  m_LocalPosition: {x: 0.23, y: 2.33, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7394,7 +7394,7 @@ TilemapRenderer:
   m_MaxChunkCount: 16
   m_MaxFrameAge: 16
   m_SortOrder: 0
-  m_Mode: 0
+  m_Mode: 1
   m_DetectChunkCullingBounds: 0
 --- !u!4 &977189779
 Transform:
@@ -8085,7 +8085,7 @@ Transform:
   m_GameObject: {fileID: 1185604716}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.71, y: 7.21, z: -10}
+  m_LocalPosition: {x: 0.23, y: 2.33, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -11278,7 +11278,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.0036594868, y: 0.010237604}
+  m_Offset: {x: 0.0007919073, y: -0.20639536}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -11288,7 +11288,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.007319, y: 0.7741677}
+  m_Size: {x: 0.60669637, y: 0.3409018}
   m_EdgeRadius: 0
 --- !u!1839735485 &1767101835
 Tilemap:
@@ -13209,11 +13209,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1993143376596484433, guid: c5a756a681274f2479e6a95a7754b065, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.71
+      value: 0.23
       objectReference: {fileID: 0}
     - target: {fileID: 1993143376596484433, guid: c5a756a681274f2479e6a95a7754b065, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 7.21
+      value: 2.33
       objectReference: {fileID: 0}
     - target: {fileID: 1993143376596484433, guid: c5a756a681274f2479e6a95a7754b065, type: 3}
       propertyPath: m_LocalPosition.z
