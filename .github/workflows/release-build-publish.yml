@@ -122,6 +122,36 @@ jobs:
           name: CatFishing-Release-${{ needs.validate-release.outputs.tag }}-${{ github.run_id }}-${{ github.run_attempt }}
           path: release-assets
 
+      - name: Find previous published release
+        id: previous-release
+        if: ${{ needs.build-release.result == 'success' }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_TAG: ${{ needs.validate-release.outputs.tag }}
+        run: |
+          set -euo pipefail
+
+          previous_tag="$(
+            gh release list \
+              --exclude-drafts \
+              --exclude-pre-releases \
+              --limit 100 \
+              --order desc \
+              --json tagName |
+            jq -r --arg current "$RELEASE_TAG" '
+              map(select(.tagName != $current))
+              | .[0].tagName // empty
+            '
+          )"
+
+          if [[ -z "$previous_tag" ]]; then
+            echo "::error::No previous published release found."
+            exit 1
+          fi
+
+          echo "Previous release: $previous_tag"
+          echo "tag=$previous_tag" >> "$GITHUB_OUTPUT"
+
       - name: Create GitHub release
         id: create-release
         if: ${{ needs.build-release.result == 'success' }}
@@ -131,6 +161,7 @@ jobs:
           name: CatFishing ${{ needs.validate-release.outputs.tag }}
           files: release-assets/CatFishing-${{ needs.validate-release.outputs.tag }}-Windows.zip
           generate_release_notes: true
+          previous_tag: ${{ steps.previous-release.outputs.tag }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

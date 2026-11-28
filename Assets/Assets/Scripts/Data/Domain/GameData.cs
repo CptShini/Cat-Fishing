@@ -19,7 +19,7 @@ namespace Assets.Scripts.Data.Domain
         public float CrowdScore;
         public int[] CrowdHistory = new int[5];
 
-        public float DecorationEntertainment;
+        public int DecorationEntertainmentPercentBonus;
         
         public SerializableDictionary<string, TankFishDTO> Collection = new();
         public SerializableDictionary<string, TankDecorationDTO> TankDecorations = new();

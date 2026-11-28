@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SentryOptions
   m_EditorClassIdentifier: Sentry.Unity.dll::Sentry.Unity.ScriptableSentryUnityOptions
   <Enabled>k__BackingField: 1
-  <Dsn>k__BackingField: 
+  <Dsn>k__BackingField: https://1dcdad2d9f41a47541fc965b4c54c2a8@o4512493821755392.ingest.de.sentry.io/4512493829554256
   <CaptureInEditor>k__BackingField: 1
   <EnableErrorEventThrottling>k__BackingField: 1
   <ThrottleDedupeWindow>k__BackingField: 5000
@@ -21,7 +21,7 @@ MonoBehaviour:
   <DebounceTimeLog>k__BackingField: 1000
   <DebounceTimeWarning>k__BackingField: 1000
   <DebounceTimeError>k__BackingField: 1000
-  <TracesSampleRate>k__BackingField: 0.01
+  <TracesSampleRate>k__BackingField: 0
   <AutoStartupTraces>k__BackingField: 1
   <AutoSceneLoadTraces>k__BackingField: 1
   <AutoAwakeTraces>k__BackingField: 0
@@ -93,7 +93,7 @@ MonoBehaviour:
     <WindowsBackend>k__BackingField: 0
     <LinuxBackend>k__BackingField: 0
     <EnableNativeAppHangTracking>k__BackingField: 0
-  <OptionsConfiguration>k__BackingField: {fileID: 11400000, guid: ec69f9e19c3e44346ab3ca8e361dafee, type: 2}
+  <OptionsConfiguration>k__BackingField: {fileID: 0}
   <Debug>k__BackingField: 1
   <DebugOnlyInEditor>k__BackingField: 1
   <DiagnosticLevel>k__BackingField: 2

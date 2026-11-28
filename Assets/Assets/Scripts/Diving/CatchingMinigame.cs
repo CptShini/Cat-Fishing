@@ -77,9 +77,11 @@ public class CatchingMinigame : MonoBehaviour
         _movement = caughtMovement;
         
         fishImage.sprite = fish.Species.Icon;
+        fishImage.transform.localScale = Vector3.one * fish.Size;
         minigameCanvas.SetActive(true);
 
-        catchBar.SetMaxValue(contestThreshold, contestThreshold / 2);
+        catchBar.MaxVal = contestThreshold;
+        catchBar.CurrentValue = contestThreshold / 2;
         angleRad = ((Mathf.Atan2(_movement.Direction.y, _movement.Direction.x) * Mathf.Rad2Deg) + 360f) % 360f;
         wiggleTime = 0;
         wiggleRad = 0;

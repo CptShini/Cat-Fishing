@@ -1,5 +1,7 @@
 using Assets.Scripts.Aquarium.Domain;
 using Assets.Scripts.Aquarium.FishTanks.CleaningMiniGame;
+using Assets.Scripts.Aquarium.FishTanks.Decor;
+using Assets.Scripts.Aquarium.FishTanks.DecorInventory;
 using Assets.Scripts.Aquarium.FishTanks.Interaction;
 using Assets.Scripts.Tutorial;
 using TMPro;
@@ -12,18 +14,19 @@ namespace Assets.Scripts.Aquarium.FishTanks
     {
         public static FishTankUIController Instance { get; private set; }
 
-        [SerializeField] [Min(0)] private int feedingPrice = 5;
+        [SerializeField] [Min(0)] private int feedingPricePerFish = 5;
         
         [SerializeField] private GameObject panel;
         [SerializeField] private TextMeshProUGUI 
             tankNameText,
             tankCapacityText,
+            tankDecorCapacityText,
             tankEntertainmentText,
             upgradePriceText,
             feedingPriceText;
 
         [SerializeField] private SpriteRenderer tankDirtyImage;
-        [SerializeField] private Button upgradeButton;
+        [SerializeField] private Button upgradeButton, feedingButton;
 
         [SerializeField] private ParticleSystem feedParticles;
 
@@ -31,6 +34,11 @@ namespace Assets.Scripts.Aquarium.FishTanks
         
         [SerializeField] private FishTankSpawner spawner;
         [SerializeField] private FishInteractionController interactionController;
+
+        [Space]
+
+        [SerializeField] private TankDecorationSpawner tankDecorSpawner;
+
 
         [Space]
 
@@ -45,6 +53,8 @@ namespace Assets.Scripts.Aquarium.FishTanks
         private float _fadeTimer;
         private float _fadeStartDirtiness;
 
+        private int _feedingPrice;
+
         private FishTank _currentTank, _prevTank;
 
         public bool IsOpen { get; private set; }
@@ -56,12 +66,11 @@ namespace Assets.Scripts.Aquarium.FishTanks
             interactionController.DropFish.AddListener(OnFishDropped);
             interactionController.FeedFish.AddListener(OnFishFed);
             interactionController.CleanAtPosition.AddListener(OnCleanAtPosition);
+            interactionController.SelectTankDecor.AddListener(OnTankDecorSelected);
 
             GoldManager.Instance.GoldChanged.AddListener(UpdateUpgradeUI);
 
             upgradeButton.onClick.AddListener(UpgradeCurrentTank);
-
-            UpdateFeedingPriceUI();
         }
 
         public void Open(FishTank tank)
@@ -77,6 +86,7 @@ namespace Assets.Scripts.Aquarium.FishTanks
 
             spriteEraser.ResetTexture();
 
+            UpdateFeedingPrice();
             UpdateUpgradeUI();
             UpdateDirtinessVisual();
 
@@ -86,12 +96,17 @@ namespace Assets.Scripts.Aquarium.FishTanks
                 UpdateTankText();
 
                 spawner.Clear();
+                tankDecorSpawner.Clear();
                 feedParticles.Stop();
                 feedParticles.Clear();
             }
 
             foreach (TankFish fish in tank.Tank.Fishes)
                 spawner.SpawnFish(fish);
+            foreach (PlacedTankDecoration placedTankDecoration in tank.Tank.Decorations)
+            {
+                tankDecorSpawner.PlaceTankDecoration(placedTankDecoration);
+            }
 
             PauseController.IsGamePaused = true;
 
@@ -105,6 +120,25 @@ namespace Assets.Scripts.Aquarium.FishTanks
             _currentTank.Tank.AddFish(fish);
             interactionController.CursorMapper.TryGetWorldPosition(mouseScreenPos, out Vector2 mouseWorldPos);
             spawner.SpawnFish(fish, mouseWorldPos);
+            UpdateTankText();
+        }
+
+        public void TryPlaceDecor(TankDecorInventorySlot tankDecorInventorySlot)
+        {
+            if (_currentTank.Tank.Decorations.Count >= _currentTank.Tank.DecorCapacity)
+                return;
+            
+            if (!tankDecorSpawner.TryPlaceDecor(tankDecorInventorySlot, _currentTank.Tank)) return;
+            
+            TankDecorCollectionManager.Instance.Remove(tankDecorInventorySlot.TankDecor);
+            UpdateTankText();
+        }
+
+        public void OnTankDecorSelected(PlacedTankDecorationObject placedTankDecorationObject)
+        {
+            _currentTank.Tank.RemoveDecoration(placedTankDecorationObject.PlacedTankDecoration);
+            tankDecorSpawner.RemoveTankDecoration(placedTankDecorationObject.PlacedTankDecoration);
+            TankDecorCollectionManager.Instance.Add(placedTankDecorationObject.PlacedTankDecoration.TankDecoration);
             UpdateTankText();
         }
 
@@ -135,34 +169,54 @@ namespace Assets.Scripts.Aquarium.FishTanks
             UpdateTankText();
         }
         
-        private void OnFishFed(TankFish fish, Vector2 cursorWorldPos)
+        private void OnFishFed(Vector2 cursorWorldPos)
         {
-            if (!IsOpen || !GoldManager.Instance.SpendGold(feedingPrice)) return;
+            if (!IsOpen || !GoldManager.Instance.SpendGold(_feedingPrice)) return;
             
             feedParticles.transform.position = cursorWorldPos;
             feedParticles.Play();
-            if (fish == null) return;
             
-            fish.Feed();
+            _currentTank.Tank.FeedFish();
+            
             UpdateTankText();
         }
 
-        private void UpdateFeedingPriceUI() => 
-            feedingPriceText.text = feedingPrice.ToString();
+        private void UpdateFeedingPrice()
+        {
+            int hungryFishCount = _currentTank?.Tank?.HungryFishCount ?? 0;
+            _feedingPrice = feedingPricePerFish * hungryFishCount;
+            feedingPriceText.text = _feedingPrice.ToString();
+            feedingButton.interactable = _feedingPrice > 0 && GoldManager.Instance.HasEnoughGold(_feedingPrice);
+        }
 
         private void UpdateTankText()
         {
-            int count = _currentTank.Tank.Fishes.Count;
-            int capacity = _currentTank.Tank.Capacity;
-            tankCapacityText.text = $"{count}/{capacity}";
-            tankCapacityText.color =
-                count == 1
-                ? Color.blue
-                : count <= capacity 
-                    ? Color.white 
-                    : Color.red;
+            {
+                int count = _currentTank.Tank.Fishes.Count;
+                int capacity = _currentTank.Tank.Capacity;
+                tankCapacityText.text = $"{count}/{capacity}";
+                tankCapacityText.color =
+                    count == 1
+                    ? Color.blue
+                    : count <= capacity 
+                        ? Color.white 
+                        : Color.red;
+            }
+
+            {
+                int countDecor = _currentTank.Tank.Decorations.Count;
+                int capacityDecor = _currentTank.Tank.DecorCapacity;
+                tankDecorCapacityText.text = $"{countDecor}/{capacityDecor}";
+                tankDecorCapacityText.color =
+                    countDecor < 1
+                    ? Color.white
+                    : countDecor >= capacityDecor 
+                        ? Color.green 
+                        : Color.blue;
+            }
 
             UpdateEntertainmentText();
+            UpdateFeedingPrice();
         }
         
         private void UpdateEntertainmentText() =>
@@ -230,8 +284,6 @@ namespace Assets.Scripts.Aquarium.FishTanks
             _isFadingOut = true;
             _fadeTimer = 0f;
             _fadeStartDirtiness = _currentTank.Tank.Dirtiness;
-
-            Debug.Log($"{_currentTank.Tank.Name} is fully cleaned!");
         }
 
         private void UpdateDirtinessVisual()

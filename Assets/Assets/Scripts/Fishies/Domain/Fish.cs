@@ -1,4 +1,5 @@
 ﻿using System;
+using Assets.Scripts.Helpers;
 using UnityEngine;
 
 namespace Assets.Scripts.Fishies.Domain
@@ -26,7 +27,7 @@ namespace Assets.Scripts.Fishies.Domain
 
         public Fish(FishDTO fishDTO, FishSpeciesDatabase db)
         {
-            Id = Guid.Parse(fishDTO.Id);
+            Id = fishDTO.Id.TryParseGuid();
             Species = db[fishDTO.SpeciesId];
             
             Weight = fishDTO.Weight;

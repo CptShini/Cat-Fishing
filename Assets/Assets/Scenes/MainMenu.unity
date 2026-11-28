@@ -2456,7 +2456,7 @@ MonoBehaviour:
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 4
+  m_ScrollSensitivity: 5
   m_Viewport: {fileID: 1322347637}
   m_HorizontalScrollbar: {fileID: 933713933}
   m_VerticalScrollbar: {fileID: 251956770}
@@ -3061,6 +3061,42 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 266026865}
     m_Modifications:
+    - target: {fileID: 66143804521592176, guid: 6816ab796a2565b43a2e45fd6da3f700, type: 3}
+      propertyPath: onSubmitFeedback.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 66143804521592176, guid: 6816ab796a2565b43a2e45fd6da3f700, type: 3}
+      propertyPath: onSubmitFeedback.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 66143804521592176, guid: 6816ab796a2565b43a2e45fd6da3f700, type: 3}
+      propertyPath: onSubmitFeedback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1314121183}
+    - target: {fileID: 66143804521592176, guid: 6816ab796a2565b43a2e45fd6da3f700, type: 3}
+      propertyPath: onSubmitFeedbackWithScreenshot.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 66143804521592176, guid: 6816ab796a2565b43a2e45fd6da3f700, type: 3}
+      propertyPath: onSubmitFeedback.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 66143804521592176, guid: 6816ab796a2565b43a2e45fd6da3f700, type: 3}
+      propertyPath: onSubmitFeedback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ResumeGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 66143804521592176, guid: 6816ab796a2565b43a2e45fd6da3f700, type: 3}
+      propertyPath: onSubmitFeedback.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Assets.Scripts.Management.PauseControllerManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 66143804521592176, guid: 6816ab796a2565b43a2e45fd6da3f700, type: 3}
+      propertyPath: onSubmitFeedbackWithScreenshot.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ShowPauseMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 66143804521592176, guid: 6816ab796a2565b43a2e45fd6da3f700, type: 3}
+      propertyPath: onSubmitFeedback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 106364810587585602, guid: 6816ab796a2565b43a2e45fd6da3f700, type: 3}
       propertyPath: m_IsActive
       value: 0

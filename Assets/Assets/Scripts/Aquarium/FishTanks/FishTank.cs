@@ -1,6 +1,8 @@
 using Assets.Scripts.Aquarium.Domain;
 using Assets.Scripts.Data.Domain;
+using Assets.Scripts.Data.Domain.TankDecor;
 using Assets.Scripts.Fishies.Domain;
+using Assets.Scripts.Helpers;
 using UnityEngine;
 
 namespace Assets.Scripts.Aquarium.FishTanks
@@ -8,6 +10,7 @@ namespace Assets.Scripts.Aquarium.FishTanks
     public class FishTank : MonoBehaviour, IInteractable, IDayAware, IPlacedFurnitureInitializer
     {
         [SerializeField] private FishSpeciesDatabase fishSpeciesDatabase;
+        [SerializeField] private TankDecorationTypeDatabase tankDecorationTypeDatabase;
         
         public Tank Tank { get; private set; }
         public FishTankDefinitionSO Definition { get; private set; }
@@ -25,19 +28,14 @@ namespace Assets.Scripts.Aquarium.FishTanks
 
             Definition = furniture.itemSO.fishTankDefinition;
 
-            if (!System.Guid.TryParse(furniture.instanceID, out System.Guid tankId))
+            System.Guid tankId = furniture.instanceID.TryParseGuid();
+            if (gameData != null && gameData.Tanks.TryGetValue(furniture.instanceID, out TankDTO savedTank))
             {
-                Debug.LogError($"Invalid tank ID: {furniture.instanceID}", this);
-                return;
-            }
-
-            if (gameData is { Tanks: not null } && gameData.Tanks.TryGetValue(furniture.instanceID, out TankDTO savedTank))
-            {
-                Tank = new(savedTank, fishSpeciesDatabase);
+                Tank = new(savedTank, fishSpeciesDatabase, tankDecorationTypeDatabase);
             }
             else
             {
-                Tank = new(tankId, Definition.tankName, Definition.GetCapacity(1));
+                Tank = new(tankId, Definition.tankName, Definition.GetCapacity(1), Definition.decorCapacity);
             }
 
             UpdateDirtinessWarning();
@@ -45,7 +43,7 @@ namespace Assets.Scripts.Aquarium.FishTanks
 
         public void RestoreTank(TankDTO tankDTO)
         {
-            Tank = new(tankDTO, fishSpeciesDatabase);
+            Tank = new(tankDTO, fishSpeciesDatabase, tankDecorationTypeDatabase);
             UpdateDirtinessWarning();
         }
         

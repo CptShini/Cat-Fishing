@@ -9,12 +9,12 @@ namespace Assets.Scripts.Fishies.Spawning
 {
     public class FishSpawner : MonoBehaviour
     {
-        [SerializeField] private GameObject fishPrefab;
+        [SerializeField] private FishController fishPrefab;
 
         [Space]
         
         [SerializeField] private RangeInt spawnCount;
-        [SerializeField] private SpeciesSpawn[] spawnList;
+        [SerializeField] private WeightedSpawnList<FishSpecies> spawnList;
         [SerializeField] private List<Transform> spawnPoints;
 
         private void Start()
@@ -28,22 +28,13 @@ namespace Assets.Scripts.Fishies.Spawning
         
         private void SpawnRandomFish()
         {
+            bool noSpawn = !spawnList.GetRandomSpawn(out FishSpecies randomSpecies);
+            if (noSpawn) return;
+            
             Transform randomSpawnPoint = spawnPoints.GetRandom();
             Quaternion randomRotation = Quaternion.Euler(0, 0, Random.Range(0, 360));
-            GameObject fish = Instantiate(fishPrefab, randomSpawnPoint.position, randomRotation);
-            FishController fc = fish.GetComponent<FishController>();
-            
-            FishSpecies randomSpecies = SelectRandomSpecies();
-            fc.Init(randomSpecies);
-
-            return;
-            
-            FishSpecies SelectRandomSpecies()
-            {
-                Dictionary<FishSpecies, int> speciesSpawns = spawnList
-                    .ToDictionary(s => s.Species, s => s.Weight);
-                return RandomHelper.WeightedRandom(speciesSpawns);
-            }
+            FishController fish = Instantiate(fishPrefab, randomSpawnPoint.position, randomRotation);
+            fish.Init(randomSpecies);
         }
     }
 }

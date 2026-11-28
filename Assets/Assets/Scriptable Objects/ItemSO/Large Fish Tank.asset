@@ -15,14 +15,14 @@ MonoBehaviour:
   itemID: large_fish_tank
   itemName: Large Tank
   itemIcon: {fileID: 21300000, guid: 64be8747a59cb3644ba3d3d5a967eb94, type: 3}
-  EntertainmentValue: 0
+  EntertainmentPercentBonus: 0
   itemType: 2
   prefab: {fileID: 3758215890295927942, guid: f5accd9ca189a794380a0e279f536e2b, type: 3}
   size: {x: 3, y: 3}
   blocksPlacement: 1
   sortingLayer: 1
   sortingOrder: 0
-  splitRendering: 1
+  splitRendering: 0
   splitHeight: 0.3
   floorTile: {fileID: 0}
   floorSize: {x: 3, y: 3}
