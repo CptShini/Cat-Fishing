@@ -800,7 +800,6 @@ GameObject:
   - component: {fileID: 6751562458667321514}
   - component: {fileID: 5112116071914907589}
   - component: {fileID: 6213074359607386840}
-  - component: {fileID: 109197819042214335}
   - component: {fileID: 7918094991964188297}
   m_Layer: 5
   m_Name: Weight Meter
@@ -865,22 +864,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08b3d7d2130641aeb925b3db05c1991e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.Bars.WeightBar
-  visual: {fileID: 109197819042214335}
---- !u!114 &109197819042214335
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2365761184008796080}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41c2e2c2c9ff41f7940a1b42fe0f2d02, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.Bars.BarVisuals.BarVisual
-  barImage: {fileID: 1657603122806773197}
-  barFiller: {fileID: 7918094991964188297}
-  barColor: {fileID: 0}
+  visuals:
+  - {fileID: 7918094991964188297}
 --- !u!114 &7918094991964188297
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -893,6 +878,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa961c07fd5248f6b7e0ea60d4c8203c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.Bars.BarVisuals.BarFillers.BarFillerFilled
+  Image: {fileID: 1657603122806773197}
 --- !u!1 &2536377611150764205
 GameObject:
   m_ObjectHideFlags: 0
@@ -1715,7 +1701,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4651415735339665302}
   - component: {fileID: 2991899046791209115}
-  - component: {fileID: 7885887959555996705}
   - component: {fileID: 4381731963163226900}
   m_Layer: 5
   m_Name: Stamina Meter
@@ -1758,22 +1743,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cca9e2d644debcf4ba81c0b314dcfd80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.Bars.StatBar
-  visual: {fileID: 7885887959555996705}
---- !u!114 &7885887959555996705
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4421625064726149190}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41c2e2c2c9ff41f7940a1b42fe0f2d02, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.Bars.BarVisuals.BarVisual
-  barImage: {fileID: 5688202531316886813}
-  barFiller: {fileID: 4381731963163226900}
-  barColor: {fileID: 0}
+  visuals:
+  - {fileID: 4381731963163226900}
 --- !u!114 &4381731963163226900
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1786,6 +1757,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa3bf1b4b343449a9a6b3506a5816569, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.Bars.BarVisuals.BarFillers.BarFillerSliced
+  Image: {fileID: 5688202531316886813}
   vertical: 0
 --- !u!1 &4552934184845324635
 GameObject:
@@ -2627,9 +2599,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7122091259670730573}
   - component: {fileID: 5699938357424794612}
-  - component: {fileID: 6984196441592608650}
   - component: {fileID: 7574131154505354106}
-  - component: {fileID: 586290609981684486}
+  - component: {fileID: 8884692795816764751}
+  - component: {fileID: 5796991381049584027}
   m_Layer: 5
   m_Name: Oxygen Meter
   m_TagString: Untagged
@@ -2671,22 +2643,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cca9e2d644debcf4ba81c0b314dcfd80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.Bars.StatBar
-  visual: {fileID: 6984196441592608650}
---- !u!114 &6984196441592608650
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8471800922274905492}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41c2e2c2c9ff41f7940a1b42fe0f2d02, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.Bars.BarVisuals.BarVisual
-  barImage: {fileID: 2429995756911053735}
-  barFiller: {fileID: 7574131154505354106}
-  barColor: {fileID: 586290609981684486}
+  visuals:
+  - {fileID: 7574131154505354106}
+  - {fileID: 8884692795816764751}
+  - {fileID: 5796991381049584027}
 --- !u!114 &7574131154505354106
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2699,8 +2659,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa3bf1b4b343449a9a6b3506a5816569, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.Bars.BarVisuals.BarFillers.BarFillerSliced
+  Image: {fileID: 2429995756911053735}
   vertical: 0
---- !u!114 &586290609981684486
+--- !u!114 &8884692795816764751
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2709,12 +2670,83 @@ MonoBehaviour:
   m_GameObject: {fileID: 8471800922274905492}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80f762aba6fc4265a9b3044386cf02e4, type: 3}
+  m_Script: {fileID: 11500000, guid: a623ba5bb7f94ae7926ead5ad0d23fdd, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.Bars.BarVisuals.BarColors.BarColorThreshold
-  threshold: 0.3
-  defaultColor: {r: 0.5529412, g: 0.87058824, b: 1, a: 1}
-  thresholdColor: {r: 0.8627451, g: 0.27450982, b: 0.49803922, a: 1}
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.Bars.BarVisuals.BarColor
+  Image: {fileID: 2429995756911053735}
+  gradient:
+    serializedVersion: 2
+    key0: {r: 0.8627451, g: 0.27450982, b: 0.49803922, a: 1}
+    key1: {r: 0.5529412, g: 0.87058824, b: 1, a: 1}
+    key2: {r: 0, g: 0, b: 0, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 19661
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 1
+    m_ColorSpace: -1
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
+--- !u!114 &5796991381049584027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8471800922274905492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a623ba5bb7f94ae7926ead5ad0d23fdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.Bars.BarVisuals.BarColor
+  Image: {fileID: 0}
+  gradient:
+    serializedVersion: 2
+    key0: {r: 1, g: 0, b: 0, a: 1}
+    key1: {r: 1, g: 0, b: 0, a: 0.49803922}
+    key2: {r: 0, g: 0, b: 0, a: 0.19607843}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 3277
+    atime2: 9830
+    atime3: 19661
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_ColorSpace: -1
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 4
 --- !u!1 &8862431338433532790
 GameObject:
   m_ObjectHideFlags: 0
