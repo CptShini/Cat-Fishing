@@ -44,8 +44,8 @@ public class FacialExpressions : MonoBehaviour
         queuedEmotion = Emotion.DEFAULT;
         curEmotion = Emotion.DEFAULT;
        
-        _interactionDetector.OnInteractibleEntered.AddListener(() => SetExpression(Emotion.CURIOUS, 5));
-        _interactionDetector.OnInteractibleExited.AddListener(() => ResetPriorityUsingState(5));
+        _interactionDetector.OnInteractableEntered.AddListener(() => SetExpression(Emotion.CURIOUS, 5));
+        _interactionDetector.OnInteractableExited.AddListener(() => ResetPriorityUsingState(5));
     }
 
     public void SetExpression(PlayerState state)

@@ -194,7 +194,8 @@ jobs:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
         with:
           targetPlatform: StandaloneWindows64
-          versioning: Tag
+          versioning: Custom
+          version: "${{ needs.create-tag.outputs.tag }} (pre-release)"
           buildProfile: 'Assets/Settings/Build Profiles/Dev.asset'
 
       - name: Prepare Windows build

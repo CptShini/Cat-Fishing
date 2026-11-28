@@ -1,7 +1,8 @@
-using Assets.Scripts.Helpers;
 using NavMeshPlus.Components;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
+using Range = Assets.Scripts.Helpers.Range;
 
 public class NpcMovement : MonoBehaviour
 {
@@ -20,12 +21,45 @@ public class NpcMovement : MonoBehaviour
     private void Awake()
     {
         animator = GetComponent<Animator>();
-        surface = NavigationManager.Instance.surface;
         navMeshAgent = GetComponent<NavMeshAgent>();
         navMeshAgent.updateRotation = false;
         navMeshAgent.updateUpAxis = false;
     }
 
+    private void Start() => surface = NavigationManager.Instance.surface;
+
+    private void FixedUpdate()
+    {
+        Move(navMeshAgent.velocity);
+        
+        curVelocity = navMeshAgent.velocity;
+        if (curCooldown > curDestinationCooldown)
+            SetNewTargetPosition();
+        else
+            curCooldown += Time.deltaTime;
+
+        bool isWalking = curVelocity != Vector2.zero;
+        animator.SetBool("isWalking", isWalking);
+        /*if (isWalking)
+            AudioManager.Instance.Play(AudioId.Walk);
+        else
+            AudioManager.Instance.FadeOutLoop(AudioId.Walk);*/
+    }
+
+    private void Move(Vector2 newDirection)
+    {
+        Vector2 curVelocityNorm = newDirection.normalized;
+        if (curVelocity == Vector2.zero)
+        {
+            animator.SetBool("isWalking", false);
+            animator.SetFloat("LastInputX", curVelocityNorm.x);
+            animator.SetFloat("LastInputY", curVelocityNorm.y);
+        }
+
+        animator.SetFloat("InputX", curVelocityNorm.x);
+        animator.SetFloat("InputY", curVelocityNorm.y);
+    }
+    
     private void SetNewTargetPosition()
     {
         Vector2 direction = Random.insideUnitCircle * maxWalkDistance;
@@ -59,37 +93,4 @@ public class NpcMovement : MonoBehaviour
         curCooldown = 0;
         curDestinationCooldown = destinationCooldownRange.Random();
     }
-
-    private void FixedUpdate()
-    {
-        Move(navMeshAgent.velocity);
-        
-        curVelocity = navMeshAgent.velocity;
-        if (curCooldown > curDestinationCooldown)
-            SetNewTargetPosition();
-        else
-            curCooldown += Time.deltaTime;
-
-        bool isWalking = curVelocity != Vector2.zero;
-        animator.SetBool("isWalking", isWalking);
-        /*if (isWalking)
-            AudioManager.Instance.Play(AudioId.Walk);
-        else
-            AudioManager.Instance.FadeOutLoop(AudioId.Walk);*/
-    }
-
-    private void Move(Vector2 newDirection)
-    {
-        Vector2 curVelocityNorm = newDirection.normalized;
-        if (curVelocity == Vector2.zero)
-        {
-            animator.SetBool("isWalking", false);
-            animator.SetFloat("LastInputX", curVelocityNorm.x);
-            animator.SetFloat("LastInputY", curVelocityNorm.y);
-        }
-
-        animator.SetFloat("InputX", curVelocityNorm.x);
-        animator.SetFloat("InputY", curVelocityNorm.y);
-    }
-
 }

@@ -15,7 +15,7 @@ namespace Assets.Scripts.Aquarium.Domain
         
         private int _capacityPenalty;
 
-        public readonly UnityEvent Fed = new();
+        public readonly UnityEvent HappinessChanged = new();
         public readonly UnityEvent<TankFish, FishCauseOfDeath> Died = new();
 
         public TankFish(Fish fish)
@@ -55,7 +55,6 @@ namespace Assets.Scripts.Aquarium.Domain
             
             Hunger--;
             Recalculate();
-            Fed.Invoke();
         }
 
         public void SetTankCrowdingInfo(int count, int capacity)
@@ -78,6 +77,8 @@ namespace Assets.Scripts.Aquarium.Domain
                 Happiness *
                 2.5f
             );
+            
+            HappinessChanged.Invoke();
         }
 
         public void TankTooDirty() =>

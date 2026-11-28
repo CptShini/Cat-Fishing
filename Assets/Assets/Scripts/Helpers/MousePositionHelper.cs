@@ -10,8 +10,12 @@ namespace Assets.Scripts.Helpers
             mouseWorldPosition = Vector3.zero;
             if (Mouse.current == null || !camera)
                 return false;
+            
+            Vector2 mousePos = Mouse.current.position.ReadValue();
+            if (float.IsNaN(mousePos.x) || float.IsNaN(mousePos.y))
+                return false;
 
-            Ray mouseRay = camera.ScreenPointToRay(Mouse.current.position.ReadValue());
+            Ray mouseRay = camera.ScreenPointToRay(mousePos);
             Plane aimPlane = new(Vector3.forward, t.position);
             if (!aimPlane.Raycast(mouseRay, out float distance))
                 return false;

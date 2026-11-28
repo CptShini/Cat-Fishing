@@ -17,5 +17,5 @@ MonoBehaviour:
   placementType: 0
   Icon: {fileID: -8704382855117038278, guid: cac6a64d79ef0624a83bf6b5b82f4c86, type: 3}
   IconInFishTank: {fileID: 5242724120745463452, guid: ffb228b0b176a7e459bc2c5f13136487, type: 3}
-  EntertainmentValue: 1.5
+  EntertainmentPercentBonus: 5
   Weight: 5

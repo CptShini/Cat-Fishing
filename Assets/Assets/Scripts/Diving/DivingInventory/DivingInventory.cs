@@ -38,7 +38,7 @@ namespace Assets.Scripts.Diving.DivingInventory
         private void Start()
         {
             _collectibles = new();
-            weightBar.SetMaxValue(DivingPlayerStats.Instance.carryingCapacity, 0f);
+            weightBar.MaxVal = DivingPlayerStats.Instance.carryingCapacity;
         }
 
         public bool Add(Collectible collectible)

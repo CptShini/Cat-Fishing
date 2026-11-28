@@ -1,5 +1,6 @@
 ﻿using System;
 using Assets.Scripts.Audio.Music;
+using Assets.Scripts.Cursors;
 
 namespace Assets.Scripts.Management
 {
@@ -8,5 +9,6 @@ namespace Assets.Scripts.Management
     {
         public int BuildIndex;
         public AudioBGM BGM;
+        public CustomCursorID CursorID;
     }
 }
