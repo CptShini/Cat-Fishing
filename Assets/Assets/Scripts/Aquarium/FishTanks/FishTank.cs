@@ -18,6 +18,12 @@ namespace Assets.Scripts.Aquarium.FishTanks
         [SerializeField] private GameObject exclamationImage;
         [SerializeField, Min(0f)] private float dirtinessWarningThreshold = 3f;
 
+
+        void Start()
+        {
+            exclamationImage.GetComponent<SpriteRenderer>().sortingLayerName = FurnitureSortingUtility.GetSortingLayer(FurnitureSortingLayer.AboveWorld);
+        }
+
         public void InitializePlacedFurniture(PlacedFurniture furniture, GameData gameData)
         {
             if (!furniture.itemSO.fishTankDefinition)
