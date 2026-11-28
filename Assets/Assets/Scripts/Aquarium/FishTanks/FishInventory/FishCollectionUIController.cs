@@ -1,3 +1,4 @@
+using System.Linq;
 using Assets.Scripts.Aquarium.Domain;
 using UnityEngine;
 
@@ -38,11 +39,8 @@ namespace Assets.Scripts.Aquarium.FishTanks.FishInventory
             }
             
             collectionPanel.SetActive(true);
-            foreach (TankFish fish in fishCollection.CollectedFish.Values)
+            foreach (TankFish fish in fishCollection.CollectedFish.Values.OrderByDescending(tf => tf.Entertainment))
             {
-                if (fish == null)
-                    continue;
-
                 FishInventorySlot slot = Instantiate(slotPrefab, content);
 
                 if (slot != null)
