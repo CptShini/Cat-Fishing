@@ -126,12 +126,10 @@ namespace Assets.Scripts.Aquarium.FishTanks
 
         public void TryPlaceDecor(TankDecorInventorySlot tankDecorInventorySlot)
         {
-            Debug.Log($"HI! {_currentTank.Tank.Decorations.Count}, {_currentTank.Tank.DecorCapacity}");
-            if(_currentTank.Tank.Decorations.Count >= _currentTank.Tank.DecorCapacity)
-            {
+            if (_currentTank.Tank.Decorations.Count >= _currentTank.Tank.DecorCapacity)
                 return;
-            }
-            if(!tankDecorSpawner.TryPlaceDecor(tankDecorInventorySlot, _currentTank.Tank)) return;
+            
+            if (!tankDecorSpawner.TryPlaceDecor(tankDecorInventorySlot, _currentTank.Tank)) return;
             
             TankDecorCollectionManager.Instance.Remove(tankDecorInventorySlot.TankDecor);
             UpdateTankText();
@@ -139,7 +137,6 @@ namespace Assets.Scripts.Aquarium.FishTanks
 
         public void OnTankDecorSelected(PlacedTankDecorationObject placedTankDecorationObject)
         {
-            Debug.Log("TANK DECORE SELECTED");
             _currentTank.Tank.RemoveDecoration(placedTankDecorationObject.PlacedTankDecoration);
             tankDecorSpawner.RemoveTankDecoration(placedTankDecorationObject.PlacedTankDecoration);
             TankDecorCollectionManager.Instance.Add(placedTankDecorationObject.PlacedTankDecoration.TankDecoration);
