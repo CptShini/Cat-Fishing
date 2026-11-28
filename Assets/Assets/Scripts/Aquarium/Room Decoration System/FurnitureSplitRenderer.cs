@@ -33,9 +33,12 @@ public class FurnitureSplitRenderer : MonoBehaviour
 
         bottomRenderer.sortingLayerName = baseLayer;
         bottomRenderer.sortingOrder = item.sortingOrder;
+        bottomRenderer.spriteSortPoint = SpriteSortPoint.Pivot;
 
-        topRenderer.sortingLayerName = "AboveWorld";
+        topRenderer.sortingLayerName = "World";
         topRenderer.sortingOrder = item.sortingOrder;
+        topRenderer.spriteSortPoint = SpriteSortPoint.Pivot;
+
     }
 
     private void CreateSplitSprites(Sprite source, float splitHeight)
