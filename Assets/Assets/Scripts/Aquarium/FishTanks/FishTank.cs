@@ -29,7 +29,7 @@ namespace Assets.Scripts.Aquarium.FishTanks
             Definition = furniture.itemSO.fishTankDefinition;
 
             System.Guid tankId = furniture.instanceID.TryParseGuid();
-            if (gameData.Tanks.TryGetValue(furniture.instanceID, out TankDTO savedTank))
+            if (gameData != null && gameData.Tanks.TryGetValue(furniture.instanceID, out TankDTO savedTank))
             {
                 Tank = new(savedTank, fishSpeciesDatabase, tankDecorationTypeDatabase);
             }
