@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3743861297294105072}
   - component: {fileID: 3157828343802105894}
   m_Layer: 0
-  m_Name: Seaweed1_0 (1)
+  m_Name: Seaweed1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
