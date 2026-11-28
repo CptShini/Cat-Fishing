@@ -141,7 +141,6 @@ namespace Assets.Scripts.Aquarium.Domain
 
         private void FishDied(TankFish fish, FishCauseOfDeath cod)
         {
-            Debug.Log($"{fish.Fish.Species.Name} died from {cod}");
             _fishDeathCount[(int)cod]++;
             _deadFish.Add(fish);
             UnregisterFish(fish);
