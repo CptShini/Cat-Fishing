@@ -747,9 +747,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5084668181287801646}
   - component: {fileID: 3241488012295673622}
-  - component: {fileID: 8339665094047562485}
   - component: {fileID: 2541634757246600248}
-  - component: {fileID: 5467218574918211567}
+  - component: {fileID: 8334950822485888677}
   m_Layer: 5
   m_Name: Catch Meter
   m_TagString: Untagged
@@ -790,22 +789,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cca9e2d644debcf4ba81c0b314dcfd80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.Bars.StatBar
-  visual: {fileID: 8339665094047562485}
---- !u!114 &8339665094047562485
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4763702304540754476}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41c2e2c2c9ff41f7940a1b42fe0f2d02, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.Bars.BarVisuals.BarVisual
-  barImage: {fileID: 2937280829304091205}
-  barFiller: {fileID: 2541634757246600248}
-  barColor: {fileID: 5467218574918211567}
+  visuals:
+  - {fileID: 2541634757246600248}
+  - {fileID: 8334950822485888677}
 --- !u!114 &2541634757246600248
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -818,8 +804,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa3bf1b4b343449a9a6b3506a5816569, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.Bars.BarVisuals.BarFillers.BarFillerSliced
+  Image: {fileID: 2937280829304091205}
   vertical: 1
---- !u!114 &5467218574918211567
+--- !u!114 &8334950822485888677
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -828,11 +815,40 @@ MonoBehaviour:
   m_GameObject: {fileID: 4763702304540754476}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7a59f17ba3941fba81fc9e0f8d79027, type: 3}
+  m_Script: {fileID: 11500000, guid: a623ba5bb7f94ae7926ead5ad0d23fdd, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.Bars.BarVisuals.BarColors.BarColorLerp
-  minColor: {r: 1, g: 0, b: 0, a: 1}
-  maxColor: {r: 0, g: 1, b: 0.116666794, a: 1}
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.Bars.BarVisuals.BarColor
+  Image: {fileID: 2937280829304091205}
+  gradient:
+    serializedVersion: 2
+    key0: {r: 1, g: 0, b: 0, a: 1}
+    key1: {r: 0, g: 1, b: 0, a: 1}
+    key2: {r: 0, g: 0, b: 0, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 2
+    m_ColorSpace: -1
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
 --- !u!1 &5984180908268520226
 GameObject:
   m_ObjectHideFlags: 0

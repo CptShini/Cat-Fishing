@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 
-namespace Assets.Scripts.Diving.Bars.BarVisuals.BarFillers
+namespace Assets.Scripts.Diving.Bars.BarVisuals
 {
-    public class BarFillerSliced : BarFiller
+    public class BarFillerSliced : BarVisual
     {
         [SerializeField] private bool vertical = true;
 
@@ -12,9 +11,8 @@ namespace Assets.Scripts.Diving.Bars.BarVisuals.BarFillers
         private Vector2 _anchorMin, _anchorMax;
         private Vector2 _offsetMin, _offsetMax;
         
-        public override void SetImage(Image image)
+        private void Awake()
         {
-            base.SetImage(image);
             _foreground = Image.rectTransform;
             
             _anchorMin = _foreground.anchorMin;
@@ -23,20 +21,20 @@ namespace Assets.Scripts.Diving.Bars.BarVisuals.BarFillers
             _offsetMax = _foreground.offsetMax;
         }
 
-        protected override void SetFill(float fill)
+        public override void UpdateVisual(float p)
         {
             Vector2 anchorMax = _anchorMax;
             Vector2 offsetMax = _offsetMax;
 
             if (vertical)
             {
-                anchorMax.y = Mathf.Lerp(_anchorMin.y, _anchorMax.y, fill);
-                offsetMax.y = Mathf.Lerp(_offsetMin.y, _offsetMax.y, fill);
+                anchorMax.y = Mathf.Lerp(_anchorMin.y, _anchorMax.y, p);
+                offsetMax.y = Mathf.Lerp(_offsetMin.y, _offsetMax.y, p);
             }
             else
             {
-                anchorMax.x = Mathf.Lerp(_anchorMin.x, _anchorMax.x, fill);
-                offsetMax.x = Mathf.Lerp(_offsetMin.x, _offsetMax.x, fill);
+                anchorMax.x = Mathf.Lerp(_anchorMin.x, _anchorMax.x, p);
+                offsetMax.x = Mathf.Lerp(_offsetMin.x, _offsetMax.x, p);
             }
 
             _foreground.anchorMin = _anchorMin;

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Assets.Scripts.Diving.Bars.BarVisuals;
 using UnityEngine;
 using UnityEngine.Events;
@@ -6,7 +7,7 @@ namespace Assets.Scripts.Diving.Bars
 {
     public class StatBar : MonoBehaviour
     {
-        [SerializeField] private BarVisual visual;
+        [SerializeField] private List<BarVisual> visuals;
         
         private float _currentValue, _maxVal;
         
@@ -19,8 +20,6 @@ namespace Assets.Scripts.Diving.Bars
                 OnValueChanged();
             }
         }
-
-        public float CurrentPercent { get; private set; }
         
         public float MaxVal
         {
@@ -40,9 +39,9 @@ namespace Assets.Scripts.Diving.Bars
             if (_currentValue <= 0f) BarEmpty.Invoke();
             
             _currentValue = Mathf.Clamp(_currentValue, 0f, MaxVal);
-            CurrentPercent = _currentValue / MaxVal;
             
-            visual?.UpdateVisual(CurrentPercent);
+            float currentPercent = _currentValue / MaxVal;
+            visuals.ForEach(bv => bv.UpdateVisual(currentPercent));
 
             ValueChanged.Invoke(_currentValue, MaxVal);
         }
