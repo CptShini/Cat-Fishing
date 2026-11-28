@@ -17,6 +17,7 @@ namespace Assets.Scripts.DailyReport
         [Header("TextFields")]
         [SerializeField] private TextMeshProUGUI tankEntertainmentText;
         [SerializeField] private TextMeshProUGUI decorEntertainmentText;
+        [SerializeField] private TextMeshProUGUI decorPercentBonusText;
         [SerializeField] private TextMeshProUGUI sumEntertainmentText;
         
         [SerializeField] private TextMeshProUGUI currentGoldText, addedGoldText;
@@ -46,8 +47,9 @@ namespace Assets.Scripts.DailyReport
 
         private int _currentCrowd, _addedCrowd;
         private int _currentGold, _addedGold;
-        
-        private float _tankEntertainment, _decorationEntertainment;
+
+        private float _tankEntertainment;
+        private int _decorationEntertainmentPercentBonus;
         private IEnumerable<Fish> _collectedFish;
         private Dictionary<Guid, Tank> _tanks;
         private IEnumerable<TankDecoration> _collectedTankDecorations;
@@ -94,7 +96,8 @@ namespace Assets.Scripts.DailyReport
 
         private void Calculate()
         {
-            _entertainmentSum = _tankEntertainment + _decorationEntertainment;
+            float decorationEntertainmentBonus = 1f + _decorationEntertainmentPercentBonus / 100f;
+            _entertainmentSum = _tankEntertainment * decorationEntertainmentBonus;
 
             float targetCrowdScore = Mathf.Sqrt(_entertainmentSum) * k;
             float crowdScoreTargetDelta = targetCrowdScore - _currentCrowdScore;
@@ -111,7 +114,10 @@ namespace Assets.Scripts.DailyReport
         private void SetResults()
         {
             tankEntertainmentText.text = $"{_tankEntertainment:F1}";
-            decorEntertainmentText.text = $"{_decorationEntertainment:F1}";
+            decorPercentBonusText.text = $"({_decorationEntertainmentPercentBonus}%)";
+            
+            float decorationContribution = _entertainmentSum - _tankEntertainment;
+            decorEntertainmentText.text = $"{decorationContribution:F1}";
             sumEntertainmentText.text = $"{_entertainmentSum:F1}";
             
             currentCrowdText.text = _currentCrowd.ToString();
@@ -147,7 +153,7 @@ namespace Assets.Scripts.DailyReport
             _currentCrowdScore = data.CrowdScore;
             _crowdHistory = new(data.CrowdHistory);
             
-            _decorationEntertainment = data.DecorationEntertainment;
+            _decorationEntertainmentPercentBonus = data.DecorationEntertainmentPercentBonus;
             
             _collectedFish = data.Collection.Select(kvp => new Fish(kvp.Value.Fish, fishSpeciesDatabase));
             _tanks = data.Tanks.ToDictionary(dto => new Tank(dto, fishSpeciesDatabase, tankDecorationTypeDatabase));
@@ -156,6 +162,9 @@ namespace Assets.Scripts.DailyReport
 
         public void SaveData(ref GameData data)
         {
+            if (!data.DayStarted)
+                return;
+                
             data.DayStarted = false;
             data.Gold = _currentGold;
             

@@ -284,8 +284,6 @@ namespace Assets.Scripts.Aquarium.FishTanks
             _isFadingOut = true;
             _fadeTimer = 0f;
             _fadeStartDirtiness = _currentTank.Tank.Dirtiness;
-
-            Debug.Log($"{_currentTank.Tank.Name} is fully cleaned!");
         }
 
         private void UpdateDirtinessVisual()

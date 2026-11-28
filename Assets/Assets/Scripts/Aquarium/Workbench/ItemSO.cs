@@ -11,7 +11,7 @@ public class ItemSO : ScriptableObject
     [Header("Basic Info")]
     public string itemName;
     public Sprite itemIcon;
-    public float EntertainmentValue;
+    [Min(0)] public int EntertainmentPercentBonus;
 
     [Header("Item Type")]
     public ItemType itemType = ItemType.Furniture;

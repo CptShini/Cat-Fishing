@@ -171,10 +171,17 @@ namespace Assets.Scripts.Aquarium.Domain
                 float noveltyFactor = Mathf.Pow(2f, 1 - speciesCount[speciesId]);
                 _entertainmentValue += fish.Entertainment * noveltyFactor;
             }
-            foreach (var tankDecoration in _decorations)
-            {
-                _entertainmentValue += tankDecoration.TankDecoration.Type.EntertainmentValue;
-            }
+
+            // Additive
+            /*int decorationPercentBonus = _decorations.Sum(td => td.TankDecoration.Type.EntertainmentPercentBonus);
+            float decorationMultiplier = 1f + decorationPercentBonus / 100f;
+            _entertainmentValue *= decorationMultiplier;*/
+            
+            // Multiplicative
+            float decorationMultiplier = _decorations.Aggregate(1f, (current, ptd) => 
+                current * (1f + ptd.TankDecoration.Type.EntertainmentPercentBonus / 100f)
+            );
+            _entertainmentValue *= decorationMultiplier;
         }
 
         public bool Upgrade(int newCapacity)
