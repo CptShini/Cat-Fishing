@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Aquarium.FishTanks;
+using Assets.Scripts.Management;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -11,15 +12,14 @@ public class InteractionDetector : MonoBehaviour
     
     private readonly Dictionary<IInteractable, Transform> _interactableList = new();
 
-    public readonly UnityEvent OnInteractibleEntered = new();
-    public readonly UnityEvent OnInteractibleExited = new();
-
-
+    public readonly UnityEvent OnInteractableEntered = new();
+    public readonly UnityEvent OnInteractableExited = new();
+    
     public void OnInteract(InputAction.CallbackContext context)
     {
-        if (!context.performed)
+        if (!context.performed || PauseControllerManager.Instance.isPaused)
             return;
-
+        
         if (CloseCurrentUI())
             return;
 
@@ -37,12 +37,11 @@ public class InteractionDetector : MonoBehaviour
             !interactable.CanInteract() ||
             !_interactableList.TryAdd(interactable, collision.transform)
         ) return;
+
+        if (_interactableList.Count != 1) return;
         
-        if (_interactableList.Count == 1) 
-        {
-            OnInteractibleEntered.Invoke();
-            interactionIcon.SetActive(true);
-        }
+        OnInteractableEntered.Invoke();
+        interactionIcon.SetActive(true);
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -52,11 +51,10 @@ public class InteractionDetector : MonoBehaviour
             !_interactableList.Remove(interactable)
         ) return;
 
-        if (_interactableList.Count == 0) 
-        {
-            OnInteractibleExited.Invoke();
-            interactionIcon.SetActive(false);
-        }
+        if (_interactableList.Count != 0) return;
+        
+        OnInteractableExited.Invoke();
+        interactionIcon.SetActive(false);
     }
     
     private static bool CloseCurrentUI()
