@@ -26,8 +26,8 @@ namespace Assets.Scripts.Data.Domain.TankDecor
 
         // --- Stats ---
 
-        [field: SerializeField, Header("Stats")]
-        public float EntertainmentValue;
+        [field: SerializeField, Min(0), Header("Stats")]
+        public int EntertainmentPercentBonus;
 
         [field: SerializeField]
         public float Weight;
