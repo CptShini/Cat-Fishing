@@ -1,5 +1,6 @@
 ﻿﻿using Assets.Scripts.Aquarium.Domain;
 using Assets.Scripts.Aquarium.FishTanks.Decor;
+using Assets.Scripts.Cursors;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -16,7 +17,7 @@ namespace Assets.Scripts.Aquarium.FishTanks.Interaction
 
         public readonly UnityEvent<TankFish, Vector2> DropFish = new();
         public readonly UnityEvent<PlacedTankDecorationObject> SelectTankDecor = new();
-        public readonly UnityEvent<TankFish, Vector2> FeedFish = new();
+        public readonly UnityEvent<Vector2> FeedFish = new();
         public readonly UnityEvent<Vector2> CleanAtPosition = new();
         
         public AquariumCursorMapper CursorMapper { get; private set; }
@@ -100,8 +101,11 @@ namespace Assets.Scripts.Aquarium.FishTanks.Interaction
         }
 
 
-        public void BeginFeedDrag() => 
+        public void BeginFeedDrag()
+        {
             SetMode(FishInteractionMode.FeedFish);
+            CursorManager.Instance.SetCursor(CustomCursorID.Hidden);
+        }
 
         public void EndFeedDrag(Vector2 screenPosition)
         {
@@ -110,6 +114,7 @@ namespace Assets.Scripts.Aquarium.FishTanks.Interaction
 
             _feedingHandler.TryFeed(screenPosition);
 
+            CursorManager.Instance.SetCursor(CustomCursorID.Paw);
             SetMode(FishInteractionMode.MoveFish);
         }
     }

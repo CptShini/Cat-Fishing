@@ -1,6 +1,7 @@
 using Assets.Scripts.Aquarium.FishTanks.Interaction;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace Assets.Scripts.Aquarium.FishTanks
 {
@@ -16,10 +17,13 @@ namespace Assets.Scripts.Aquarium.FishTanks
         private Vector2 _originalPosition;
         private int _originalSiblingIndex;
 
+        private Button _button;
+
         private bool _dragging;
 
         private void Awake()
         {
+            _button = GetComponent<Button>();
             _rectTransform = GetComponent<RectTransform>();
 
             _canvas = GetComponentInParent<Canvas>();
@@ -34,7 +38,8 @@ namespace Assets.Scripts.Aquarium.FishTanks
         {
             if (!interactionController ||
                 !interactionController.isActiveAndEnabled ||
-                !_canvasRect)
+                !_canvasRect ||
+                !_button.interactable)
                 return;
 
             _originalParent = _rectTransform.parent;

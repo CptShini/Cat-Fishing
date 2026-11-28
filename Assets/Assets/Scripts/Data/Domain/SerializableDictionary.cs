@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.Scripts.Helpers;
 using UnityEngine;
 
 namespace Assets.Scripts.Data.Domain
@@ -65,7 +66,7 @@ namespace Assets.Scripts.Data.Domain
 
             foreach (string id in dic.Keys)
             {
-                Guid key = Guid.Parse(id);
+                Guid key = id.TryParseGuid();
                 TResult value = converter(dic[id]);
                 dictionary.Add(key, value);
             }

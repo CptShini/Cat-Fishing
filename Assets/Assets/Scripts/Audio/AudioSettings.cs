@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 
-namespace Assets.Scripts.Management
+namespace Assets.Scripts.Audio
 {
     public class AudioSettings : MonoBehaviour
     {
