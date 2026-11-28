@@ -17,7 +17,7 @@ namespace Assets.Scripts.Aquarium.FishTanks.Interaction
 
         public readonly UnityEvent<TankFish, Vector2> DropFish = new();
         public readonly UnityEvent<PlacedTankDecorationObject> SelectTankDecor = new();
-        public readonly UnityEvent<TankFish, Vector2> FeedFish = new();
+        public readonly UnityEvent<Vector2> FeedFish = new();
         public readonly UnityEvent<Vector2> CleanAtPosition = new();
         
         public AquariumCursorMapper CursorMapper { get; private set; }

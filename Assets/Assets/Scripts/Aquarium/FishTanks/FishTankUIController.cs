@@ -1,10 +1,8 @@
-using System.Collections.Generic;
 using Assets.Scripts.Aquarium.Domain;
 using Assets.Scripts.Aquarium.FishTanks.CleaningMiniGame;
 using Assets.Scripts.Aquarium.FishTanks.Decor;
 using Assets.Scripts.Aquarium.FishTanks.DecorInventory;
 using Assets.Scripts.Aquarium.FishTanks.Interaction;
-using Assets.Scripts.Data.Domain.TankDecor;
 using Assets.Scripts.Tutorial;
 using TMPro;
 using UnityEngine;
@@ -16,7 +14,7 @@ namespace Assets.Scripts.Aquarium.FishTanks
     {
         public static FishTankUIController Instance { get; private set; }
 
-        [SerializeField] [Min(0)] private int feedingPrice = 5;
+        [SerializeField] [Min(0)] private int feedingPricePerFish = 5;
         
         [SerializeField] private GameObject panel;
         [SerializeField] private TextMeshProUGUI 
@@ -28,7 +26,7 @@ namespace Assets.Scripts.Aquarium.FishTanks
             feedingPriceText;
 
         [SerializeField] private SpriteRenderer tankDirtyImage;
-        [SerializeField] private Button upgradeButton;
+        [SerializeField] private Button upgradeButton, feedingButton;
 
         [SerializeField] private ParticleSystem feedParticles;
 
@@ -55,6 +53,8 @@ namespace Assets.Scripts.Aquarium.FishTanks
         private float _fadeTimer;
         private float _fadeStartDirtiness;
 
+        private int _feedingPrice;
+
         private FishTank _currentTank, _prevTank;
 
         public bool IsOpen { get; private set; }
@@ -71,8 +71,6 @@ namespace Assets.Scripts.Aquarium.FishTanks
             GoldManager.Instance.GoldChanged.AddListener(UpdateUpgradeUI);
 
             upgradeButton.onClick.AddListener(UpgradeCurrentTank);
-
-            UpdateFeedingPriceUI();
         }
 
         public void Open(FishTank tank)
@@ -88,6 +86,7 @@ namespace Assets.Scripts.Aquarium.FishTanks
 
             spriteEraser.ResetTexture();
 
+            UpdateFeedingPrice();
             UpdateUpgradeUI();
             UpdateDirtinessVisual();
 
@@ -143,8 +142,6 @@ namespace Assets.Scripts.Aquarium.FishTanks
             UpdateTankText();
         }
 
-
-
         public void Close()
         {
             if (!IsOpen)
@@ -172,20 +169,25 @@ namespace Assets.Scripts.Aquarium.FishTanks
             UpdateTankText();
         }
         
-        private void OnFishFed(TankFish fish, Vector2 cursorWorldPos)
+        private void OnFishFed(Vector2 cursorWorldPos)
         {
-            if (!IsOpen || !GoldManager.Instance.SpendGold(feedingPrice)) return;
+            if (!IsOpen || !GoldManager.Instance.SpendGold(_feedingPrice)) return;
             
             feedParticles.transform.position = cursorWorldPos;
             feedParticles.Play();
-            if (fish == null) return;
             
-            fish.Feed();
+            _currentTank.Tank.FeedFish();
+            
             UpdateTankText();
         }
 
-        private void UpdateFeedingPriceUI() => 
-            feedingPriceText.text = feedingPrice.ToString();
+        private void UpdateFeedingPrice()
+        {
+            int hungryFishCount = _currentTank?.Tank?.HungryFishCount ?? 0;
+            _feedingPrice = feedingPricePerFish * hungryFishCount;
+            feedingPriceText.text = _feedingPrice.ToString();
+            feedingButton.interactable = _feedingPrice > 0 && GoldManager.Instance.HasEnoughGold(_feedingPrice);
+        }
 
         private void UpdateTankText()
         {
@@ -214,6 +216,7 @@ namespace Assets.Scripts.Aquarium.FishTanks
             }
 
             UpdateEntertainmentText();
+            UpdateFeedingPrice();
         }
         
         private void UpdateEntertainmentText() =>
