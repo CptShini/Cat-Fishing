@@ -150,7 +150,7 @@ namespace Assets.Scripts.DailyReport
             _decorationEntertainment = data.DecorationEntertainment;
             
             _collectedFish = data.Collection.Select(kvp => new Fish(kvp.Value.Fish, fishSpeciesDatabase));
-            _tanks = data.Tanks.ToDictionary(dto => new Tank(dto, fishSpeciesDatabase));
+            _tanks = data.Tanks.ToDictionary(dto => new Tank(dto, fishSpeciesDatabase, tankDecorationTypeDatabase));
             _collectedTankDecorations = data.DailyTankDecorations.Select(kvp => new TankDecoration(kvp.Value, tankDecorationTypeDatabase));
         }
 

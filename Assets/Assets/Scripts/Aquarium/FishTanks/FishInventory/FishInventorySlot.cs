@@ -1,6 +1,7 @@
 using Assets.Scripts.Aquarium.Domain;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -17,7 +18,6 @@ namespace Assets.Scripts.Aquarium.FishTanks.FishInventory
 
         private TankFish _fish;
         public static TankFish DraggedFish { get; private set; }
-
         private void Awake()
         {
             canvas = GetComponentInParent<Canvas>();

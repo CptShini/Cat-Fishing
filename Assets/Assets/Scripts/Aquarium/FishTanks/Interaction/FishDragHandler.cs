@@ -19,6 +19,8 @@ namespace Assets.Scripts.Aquarium.FishTanks.Interaction
         private Vector2 _offset;
         private bool _dragging;
 
+        public bool Dragging => _dragging;
+
         private void Awake() => _cursorMapper = GetComponent<AquariumCursorMapper>();
 
         public void UpdateHover(Vector2 mousePosition)

@@ -15,4 +15,5 @@ MonoBehaviour:
   definitionID: large_tank
   tankName: Large Tank
   capacities: 0a0000000f00000014000000
+  decorCapacity: 4
   upgradePrices: c8000000f4010000

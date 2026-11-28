@@ -13,7 +13,6 @@ namespace Assets.Scripts.Data.Domain.TankDecor
         {
             Id = Guid.NewGuid();
             Type = type;
-
         }
 
         public TankDecoration(TankDecorationDTO tankDecorDTO, TankDecorationTypeDatabase db)
