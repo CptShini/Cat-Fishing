@@ -11,12 +11,12 @@ namespace Assets.Scripts.Diving.Spawning
 {
     public class TankDecorationSpawner : MonoBehaviour
     {
-        [SerializeField] private GameObject tankDecorPrefab;
+        [SerializeField] private TankDecorPickUp tankDecorPrefab;
 
         [Space]
         
         [SerializeField] private RangeInt spawnCount;
-        [SerializeField] private TankDecorTypeSpawn[] spawnList;
+        [SerializeField] private WeightedSpawnList<TankDecorationType> spawnList;
         [SerializeField] private List<Transform> spawnPoints;
 
         private void Start()
@@ -30,25 +30,15 @@ namespace Assets.Scripts.Diving.Spawning
         
         private void SpawnRandomTankDecor()
         {
+            bool noSpawn = !spawnList.GetRandomSpawn(out TankDecorationType randomDecorType);
+            if (noSpawn) return;
+            
             Transform randomSpawnPoint = spawnPoints.GetRandom();
             spawnPoints.Remove(randomSpawnPoint);
             Quaternion rotation = Quaternion.Euler(0, 0, 0);
-            GameObject TankDecor = Instantiate(tankDecorPrefab, randomSpawnPoint.position, rotation);
-            
-
-
-            TankDecorationType randomDecorType = SelectRandomSpecies();
-            TankDecoration decoration = new TankDecoration(randomDecorType);
-            TankDecor.GetComponent<TankDecorPickUp>().Init(decoration);
-
-            return;
-            
-            TankDecorationType SelectRandomSpecies()
-            {
-                Dictionary<TankDecorationType, int> decorTypeSpawns = spawnList
-                    .ToDictionary(s => s.DecorType, s => 1);
-                return RandomHelper.WeightedRandom(decorTypeSpawns);
-            }
+            TankDecorPickUp TankDecor = Instantiate(tankDecorPrefab, randomSpawnPoint.position, rotation);
+            TankDecoration decoration = new(randomDecorType);
+            TankDecor.Init(decoration);
         }
     }
 }

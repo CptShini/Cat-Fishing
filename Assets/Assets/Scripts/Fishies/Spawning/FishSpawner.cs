@@ -9,7 +9,7 @@ namespace Assets.Scripts.Fishies.Spawning
 {
     public class FishSpawner : MonoBehaviour
     {
-        [SerializeField] private GameObject fishPrefab;
+        [SerializeField] private FishController fishPrefab;
 
         [Space]
         
@@ -28,15 +28,13 @@ namespace Assets.Scripts.Fishies.Spawning
         
         private void SpawnRandomFish()
         {
+            bool noSpawn = !spawnList.GetRandomSpawn(out FishSpecies randomSpecies);
+            if (noSpawn) return;
+            
             Transform randomSpawnPoint = spawnPoints.GetRandom();
             Quaternion randomRotation = Quaternion.Euler(0, 0, Random.Range(0, 360));
-            GameObject fish = Instantiate(fishPrefab, randomSpawnPoint.position, randomRotation);
-            FishController fc = fish.GetComponent<FishController>();
-
-            FishSpecies randomSpecies = spawnList.GetRandomSpawn();
-            if (!randomSpecies) return;
-            
-            fc.Init(randomSpecies);
+            FishController fish = Instantiate(fishPrefab, randomSpawnPoint.position, randomRotation);
+            fish.Init(randomSpecies);
         }
     }
 }

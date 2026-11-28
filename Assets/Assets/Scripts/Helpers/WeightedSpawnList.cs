@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Assets.Scripts.Helpers
 {
@@ -19,16 +19,21 @@ namespace Assets.Scripts.Helpers
         
         public WeightedSpawn<T>[] Spawns;
 
-        public T GetRandomSpawn()
+        public bool GetRandomSpawn(out T spawn)
         {
+            spawn = default;
+            if (Spawns.Length == 0) return false;
+            
             if (EmptyWeight > 0)
             {
-                
+                int totalWeight = EmptyWeight + Spawns.Sum(ws => ws.Weight);
+                int rand = Random.Range(0, totalWeight);
+                if (rand < EmptyWeight) return false;
             }
 
-            Dictionary<T, int> spawnDict = Spawns
-                .ToDictionary(s => s.Item, s => s.Weight);
-            return RandomHelper.WeightedRandom(spawnDict);
+            var spawnDict = Spawns.ToDictionary(ws => ws.Item, ws => ws.Weight);
+            spawn = RandomHelper.WeightedRandom(spawnDict);
+            return true;
         }
     }
 }

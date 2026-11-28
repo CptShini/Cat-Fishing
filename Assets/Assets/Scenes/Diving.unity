@@ -4507,23 +4507,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5059645218684405a809285af6b146c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.FishSpawning.FishSpawner
-  fishPrefab: {fileID: 5206029193779855580, guid: 161b5c02739f62b4fb82a7e106416081, type: 3}
+  fishPrefab: {fileID: 2770333134826107441, guid: 161b5c02739f62b4fb82a7e106416081, type: 3}
   spawnCount:
     Min: 8
     Max: 13
   spawnList:
-  - Species: {fileID: 11400000, guid: a1c2bda1def9ae64c96c1a14e30539ea, type: 2}
-    Weight: 1
-  - Species: {fileID: 11400000, guid: 957081e1661a82546925ad84e54f785a, type: 2}
-    Weight: 5
-  - Species: {fileID: 11400000, guid: 0b13e1c793cd6f44aa45bd98f09478ef, type: 2}
-    Weight: 10
-  - Species: {fileID: 11400000, guid: c5b5167dd7e32a544960b33d31078a61, type: 2}
-    Weight: 5
-  - Species: {fileID: 11400000, guid: 43d79769ea91e444d988846b22bab9d8, type: 2}
-    Weight: 3
-  - Species: {fileID: 11400000, guid: 51ef012cccc8c604bab4a33b2a1c41c6, type: 2}
-    Weight: 2
+    EmptyWeight: 0
+    Spawns:
+    - Item: {fileID: 11400000, guid: a1c2bda1def9ae64c96c1a14e30539ea, type: 2}
+      Weight: 1
+    - Item: {fileID: 11400000, guid: 957081e1661a82546925ad84e54f785a, type: 2}
+      Weight: 5
+    - Item: {fileID: 11400000, guid: 0b13e1c793cd6f44aa45bd98f09478ef, type: 2}
+      Weight: 10
+    - Item: {fileID: 11400000, guid: c5b5167dd7e32a544960b33d31078a61, type: 2}
+      Weight: 5
+    - Item: {fileID: 11400000, guid: 43d79769ea91e444d988846b22bab9d8, type: 2}
+      Weight: 3
+    - Item: {fileID: 11400000, guid: 51ef012cccc8c604bab4a33b2a1c41c6, type: 2}
+      Weight: 2
   spawnPoints:
   - {fileID: 835767586}
   - {fileID: 1592815526}
@@ -13119,17 +13121,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5059645218684405a809285af6b146c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.FishSpawning.FishSpawner
-  fishPrefab: {fileID: 5206029193779855580, guid: 161b5c02739f62b4fb82a7e106416081, type: 3}
+  fishPrefab: {fileID: 2770333134826107441, guid: 161b5c02739f62b4fb82a7e106416081, type: 3}
   spawnCount:
     Min: 4
     Max: 8
   spawnList:
-  - Species: {fileID: 11400000, guid: 918f73f4864a0af40833d047317409c6, type: 2}
-    Weight: 20
-  - Species: {fileID: 11400000, guid: 8dcbfa329eae5c04aac35891136697e8, type: 2}
-    Weight: 20
-  - Species: {fileID: 11400000, guid: 08f5d182fa3b69d4491de31ce8225ea4, type: 2}
-    Weight: 1
+    EmptyWeight: 0
+    Spawns:
+    - Item: {fileID: 11400000, guid: 918f73f4864a0af40833d047317409c6, type: 2}
+      Weight: 20
+    - Item: {fileID: 11400000, guid: 8dcbfa329eae5c04aac35891136697e8, type: 2}
+      Weight: 20
+    - Item: {fileID: 11400000, guid: 08f5d182fa3b69d4491de31ce8225ea4, type: 2}
+      Weight: 1
   spawnPoints:
   - {fileID: 2077835087}
   - {fileID: 439367288}
@@ -13150,15 +13154,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab8b34d5c6266e94c87d4c056489f6f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.Spawning.TankDecorationSpawner
-  tankDecorPrefab: {fileID: 1838663978287374512, guid: 5e2514464e01e1840b8b703dc1d89a32, type: 3}
+  tankDecorPrefab: {fileID: 5945177383465258004, guid: 5e2514464e01e1840b8b703dc1d89a32, type: 3}
   spawnCount:
-    Min: 2
-    Max: 2
+    Min: 1
+    Max: 1
   spawnList:
-  - DecorType: {fileID: 11400000, guid: 15d9ea4a8d48c0841b13ff288e901197, type: 2}
-  - DecorType: {fileID: 11400000, guid: 7f5678b18e8ca7f4899c1fd3ff11fe63, type: 2}
-  - DecorType: {fileID: 11400000, guid: e71a3a32b96e2e14990853e9ba7e486f, type: 2}
-  - DecorType: {fileID: 11400000, guid: 185b418269fa2d547890c5c9397d2f18, type: 2}
+    EmptyWeight: 16
+    Spawns:
+    - Item: {fileID: 11400000, guid: 15d9ea4a8d48c0841b13ff288e901197, type: 2}
+      Weight: 1
+    - Item: {fileID: 11400000, guid: 7f5678b18e8ca7f4899c1fd3ff11fe63, type: 2}
+      Weight: 1
+    - Item: {fileID: 11400000, guid: e71a3a32b96e2e14990853e9ba7e486f, type: 2}
+      Weight: 1
+    - Item: {fileID: 11400000, guid: 185b418269fa2d547890c5c9397d2f18, type: 2}
+      Weight: 1
   spawnPoints:
   - {fileID: 1419347716}
   - {fileID: 2122421507}
@@ -17070,21 +17080,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5059645218684405a809285af6b146c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.FishSpawning.FishSpawner
-  fishPrefab: {fileID: 5206029193779855580, guid: 161b5c02739f62b4fb82a7e106416081, type: 3}
+  fishPrefab: {fileID: 2770333134826107441, guid: 161b5c02739f62b4fb82a7e106416081, type: 3}
   spawnCount:
     Min: 3
     Max: 7
   spawnList:
-  - Species: {fileID: 11400000, guid: a1c2bda1def9ae64c96c1a14e30539ea, type: 2}
-    Weight: 1
-  - Species: {fileID: 11400000, guid: c5b5167dd7e32a544960b33d31078a61, type: 2}
-    Weight: 2
-  - Species: {fileID: 11400000, guid: 43d79769ea91e444d988846b22bab9d8, type: 2}
-    Weight: 6
-  - Species: {fileID: 11400000, guid: 381949d2f0afc564c9672633c95d46c6, type: 2}
-    Weight: 10
-  - Species: {fileID: 11400000, guid: 51ef012cccc8c604bab4a33b2a1c41c6, type: 2}
-    Weight: 2
+    EmptyWeight: 0
+    Spawns:
+    - Item: {fileID: 11400000, guid: a1c2bda1def9ae64c96c1a14e30539ea, type: 2}
+      Weight: 1
+    - Item: {fileID: 11400000, guid: c5b5167dd7e32a544960b33d31078a61, type: 2}
+      Weight: 2
+    - Item: {fileID: 11400000, guid: 43d79769ea91e444d988846b22bab9d8, type: 2}
+      Weight: 6
+    - Item: {fileID: 11400000, guid: 381949d2f0afc564c9672633c95d46c6, type: 2}
+      Weight: 10
+    - Item: {fileID: 11400000, guid: 51ef012cccc8c604bab4a33b2a1c41c6, type: 2}
+      Weight: 2
   spawnPoints:
   - {fileID: 1631457539}
   - {fileID: 1001524176}
@@ -18891,19 +18903,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5059645218684405a809285af6b146c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.FishSpawning.FishSpawner
-  fishPrefab: {fileID: 5206029193779855580, guid: 161b5c02739f62b4fb82a7e106416081, type: 3}
+  fishPrefab: {fileID: 2770333134826107441, guid: 161b5c02739f62b4fb82a7e106416081, type: 3}
   spawnCount:
     Min: 3
     Max: 7
   spawnList:
-  - Species: {fileID: 11400000, guid: e5ee08445d645884093d25dd2a282203, type: 2}
-    Weight: 1
-  - Species: {fileID: 11400000, guid: 7cf2208f07f57cc478d1066712dfba15, type: 2}
-    Weight: 4
-  - Species: {fileID: 11400000, guid: 4809689aa64fbf64d9bde38767433027, type: 2}
-    Weight: 4
-  - Species: {fileID: 11400000, guid: 957081e1661a82546925ad84e54f785a, type: 2}
-    Weight: 3
+    EmptyWeight: 0
+    Spawns:
+    - Item: {fileID: 11400000, guid: e5ee08445d645884093d25dd2a282203, type: 2}
+      Weight: 1
+    - Item: {fileID: 11400000, guid: 7cf2208f07f57cc478d1066712dfba15, type: 2}
+      Weight: 4
+    - Item: {fileID: 11400000, guid: 4809689aa64fbf64d9bde38767433027, type: 2}
+      Weight: 4
+    - Item: {fileID: 11400000, guid: 957081e1661a82546925ad84e54f785a, type: 2}
+      Weight: 3
   spawnPoints:
   - {fileID: 852820412}
   - {fileID: 903179574}
@@ -30816,23 +30830,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5059645218684405a809285af6b146c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.FishSpawning.FishSpawner
-  fishPrefab: {fileID: 5206029193779855580, guid: 161b5c02739f62b4fb82a7e106416081, type: 3}
+  fishPrefab: {fileID: 2770333134826107441, guid: 161b5c02739f62b4fb82a7e106416081, type: 3}
   spawnCount:
     Min: 10
     Max: 15
   spawnList:
-  - Species: {fileID: 11400000, guid: e5ee08445d645884093d25dd2a282203, type: 2}
-    Weight: 2
-  - Species: {fileID: 11400000, guid: 4809689aa64fbf64d9bde38767433027, type: 2}
-    Weight: 5
-  - Species: {fileID: 11400000, guid: 0b13e1c793cd6f44aa45bd98f09478ef, type: 2}
-    Weight: 10
-  - Species: {fileID: 11400000, guid: c5b5167dd7e32a544960b33d31078a61, type: 2}
-    Weight: 5
-  - Species: {fileID: 11400000, guid: 08f5d182fa3b69d4491de31ce8225ea4, type: 2}
-    Weight: 5
-  - Species: {fileID: 11400000, guid: 51ef012cccc8c604bab4a33b2a1c41c6, type: 2}
-    Weight: 2
+    EmptyWeight: 0
+    Spawns:
+    - Item: {fileID: 11400000, guid: e5ee08445d645884093d25dd2a282203, type: 2}
+      Weight: 2
+    - Item: {fileID: 11400000, guid: 4809689aa64fbf64d9bde38767433027, type: 2}
+      Weight: 5
+    - Item: {fileID: 11400000, guid: 0b13e1c793cd6f44aa45bd98f09478ef, type: 2}
+      Weight: 10
+    - Item: {fileID: 11400000, guid: c5b5167dd7e32a544960b33d31078a61, type: 2}
+      Weight: 5
+    - Item: {fileID: 11400000, guid: 08f5d182fa3b69d4491de31ce8225ea4, type: 2}
+      Weight: 5
+    - Item: {fileID: 11400000, guid: 51ef012cccc8c604bab4a33b2a1c41c6, type: 2}
+      Weight: 2
   spawnPoints:
   - {fileID: 1721205306}
   - {fileID: 1909834918}
@@ -35447,19 +35463,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5059645218684405a809285af6b146c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Diving.FishSpawning.FishSpawner
-  fishPrefab: {fileID: 5206029193779855580, guid: 161b5c02739f62b4fb82a7e106416081, type: 3}
+  fishPrefab: {fileID: 2770333134826107441, guid: 161b5c02739f62b4fb82a7e106416081, type: 3}
   spawnCount:
     Min: 4
     Max: 9
   spawnList:
-  - Species: {fileID: 11400000, guid: 7fd1e9cefb0c6cc4a92f1087a1be7042, type: 2}
-    Weight: 5
-  - Species: {fileID: 11400000, guid: 7cf2208f07f57cc478d1066712dfba15, type: 2}
-    Weight: 5
-  - Species: {fileID: 11400000, guid: 8dcbfa329eae5c04aac35891136697e8, type: 2}
-    Weight: 1
-  - Species: {fileID: 11400000, guid: 0b13e1c793cd6f44aa45bd98f09478ef, type: 2}
-    Weight: 2
+    EmptyWeight: 0
+    Spawns:
+    - Item: {fileID: 11400000, guid: 7fd1e9cefb0c6cc4a92f1087a1be7042, type: 2}
+      Weight: 5
+    - Item: {fileID: 11400000, guid: 7cf2208f07f57cc478d1066712dfba15, type: 2}
+      Weight: 5
+    - Item: {fileID: 11400000, guid: 8dcbfa329eae5c04aac35891136697e8, type: 2}
+      Weight: 1
+    - Item: {fileID: 11400000, guid: 0b13e1c793cd6f44aa45bd98f09478ef, type: 2}
+      Weight: 2
   spawnPoints:
   - {fileID: 1102566652}
   - {fileID: 1730377318}
