@@ -7,7 +7,7 @@ namespace Assets.Scripts.Aquarium
 {
     public class EntertainmentManager : MonoBehaviour, IDataPersistence
     {
-        private float _decorationEntertainment;
+        private int _decorationEntertainmentPercentBonus;
         private FishTank[] _fishTanks;
 
         private void Start()
@@ -17,20 +17,20 @@ namespace Assets.Scripts.Aquarium
         }
 
         private void HandlePlacedFurniture(ItemSO item) => 
-            _decorationEntertainment += item.EntertainmentValue;
+            _decorationEntertainmentPercentBonus += item.EntertainmentPercentBonus;
 
         private void HandlePickedUpFurniture(ItemSO item) => 
-            _decorationEntertainment -= item.EntertainmentValue;
+            _decorationEntertainmentPercentBonus -= item.EntertainmentPercentBonus;
 
         public void LoadData(GameData data)
         {
-            _decorationEntertainment = data.DecorationEntertainment;
+            _decorationEntertainmentPercentBonus = data.DecorationEntertainmentPercentBonus;
             CrowdPopulator.Instance.InitializeCrowd(data.CrowdHistory[0]);
         }
 
         public void SaveData(ref GameData data)
         {
-            data.DecorationEntertainment = _decorationEntertainment;
+            data.DecorationEntertainmentPercentBonus = _decorationEntertainmentPercentBonus;
         }
     }
 }
